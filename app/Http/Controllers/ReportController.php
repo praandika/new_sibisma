@@ -427,30 +427,14 @@ class ReportController extends Controller
             ->where('dealer_code',$req->dealer_code)->count();
 
             // Get lastStock
-            $date = Carbon::parse($req->date)->format('Y-m-d');
-            if ($date != $today) {
-                $yesterday = $date->subDay();
-                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
-                ->where('history_date',$yesterday)
-                ->orderBy('history_date','desc')->count();
-                if ($cekStock > 0) {
-                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
-                    ->where('history_date',$yesterday)
-                    ->orderBy('history_date','desc')->pluck('last_stock');
-                    $lastStock = $lastStock[0];
-                } else {
-                    $lastStock = 0;
-                }
+            $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+            ->orderBy('history_date','desc')->count();
+            if ($cekStock > 0) {
+                $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->orderBy('history_date','desc')->pluck('last_stock');
+                $lastStock = $lastStock[0];
             } else {
-                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
-                ->orderBy('history_date','desc')->count();
-                if ($cekStock > 0) {
-                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
-                    ->orderBy('history_date','desc')->pluck('last_stock');
-                    $lastStock = $lastStock[0];
-                } else {
-                    $lastStock = 0;
-                }
+                $lastStock = 0;
             }
 
             if ($cek > 0) {
@@ -482,30 +466,14 @@ class ReportController extends Controller
             ->where('dealer_code',$dc)->count();
             
             // Get lastStock
-            $date = Carbon::parse($req->date)->format('Y-m-d');
-            if ($date != $today) {
-                $yesterday = $date->subDay();
-                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
-                ->where('history_date',$yesterday)
-                ->orderBy('history_date','desc')->count();
-                if ($cekStock > 0) {
-                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
-                    ->where('history_date',$yesterday)
-                    ->orderBy('history_date','desc')->pluck('last_stock');
-                    $lastStock = $lastStock[0];
-                } else {
-                    $lastStock = 0;
-                }
+            $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+            ->orderBy('history_date','desc')->count();
+            if ($cekStock > 0) {
+                $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->orderBy('history_date','desc')->pluck('last_stock');
+                $lastStock = $lastStock[0];
             } else {
-                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
-                ->orderBy('history_date','desc')->count();
-                if ($cekStock > 0) {
-                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
-                    ->orderBy('history_date','desc')->pluck('last_stock');
-                    $lastStock = $lastStock[0];
-                } else {
-                    $lastStock = 0;
-                }
+                $lastStock = 0;
             }
 
             if ($cek > 0) {

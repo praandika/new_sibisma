@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="date" name="date" type="text" class="form-control input-border-bottom" value="{{ $today }}"
+                            <input id="date" name="date" type="date" class="form-control input-border-bottom" value="{{ $today }}"
                                 required>
                             <label for="date" class="placeholder">Date</label>
                         </div>
