@@ -171,9 +171,7 @@
 
 @section('modal-title','Data Stock')
 @include('component.modal-data')
-@if(Auth::user()->crud == 'normal')
-    @include('component.modal-leasing')
-@endif
+@include('component.modal-leasing')
 <livewire:modal-dealer/>
 
 @push('after-script')

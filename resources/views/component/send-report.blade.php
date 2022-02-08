@@ -137,17 +137,10 @@
                         Terjual : <span class="t">*</span>{{ $sale }}<span class="t">*</span> (-)
                     </p>
                     <p>
-                        @if(Auth::user()->crud == 'simple')
-                            @foreach($dataSale as $o)
-                            {{ $o->qty }} | {{ $o->stock->unit->model_name }} | {{ $o->stock->unit->color->color_name }} |
-                            {{ $o->stock->unit->year_mc }} <br>
-                            @endforeach
-                        @else
-                            @foreach($dataSale as $o)
+                        @foreach($dataSale as $o)
                             {{ $o->qty }} | {{ $o->stock->unit->model_name }} | {{ $o->stock->unit->color->color_name }} |
                             {{ $o->stock->unit->year_mc }} | {{ $o->leasing->leasing_code }} <br>
-                            @endforeach
-                        @endif
+                        @endforeach
                     </p><br>
 
                     <p class="header sum">

@@ -146,8 +146,8 @@
                         <div class="card-body">
                             <div class="separator-solid"></div>
                             <input type="hidden" value="{{ $stock->unit->image }}" name="img_prev">
-                            <p class="card-category text-info mb-1"><a href="#">File name :
-                                    {{ $stock->unit->image == '' ? 'No image available' : $stock->unit->image }}</a></p>
+                            <!-- <p class="card-category text-info mb-1"><a href="#">File name :
+                                    {{ $stock->unit->image == '' ? 'No image available' : $stock->unit->image }}</a></p> -->
                             <h3 class="card-title">
                                 <a href="#">
                                     {{ $stock->unit->model_name }}

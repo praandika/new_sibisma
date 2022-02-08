@@ -99,6 +99,7 @@ class SimpleSaleController extends Controller
             $data->sale_date = $req->sale_date;
             $data->stock_id = $req->stock_id;
             $data->sale_qty = $req->sale_qty;
+            $data->leasing_id = $req->leasing_id;
             $data->created_by = Auth::user()->id;
             $data->updated_by = Auth::user()->id;
             $data->save();

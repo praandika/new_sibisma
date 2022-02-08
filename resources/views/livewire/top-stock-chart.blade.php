@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-6">
     <div class="card">
         <div class="card-header">
             <div class="card-title">Top Stocks</div>
@@ -34,7 +34,17 @@
             </div>
             <div class="separator-dashed"></div>
             @endif
+        </div>
+    </div>
+</div>
 
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Top Stocks</div>
+            <div class="card-category">{{ $dealerName }}</div>
+        </div>
+        <div class="card-body pb-0">
             <div class="pull-in">
                 <div id="topStockChart" style="height: 300px;"></div>
             </div>

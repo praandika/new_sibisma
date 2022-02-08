@@ -86,6 +86,16 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
+                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
+                            <input id="leasing_code" type="text" class="form-control input-border-bottom"
+                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
+                                data-target=".modalLeasing" required>
+                            <label for="leasing_code" class="placeholder">Select Leasing *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
                             <input id="sale_qty" type="number" class="form-control input-border-bottom" name="sale_qty" value="{{ old('sale_qty') }}" required>
                             <label for="sale_qty" class="placeholder">Qty*</label>
                         </div>
@@ -116,9 +126,7 @@
 
 @section('modal-title','Data Stock')
 @include('component.modal-data')
-@if(Auth::user()->crud == 'normal')
-    @include('component.modal-leasing')
-@endif
+<livewire:modal-leasing/>
 <livewire:modal-dealer/>
 
 @push('after-script')

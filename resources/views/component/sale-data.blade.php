@@ -35,6 +35,7 @@
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
+                            <th>Leasing</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -50,6 +51,7 @@
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
+                            <th>Leasing</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -69,6 +71,7 @@
                             <td>{{ $o->frame_no }}</td>
                             @endif
                             <td>{{ $o->sale_qty }}</td>
+                            <td>{{ $o->leasing->leasing_code }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">

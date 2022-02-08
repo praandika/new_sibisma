@@ -41,13 +41,11 @@
                 </div>
             @endif
 
-                @if(Auth::user()->dealer_code == 'group')
                 <x-jet-section-border />
 
                 <div class="mt-10 sm:mt-0">
                     @include('component.crud-mode')
                 </div>
-                @endif
         </div>
     </div>
 </x-app-layout>
