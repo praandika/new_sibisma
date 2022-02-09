@@ -63,7 +63,7 @@
                             <td>{{ $o->customer_name }}</td>
                             <td>{{ $o->model_name }}</td>
                             
-                                @if($o->stck < 1)
+                                @if($o->stck == "")
                                 <td style="background-color:#eb343480">
                                 -
                                 </td>
@@ -73,7 +73,7 @@
                                 </td>
                                 @endif
                             
-                                @if($o->stnk < 1)
+                                @if($o->stnk == "")
                                 <td style="background-color:#eb343480">
                                 -
                                 </td>
@@ -83,7 +83,7 @@
                                 </td>
                                 @endif
 
-                                @if($o->bpkb < 1)
+                                @if($o->bpkb == "")
                                 <td style="background-color:#eb343480">
                                 -
                                 </td>
