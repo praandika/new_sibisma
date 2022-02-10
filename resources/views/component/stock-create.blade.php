@@ -76,13 +76,13 @@
                     </div>
                     @endif
 
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="qty" type="number" class="form-control input-border-bottom"
                                 name="qty" value="{{ old('qty') }}" placeholder="Qty (optional)">
                             <label for="qty" class="placeholder"></label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
