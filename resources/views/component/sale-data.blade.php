@@ -85,9 +85,9 @@
                         @empty
                         <tr>
                         @if(Auth::user()->crud == 'normal')
-                            <td colspan="9" style="text-align: center;">No data available</td>
+                            <td colspan="10" style="text-align: center;">No data available</td>
                         @else
-                            <td colspan="8" style="text-align: center;">No data available</td>
+                            <td colspan="9" style="text-align: center;">No data available</td>
                         @endif
                         </tr>
                         @endforelse
