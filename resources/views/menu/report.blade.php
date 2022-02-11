@@ -29,6 +29,11 @@
                     <span class="sub-item">Adjust Report</span>
                 </a>
             </li>
+            <li class="{{ Route::is('report.unit') ? 'active' : '' }}">
+                <a href="{{ route('report.unit') }}">
+                    <span class="sub-item">Unit Report</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

@@ -121,6 +121,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history/{dat
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/send-report/{date?}', [ReportController::class, 'sendReport'])->name('report.send-report');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/adjust/', [ReportController::class, 'adjustReport'])->name('report.adjust');
 Route::middleware(['auth:sanctum', 'verified'])->post('/report-adjust', [ReportController::class, 'adjustReportStore'])->name('report.adjust-store');
+Route::middleware(['auth:sanctum', 'verified'])->post('/report-unit', [ReportController::class, 'unitReport'])->name('report.unit');
 // ROUTE SEND REPORT IF DEALER CODE != GROUP
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/{dealer}/{date}', [ReportController::class, 'sendReportGroup'])->name('report.send-group');
 // END

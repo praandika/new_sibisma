@@ -480,4 +480,58 @@ class ReportController extends Controller
         }
         
     }
+
+    public function unitReport(){
+        $sentral = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0101')
+        ->get();
+
+        $cokro = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0102')
+        ->get();
+
+        $udbisma = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0104')
+        ->get();
+
+        $tts = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0105')
+        ->get();
+
+        $imbo = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0106')
+        ->get();
+
+        $mandiri = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0107')
+        ->get();
+
+        $supratman = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0108')
+        ->get();
+
+        $sunset = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0109')
+        ->get();
+
+        $dalung = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0104-01')
+        ->get();
+
+        $fss = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks_dealer_id','dealers.id')
+        ->where('dealers.dealer_code','AA0104F')
+        ->get();
+
+        return view('page',compact('sentral','cokro','udbisma','tts','imbo','mandiri','supratman','sunset','dalung','fss'));
+    }
 }

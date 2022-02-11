@@ -173,6 +173,8 @@
             @include('component.search-report-id-data')
         @elseif(Route::is('report.adjust'))
             @include('component.adjust-report')
+        @elseif(Route::is('report.unit'))
+            @include('component.unit-report')
         @endif
 
     <!-- Log Page -->
@@ -241,8 +243,6 @@
         @elseif(Route::is('info.out-ach'))
             @include('component.out-ach')
         @endif
-        
-    @endif
     
 @endsection
 
