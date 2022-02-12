@@ -39,6 +39,8 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
                             @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
                             @endif
@@ -55,6 +57,8 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
                             @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
                             @endif
@@ -75,6 +79,8 @@
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
+                            <td>{{ $o->customer_name }}</td>
+                            <td>{{ $o->phone }}</td>
                             @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->frame_no }}</td>
                             @endif
@@ -92,9 +98,9 @@
                         @empty
                         <tr>
                         @if(Auth::user()->crud == 'normal')
-                            <td colspan="10" style="text-align: center;">No data available</td>
+                            <td colspan="12" style="text-align: center;">No data available</td>
                         @else
-                            <td colspan="9" style="text-align: center;">No data available</td>
+                            <td colspan="11" style="text-align: center;">No data available</td>
                         @endif
                         </tr>
                         @endforelse

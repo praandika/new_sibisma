@@ -16,13 +16,22 @@
 </li>
 @endpush
 
-<div class="col-md-12">
+<div class="col-md-3">
     <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Unit Report</h4>
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Sentral</h4>
         </div>
         <div class="card-body">
-            <!-- Content -->
+            <table>
+                <thead>
+                @foreach($sentralYearMC as $key => $value)
+                    <tr>
+                        <td>{{ $key }} : {{ $value }} </td>
+                    </tr>
+                @endforeach
+                </thead>
+            </table>
+            
         </div>
     </div>
 </div>
