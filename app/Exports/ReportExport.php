@@ -175,6 +175,23 @@ class ReportExport implements FromView
                 'data' => Log::whereBetween('log_date', [$this->start, $this->end])
                 ->orderBy('log_date','asc')->get()
             ]);
+        }elseif($this->param == 'stock') {
+            if ($dc == 'group') {
+                return view('export.stock',[
+                    'data' => Stock::join('units','stocks.unit_id','units.id')
+                        ->join('dealers','stocks.dealer_id','dealers.id')
+                        ->join('colors','units.color_id','colors.id')
+                        ->orderBy('units.year_mc')->get()
+                ]);
+            } else {
+                return view('export.stock',[
+                    'data' => Stock::join('units','stocks.unit_id','units.id')
+                        ->join('dealers','stocks.dealer_id','dealers.id')
+                        ->join('colors','units.color_id','colors.id')
+                        ->orderBy('units.year_mc')
+                        ->where('stocks.dealer_id',$did)->get()
+                ]);
+            }
         }else{
             return view('export.error');
         }

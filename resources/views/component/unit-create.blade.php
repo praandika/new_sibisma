@@ -1,3 +1,23 @@
+@push('after-css')
+<style>
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
+</style>
+@endpush
+
 @push('button')
     @section('button-title','Add New Unit')
     @include('component.button-add')
@@ -23,7 +43,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="model_name" type="text" class="form-control input-border-bottom"
-                                name="model_name" value="{{ old('model_name') }}" autofocus required>
+                                name="model_name" value="{{ old('model_name') }}" style="text-transform: uppercase;" autofocus required>
                             <label for="model_name" class="placeholder">Model Name</label>
                         </div>
                     </div>
@@ -31,7 +51,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="category" name="category"
-                                required>
+                            style="text-transform: uppercase;" required>
                                 <option value=""></option>
                                 <option value="Moped">Moped</option>
                                 <option value="Matic">Matic</option>
@@ -48,7 +68,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="color_id" name="color_id"
-                                required>
+                            style="text-transform: uppercase;" required>
                                 <option value=""></option>
                                 @foreach($color as $o)
                                 <option value="{{ $o->id }}">{{ $o->color_name }}</option>
@@ -63,7 +83,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="address" type="number" class="form-control input-border-bottom"
-                                name="year_mc" value="{{ old('year_mc') }}" required>
+                                name="year_mc" value="{{ old('year_mc') }}" style="text-transform: uppercase;" required>
                             <label for="year_mc" class="placeholder">Year MC</label>
                         </div>
                     </div>
@@ -71,7 +91,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="price" type="number" class="form-control input-border-bottom"
-                                name="price" value="{{ old('price') }}" required>
+                                name="price" value="{{ old('price') }}" style="text-transform: uppercase;" required>
                             <label for="price" class="placeholder">Price</label>
                         </div>
                     </div>

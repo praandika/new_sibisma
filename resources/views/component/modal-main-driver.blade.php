@@ -43,7 +43,11 @@
                             </tr>
                             @empty
                             <tr>
+                            @if(Auth::user()->dealer_code == 'group')
+                                <td colspan="3" style="text-align: center;">No data available</td>
+                            @else
                                 <td colspan="2" style="text-align: center;">No data available</td>
+                            @endif
                             </tr>
                             @endforelse
                         </tbody>

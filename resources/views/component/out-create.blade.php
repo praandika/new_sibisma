@@ -7,6 +7,21 @@
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
 
 </style>
 @endpush
@@ -41,7 +56,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="out_date" type="date" class="form-control input-border-bottom" name="out_date"
-                                value="{{ old('out_date') }}" required>
+                                value="{{ old('out_date') }}" style="text-transform: uppercase;" required>
                             <label for="out_date" class="placeholder">Date *</label>
                         </div>
                     </div>
@@ -51,7 +66,7 @@
                             <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal" data-target=".modalData"
-                                value="{{ old('model_name') }}" required>
+                                value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
                             <label for="model_name" class="placeholder">Select Stock *</label>
                         </div>
                     </div>
@@ -59,7 +74,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="color" type="text" class="form-control input-border-bottom" name="color"
-                                value="{{ old('color') }}" placeholder="Color *">
+                                value="{{ old('color') }}" placeholder="Color *" style="text-transform: uppercase;">
                             <label for="color" class="placeholder"></label>
                         </div>
                     </div>
@@ -67,7 +82,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
-                                value="{{ old('year_mc') }}" placeholder="Year MC *">
+                                value="{{ old('year_mc') }}" placeholder="Year MC *" style="text-transform: uppercase;">
                             <label for="year_mc" class="placeholder"></label>
                         </div>
                     </div>
@@ -77,7 +92,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="on_hand" type="text" class="form-control input-border-bottom" name="on_hand"
-                                value="{{ old('on_hand') }}" placeholder="Stock On Hand *" readonly>
+                                value="{{ old('on_hand') }}" placeholder="Stock On Hand *" style="text-transform: uppercase;" readonly>
                             <label for="on_hand" class="placeholder"></label>
 
                             <span class="invalid-feedback">
@@ -92,7 +107,7 @@
                                 required>
                             <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                 name="dealer_name" value="{{ old('dealer_name') }}" data-toggle="modal"
-                                data-target=".modalDealer" required>
+                                data-target=".modalDealer" style="text-transform: uppercase;" required>
                             <label for="dealer_name" class="placeholder">Select Destination *</label>
                         </div>
                     </div>
@@ -116,7 +131,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no"
-                                value="{{ old('engine_no') }}" placeholder="Engine No.">
+                                value="{{ old('engine_no') }}" placeholder="Engine No." style="text-transform: uppercase;">
                             <label for="engine_no" class="placeholder"></label>
                         </div>
                     </div>
@@ -129,13 +144,13 @@
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}"
                                 required>
                             <input id="dealer" type="text" class="form-control input-border-bottom" name="dealer"
-                                value="{{ old('dealer') }}" required>
+                                value="{{ old('dealer') }}" style="text-transform: uppercase;" required>
                             <label for="dealer" class="placeholder">Dealer *</label>
                         </div>
                     </div>
                 </div>
                 @else
-                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
+                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" style="text-transform: uppercase;" required>
                 @endif
 
                 <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>

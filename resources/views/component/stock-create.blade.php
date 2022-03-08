@@ -1,6 +1,27 @@
+@push('after-css')
+<style>
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
+</style>
+@endpush
+
 @push('button')
     @section('button-title','Add New Stock')
     @include('component.button-add')
+    @include('component.button-print')
 @endpush
 
 <div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
@@ -32,7 +53,7 @@
                             <input type="hidden" id="unit_id" name="unit_id" value="{{ old('unit_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" value="{{ old('model_name') }}" data-toggle="modal"
-                                data-target=".modalData" required>
+                                data-target=".modalData" style="text-transform: uppercase;" required>
                             <label for="model_name" class="placeholder">Select Unit</label>
                         </div>
                     </div>
@@ -40,7 +61,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="color" type="text" class="form-control input-border-bottom" name="color"
-                            value="{{ old('color') }}" placeholder="Color">
+                            value="{{ old('color') }}" placeholder="Color" style="text-transform: uppercase;">
                             <label for="color" class="placeholder"></label>
                         </div>
                     </div>
@@ -48,7 +69,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc" value="{{ old('year_mc') }}"
-                                placeholder="Year MC">
+                                placeholder="Year MC" style="text-transform: uppercase;">
                             <label for="year_mc" class="placeholder"></label>
                         </div>
                     </div>
@@ -61,7 +82,7 @@
                             <input type="hidden" id="dealer_id" name="dealer_id" value="{{ old('dealer_id') }}" required>
                                 <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                     name="dealer_name" value="{{ old('dealer_name') }}" data-toggle="modal"
-                                    data-target=".modalDealer" required>
+                                    data-target=".modalDealer" style="text-transform: uppercase;" required>
                                 <label for="dealer_name" class="placeholder">Select Dealer *</label>
                             </div>
                     </div>
@@ -70,7 +91,7 @@
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_id" name="dealer_id" value="{{ $dealerId }}" required>
                                 <input id="dealer_name" type="text" class="form-control input-border-bottom"
-                                    name="dealer_name" value="{{ $dealerName }}" required>
+                                    name="dealer_name" value="{{ $dealerName }}" style="text-transform: uppercase;" required>
                                 <label for="dealer_name" class="placeholder">Select Dealer *</label>
                             </div>
                     </div>

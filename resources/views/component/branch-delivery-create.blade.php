@@ -7,6 +7,21 @@
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
 
 </style>
 @endpush
@@ -51,7 +66,7 @@
                             <input type="hidden" id="out_id" name="out_id" value="{{ old('out_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal" data-target=".modalData"
-                                value="{{ old('model_name') }}" required>
+                                value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
                             <label for="model_name" class="placeholder">Select Unit Out *</label>
                         </div>
                     </div>
@@ -59,7 +74,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="color" type="text" class="form-control input-border-bottom" name="color"
-                                value="{{ old('color') }}" placeholder="Color *">
+                                value="{{ old('color') }}" placeholder="Color *" style="text-transform: uppercase;">
                             <label for="color" class="placeholder"></label>
                         </div>
                     </div>
@@ -67,7 +82,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
-                                value="{{ old('year_mc') }}" placeholder="Year MC *">
+                                value="{{ old('year_mc') }}" placeholder="Year MC *" style="text-transform: uppercase;">
                             <label for="year_mc" class="placeholder"></label>
                         </div>
                     </div>
@@ -77,7 +92,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no"
-                                value="{{ old('frame_no') }}" placeholder="Frame No.">
+                                value="{{ old('frame_no') }}" placeholder="Frame No." style="text-transform: uppercase;">
                             <label for="frame_no" class="placeholder"></label>
                         </div>
                     </div>
@@ -86,7 +101,7 @@
                         <div class="form-group form-floating-label">
                             <input type="hidden" name="dealer_id" id="dealer_id">
                             <input id="dealer_name" type="text" class="form-control input-border-bottom"
-                                name="dealer_name" value="{{ old('dealer_name') }}" placeholder="Dealer's Name">
+                                name="dealer_name" value="{{ old('dealer_name') }}" placeholder="Dealer's Name" style="text-transform: uppercase;">
                             <label for="dealer_name" class="placeholder"></label>
                         </div>
                     </div>
@@ -94,7 +109,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="phone" type="text" class="form-control input-border-bottom" name="phone"
-                                value="{{ old('phone') }}" placeholder="Phone">
+                                value="{{ old('phone') }}" placeholder="Phone" style="text-transform: uppercase;">
                             <label for="phone" class="placeholder"></label>
                         </div>
                     </div>
@@ -102,7 +117,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom" name="address"
-                                value="{{ old('address') }}" placeholder="Address">
+                                value="{{ old('address') }}" placeholder="Address" style="text-transform: uppercase;">
                             <label for="address" class="placeholder"></label>
                         </div>
                     </div>
@@ -112,7 +127,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="delivery_time" type="time" class="form-control input-border-bottom"
-                                name="delivery_time" value="{{ old('delivery_time') }}" value="{{ $time }}" required>
+                                name="delivery_time" value="{{ old('delivery_time') }}" value="{{ $time }}" style="text-transform: uppercase;" required>
                             <label for="delivery_time" class="placeholder">Delivery Time *</label>
                         </div>
                     </div>
@@ -120,7 +135,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="arrival_time" type="time" class="form-control input-border-bottom"
-                                name="arrival_time" value="{{ old('arrival_time') }}" value="{{ $time }}">
+                                name="arrival_time" value="{{ old('arrival_time') }}" value="{{ $time }}" style="text-transform: uppercase;">
                             <label for="arrival_time" class="placeholder">Arrival Time</label>
                         </div>
                     </div>
@@ -131,7 +146,7 @@
                                 required>
                             <input id="driver_name" type="text" class="form-control input-border-bottom"
                                 name="driver_name" value="{{ old('driver_name') }}" data-toggle="modal"
-                                data-target=".modalMainDriver" required>
+                                data-target=".modalMainDriver" style="text-transform: uppercase;" required>
                             <label for="driver_name" class="placeholder">Select Driver *</label>
                         </div>
                     </div>
@@ -142,7 +157,7 @@
                                 value="{{ old('backup_driver') }}" required>
                             <input id="pic_name" type="text" class="form-control input-border-bottom" name="pic_name"
                                 value="{{ old('pic_name') }}" data-toggle="modal" data-target=".modalBackupDriver"
-                                required>
+                                style="text-transform: uppercase;" required>
                             <label for="pic_name" class="placeholder">Select PIC *</label>
                         </div>
                     </div>
@@ -153,7 +168,7 @@
                         <div class="form-group form-floating-label">
                             <textarea id="note" type="text" class="form-control input-border-bottom"
                                 name="note" value="{{ old('note') }}"
-                                placeholder="Note"></textarea>
+                                placeholder="Note" style="text-transform: uppercase;"></textarea>
                             <label for="note" class="placeholder"></label>
                         </div>
                     </div>

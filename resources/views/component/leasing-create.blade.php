@@ -1,3 +1,23 @@
+@push('after-css')
+<style>
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
+</style>
+@endpush
+
 @push('button')
     @section('button-title','Add New Leasing')
     @include('component.button-add')
@@ -24,7 +44,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-floating-label">
                                 <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                    name="leasing_code[]" value="{{ old('leasing_code') }}" required>
+                                    name="leasing_code[]" value="{{ old('leasing_code') }}" style="text-transform: uppercase;" required>
                                 <label for="leasing_code" class="placeholder">Leasing Code</label>
                             </div>
                         </div>
@@ -32,7 +52,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="leasing_name" type="text" class="form-control input-border-bottom"
-                                    name="leasing_name[]" value="{{ old('leasing_name') }}" required>
+                                    name="leasing_name[]" value="{{ old('leasing_name') }}" style="text-transform: uppercase;" required>
                                 <label for="leasing_name" class="placeholder">Leasing Name</label>
                             </div>
                         </div>
@@ -76,7 +96,7 @@
                 <div class="col-md-6">
                     <div class="form-group form-floating-label">
                         <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                    name="leasing_code[]" value="{{ old('leasing_code') }}" required>
+                                    name="leasing_code[]" value="{{ old('leasing_code') }}" style="text-transform: uppercase;" required>
                         <label for="leasing_code" class="placeholder">Leasing Code</label>
                     </div>
                 </div>
@@ -84,7 +104,7 @@
                 <div class="col-md-4">
                     <div class="form-group form-floating-label">
                         <input id="leasing_name" type="text" class="form-control input-border-bottom"
-                                    name="leasing_name[]" value="{{ old('leasing_name') }}" required>
+                                    name="leasing_name[]" value="{{ old('leasing_name') }}" style="text-transform: uppercase;" required>
                         <label for="leasing_name" class="placeholder">Leasing Name</label>
                     </div>
                 </div>

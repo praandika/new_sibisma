@@ -10,6 +10,7 @@
             <a href="{{ route('dashboard') }}">Dashboard</a>
         </li>
         @endpush
+        
         <livewire:rank>
         <livewire:sale-chart>
         <livewire:ratio-stock>

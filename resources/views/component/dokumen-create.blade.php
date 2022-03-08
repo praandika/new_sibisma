@@ -6,6 +6,21 @@
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
 </style>
 @endpush
 
@@ -47,21 +62,21 @@
                             <input type="hidden" id="sale_id" name="sale_id" value="{{ old('sale_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal"
-                                data-target=".modalData" value="{{ old('model_name') }}" required>
+                                data-target=".modalData" value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
                             <label for="model_name" class="placeholder">Model Name *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="color" type="text" class="form-control input-border-bottom" name="color" value="{{ old('color') }}"required>
+                            <input id="color" type="text" class="form-control input-border-bottom" name="color" value="{{ old('color') }}" style="text-transform: uppercase;" required>
                             <label for="color" class="placeholder">Color *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc" value="{{ old('year_mc') }}" required>
+                            <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc" value="{{ old('year_mc') }}" style="text-transform: uppercase;" required>
                             <label for="year_mc" class="placeholder">MC Year *</label>
                         </div>
                     </div>
@@ -70,14 +85,14 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name" value="{{ old('customer_name') }}" required>
+                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name" value="{{ old('customer_name') }}" style="text-transform: uppercase;" required>
                                 <label for="customer_name" class="placeholder">Customer Name *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" required>
+                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" style="text-transform: uppercase;" required>
                                 <label for="phone" class="placeholder">Phone Number *</label>
                         </div>
                     </div>
@@ -86,14 +101,14 @@
 
                 <div class="col-md-3">
                     <div class="form-group form-floating-label">
-                        <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}" required>
+                        <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}" style="text-transform: uppercase;" required>
                         <label for="frame_no" class="placeholder">Frame No. *</label>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group form-floating-label">
-                        <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}" required>
+                        <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}" style="text-transform: uppercase;" required>
                         <label for="engine_no" class="placeholder">Engine No. *</label>
                     </div>
                 </div>
@@ -103,7 +118,7 @@
                 <div class="col-md-12">
                     <div class="form-group form-floating-label">
                         <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}"
-                            required>
+                        style="text-transform: uppercase;" required>
                             <label for="address" class="placeholder">Address *</label>
                     </div>
                 </div> 
@@ -113,7 +128,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stck" type="text" class="form-control input-border-bottom" name="stck" value="{{ old('stck') }}"
-                                placeholder="Nomor STCK">
+                                placeholder="Nomor STCK" style="text-transform: uppercase;">
                             <label for="stck" class="placeholder"></label>
                         </div>
                     </div> 
@@ -122,21 +137,21 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stnk" type="text" class="form-control input-border-bottom" name="stnk" value="{{ old('stnk') }}"
-                                placeholder="Nomor STNK">
+                                placeholder="Nomor STNK" style="text-transform: uppercase;">
                             <label for="stnk" class="placeholder"></label>
                         </div>
                     </div> 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="bpkb" type="text" class="form-control input-border-bottom" name="bpkb" value="{{ old('bpkb') }}"
-                                placeholder="Nomor BPKB">
+                                placeholder="Nomor BPKB" style="text-transform: uppercase;">
                             <label for="bpkb" class="placeholder"></label>
                         </div>
                     </div> 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="document_note" type="text" class="form-control input-border-bottom" name="document_note" value="{{ old('document_note') }}"
-                                placeholder="Document Note">
+                                placeholder="Document Note" style="text-transform: uppercase;">
                             <label for="document_note" class="placeholder"></label>
                         </div>
                     </div>

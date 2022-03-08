@@ -55,13 +55,17 @@
 
             <ul class="nav nav-primary">
                 @include('menu.dashboard')
-                @include('menu.stock')
-                @include('menu.manage-stock')
-                @include('menu.delivery')
-                @include('menu.opname')
-                @include('menu.dealer')
-                @include('menu.manpower')
-                @include('menu.dokumen')
+
+                @if(Auth::user()-> access != 'owner')
+                    @include('menu.stock')
+                    @include('menu.manage-stock')
+                    @include('menu.delivery')
+                    @include('menu.opname')
+                    @include('menu.dealer')
+                    @include('menu.manpower')
+                    @include('menu.dokumen')
+                @endif
+
                 @include('menu.report')
 
                 @if(Auth::user()->access == 'master')

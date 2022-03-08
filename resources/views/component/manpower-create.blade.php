@@ -6,6 +6,21 @@
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
 </style>
 @endpush
 
@@ -37,18 +52,18 @@
                             <input type="hidden" id="dealer_id" name="dealer_id" value="{{ old('dealer_id') }}" required>
                             <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                     name="dealer_name" value="{{ old('dealer_name') }}" data-toggle="modal"
-                                    data-target=".modalDealer" required>
+                                    data-target=".modalDealer" style="text-transform: uppercase;" required>
                             <label for="dealer_name" class="placeholder">Select Dealer *</label>
                         </div>
                     </div>
                 @else
-                    <input type="hidden" id="dealer_id" name="dealer_id" value="{{ $dealer }}" required>
+                    <input type="hidden" id="dealer_id" name="dealer_id" value="{{ $dealer }}" style="text-transform: uppercase;" required>
                 @endif
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="name" type="text" class="form-control input-border-bottom"
-                                name="name" value="{{ old('name') }}" required>
+                                name="name" value="{{ old('name') }}" style="text-transform: uppercase;" required>
                             <label for="name" class="placeholder">Name</label>
                         </div>
                     </div>
@@ -56,7 +71,7 @@
                     <div class="{{ Auth::user()->dealer_code == 'group' ? 'col-md-4' : 'col-md-8' }}">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom"
-                                name="address" value="{{ old('address') }}" required>
+                                name="address" value="{{ old('address') }}" style="text-transform: uppercase;" required>
                             <label for="address" class="placeholder">Address</label>
                         </div>
                     </div>
@@ -66,7 +81,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="phone" type="text" class="form-control input-border-bottom"
-                                name="phone" value="{{ old('phone') }}" required>
+                                name="phone" value="{{ old('phone') }}" style="text-transform: uppercase;" required>
                             <label for="phone" class="placeholder">Phone</label>
                         </div>
                     </div>
@@ -74,7 +89,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="birthday" type="date" class="form-control input-border-bottom"
-                                name="birthday" value="{{ old('birthday') }}" required>
+                                name="birthday" value="{{ old('birthday') }}" style="text-transform: uppercase;" required>
                             <label for="birthday" class="placeholder">Birthday</label>
                         </div>
                     </div>
@@ -84,7 +99,7 @@
                             <input id="gender" type="hidden" name="gender" value="{{ old('gender') }}" required>
                             <input id="gender_name" type="text" class="form-control input-border-bottom"
                                     name="gender_name" value="{{ old('gender_name') }}" data-toggle="modal"
-                                    data-target=".modalGender" required>
+                                    data-target=".modalGender" style="text-transform: uppercase;" required>
                             <label for="gender_name" class="placeholder">Select Gender *</label>
                         </div>
                     </div>
@@ -94,7 +109,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="join_date" type="date" class="form-control input-border-bottom"
-                                name="join_date" value="{{ old('join_date') }}" required>
+                                name="join_date" value="{{ old('join_date') }}" style="text-transform: uppercase;" required>
                             <label for="join_date" class="placeholder">Join Date</label>
                         </div>
                     </div>
@@ -103,7 +118,7 @@
                         <div class="form-group form-floating-label">
                             <input id="position" type="text" class="form-control input-border-bottom"
                                     name="position" value="{{ old('position') }}" data-toggle="modal"
-                                    data-target=".modalPosition" required>
+                                    data-target=".modalPosition" style="text-transform: uppercase;" required>
                             <label for="position" class="placeholder">Select Position *</label>
                         </div>
                     </div>
@@ -112,7 +127,7 @@
                         <div class="form-group form-floating-label">
                             <input id="education" type="text" class="form-control input-border-bottom"
                                     name="education" value="{{ old('education') }}" data-toggle="modal"
-                                    data-target=".modalEducation" required>
+                                    data-target=".modalEducation" style="text-transform: uppercase;" required>
                             <label for="education" class="placeholder">Select Education *</label>
                         </div>
                     </div>

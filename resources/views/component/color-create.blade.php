@@ -11,6 +11,21 @@
     input[type="color"]::-webkit-color-swatch {
         border: none;
     }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
 </style>
 @endpush
 
@@ -40,7 +55,7 @@
                         <div class="col-md-6">
                             <div class="form-group form-floating-label">
                                 <input id="color_name" type="text" class="form-control input-border-bottom"
-                                    name="color_name[]" value="{{ old('color_name') }}" required>
+                                    name="color_name[]" value="{{ old('color_name') }}" style="text-transform: uppercase;" required>
                                 <label for="color_name" class="placeholder">Color Name</label>
                             </div>
                         </div>
@@ -48,7 +63,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="color_code" type="color" value="#000000"
-                                    class="form-control input-border-bottom" name="color_code[]" required>
+                                    class="form-control input-border-bottom" name="color_code[]" style="text-transform: uppercase;" required>
                                 <label for="color_code" class="placeholder">Select Color</label>
                             </div>
                         </div>
@@ -92,7 +107,7 @@
                 <div class="col-md-6">
                     <div class="form-group form-floating-label">
                         <input id="color_name" type="text" class="form-control input-border-bottom"
-                                    name="color_name[]" value="{{ old('color_name') }}" required>
+                                    name="color_name[]" value="{{ old('color_name') }}" style="text-transform: uppercase;" required>
                         <label for="color_name" class="placeholder">Color Name</label>
                     </div>
                 </div>
@@ -101,7 +116,7 @@
                     <div class="form-group form-floating-label">
                         <input id="color_code" type="color" value="#000000"
                                     class="form-control input-border-bottom" name="color_code[]"
-                                    value="{{ old('color_code') }}" required>
+                                    value="{{ old('color_code') }}" style="text-transform: uppercase;" required>
                         <label for="color_code" class="placeholder">Select Color</label>
                     </div>
                 </div>

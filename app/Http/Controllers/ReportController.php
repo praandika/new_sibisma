@@ -74,6 +74,8 @@ class ReportController extends Controller
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Log_report_'.$start.'-'.$end.'.xlsx');
         }elseif($param == 'opname') {
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Opname_report_'.$start.'-'.$end.'.xlsx');
+        }elseif($param == 'stock') {
+            return (new ReportExport)->param($param)->download('Stock_report.xlsx');
         }else{
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Error_report_'.$start.'-'.$end.'.xlsx');
         }
@@ -442,7 +444,7 @@ class ReportController extends Controller
             }
             
         } else {
-            $cek = StockHistroy::where('history_date',$req->date)
+            $cek = StockHistory::where('history_date',$req->date)
             ->where('dealer_code',$dc)->count();
             
             // Get lastStock
@@ -497,7 +499,7 @@ class ReportController extends Controller
         $mandiriYearMC = [];
         $supratmanYearMC = [];
         $sunsetYearMC = [];
-        $dalunglYearMC = [];
+        $dalungYearMC = [];
         $fssYearMC = [];
 
         for ($i=0; $i < count($tahunUnit); $i++) { 
@@ -521,7 +523,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($cokroYearMC, $cokroStock);
+            $cokroYearMC += [$arrayYear[$a] => $cokroStock];
 
             // UD
             $udbismaStock = Stock::join('units','stocks.unit_id','units.id')
@@ -530,7 +532,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($udbismaYearMC, $udbismaStock);
+            $udbismaYearMC += [$arrayYear[$a] => $udbismaStock];
 
             // TTS
             $ttsStock = Stock::join('units','stocks.unit_id','units.id')
@@ -539,7 +541,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($ttsYearMC, $ttsStock);
+            $ttsYearMC += [$arrayYear[$a] => $ttsStock];
 
             // Imbo
             $imboStock = Stock::join('units','stocks.unit_id','units.id')
@@ -548,7 +550,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($imboYearMC, $imboStock);
+            $imboYearMC += [$arrayYear[$a] => $imboStock];
 
             // Mandiri
             $mandiriStock = Stock::join('units','stocks.unit_id','units.id')
@@ -557,7 +559,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($mandiriYearMC, $mandiriStock);
+            $mandiriYearMC += [$arrayYear[$a] => $mandiriStock];
 
             // Supratman
             $supratmanStock = Stock::join('units','stocks.unit_id','units.id')
@@ -566,7 +568,7 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($supratmanYearMC, $supratmanStock);
+            $supratmanYearMC += [$arrayYear[$a] => $supratmanStock];
 
             // Sunset
             $sunsetStock = Stock::join('units','stocks.unit_id','units.id')
@@ -575,16 +577,16 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($sunsetYearMC, $sunsetStock);
+            $sunsetYearMC += [$arrayYear[$a] => $sunsetStock];
 
             // Dalung
-            $dalunglStock = Stock::join('units','stocks.unit_id','units.id')
+            $dalungStock = Stock::join('units','stocks.unit_id','units.id')
             ->join('dealers','stocks.dealer_id','dealers.id')
             ->where('dealers.dealer_code','AA0104-01')
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($dalunglYearMC, $dalunglStock);
+            $dalungYearMC += [$arrayYear[$a] => $dalungStock];
 
             // FSS
             $fssStock = Stock::join('units','stocks.unit_id','units.id')
@@ -593,63 +595,73 @@ class ReportController extends Controller
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
-            array_push($fssYearMC, $fssStock);
+            $fssYearMC += [$arrayYear[$a] => $fssStock];
         }
 
         $sentral = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0101')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $cokro = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0102')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $udbisma = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0104')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $tts = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0105')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $imbo = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0106')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $mandiri = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0107')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $supratman = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0108')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $sunset = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0109')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $dalung = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0104-01')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $fss = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('dealers.dealer_code','AA0104F')
+        ->orderBy('units.year_mc', 'asc')
         ->get();
 
         return view('page',compact(
             'sentral','cokro','udbisma','tts','imbo','mandiri','supratman','sunset','dalung','fss',
             'arrayYear','sentralYearMC','cokroYearMC','udbismaYearMC','ttsYearMC','imboYearMC','mandiriYearMC',
-            'supratmanYearMC','sunsetYearMC','dalunglYearMC','fssYearMC'
+            'supratmanYearMC','sunsetYearMC','dalungYearMC','fssYearMC'
         ));
     }
 }

@@ -22,16 +22,336 @@
             <h4 class="card-title" style="color: #fff;">Bisma Sentral</h4>
         </div>
         <div class="card-body">
+            @foreach($sentralYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
             <table>
-                <thead>
-                @foreach($sentralYearMC as $key => $value)
+                @foreach($sentral as $o)
                     <tr>
-                        <td>{{ $key }} : {{ $value }} </td>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
-                </thead>
             </table>
-            
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Cokro</h4>
+        </div>
+        <div class="card-body">
+            @foreach($cokroYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($cokro as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($udbismaYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($udbisma as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($ttsYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($tts as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($imboYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($imbo as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($mandiriYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($mandiri as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($supratmanYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($supratman as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($sunsetYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($sunset as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($dalungYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($dalung as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+        </div>
+        <div class="card-body">
+            @foreach($fssYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($fss as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
         </div>
     </div>
 </div>
