@@ -434,7 +434,7 @@ class EntryController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Entry::all();
-                dd($data);
+                dd($dc);
             }else{
                 $data = Entry::join('stocks','entries.stock_id','stocks.id')
                 ->join('dealers','entries.dealer_id','dealers.id')
