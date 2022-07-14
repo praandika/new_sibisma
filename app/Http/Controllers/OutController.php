@@ -448,12 +448,14 @@ class OutController extends Controller
     public function history(Request $req){
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $yes = Carbon::yesterday('GMT+8')->format('Y-m-d');
 
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = Out::orderBy('out_date','desc')->get();
+                $data = Out::whereBetween('out_date',[$yes, $today])->get();
             }else{
                 $data = Out::join('stocks','outs.stock_id','stocks.id')
                 ->join('dealers','outs.dealer_id','dealers.id')

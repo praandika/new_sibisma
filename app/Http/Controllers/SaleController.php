@@ -487,12 +487,14 @@ class SaleController extends Controller
     public function history(Request $req){
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $yes = Carbon::yesterday('GMT+8')->format('Y-m-d');
 
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = Sale::orderBy('sale_date','desc')->get();
+                $data = Sale::whereBetween('sale_date',[$yes, $today])->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
