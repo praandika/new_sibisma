@@ -436,7 +436,7 @@ class EntryController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Entry::whereBetween('entry_date',[$yes, $today])->get();
-                dd($data);
+                // dd($data);
             }else{
                 $data = Entry::join('stocks','entries.stock_id','stocks.id')
                 ->join('dealers','entries.dealer_id','dealers.id')
