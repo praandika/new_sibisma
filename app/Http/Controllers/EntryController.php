@@ -433,10 +433,7 @@ class EntryController extends Controller
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = Entry::join('stocks','entries.stock_id','stocks.id')
-                ->join('dealers','entries.dealer_id','dealers.id')
-                ->orderBy('entry_date','desc')
-                ->select('dealers.dealer_name','stocks.*','entries.*')->get();
+                $data = Entry::all();
                 dd($data);
             }else{
                 $data = Entry::join('stocks','entries.stock_id','stocks.id')
