@@ -415,12 +415,12 @@ class OutController extends Controller
         if ($dc == 'group') {
             $his = StockHistory::where('history_date',$out_date)
             ->where('dealer_code',$dealer_code)->first();
-            dd("in : ".$in, "out : ".$out, "sale : ".$sale, "out_qty : ".$out_qty, "last_stok : ".$lastStock, "history : ".$his);
         }else{
             $his = StockHistory::where('history_date',$out_date)
             ->where('dealer_code',$dc)->first();
         }
         
+
         $his->in_qty = $in;
         $his->out_qty = $out_qty;
         $his->sale_qty = $sale;
