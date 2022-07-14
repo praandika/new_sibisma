@@ -377,13 +377,13 @@ class SaleController extends Controller
 
         /** ============== Create Or Update Stock History ============== */
         $sale_date = Sale::where('id',$id)->pluck('sale_date');
-        $dealer_code = Entry::join('stocks','entries.stock_id','stocks.id')
+        $dealer_code = Sale::join('stocks','sales.stock_id','stocks.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('entries.id',$id)
+        ->where('sales.id',$id)
         ->pluck('dealers.dealer_code');
-        $dealerId = Entry::join('stocks','entries.stock_id','stocks.id')
+        $dealerId = Sale::join('stocks','sales.stock_id','stocks.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('entries.id',$id)
+        ->where('sales.id',$id)
         ->pluck('dealers.id');
         dd($dealerId);
 
