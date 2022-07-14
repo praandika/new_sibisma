@@ -385,6 +385,7 @@ class SaleController extends Controller
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('entries.id',$id)
         ->pluck('dealers.id');
+        dd($dealerId);
 
         if($dc == 'group'){
             // Count first stock
