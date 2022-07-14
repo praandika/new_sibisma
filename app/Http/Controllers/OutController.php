@@ -357,7 +357,6 @@ class OutController extends Controller
             ->where('entry_date',$out_date)
             ->where('stocks.dealer_id',$dealerId)->sum('in_qty');
             $in = ($in == 0) ? $in = 0 : (int)$in ;
-            dd($in);
             $out = Out::join('stocks','outs.stock_id','stocks.id')
             ->where('out_date',$out_date)
             ->where('stocks.dealer_id',$dealerId)->sum('out_qty');
@@ -366,6 +365,7 @@ class OutController extends Controller
             ->where('sale_date',$out_date)
             ->where('stocks.dealer_id',$dealerId)->sum('sale_qty');
             $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+            dd($in, $out, $sale);
         }else{
             // Count first stock
             $stock = Stock::where('dealer_id',$did)->sum('qty');
