@@ -436,7 +436,7 @@ class EntryController extends Controller
                 $data = Entry::join('stocks','entries.stock_id','stocks.id')
                 ->join('dealers','entries.dealer_id','dealers.id')
                 ->orderBy('entry_date','desc')->get();
-                dd($data);
+                // dd($data);
             }else{
                 $data = Entry::join('stocks','entries.stock_id','stocks.id')
                 ->join('dealers','entries.dealer_id','dealers.id')
