@@ -454,7 +454,8 @@ class SaleController extends Controller
             $his = StockHistory::where('history_date',$sale_date)
             ->where('dealer_code',$dc)->first();
         }
-        
+        dd("in : ".$in, "out : ".$out, "sale : ".$sale, "out_qty : ".$sale_qty, "last_stok : ".$lastStock, "history : ".$his);
+
         $his->in_qty = $in;
         $his->out_qty = $out;
         $his->sale_qty = $sale_qty;
