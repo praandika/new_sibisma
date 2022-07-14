@@ -64,7 +64,7 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $o->stock->dealer->dealer_code }}</td>
+                            <td>{{ $o->stock->dealer['dealer_code'] }}</td>
                             <td>{{ \Carbon\Carbon::parse($o->entry_date)->format('j M Y') }}</td>
                             <td>{{ $o->stock->unit->model_name }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
