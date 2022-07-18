@@ -350,7 +350,7 @@ class OutController extends Controller
         ->where('entries.id',$id)
         ->pluck('dealers.id');
 
-        dd($dealerId);
+        dd($dealerId, $id);
         // dd("in : ".$in, "out : ".$out, "sale : ".$sale, "out_qty : ".$out_qty, "last_stok : ".$lastStock, "history : ".$his);
 
         if($dc == 'group'){
