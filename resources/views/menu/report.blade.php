@@ -57,7 +57,7 @@
             </li>
             @endif
 
-            @if((Auth::user()->access != 'owner') || (Auth::user()->dealer_code == 'group'))
+            @if(Auth::user()->access == 'master' )
             <li class="{{ Route::is('report.adjust') ? 'active' : '' }}">
                 <a href="{{ route('report.adjust') }}">
                     <span class="sub-item">Adjust Report</span>
