@@ -341,13 +341,13 @@ class OutController extends Controller
 
         /** ============== Create Or Update Stock History ============== */
         $out_date = Out::where('id',$id)->pluck('out_date');
-        $dealer_code = Entry::join('stocks','entries.stock_id','stocks.id')
+        $dealer_code = Out::join('stocks','outs.stock_id','stocks.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('entries.id',$id)
+        ->where('outs.id',$id)
         ->pluck('dealers.dealer_code');
-        $dealerId = Entry::join('stocks','entries.stock_id','stocks.id')
+        $dealerId = Out::join('stocks','outs.stock_id','stocks.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('entries.id',$id)
+        ->where('outs.id',$id)
         ->pluck('dealers.id');
 
         dd($dealerId, $id);
