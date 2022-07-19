@@ -18,7 +18,7 @@
 
         <div class="mt-3 max-w-xl text-sm text-gray-600">
             <p>
-                {{ __('When simple mode is enabled, you will posible to input sale and out data without input frame number.') }}
+                {{ __('When simple mode is enabled, you will posible to input sale and out data without frame number.') }}
             </p>
         </div>
 
