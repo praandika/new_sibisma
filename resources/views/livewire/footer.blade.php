@@ -20,7 +20,7 @@
             </ul>
         </nav>
         <div class="copyright ml-auto">
-            &copy; CRM Bisma 2022 | <a href="https://www.dikaprana.com/" class="nav-link" style="font-weight: bold;">dikaprana</a>
+            &copy; CRM Bisma 2022 | <a href="https://www.dikaprana.com/" style="font-weight: bold;">dikaprana</a>
         </div>
     </div>
 </footer>
