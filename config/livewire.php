@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => "http://localhost/test/public",
+    'asset_url' => "http://yamahabismagroup.com/test/public",
 
     /*
     |--------------------------------------------------------------------------
