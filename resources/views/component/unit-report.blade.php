@@ -121,7 +121,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma TTS</h4>
         </div>
         <div class="card-body">
             @foreach($ttsYearMC as $tahun => $total)
@@ -155,7 +155,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma Imbo</h4>
         </div>
         <div class="card-body">
             @foreach($imboYearMC as $tahun => $total)
@@ -189,7 +189,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma Mandiri</h4>
         </div>
         <div class="card-body">
             @foreach($mandiriYearMC as $tahun => $total)
@@ -223,7 +223,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma Supratman</h4>
         </div>
         <div class="card-body">
             @foreach($supratmanYearMC as $tahun => $total)
@@ -257,7 +257,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma Sunset Road</h4>
         </div>
         <div class="card-body">
             @foreach($sunsetYearMC as $tahun => $total)
@@ -291,7 +291,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma Dalung</h4>
         </div>
         <div class="card-body">
             @foreach($dalungYearMC as $tahun => $total)
@@ -325,7 +325,7 @@
 <div class="col-md-3">
     <div class="card">
         <div class="card-header bg-info-gradient skew-shadow">
-            <h4 class="card-title" style="color: #fff;">Bisma Hasanuddin</h4>
+            <h4 class="card-title" style="color: #fff;">Bisma FSS</h4>
         </div>
         <div class="card-body">
             @foreach($fssYearMC as $tahun => $total)
