@@ -455,6 +455,8 @@ class SaleController extends Controller
             ->where('dealer_code',$dc)->first();
         }
 
+        dd($his, 'kode '.$dc);
+
         $his->in_qty = $in;
         $his->out_qty = $out;
         $his->sale_qty = $sale_qty;
