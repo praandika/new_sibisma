@@ -40,7 +40,7 @@ class SaleController extends Controller
             $stock = Stock::where('dealer_id',$did)->get('stocks.*');
             $dealerCode = $dc;
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->get();
+            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->select('sales.id as id', '...')->get();
             return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
         }
         
