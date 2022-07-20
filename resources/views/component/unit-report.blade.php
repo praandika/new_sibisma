@@ -371,7 +371,7 @@
                                 transform: skew(-15deg, 0deg);">
                 <strong>{{ $tahun }}</strong>
                 &nbsp;
-                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                <span style="background-color: #816797; padding: 5px; margin-right: -11px;">
                     <strong>{{ $total }}</strong>
                     &nbsp;
                 </span>
