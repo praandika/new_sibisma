@@ -363,7 +363,7 @@
         </div>
         <div class="card-body">
             @foreach($groupYearMC as $tahun => $total)
-            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+            <span class="badge badge-secondary" style="border-radius: 0 0 0 5px;
                                 -moz-transform: skew(-15deg, 0deg);
                                 -webkit-transform: skew(-15deg, 0deg);
                                 -o-transform: skew(-15deg, 0deg);
