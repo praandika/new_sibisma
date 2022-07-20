@@ -358,7 +358,7 @@
 
 <div class="col-md-3">
     <div class="card">
-        <div class="card-header bg-primary-gradient skew-shadow">
+        <div class="card-header bg-secondary-gradient skew-shadow">
             <h4 class="card-title" style="color: #fff;">Bisma Group</h4>
         </div>
         <div class="card-body">
