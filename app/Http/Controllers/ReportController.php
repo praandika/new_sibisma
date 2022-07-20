@@ -602,7 +602,6 @@ class ReportController extends Controller
             // GROUP
             $groupStock = Stock::join('units','stocks.unit_id','units.id')
             ->join('dealers','stocks.dealer_id','dealers.id')
-            ->where('dealers.dealer_code','AA0104F')
             ->where('units.year_mc', $arrayYear[$a])
             ->sum('qty'); 
 
