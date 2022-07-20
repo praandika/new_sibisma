@@ -490,6 +490,7 @@ class ReportController extends Controller
         ->orderBy('units.year_mc','asc')
         ->pluck('units.year_mc');
 
+        // Get Year MC
         $arrayYear = [];
         $sentralYearMC = [];
         $cokroYearMC = [];
@@ -501,6 +502,7 @@ class ReportController extends Controller
         $sunsetYearMC = [];
         $dalungYearMC = [];
         $fssYearMC = [];
+        $groupYearMC = [];
 
         for ($i=0; $i < count($tahunUnit); $i++) { 
             array_push($arrayYear, $tahunUnit[$i]);
@@ -596,6 +598,15 @@ class ReportController extends Controller
             ->sum('qty'); 
 
             $fssYearMC += [$arrayYear[$a] => $fssStock];
+
+            // GROUP
+            $groupStock = Stock::join('units','stocks.unit_id','units.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->where('dealers.dealer_code','AA0104F')
+            ->where('units.year_mc', $arrayYear[$a])
+            ->sum('qty'); 
+
+            $groupYearMC += [$arrayYear[$a] => $groupStock];
         }
 
         $sentral = Stock::join('units','stocks.unit_id','units.id')
@@ -688,10 +699,16 @@ class ReportController extends Controller
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
+        $group = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->where('stocks.qty','>',0)
+        ->orderBy('units.year_mc', 'asc')
+        ->get();
+
         return view('page',compact(
-            'sentral','cokro','udbisma','tts','imbo','mandiri','supratman','sunset','dalung','fss',
+            'sentral','cokro','udbisma','tts','imbo','mandiri','supratman','sunset','dalung','fss','group',
             'arrayYear','sentralYearMC','cokroYearMC','udbismaYearMC','ttsYearMC','imboYearMC','mandiriYearMC',
-            'supratmanYearMC','sunsetYearMC','dalungYearMC','fssYearMC'
+            'supratmanYearMC','sunsetYearMC','dalungYearMC','fssYearMC','groupYearMC'
         ));
     }
 }

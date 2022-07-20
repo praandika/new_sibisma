@@ -355,3 +355,37 @@
         </div>
     </div>
 </div>
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header bg-info-gradient skew-shadow">
+            <h4 class="card-title" style="color: #fff;">Bisma Group</h4>
+        </div>
+        <div class="card-body">
+            @foreach($groupYearMC as $tahun => $total)
+            <span class="badge badge-dark" style="border-radius: 0 0 0 5px;
+                                -moz-transform: skew(-15deg, 0deg);
+                                -webkit-transform: skew(-15deg, 0deg);
+                                -o-transform: skew(-15deg, 0deg);
+                                -ms-transform: skew(-15deg, 0deg);
+                                transform: skew(-15deg, 0deg);">
+                <strong>{{ $tahun }}</strong>
+                &nbsp;
+                <span style="background-color: #cf0257; padding: 5px; margin-right: -11px;">
+                    <strong>{{ $total }}</strong>
+                    &nbsp;
+                </span>
+            </span>
+            &nbsp;&nbsp;
+            @endforeach
+            <hr>
+            <table>
+                @foreach($group as $o)
+                    <tr>
+                        <td>{{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->year_mc }}</td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+</div>
