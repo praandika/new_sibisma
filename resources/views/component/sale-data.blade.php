@@ -61,8 +61,6 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            @if(Auth::user()->dealer_code == 'group')
-                            <!-- Master View -->
                                 <td>{{ $o->stock->dealer->dealer_code }}</td>
                                 <td>{{ $o->stock->unit->model_name }}</td>
                                 <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
@@ -75,21 +73,6 @@
                                 <td>{{ $o->sale_qty }}</td>
                                 <td>{{ $o->leasing->leasing_code }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
-                            @else
-                            <!-- Dealer View -->
-                                <td>{{ $o->dealer_code }}</td>
-                                <td>{{ $o->model_name }}</td>
-                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
-                                    {{ $o->color_name }}
-                                </td>
-                                <td>{{ $o->year_mc }}</td>
-                                @if(Auth::user()->crud == 'normal')
-                                <td>{{ $o->frame_no }}</td>
-                                @endif
-                                <td>{{ $o->sale_qty }}</td>
-                                <td>{{ $o->leasing_code }}</td>
-                                <td>{{ $o->first_name }}</td>
-                            @endif
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', $o->id) }}" class="btnAction"
