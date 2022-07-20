@@ -40,14 +40,7 @@ class SaleController extends Controller
             $stock = Stock::where('dealer_id',$did)->get('stocks.*');
             $dealerCode = $dc;
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->join('dealers','sales.stock_id','dealers.id')
-            ->join('units','sales.stock_id','units.id')
-            ->join('colors','stocks.unit_id','colors.id')
-            ->join('leasings','sales.leasing_id','leasings.id')
-            ->join('users','sales.created_by','users.id')
-            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
-            ->select('sales.id','dealers.dealer_code','units.model_name','colors.color_code','colors.color_name','units.year_mc','sales.frame_no','sales.sale_qty','leasings.leasing_code','users.first_name')
-            ->get();
+            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->get();
             return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
         }
         

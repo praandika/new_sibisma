@@ -61,18 +61,18 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
-                                <td>{{ $o->stock->dealer->dealer_code }}</td>
-                                <td>{{ $o->stock->unit->model_name }}</td>
-                                <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
-                                    {{ $o->stock->unit->color->color_name }}
-                                </td>
-                                <td>{{ $o->stock->unit->year_mc }}</td>
-                                @if(Auth::user()->crud == 'normal')
-                                <td>{{ $o->frame_no }}</td>
-                                @endif
-                                <td>{{ $o->sale_qty }}</td>
-                                <td>{{ $o->leasing->leasing_code }}</td>
-                                <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->stock->dealer->dealer_code }}</td>
+                            <td>{{ $o->stock->unit->model_name }}</td>
+                            <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
+                                {{ $o->stock->unit->color->color_name }}
+                            </td>
+                            <td>{{ $o->stock->unit->year_mc }}</td>
+                            @if(Auth::user()->crud == 'normal')
+                            <td>{{ $o->frame_no }}</td>
+                            @endif
+                            <td>{{ $o->sale_qty }}</td>
+                            <td>{{ $o->leasing->leasing_code }}</td>
+                            <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', $o->id) }}" class="btnAction"
