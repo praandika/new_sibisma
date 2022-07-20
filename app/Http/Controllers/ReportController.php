@@ -600,61 +600,91 @@ class ReportController extends Controller
 
         $sentral = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0101')
+        ->where([
+                ['dealers.dealer_code','AA0101'],
+                ['stocks.qty','>',0],
+            ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $cokro = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0102')
+        ->where([
+            ['dealers.dealer_code','AA0102'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $udbisma = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0104')
+        ->where([
+            ['dealers.dealer_code','AA0104'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $tts = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0105')
+        ->where([
+            ['dealers.dealer_code','AA0105'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $imbo = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0106')
+        ->where([
+            ['dealers.dealer_code','AA0106'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $mandiri = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0107')
+        ->where([
+            ['dealers.dealer_code','AA0107'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $supratman = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0108')
+        ->where([
+            ['dealers.dealer_code','AA0108'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $sunset = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0109')
+        ->where([
+            ['dealers.dealer_code','AA0109'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $dalung = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0104-01')
+        ->where([
+                ['dealers.dealer_code','AA0104-01'],
+                ['stocks.qty','>',0],
+            ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
         $fss = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->where('dealers.dealer_code','AA0104F')
+        ->where([
+            ['dealers.dealer_code','AA0104F'],
+            ['stocks.qty','>',0],
+        ])
         ->orderBy('units.year_mc', 'asc')
         ->get();
 
