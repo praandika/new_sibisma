@@ -40,7 +40,7 @@ class SaleController extends Controller
             $stock = Stock::where('dealer_id',$did)->get('stocks.*');
             $dealerCode = $dc;
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->select('sales.id as id')->get();
+            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->get();
             return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
         }
         
@@ -454,8 +454,6 @@ class SaleController extends Controller
             $his = StockHistory::where('history_date',$sale_date)
             ->where('dealer_code',$dc)->first();
         }
-
-        dd($his, 'kode '.$dc);
 
         $his->in_qty = $in;
         $his->out_qty = $out;
