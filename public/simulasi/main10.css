@@ -1,0 +1,413 @@
+body{
+
+  background-image: url('bg-simulasi-2.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  font-family: 'Cabin', sans-serif;
+
+  color: white;
+
+}
+
+.box{
+
+  height: 80%;
+
+  width: 60%;
+
+  margin: auto;
+
+  margin-top: 100px;
+
+  background: white;
+
+  box-shadow: 0px 0px 10px #2d62c8;
+
+  background: rgba(0, 0, 0, 0.80);
+
+  border-radius: 0px;
+
+}
+
+.main{
+  margin-top: 100px;
+  margin-bottom: 230px;
+}
+
+
+
+.isian{
+
+  padding: 10px 10px 10px 30px;
+
+}
+
+
+
+.dp{
+
+  color: #78c3fa
+
+}
+
+
+
+label{
+
+  font-size: 13px;
+
+  color: #b1b5b4
+
+}
+
+
+
+.tombol{
+
+  border-radius: 0px;
+
+  position: relative;
+
+  margin: auto;
+
+  background: linear-gradient(to right, #2e5eb9 0%, #1ec6f0 100%);
+
+  color: black;
+
+  font-size: 20px;
+
+  padding-left: 40px;
+
+  padding-right: 40px;
+
+  transition-property: padding;
+
+  transition-duration: 0.3s;
+
+}
+
+
+
+.tombol:hover{
+
+  position: relative;
+
+  margin: auto;
+
+  background: linear-gradient(to top right, #71ddff 0%, #19abf2 100%);
+
+  color: black;
+
+  padding-left: 55px;
+
+  padding-right: 55px;
+
+}
+
+
+
+.logo{
+
+  display: block;
+
+  width: 200px;
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+  margin-top: 20px;
+
+  margin-bottom: 20px;
+
+}
+
+
+
+.modalcustom{
+
+  color: black;
+
+}
+
+
+
+.modalcustom-header{
+
+  color: white;
+
+  background: linear-gradient(to left, #0525cc 0%, #0a1e88 100%);
+
+}
+
+
+
+.close{
+
+  color: white;
+
+}
+
+
+
+.close:hover{
+
+  color: #f7a8a8;
+
+  text-shadow: -1px 0px #f7a8a8, 0 1px #f7a8a8, 1px 0 #f7a8a8, 0 -1px #f7a8a8;
+
+}
+
+
+
+.inputcustom{
+
+  background-color: transparent;
+
+  border-radius: 0px;
+
+  border-top: none;
+
+  border-left: none;
+
+  border-right: none;
+
+  border-bottom: 2px solid white;
+
+  color: white;
+
+  width: 60%;
+
+  transition-property: width;
+
+  transition-duration: 0.4s
+
+}
+
+
+
+.inputcustom:hover{
+
+  background-color: transparent;
+
+  border-radius: 2px 0px 2px 0px;
+
+  border-top: none;
+
+  border-left: none;
+
+  border-right: none;
+
+  border-bottom: 2px solid #0d97ed;
+
+  width: 100%;
+
+}
+
+
+
+.inputcustom:focus{
+
+  background-color: transparent;
+
+  border-radius: 2px 0px 2px 0px;
+
+  border-top: none;
+
+  border-left: none;
+
+  border-right: none;
+
+  border-bottom: 2px solid #0d97ed;
+
+  box-shadow: none;
+
+  color: white;
+
+  width: 100%;
+
+}
+
+
+
+.inputharga{
+
+  border:none;
+
+  width: 100%;
+
+  font-size: 30px;
+
+}
+
+
+
+.inputharga:hover{
+
+  border:none;
+
+}
+
+
+
+.inputharga:focus{
+
+  border:none;
+
+}
+
+
+
+.selectcustom option{
+
+  background: #1e1e37;
+
+}
+
+
+
+/* HIDE ARROW INPUT NUMBER
+
+Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+
+input::-webkit-inner-spin-button {
+
+  -webkit-appearance: none;
+
+  margin: 0;
+
+}
+
+
+
+/* Firefox */
+
+input[type=number] {
+
+  -moz-appearance: textfield;
+
+}
+
+
+
+.hasil{
+
+  color: white;
+
+}
+
+
+
+footer{
+
+  background: linear-gradient(to right, #000000 0%, #003c8b 50%, #000000 100%);
+
+  color: white;
+
+  padding: 30px;
+
+  margin-top: 100px;
+
+  box-shadow: 0px 0px 10px #000a17;
+
+}
+
+
+
+.navcustom{
+
+  background: linear-gradient(to right, #000000 0%, #003c8b 50%, #000000 100%);
+
+  box-shadow: 0px 0px 10px #000a17;
+
+}
+
+
+
+.togglercustom{
+
+  background-color: white;
+
+}
+
+
+
+footer a{
+
+  text-decoration: none;
+
+  color: white;
+
+}
+
+
+
+footer a:hover{
+
+  text-decoration: none;
+
+  color: white;
+
+}
+
+
+
+.judul{
+
+  padding-top: 10px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 2px solid #78c3fa;
+
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  color: #0a0b0b;
+  background: linear-gradient(to top right, #71ddff 0%, #19abf2 100%);
+  border-color: #19abf2;
+}
+
+.judul-tenor{
+  padding: 10px;
+  border: 1px solid #19abf2;
+  transform: skewY(10deg);
+}
+
+.divider{
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right, #000000 0%, #003c8b 50%, #000000 100%);
+}
+
+.box-tenor{
+  padding: 10px;
+  background: linear-gradient(to right, #000000 0%, #003c8b 50%, #000000 100%);
+}
+
+@media screen and (max-width: 992px){
+
+  .box{
+
+    height: 80%;
+
+    width: 90%;
+
+    margin: auto;
+
+    margin-top: 150px;
+
+    background: white;
+
+    box-shadow: 0px 0px 10px #2d62c8;
+
+    background: rgba(0, 0, 0, 0.80);
+
+    border-radius: 0px;
+
+  }
+
+}

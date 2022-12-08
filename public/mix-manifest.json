@@ -1,0 +1,4 @@
+{
+    "/js/app.js": "test/public/js/app.js",
+    "/css/app.css": "test/public/css/app.css"
+}

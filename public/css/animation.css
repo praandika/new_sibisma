@@ -1,0 +1,135 @@
+/* Transition */
+.fadeInAtas{
+    animation-name: fadeInAtas;
+    animation-duration: 1s;
+}
+
+.fadeInKiri{
+    animation-name: fadeInKiri;
+    animation-duration: 1s;
+}
+
+.fadeInKanan{
+    animation-name: fadeInKanan;
+    animation-duration: 1s;
+}
+
+.fadeInBawah{
+    animation-name: fadeInBawah;
+    animation-duration: 1s;
+}
+
+.fadeIn{
+    animation-name: fadeIn;
+    animation-duration: 3s;
+}
+
+.fadeOutAtas{
+    animation-name: fadeOutAtas;
+    animation-duration: 1s;
+}
+
+.fadeOutBawah{
+    animation-name: fadeOutBawah;
+    animation-duration: 1s;
+}
+
+/* Animation */
+@keyframes fadeInAtas {
+    from{
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutAtas {
+    from{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to{
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+}
+
+@keyframes fadeInKiri {
+    from{
+        opacity: 0;
+        transform: translateX(-25px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInKanan {
+    from{
+        opacity: 0;
+        transform: translateX(25px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInBawah {
+    from{
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutBawah {
+    from{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to{
+        opacity: 0;
+        transform: translateY(25px);
+    }
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes anime1 {
+    0%  {left: 0px;}
+    25% {left: 50px;}
+    50% {left: 0px;}
+    75% {left: 50px;}
+    100%{left: 0px;}
+}
+
+@keyframes anime2 {
+    0%  {right: 0px;}
+    25% {right: 50px;}
+    50% {right: 0px;}
+    75% {right: 50px;}
+    100%{right: 0px;}
+}
+/* End Animation */
