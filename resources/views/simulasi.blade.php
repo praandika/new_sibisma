@@ -28,6 +28,9 @@
       Copyright 2020
       ============================================= -->
 
+    <!-- Print JS -->
+    <link rel="stylesheet" href="{{ asset('printpdfjs/print.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('simulasi/main10.css') }}">
 </head>
 
@@ -426,7 +429,6 @@
     </div>
     <!-- END Modal Menetap -->
 
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -444,7 +446,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-    
+    <!-- Print JS -->
+    <script src="{{ asset('printpdfjs/print.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
