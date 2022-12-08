@@ -176,3 +176,9 @@ Route::middleware(['auth:sanctum', 'verified'])->post('update-crud/{id}/{crud}',
 // SIMULASI KREDIT
 Route::get('/simulasi-kredit', [DashboardController::class, 'simulasi'])->name('simulasi');
 // END SIMULASI KREDIT
+
+// PRINT PDF
+Route::get('print-pdf', function () {
+    return view('export.pdf');
+})->name('printpdf');
+// END PRINT PDF

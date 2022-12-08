@@ -255,7 +255,7 @@ function kredit_menetap(){
   let rupiah_60 = formatter.format(angsuran_60);
 
   if ((!isNaN(angsuran_12)) || (!isNaN(angsuran_24)) || (!isNaN(angsuran_36)) || (!isNaN(angsuran_48)) || (!isNaN(angsuran_60))) {
-    document.getElementById("angsuran_menetap_12").innerHTML = "<h2 class='font_angsuran'>"+rupiah_12+"</h2>";
+    document.getElementById("angsuran_menetap_12").innerHTML = "<h2 class='font_angsuran' id='storage12'>"+rupiah_12+"</h2>";
     document.getElementById("angsuran_menetap_24").innerHTML = "<h2 class='font_angsuran'>"+rupiah_24+"</h2>";
     document.getElementById("angsuran_menetap_36").innerHTML = "<h2 class='font_angsuran'>"+rupiah_36+"</h2>";
     document.getElementById("angsuran_menetap_48").innerHTML = "<h2 class='font_angsuran'>"+rupiah_48+"</h2>";
@@ -267,6 +267,7 @@ function kredit_menetap(){
     document.getElementById("angsuran_menetap_48").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
     document.getElementById("angsuran_menetap_60").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
   }
-
+  
+  // Pakai Session Storage
   console.log(`DP Menetap ${dp}`);
 }

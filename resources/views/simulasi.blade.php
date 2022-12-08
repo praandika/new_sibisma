@@ -28,8 +28,8 @@
       Copyright 2020
       ============================================= -->
 
-    <!-- Print JS -->
-    <link rel="stylesheet" href="{{ asset('printpdfjs/print.min.css') }}">
+    <!-- Print JS
+    <link rel="stylesheet" href="{{ asset('printpdfjs/print.min.css') }}"> -->
 
     <link rel="stylesheet" href="{{ asset('simulasi/main10.css') }}">
 </head>
@@ -292,7 +292,9 @@
                     <center>
                         <h5>Angsuran Bunga Menetap</h5>
                         <br>
+                        <a href="{{ route('printpdf') }}" target="_blank">Print</a>
                     </center>
+
 
                     <div class="container">
                         <div class="row data_tenor d-flex justify-content-center" style="text-align: center;">
@@ -334,6 +336,7 @@
             </div>
         </div>
     </div>
+
 
     <footer>
         <center>
@@ -446,8 +449,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Print JS -->
-    <script src="{{ asset('printpdfjs/print.min.js') }}"></script>
+    <!-- Print JS
+    <script src="{{ asset('printpdfjs/print.min.js') }}"></script> -->
 
     <script type="text/javascript">
         $(document).ready(function () {
