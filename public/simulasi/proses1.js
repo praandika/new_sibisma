@@ -190,7 +190,33 @@ function kredit_menurun(){
     document.getElementById("angsuran_menurun_48").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
   }
 
-  console.log(`DP ${dp}`);
+  // Save Temp Data
+  localStorage.setItem("unitTr",document.getElementById("motor_menurun").value);
+
+  localStorage.setItem("otrTr",otr);
+  localStorage.setItem("dpTr",dp);
+  localStorage.setItem("bungaTr",bunga);
+  localStorage.setItem("adminTr",admin);
+
+  localStorage.setItem("asuransiTr12",asuransi_12);
+  localStorage.setItem("asuransiTr24",asuransi_24);
+  localStorage.setItem("asuransiTr36",asuransi_36);
+  localStorage.setItem("asuransiTr48",asuransi_48);
+
+  localStorage.setItem("sphTr12",sph_12);
+  localStorage.setItem("sphTr24",sph_24);
+  localStorage.setItem("sphTr36",sph_36);
+  localStorage.setItem("sphTr48",sph_48);
+
+  localStorage.setItem("angsuranTr12",angsuran_12);
+  localStorage.setItem("angsuranTr24",angsuran_24);
+  localStorage.setItem("angsuranTr36",angsuran_36);
+  localStorage.setItem("angsuranTr48",angsuran_48);
+
+  localStorage.setItem("rupiahTr12",rupiah_12);
+  localStorage.setItem("rupiahTr24",rupiah_24);
+  localStorage.setItem("rupiahTr36",rupiah_36);
+  localStorage.setItem("rupiahTr48",rupiah_48);
 }
 
 function kredit_menetap(){

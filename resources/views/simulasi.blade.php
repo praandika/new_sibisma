@@ -153,14 +153,15 @@
                                 </div>
 
                                 <!-- <div class="form-group col-md-6">
-                            <label>Bunga (%)</label>
-                            <select class="form-control inputcustom selectcustom">
-                            <option selected>Pilih Bunga</option>
-                            <option value="0.0175">1.75%</option>
-                            <option value="0.024">2.4%</option>
-                            </select>
-                        </div> -->
+                                    <label>Bunga (%)</label>
+                                    <select class="form-control inputcustom selectcustom">
+                                    <option selected>Pilih Bunga</option>
+                                    <option value="0.0175">1.75%</option>
+                                    <option value="0.024">2.4%</option>
+                                    </select>
+                                </div> -->
                             </div>
+                            <input type="text" id="unit_img_menurun" hidden>
                             <br>
                         </form>
                     </div>
@@ -179,6 +180,7 @@
                     <center>
                         <h5>Angsuran Bunga Menurun</h5>
                         <br>
+                        <a href="{{ route('printtrpdf') }}" target="_blank">Print</a>
                     </center>
 
                     <div class="container">
@@ -266,14 +268,15 @@
                                 
 
                                 <!-- <div class="form-group col-md-6">
-                            <label>Bunga (%)</label>
-                            <select class="form-control inputcustom selectcustom">
-                            <option selected>Pilih Bunga</option>
-                            <option value="0.0175">1.75%</option>
-                            <option value="0.024">2.4%</option>
-                            </select>
-                        </div> -->
+                                    <label>Bunga (%)</label>
+                                    <select class="form-control inputcustom selectcustom">
+                                    <option selected>Pilih Bunga</option>
+                                    <option value="0.0175">1.75%</option>
+                                    <option value="0.024">2.4%</option>
+                                    </select>
+                                </div> -->
                             </div>
+                            <input type="text" id="unit_img" hidden>
                             <br>
                         </form>
                     </div>
@@ -292,7 +295,7 @@
                     <center>
                         <h5>Angsuran Bunga Menetap</h5>
                         <br>
-                        <a href="{{ route('printpdf') }}" target="_blank">Print</a>
+                        <a href="{{ route('printtrpdf') }}" target="_blank">Print</a>
                     </center>
 
 
@@ -370,9 +373,11 @@
                         </thead>
                         <tbody>
                             @forelse($data as $o)
-                            <tr class="pilih_menurun" data-motor_menurun="{{ $o->model_name }}"
+                            <tr class="pilih_menurun" 
+                                data-motor_menurun="{{ $o->model_name }}"
                                 data-harga_motor_menurun="Rp {{ number_format($o->price, 0, ',', '.') }}"
-                                data-angka_motor_menurun="{{ $o->price }}">
+                                data-angka_motor_menurun="{{ $o->price }}" 
+                                data-unit_img_menurun="{{ $o->image }}">
                                 <td>{{ $o->model_name }}</td>
                                 <td>Rp {{ number_format($o->price, 0, ',', '.') }}</td>
                                 <td>{{ $o->category }}</td>
@@ -414,7 +419,8 @@
                             @forelse($data as $o)
                             <tr class="pilih" data-motor="{{ $o->model_name }}"
                                 data-harga_motor="Rp {{ number_format($o->price, 0, ',', '.') }}"
-                                data-angka_motor="{{ $o->price }}">
+                                data-angka_motor="{{ $o->price }}"
+                                data-unit_img="{{ $o->image }}">
                                 <td>{{ $o->model_name }}</td>
                                 <td>Rp {{ number_format($o->price, 0, ',', '.') }}</td>
                                 <td>{{ $o->category }}</td>
@@ -472,6 +478,7 @@
             document.getElementById("motor_menurun").value = $(this).attr('data-motor_menurun');
             document.getElementById("harga_motor_menurun").innerHTML = $(this).attr('data-harga_motor_menurun');
             document.getElementById("angka_motor_menurun").value = $(this).attr('data-angka_motor_menurun');
+            document.getElementById("unit_img_menurun").value = $(this).attr('data-unit_img_menurun');
             $('#menu_motor_menurun').modal('hide');
         });
 
@@ -479,6 +486,7 @@
             document.getElementById("motor").value = $(this).attr('data-motor');
             document.getElementById("harga_motor").innerHTML = $(this).attr('data-harga_motor');
             document.getElementById("angka_motor").value = $(this).attr('data-angka_motor');
+            document.getElementById("unit_img").value = $(this).attr('data-unit_img');
             $('#menu_motor').modal('hide');
         });
     </script>
