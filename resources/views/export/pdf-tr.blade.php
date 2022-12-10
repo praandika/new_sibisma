@@ -26,7 +26,9 @@
             padding: 20px;
             border: 1px dashed grey;
         }
-        
+        .info-text{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -35,72 +37,81 @@
     </center>
     
     <div class="row d-flex justify-content-center box-info">
-        <div class="row col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center">
-            <table class="info">
-                <tr>
-                    <th>OTR</th>
-                    <th id="otr"></th>
-                </tr>
-                <tr>
-                    <th>Down Payment</th>
-                    <th id="dp"></th>
-                </tr>
-                <tr>
-                    <th>Bunga</th>
-                    <th id="bunga"></th>
-                </tr>
-                <tr>
-                    <th>Admin</th>
-                    <th id="admin"></th>
-                </tr>
-                <div class="tbangsuran d-sm-none d-md-block">
-                    <tr>
-                        <th colspan="2">Angsuran ke-1 All Tenor</th>
-                    </tr>
-                    <tr>
-                        <th>12 Bulan</th>
-                        <th id="angsuran12"></th>
-                    </tr>
-                    <tr>
-                        <th>24 Bulan</th>
-                        <th id="angsuran24"></th>
-                    </tr>
-                    <tr>
-                        <th>36 Bulan</th>
-                        <th id="angsuran36"></th>
-                    </tr>
-                    <tr>
-                        <th>48 Bulan</th>
-                        <th id="angsuran48"></th>
-                    </tr>
-                </div>
-            </table>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">OTR</label>
+            <p id="otr"></p>
         </div>
-        
-        <div class="row col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center">
-            <table class="info">
-                <tr>
-                    <th colspan="2">Angsuran ke-1 All Tenor</th>
-                </tr>
-                <tr>
-                    <th>12 Bulan</th>
-                    <th id="angsuran12"></th>
-                </tr>
-                <tr>
-                    <th>24 Bulan</th>
-                    <th id="angsuran24"></th>
-                </tr>
-                <tr>
-                    <th>36 Bulan</th>
-                    <th id="angsuran36"></th>
-                </tr>
-                <tr>
-                    <th>48 Bulan</th>
-                    <th id="angsuran48"></th>
-                </tr>
-            </table>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Down Payment</label>
+            <p id="dp"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Bunga</label>
+            <p id="bunga"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Admin</label>
+            <p id="admin"></p>
         </div>
     </div>
+
+    <div class="row d-flex justify-content-center box-info">
+        <h2>Angsuran ke-1 All Tenor</h2>
+    </div>
+
+    <div class="row d-flex justify-content-center box-info">
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">12 Bulan</label>
+            <p id="angsuran12"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">24 Bulan</label>
+            <p id="angsuran24"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">36 Bulan</label>
+            <p id="angsuran36"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">48 Bulan</label>
+            <p id="angsuran48"></p>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center box-info">
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tenor</th>
+                        <th>SPH</th>
+                        <th>Bunga</th>
+                        <th>Pokok</th>
+                        <th>Angsuran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">24 Bulan</label>
+            <p id="angsuran24"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">36 Bulan</label>
+            <p id="angsuran36"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">48 Bulan</label>
+            <p id="angsuran48"></p>
+        </div>
+    </div>
+
     <script type="text/javascript">
         const formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
@@ -119,6 +130,10 @@
         let angsuran24 = localStorage.getItem("rupiahTr24");
         let angsuran36 = localStorage.getItem("rupiahTr36");
         let angsuran48 = localStorage.getItem("rupiahTr48");
+        let ass12 = localStorage.getItem("rateAssTr12");
+        let ass24 = localStorage.getItem("rateAssTr24");
+        let ass36 = localStorage.getItem("rateAssTr36");
+        let ass48 = localStorage.getItem("rateAssTr48");
 
         document.getElementById("otr").innerHTML = otr;
         document.getElementById("dp").innerHTML = dp;
@@ -128,6 +143,31 @@
         document.getElementById("angsuran24").innerHTML = angsuran24;
         document.getElementById("angsuran36").innerHTML = angsuran36;
         document.getElementById("angsuran48").innerHTML = angsuran48;
+
+        // Hitung list bunga menurun
+        // inisiasi 1
+        let sph12 = ot-d+ad+ass12;
+
+        for (let i = 1; i <= 5; i++) {
+            if ([i] == 1) {
+                let bunga12 = sph12*bunga;
+                let pokok12 = sph12/12;
+                let angsuran12 = bunga12+pokok12;
+            } else {
+                let sph12 = sph12 - pokok12;
+                let bunga12 = sph12*bunga;
+                let pokok12 = sph12/12;
+                let angsuran12 = bunga12+pokok12;
+            }
+            
+            sessionStorage.setItem("t12_"[i], [i]);
+            sessionStorage.setItem("s12_"[i], sph12);
+            sessionStorage.setItem("b12_"[i], bunga12);
+            sessionStorage.setItem("p12_"[i], pokok12);
+            sessionStorage.setItem("pa2_"[i], angsuran12);
+        }
+
+        // bunga12 is not defined
     </script>
 </body>
 </html>

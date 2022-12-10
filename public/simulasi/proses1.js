@@ -217,6 +217,11 @@ function kredit_menurun(){
   localStorage.setItem("rupiahTr24",rupiah_24);
   localStorage.setItem("rupiahTr36",rupiah_36);
   localStorage.setItem("rupiahTr48",rupiah_48);
+
+  localStorage.setItem("rateAssTr12",rateAss12);
+  localStorage.setItem("rateAssTr24",rateAss24);
+  localStorage.setItem("rateAssTr36",rateAss36);
+  localStorage.setItem("rateAssTr48",rateAss48);
 }
 
 function kredit_menetap(){
