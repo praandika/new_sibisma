@@ -181,4 +181,8 @@ Route::get('/simulasi-kredit', [DashboardController::class, 'simulasi'])->name('
 Route::get('print-pdf-tr', function () {
     return view('export.pdf-tr');
 })->name('printtrpdf');
+
+Route::get('print-pdf-tp', function () {
+    return view('export.pdf-tp');
+})->name('printtppdf');
 // END PRINT PDF

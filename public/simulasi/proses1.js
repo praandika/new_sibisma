@@ -299,6 +299,18 @@ function kredit_menetap(){
     document.getElementById("angsuran_menetap_60").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
   }
   
-  // Pakai Session Storage
-  console.log(`DP Menetap ${dp}`);
+  // Save Temp Data
+  let rupiah_otr = formatter.format(otr);
+  let rupiah_dp = formatter.format(dp);
+
+  localStorage.setItem("unitTp",document.getElementById("motor").value);
+
+  localStorage.setItem("otrTp",rupiah_otr);
+  localStorage.setItem("dpTp",rupiah_dp);
+
+  localStorage.setItem("rupiahTp12",rupiah_12);
+  localStorage.setItem("rupiahTp24",rupiah_24);
+  localStorage.setItem("rupiahTp36",rupiah_36);
+  localStorage.setItem("rupiahTp48",rupiah_48);
+  localStorage.setItem("rupiahTp60",rupiah_60);
 }

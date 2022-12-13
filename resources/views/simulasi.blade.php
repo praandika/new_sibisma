@@ -10,6 +10,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Favicons -->
     <link href="{{ asset('simulasi/icon-bisma.png') }}" rel="icon">
     <link href="{{ asset('simulasi/icon-bisma.png') }}" rel="apple-touch-icon">
@@ -180,7 +181,8 @@
                     <center>
                         <h5>Angsuran Bunga Menurun</h5>
                         <br>
-                        <a href="{{ route('printtrpdf') }}" target="_blank">Print</a>
+                        <a href="{{ route('printtrpdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
+                        <br><br>
                     </center>
 
                     <div class="container">
@@ -293,9 +295,10 @@
                     <div class="divider"></div>
                     <br>
                     <center>
-                        <h5>Angsuran Bunga Menetap</h5>
+                        <h5>Angsuran Bunga Menurun</h5>
                         <br>
-                        <a href="{{ route('printtrpdf') }}" target="_blank">Print</a>
+                        <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
+                        <br><br>
                     </center>
 
 
