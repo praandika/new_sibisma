@@ -168,6 +168,15 @@
         let ass48 = localStorage.getItem("rateAssTr48")*ot;
         let unit = localStorage.getItem("unitTr");
 
+        sessionStorage.setItem("p12_1", pokok12_rp);
+        sessionStorage.setItem("p24_1", pokok24_rp);
+        sessionStorage.setItem("p36_1", pokok36_rp);
+        sessionStorage.setItem("p48_1", pokok48_rp);
+        document.getElementById("pokok12").innerHTML = sessionStorage.getItem("p12_1");
+        document.getElementById("pokok24").innerHTML = sessionStorage.getItem("p24_1");
+        document.getElementById("pokok36").innerHTML = sessionStorage.getItem("p36_1");
+        document.getElementById("pokok48").innerHTML = sessionStorage.getItem("p48_1");
+
         document.getElementById("otr").innerHTML = otr;
         document.getElementById("dp").innerHTML = dp;
         document.getElementById("bunga").innerHTML = `${bungapersen}%`;
