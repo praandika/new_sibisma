@@ -83,6 +83,36 @@
 
     <div class="row d-flex justify-content-center">
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">OTR</label>
+            <p id="otr"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Down Payment</label>
+            <p id="dp"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Bunga</label>
+            <p id="bunga"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">Admin</label>
+            <p id="admin"></p>
+        </div>
+    </div>
+    
+    <div class="divider"></div>
+    <br>
+
+    <div class="row d-flex justify-content-center">
+        <h2 id="unit"></h2>
+    </div>
+
+    <br>
+    <div class="divider"></div>
+    <br>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">12 Bulan</label>
             <p id="angsuran12" hidden></p>
             <p>Angsuran Pertama</p>
@@ -106,36 +136,6 @@
             <p>Angsuran Pertama</p>
             <p id="pokok48"></p>
         </div>
-    </div>
-
-    <br>
-    <div class="divider"></div>
-    <br>
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">OTR</label>
-            <p id="otr"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">Down Payment</label>
-            <p id="dp"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">Bunga</label>
-            <p id="bunga"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">Admin</label>
-            <p id="admin"></p>
-        </div>
-    </div>
-    
-    <div class="divider"></div>
-    <br>
-
-    <div class="row d-flex justify-content-center">
-        <h2 id="unit"></h2>
     </div>
 
     <br>
