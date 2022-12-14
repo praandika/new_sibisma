@@ -183,6 +183,10 @@
                         <br>
                         <a href="{{ route('printtrpdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
                         <br><br>
+                        <p style="color: orange;">
+                            *perhitungan angsuran adalah estimasi <br>
+                            **harga dan angsuran dapat berubah sewaktu-waktu
+                        </p>
                     </center>
 
                     <div class="container">
@@ -299,6 +303,10 @@
                         <br>
                         <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
                         <br><br>
+                        <p style="color: orange;">
+                            *perhitungan angsuran adalah estimasi <br>
+                            **harga dan angsuran dapat berubah sewaktu-waktu
+                        </p>
                     </center>
 
 
