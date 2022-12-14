@@ -130,6 +130,13 @@
         </table>
     </div>
 
+    <center>
+        <p style="color: orange;">
+            *perhitungan angsuran adalah estimasi <br>
+            **harga dan angsuran dapat berubah sewaktu-waktu
+        </p>
+    </center>
+
     <script type="text/javascript">
         const formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
