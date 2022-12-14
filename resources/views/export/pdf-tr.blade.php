@@ -142,7 +142,7 @@
     </div>
 
     <center>
-        <p style="color: orange;">
+        <p style="color: red;">
             *perhitungan angsuran adalah estimasi <br>
             **harga dan angsuran dapat berubah sewaktu-waktu
         </p>
