@@ -142,6 +142,33 @@
     <div class="divider"></div>
     <br>
 
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">12 Bulan</label>
+            <p id="angsuran12" hidden></p>
+            <p>Asuransi</p>
+            <p id="asuransi12"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">24 Bulan</label>
+            <p id="angsuran24" hidden></p>
+            <p>Asuransi</p>
+            <p id="asuransi24"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">36 Bulan</label>
+            <p id="angsuran36" hidden></p>
+            <p>Asuransi</p>
+            <p id="asuransi36"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">48 Bulan</label>
+            <p id="angsuran48" hidden></p>
+            <p>Asuransi</p>
+            <p id="asuransi48"></p>
+        </div>
+    </div>
+
     <script type="text/javascript">
         const formatter = new Intl.NumberFormat('id-ID', {
             style: 'currency',
@@ -167,6 +194,11 @@
         let ass36 = localStorage.getItem("rateAssTr36")*ot;
         let ass48 = localStorage.getItem("rateAssTr48")*ot;
         let unit = localStorage.getItem("unitTr");
+
+        let asuransi12 = formatter.format(ass12);
+        let asuransi24 = formatter.format(ass24);
+        let asuransi36 = formatter.format(ass36);
+        let asuransi48 = formatter.format(ass48);
 
         let countsph12 = parseFloat(ot)-parseFloat(d)+parseFloat(ad)+parseFloat(ass12);
             console.log(`otr = ${ot} dp = ${d} admin = ${ad} asuransi = ${ass12}`)
@@ -211,7 +243,10 @@
         document.getElementById("angsuran48").innerHTML = angsuran48;
         document.getElementById("unit").innerHTML = unit;
 
-        
+        document.getElementById("asuransi12").innerHTML = asuransi12;
+        document.getElementById("asuransi24").innerHTML = asuransi24;
+        document.getElementById("asuransi36").innerHTML = asuransi36;
+        document.getElementById("asuransi48").innerHTML = asuransi48;
     </script>
 </body>
 </html>
