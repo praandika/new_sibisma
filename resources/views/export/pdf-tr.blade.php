@@ -168,18 +168,26 @@
         let ass48 = localStorage.getItem("rateAssTr48")*ot;
         let unit = localStorage.getItem("unitTr");
 
+        let countsph12 = parseFloat(ot)-parseFloat(d)+parseFloat(ad)+parseFloat(ass12);
+            console.log(`otr = ${ot} dp = ${d} admin = ${ad} asuransi = ${ass12}`)
         let countpokok12 = countsph12/12;
         let pokok12 = countpokok12.toFixed(0);
         let pokok12_rp = formatter.format(pokok12);
 
+        let countsph24 = parseFloat(ot)-parseFloat(d)+parseFloat(ad)+parseFloat(ass24);
+            console.log(`otr = ${ot} dp = ${d} admin = ${ad} asuransi = ${ass24}`)
         let countpokok24 = countsph24/24;
         let pokok24 = countpokok24.toFixed(0);
         let pokok24_rp = formatter.format(pokok24);
 
+        let countsph36 = parseFloat(ot)-parseFloat(d)+parseFloat(ad)+parseFloat(ass36);
+            console.log(`otr = ${ot} dp = ${d} admin = ${ad} asuransi = ${ass36}`)
         let countpokok36 = countsph36/36;
         let pokok36 = countpokok36.toFixed(0);
         let pokok36_rp = formatter.format(pokok36);
 
+        let countsph48 = parseFloat(ot)-parseFloat(d)+parseFloat(ad)+parseFloat(ass48);
+            console.log(`otr = ${ot} dp = ${d} admin = ${ad} asuransi = ${ass48}`)
         let countpokok48 = countsph48/48;
         let pokok48 = countpokok48.toFixed(0);
         let pokok48_rp = formatter.format(pokok48);
