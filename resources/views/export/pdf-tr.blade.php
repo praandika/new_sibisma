@@ -77,6 +77,13 @@
         <img src="{{ asset('simulasi/Logobisma.png') }}" width="200">
     </center>
     
+    <div class="divider"></div>
+    <br>
+
+    <div class="row d-flex justify-content-center">
+        <h2 id="unit"></h2>
+    </div>
+
     <br>
     <div class="divider"></div>
     <br>
@@ -99,12 +106,12 @@
             <p id="admin"></p>
         </div>
     </div>
-    
+
     <div class="divider"></div>
     <br>
 
     <div class="row d-flex justify-content-center">
-        <h2 id="unit"></h2>
+        <h2>Angsuran Pertama</h2>
     </div>
 
     <br>
@@ -115,27 +122,30 @@
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">12 Bulan</label>
             <p id="angsuran12" hidden></p>
-            <p>Angsuran Pertama</p>
             <p id="pokok12"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">24 Bulan</label>
             <p id="angsuran24" hidden></p>
-            <p>Angsuran Pertama</p>
             <p id="pokok24"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">36 Bulan</label>
             <p id="angsuran36" hidden></p>
-            <p>Angsuran Pertama</p>
             <p id="pokok36"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">48 Bulan</label>
             <p id="angsuran48" hidden></p>
-            <p>Angsuran Pertama</p>
             <p id="pokok48"></p>
         </div>
+    </div>
+
+    <div class="divider"></div>
+    <br>
+
+    <div class="row d-flex justify-content-center">
+        <h2>Asuransi</h2>
     </div>
 
     <br>
@@ -146,25 +156,21 @@
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">12 Bulan</label>
             <p id="angsuran12" hidden></p>
-            <p>Asuransi</p>
             <p id="asuransi12"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">24 Bulan</label>
             <p id="angsuran24" hidden></p>
-            <p>Asuransi</p>
             <p id="asuransi24"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">36 Bulan</label>
             <p id="angsuran36" hidden></p>
-            <p>Asuransi</p>
             <p id="asuransi36"></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">48 Bulan</label>
             <p id="angsuran48" hidden></p>
-            <p>Asuransi</p>
             <p id="asuransi48"></p>
         </div>
     </div>
