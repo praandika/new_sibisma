@@ -83,6 +83,37 @@
 
     <div class="row d-flex justify-content-center">
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">12 Bulan</label>
+            <p id="angsuran12" hidden></p>
+            <p>Pokok Angsuran</p>
+            <p id="pokok12"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">24 Bulan</label>
+            <p id="angsuran24" hidden></p>
+            <p>Pokok Angsuran</p>
+            <p id="pokok24"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">36 Bulan</label>
+            <p id="angsuran36" hidden></p>
+            <p>Pokok Angsuran</p>
+            <p id="pokok36"></p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
+            <label for="">48 Bulan</label>
+            <p id="angsuran48" hidden></p>
+            <p>Pokok Angsuran</p>
+            <p id="pokok48"></p>
+        </div>
+    </div>
+
+    <br>
+    <div class="divider"></div>
+    <br>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">OTR</label>
             <p id="otr"></p>
         </div>
@@ -111,32 +142,7 @@
     <div class="divider"></div>
     <br>
 
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">12 Bulan</label>
-            <p id="angsuran12" hidden></p>
-            <p>Pokok Angsuran</p>
-            <p id="pokok12"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">24 Bulan</label>
-            <p id="angsuran24" hidden></p>
-            <p>Pokok Angsuran</p>
-            <p id="pokok24"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">36 Bulan</label>
-            <p id="angsuran36" hidden></p>
-            <p>Pokok Angsuran</p>
-            <p id="pokok36"></p>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 info-text">
-            <label for="">48 Bulan</label>
-            <p id="angsuran48" hidden></p>
-            <p>Pokok Angsuran</p>
-            <p id="pokok48"></p>
-        </div>
-    </div>
+    
 
     <div class="row d-flex justify-content-center">
         <!-- Tenor 12 -->

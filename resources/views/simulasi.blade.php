@@ -295,7 +295,7 @@
                     <div class="divider"></div>
                     <br>
                     <center>
-                        <h5>Angsuran Bunga Menurun</h5>
+                        <h5>Angsuran Bunga Menetap</h5>
                         <br>
                         <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
                         <br><br>
