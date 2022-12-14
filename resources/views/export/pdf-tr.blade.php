@@ -168,6 +168,22 @@
         let ass48 = localStorage.getItem("rateAssTr48")*ot;
         let unit = localStorage.getItem("unitTr");
 
+        let countpokok12 = countsph12/12;
+        let pokok12 = countpokok12.toFixed(0);
+        let pokok12_rp = formatter.format(pokok12);
+
+        let countpokok24 = countsph24/24;
+        let pokok24 = countpokok24.toFixed(0);
+        let pokok24_rp = formatter.format(pokok24);
+
+        let countpokok36 = countsph36/36;
+        let pokok36 = countpokok36.toFixed(0);
+        let pokok36_rp = formatter.format(pokok36);
+
+        let countpokok48 = countsph48/48;
+        let pokok48 = countpokok48.toFixed(0);
+        let pokok48_rp = formatter.format(pokok48);
+
         sessionStorage.setItem("p12_1", pokok12_rp);
         sessionStorage.setItem("p24_1", pokok24_rp);
         sessionStorage.setItem("p36_1", pokok36_rp);
