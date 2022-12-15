@@ -15,6 +15,7 @@ class DashboardController extends Controller
     public function simulasi(){
         $data = Unit::join('colors','colors.id','=','units.color_id')
         ->where('units.year_mc','2022')
+        ->orWhere('units.year_mc','2023')
         ->groupBy('units.model_name')
         ->orderBy('units.model_name', 'asc')
         ->get();
