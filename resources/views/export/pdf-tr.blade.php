@@ -121,23 +121,23 @@
     <div class="row d-flex justify-content-center">
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">12 Bulan</label>
-            <p id="angsuran12" hidden></p>
-            <p id="pokok12"></p>
+            <p id="angsuran12"></p>
+            <p id="pokok12" hidden></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">24 Bulan</label>
-            <p id="angsuran24" hidden></p>
-            <p id="pokok24"></p>
+            <p id="angsuran24"></p>
+            <p id="pokok24" hidden></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">36 Bulan</label>
-            <p id="angsuran36" hidden></p>
-            <p id="pokok36"></p>
+            <p id="angsuran36"></p>
+            <p id="pokok36" hidden></p>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 info-text">
             <label for="">48 Bulan</label>
-            <p id="angsuran48" hidden></p>
-            <p id="pokok48"></p>
+            <p id="angsuran48"></p>
+            <p id="pokok48" hidden></p>
         </div>
     </div>
 
