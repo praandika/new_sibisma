@@ -61,6 +61,8 @@
             @include('component.unit-edit')
         @elseif(Route::is('unit.show'))
             @include('component.unit-show')
+        @elseif(Route::is('unit.add-all'))
+            @include('component.unit-add-all')
         @else
             @include('component.unit-create')
             @include('component.unit-data')

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Color;
+use App\Models\Dealer;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 
 class UnitController extends Controller
@@ -152,5 +155,33 @@ class UnitController extends Controller
         Unit::whereIn('id',$req->pilih)->delete();
         toast('Data unit berhasil dihapus','success');
         return redirect()->back();
+    }
+
+    public function addalltostock(){
+        $data = Dealer::leftJoin('stocks','stocks.dealer_id','=','dealers.id')
+        ->selectRaw('dealers.id as id, dealers.dealer_code as code, dealers.dealer_name as dealer, sum(stocks.qty) as stock')
+        ->where('dealers.dealer_name','!=','Yamaha Indonesia Motor MFG')
+        ->groupBy('dealers.dealer_name')
+        ->get();
+        $tahunUnit = Unit::select('year_mc')->groupBy('year_mc')->get();
+        return view('page', compact('data','tahunUnit'));
+    }
+
+    public function addalltostockStore(Request $req){
+        $data = Unit::where('year_mc',$req->year_mc)
+            ->pluck('id');
+        
+        for ($i=0; $i < count($data); $i++) { 
+            Stock::insert([
+                'unit_id' => $data[$i],
+                'dealer_id' => $req->dealer_id,
+                'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
+                'qty' => 0,
+                'created_at' => Carbon::now('GMT+8'),
+            ]);
+        }
+        toast(count($data).' stock berhasil disimpan','success');
+        return redirect()->back()->with('display', true);
     }
 }

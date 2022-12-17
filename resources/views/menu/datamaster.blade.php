@@ -21,6 +21,11 @@
                     <span class="sub-item">Data Leasing</span>
                 </a>
             </li>
+            <li class="{{ Route::is('unit.add-all') ? 'active' : '' }}">
+                <a href="{{ route('unit.add-all') }}">
+                    <span class="sub-item">Add All Unit to Stock</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

@@ -67,6 +67,8 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/color/deleteall', [Color
 Route::middleware(['auth:sanctum', 'verified'])->resource('unit', UnitController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/unit/delete/{id}', [UnitController::class, 'delete'])->name('unit.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/unit/deleteall', [UnitController::class, 'deleteall'])->name('unit.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/unitaddall', [UnitController::class, 'addalltostock'])->name('unit.add-all');
+Route::middleware(['auth:sanctum', 'verified'])->post('/unitaddall/store', [UnitController::class, 'addalltostockStore'])->name('unit.add-all-unit-store');
 // END UNIT
 
 // LEASING
