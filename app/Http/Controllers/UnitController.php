@@ -168,20 +168,36 @@ class UnitController extends Controller
     }
 
     public function addalltostockStore(Request $req){
+        // Finding Unit ID where not in stock's table
+        $cekStock = Stock::join('units','stocks.unit_id','=','units.id')
+        ->where([
+            ['stocks.dealer_id',$req->dealer_id],
+            ['units.year_mc',$req->year_mc],
+        ])
+        ->pluck('stocks.unit_id');
+
         $data = Unit::where('year_mc',$req->year_mc)
-            ->pluck('id');
+        ->whereNotIn('id',$cekStock)
+        ->pluck('id');
+
+        // dd($data, $cekStock);
         
-        for ($i=0; $i < count($data); $i++) { 
-            Stock::insert([
-                'unit_id' => $data[$i],
-                'dealer_id' => $req->dealer_id,
-                'created_by' => Auth::user()->id,
-                'updated_by' => Auth::user()->id,
-                'qty' => 0,
-                'created_at' => Carbon::now('GMT+8'),
-            ]);
+        if (count($data) <= 0) {
+            toast($req->dealer_name.' sudah ada semua stock '.$req->year_mc.'','warning');
+            return redirect()->back()->with('display', true);
+        } else {
+            for ($i=0; $i < count($data); $i++) { 
+                Stock::insert([
+                    'unit_id' => $data[$i],
+                    'dealer_id' => $req->dealer_id,
+                    'created_by' => Auth::user()->id,
+                    'updated_by' => Auth::user()->id,
+                    'qty' => 0,
+                    'created_at' => Carbon::now('GMT+8'),
+                ]);
+            }
+            toast(count($data).' stock '.$req->year_mc.' berhasil disimpan','success');
+            return redirect()->back()->with('display', true);
         }
-        toast(count($data).' stock berhasil disimpan','success');
-        return redirect()->back()->with('display', true);
     }
 }
