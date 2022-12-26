@@ -181,7 +181,9 @@
                     <center>
                         <h5>Angsuran Bunga Menurun</h5>
                         <br>
-                        <a href="{{ route('printtrpdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
+                        <a href="{{ route('printtrpdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;" id="printButtonMenurun" hidden><i class="fa fa-print"></i> Print</a>
+                        &nbsp;&nbsp;
+                        <a href="#" style="padding: 10px; color: #ffffff; background-color: #00bd4b;  text-decoration: none;" id="inputWhatsappTr" data-toggle="modal" data-target="#inputWhatsappTrModal" hidden><i class="fa fa-whatsapp"></i> Send to Whatsapp</a>
                         <br><br>
                         <p style="color: orange;">
                             *perhitungan angsuran adalah estimasi <br>
@@ -259,7 +261,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-row">
+                            <!-- <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Tenor (bulan)</label>
                                     <select id="tenor" class="form-control inputcustom selectcustom">
@@ -273,15 +275,15 @@
                                 </div>
                                 
 
-                                <!-- <div class="form-group col-md-6">
+                                <div class="form-group col-md-6">
                                     <label>Bunga (%)</label>
                                     <select class="form-control inputcustom selectcustom">
                                     <option selected>Pilih Bunga</option>
                                     <option value="0.0175">1.75%</option>
                                     <option value="0.024">2.4%</option>
                                     </select>
-                                </div> -->
-                            </div>
+                                </div>
+                            </div> -->
                             <input type="text" id="unit_img" hidden>
                             <br>
                         </form>
@@ -301,7 +303,9 @@
                     <center>
                         <h5>Angsuran Bunga Menetap</h5>
                         <br>
-                        <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;"><i class="fa fa-print"></i> Print</a>
+                        <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;" id="printButtonMenetap" hidden><i class="fa fa-print"></i> Print</a>
+                        &nbsp;&nbsp;
+                        <a href="#" style="padding: 10px; color: #ffffff; background-color: #00bd4b;  text-decoration: none;" id="inputWhatsappTp" data-toggle="modal" data-target="#inputWhatsappTpModal" hidden><i class="fa fa-whatsapp"></i> Send to Whatsapp</a>
                         <br><br>
                         <p style="color: orange;">
                             *perhitungan angsuran adalah estimasi <br>
@@ -449,6 +453,44 @@
     </div>
     <!-- END Modal Menetap -->
 
+    <!-- Modal Whatsapp Menurun-->
+    <div class="modal fade modalcustom" id="inputWhatsappTrModal" tabindex="-1" role="dialog" aria-labelledby="inputWhatsappModalTr"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group col-md-12">
+                        <label for="dp" style="color: #3488f7;">Send to:</label>
+                        <input type="number" id="whatsappNumberTr" class="form-control inputcustom" placeholder="cth: 628124657xxxx" style="color: #003c8b;" autofocus>
+                    </div>
+                    <center>
+                        <button style="padding: 8px 15px 8px 15px; color: #00bd4b; background-color: #ffffff;  text-decoration: none; border: 1px solid #00bd4b; border-radius: 2px;" id="btnSendTr" onclick="send_wa_tr();"><i class="fa fa-paper-plane"></i> Send</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal Whatsapp Menurun-->
+
+    <!-- Modal Whatsapp Menetap-->
+    <div class="modal fade modalcustom" id="inputWhatsappTpModal" tabindex="-1" role="dialog" aria-labelledby="inputWhatsappModalTp"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group col-md-12">
+                        <label for="dp" style="color: #3488f7;">Send to:</label>
+                        <input type="number" id="whatsappNumberTp" class="form-control inputcustom" placeholder="cth: 628124657xxxx" style="color: #003c8b;" autofocus>
+                    </div>
+                    <center>
+                        <button style="padding: 8px 15px 8px 15px; color: #00bd4b; background-color: #ffffff;  text-decoration: none; border: 1px solid #00bd4b; border-radius: 2px;" id="btnSendTr" onclick="send_wa_tp();"><i class="fa fa-paper-plane"></i> Send</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Modal Whatsapp Menetap-->
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -522,6 +564,18 @@
                 minimumFractionDigits: 0
             });
         });
+    </script>
+
+    <script>
+        $('#inputWhatsappTrModal').on('shown.bs.modal', function () {
+            $('#whatsappNumberTr').focus();
+        }) 
+    </script>
+
+    <script>
+        $('#inputWhatsappTpModal').on('shown.bs.modal', function () {
+            $('#whatsappNumberTp').focus();
+        }) 
     </script>
 
     <script src="{{ asset('simulasi/proses1.js') }}"></script>

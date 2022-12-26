@@ -222,6 +222,12 @@ function kredit_menurun(){
   localStorage.setItem("rateAssTr24",rateAss24);
   localStorage.setItem("rateAssTr36",rateAss36);
   localStorage.setItem("rateAssTr48",rateAss48);
+
+  // Show Button Print
+  document.getElementById("printButtonMenurun").removeAttribute("hidden");
+
+  // Show Button WA
+  document.getElementById("inputWhatsappTr").removeAttribute("hidden");
 }
 
 function kredit_menetap(){
@@ -313,4 +319,40 @@ function kredit_menetap(){
   localStorage.setItem("rupiahTp36",rupiah_36);
   localStorage.setItem("rupiahTp48",rupiah_48);
   localStorage.setItem("rupiahTp60",rupiah_60);
+
+  // Show Button Print
+  document.getElementById("printButtonMenetap").removeAttribute("hidden");
+
+  // Show Button WA
+  document.getElementById("inputWhatsappTp").removeAttribute("hidden");
+}
+
+function send_wa_tr(){
+  let number = document.getElementById("whatsappNumberTr").value;
+  let unit = localStorage.getItem("unitTr");
+  let getOtr = localStorage.getItem("otrTr")
+  let getDp = localStorage.getItem("dpTr");
+  let otr = formatter.format(getOtr);
+  let dp = formatter.format(getDp);
+  let angsuran12 = localStorage.getItem("rupiahTr12");
+  let angsuran24 = localStorage.getItem("rupiahTr24");
+  let angsuran36 = localStorage.getItem("rupiahTr36");
+  let angsuran48 = localStorage.getItem("rupiahTr48");
+  let bunga = localStorage.getItem("bungaTr");
+  let hitungbunga = bunga*100;
+  let bungap = hitungbunga.toFixed(2);
+  window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menurun*%0D%0A%0D%0ABunga%20${bungap}%%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+}
+
+function send_wa_tp(){
+  let number = document.getElementById("whatsappNumberTp").value;
+  let unit = localStorage.getItem("unitTr");
+  let otr = localStorage.getItem("otrTp");
+  let dp = localStorage.getItem("dpTp");
+  let angsuran12 = localStorage.getItem("rupiahTp12");
+  let angsuran24 = localStorage.getItem("rupiahTp24");
+  let angsuran36 = localStorage.getItem("rupiahTp36");
+  let angsuran48 = localStorage.getItem("rupiahTp48");
+  let angsuran60 = localStorage.getItem("rupiahTp60");
+  window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menetap*%0D%0A%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0AAngsuran%2060%20bln%20*_${angsuran60}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
 }
