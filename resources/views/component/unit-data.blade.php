@@ -104,7 +104,7 @@
                                                 class="fas fa-trash-alt"></i></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="#" class="btnAction"
-                                            data-toggle="tooltip" data-placement="top" title="Delete" @if($o->image == 'noimage.jpg') style="color: grey;" @else style="color: #00cc14;" @endif>
+                                            data-toggle="tooltip" data-placement="top" title="Image" @if($o->image == 'noimage.jpg') style="color: grey;" @else style="color: #00cc14;" @endif>
                                             <i class="fa fa-image"></i></a>
                                     </div>
 
