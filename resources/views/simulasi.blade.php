@@ -462,6 +462,7 @@
                     <div class="form-group col-md-12">
                         <label for="dp" style="color: #3488f7;">Send to:</label>
                         <input type="number" id="whatsappNumberTr" class="form-control inputcustom" placeholder="cth: 628124657xxxx" style="color: #003c8b;" autofocus>
+                        <span style="color: #003c8b; font-size: 11px;">format : only number</span>
                     </div>
                     <center>
                         <button style="padding: 8px 15px 8px 15px; color: #00bd4b; background-color: #ffffff;  text-decoration: none; border: 1px solid #00bd4b; border-radius: 2px;" id="btnSendTr" onclick="send_wa_tr();"><i class="fa fa-paper-plane"></i> Send</button>
@@ -481,6 +482,7 @@
                     <div class="form-group col-md-12">
                         <label for="dp" style="color: #3488f7;">Send to:</label>
                         <input type="number" id="whatsappNumberTp" class="form-control inputcustom" placeholder="cth: 628124657xxxx" style="color: #003c8b;" autofocus>
+                        <span style="color: #003c8b; font-size: 11px;">format : only number</span>
                     </div>
                     <center>
                         <button style="padding: 8px 15px 8px 15px; color: #00bd4b; background-color: #ffffff;  text-decoration: none; border: 1px solid #00bd4b; border-radius: 2px;" id="btnSendTr" onclick="send_wa_tp();"><i class="fa fa-paper-plane"></i> Send</button>

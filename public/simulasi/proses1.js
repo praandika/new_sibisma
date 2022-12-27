@@ -341,7 +341,15 @@ function send_wa_tr(){
   let bunga = localStorage.getItem("bungaTr");
   let hitungbunga = bunga*100;
   let bungap = hitungbunga.toFixed(2);
-  window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menurun*%0D%0A%0D%0ABunga%20${bungap}%%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+
+  if (String(number)[0] == '0') {
+    let string = number.toString();
+    let rep = string.replace(string[0],'62');
+    let correctNumber = Number(rep);
+    window.open(`https://api.whatsapp.com/send/?phone=${correctNumber}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menurun*%0D%0A%0D%0ABunga%20${bungap}%%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+  }else{
+    window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menurun*%0D%0A%0D%0ABunga%20${bungap}%%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+  }
 }
 
 function send_wa_tp(){
@@ -354,5 +362,13 @@ function send_wa_tp(){
   let angsuran36 = localStorage.getItem("rupiahTp36");
   let angsuran48 = localStorage.getItem("rupiahTp48");
   let angsuran60 = localStorage.getItem("rupiahTp60");
-  window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menetap*%0D%0A%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0AAngsuran%2060%20bln%20*_${angsuran60}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+
+  if ((String(number)[0] == '0')) {
+    let string = number.toString();
+    let rep = string.replace(string[0],'62');
+    let correctNumber = Number(rep);
+    window.open(`https://api.whatsapp.com/send/?phone=${correctNumber}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menetap*%0D%0A%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0AAngsuran%2060%20bln%20*_${angsuran60}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+  }else{
+    window.open(`https://api.whatsapp.com/send/?phone=${number}&text=Salam%20Semakin%20Didepan%0D%0A%0D%0A*Simulasi%20Kredit%20Bunga%20Menetap*%0D%0A%0D%0A*${unit}*%0D%0AHarga%20OTR%20*_${otr}_*%0D%0ADP%20*_${dp}_*%0D%0AAngsuran%2012%20bln%20*_${angsuran12}_*%0D%0AAngsuran%2024%20bln%20*_${angsuran24}_*%0D%0AAngsuran%2036%20bln%20*_${angsuran36}_*%0D%0AAngsuran%2048%20bln%20*_${angsuran48}_*%0D%0AAngsuran%2060%20bln%20*_${angsuran60}_*%0D%0A%0D%0ATerimakasih%0D%0A%0D%0A*Yamaha%20Belinya%20Pasti%20di%20Bisma*`)
+  }
 }
