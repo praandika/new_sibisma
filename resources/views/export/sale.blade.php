@@ -30,7 +30,7 @@
             <td>{{ $o->customer_name }}</td>
             <td>{{ $o->phone }}</td>
             <td>{{ $o->address }}</td>
-            <td>{{ $o->leasing->leasing_name }}</td>
+            <td>{{ $o->leasing->leasing_code }}</td>
             <td>{{ $o->sale_qty }}</td>
         </tr>
         @empty
