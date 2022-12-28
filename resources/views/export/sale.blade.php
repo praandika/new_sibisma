@@ -12,6 +12,7 @@
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Customer Name</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Phone</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Address</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Payment Method</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Qty</th>
         </tr>
     </thead>
@@ -29,11 +30,12 @@
             <td>{{ $o->customer_name }}</td>
             <td>{{ $o->phone }}</td>
             <td>{{ $o->address }}</td>
+            <td>{{ $o->leasing->leasing_name }}</td>
             <td>{{ $o->sale_qty }}</td>
         </tr>
         @empty
         <tr>
-            <td colspan="12" style="text-align: center;">No data available</td>
+            <td colspan="13" style="text-align: center;">No data available</td>
         </tr>
         @endforelse
     </tbody>
