@@ -90,18 +90,22 @@ class OpnameController extends Controller
             $dealerId = Stock::where('stocks.id', $req->stock_id)
             ->sum('dealer_id');
             $his = StockHistory::where('dealer_code', $dealerCode)->orderBy('history_date','desc')->first();
+            $countHis = StockHistory::where('dealer_code', $dealerCode)->orderBy('history_date','desc')->count();
             
             $lastStock = Stock::where('dealer_id', $dealerId)->sum('qty');
             // dd($dealerCode, $dealerId, $his);
         }else{
             $his = StockHistory::where('dealer_code', $dc)->orderBy('history_date','desc')->first();
+            $countHis = StockHistory::where('dealer_code', $dc)->orderBy('history_date','desc')->count();
             $lastStock = Stock::where('dealer_id', $did)->sum('qty');
             // dd($dc);
         }
         
-        $his->last_stock = $lastStock;
-        $his->opname = 'yes';
-        $his->save();
+        if ($countHis > 0) {
+            $his->last_stock = $lastStock;
+            $his->opname = 'yes';
+            $his->save();
+        }
         //END Update Stock History
 
         // Write log
@@ -168,7 +172,8 @@ class OpnameController extends Controller
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = Opname::orderBy('id','desc')->get();
+                $data = Opname::join('stocks','opnames.stock_id','stocks.id')
+                ->orderBy('opnames.id','desc')->get();
             }else{
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
@@ -177,7 +182,8 @@ class OpnameController extends Controller
             
         } else {
             if ($dc == 'group') {
-                $data = Opname::whereBetween('opname_date',[$req->start, $req->end])->orderBy('id','desc')->get();
+                $data = Opname::join('stocks','opnames.stock_id','stocks.id')
+                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.id','desc')->get();
             }else{
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
