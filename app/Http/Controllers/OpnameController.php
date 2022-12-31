@@ -173,21 +173,21 @@ class OpnameController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
-                ->orderBy('opnames.id','desc')->get();
+                ->orderBy('opnames.opname_date','desc')->limit(50)->get();
             }else{
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
-                ->orderBy('opnames.id','desc')->get();
+                ->orderBy('opnames.opname_date','desc')->limit(50)->get();
             }
             
         } else {
             if ($dc == 'group') {
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
-                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.id','desc')->get();
+                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.opname_date','desc')->get();
             }else{
                 $data = Opname::join('stocks','opnames.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
-                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.id','desc')->get();
+                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.opname_date','desc')->get();
             }
         }
         return view('page', compact('data','start','end'));
