@@ -25,13 +25,8 @@
     }
 </style>
 @endpush
-@if(Auth::user()->access == 'master')
 <span class="widget-stock" id="widgetStock" data-toggle="modal" data-target=".modalWidget"><p style="font-size: 10px; cursor:pointer;">Stocks <br> <strong style="font-size: 22px;">{{ $stock }}</strong></p></span>
-@else
-<span class="widget-stock"><p style="font-size: 10px;">Stocks <br> <strong style="font-size: 22px;">{{ $stock }}</strong></p></span>
-@endif
 
-@if(Auth::user()->access == 'master')
 <!-- Modal -->
 <div class="modal fade modalWidget" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -87,4 +82,3 @@
 </div>
 
 <!-- END Modal -->
-@endif

@@ -21,6 +21,9 @@ class WidgetStockQty extends Component
             ->groupBy('stocks.dealer_id')->orderBy('stock','desc')->get();
         } else {
             $stock = Stock::where('dealer_id',$did)->sum('qty');
+            $data = Stock::join('dealers','stocks.dealer_id','=','dealers.id')
+            ->selectRaw('SUM(stocks.qty) as stock, dealers.dealer_code, dealers.dealer_name')
+            ->groupBy('stocks.dealer_id')->orderBy('stock','desc')->get();
         }
         
         return view('livewire.widget-stock-qty', compact('stock','data'));
