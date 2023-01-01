@@ -18,7 +18,7 @@ class WidgetStockQty extends Component
             $stock = Stock::sum('qty');
             $data = Stock::join('dealers','stocks.dealer_id','=','dealers.id')
             ->selectRaw('SUM(stocks.qty) as stock, dealers.dealer_code, dealers.dealer_name')
-            ->groupBy('stocks.dealer_id')->orderBy('stocks.qty','desc')->get();
+            ->groupBy('stocks.dealer_id')->orderBy('stock','desc')->get();
         } else {
             $stock = Stock::where('dealer_id',$did)->sum('qty');
         }
