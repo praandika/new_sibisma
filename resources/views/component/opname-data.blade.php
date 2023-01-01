@@ -38,6 +38,9 @@
                             <th>Qty</th>
                             <th>Opname</th>
                             <th>Difference</th>
+                            @if(Auth::user()->access == 'master')
+                            <th>Dealer</th>
+                            @endif
                             <th>Updated By</th>
                         </tr>
                     </thead>
@@ -50,6 +53,9 @@
                             <th>Qty</th>
                             <th>Opname</th>
                             <th>Difference</th>
+                            @if(Auth::user()->access == 'master')
+                            <th>Dealer</th>
+                            @endif
                             <th>Updated By</th>
                         </tr>
                     </tfoot>
@@ -66,11 +72,18 @@
                             <td style="background-color: #fcba0350;">{{ $o->stock_system }}</td>
                             <td style="background-color: #03fc1350;">{{ $o->stock_opname }}</td>
                             <td style="background-color: #fc037f50;">{{ $o->difference }}</td>
+                            @if(Auth::user()->access == 'master')
+                            <td>{{ $o->dealer_code }}</td>
+                            @endif
                             <td>{{ $o->updatedBy->first_name }}</td>
                         </tr>
                         @empty
                         <tr>
+                            @if(Auth::user()->access == 'master')
+                            <td colspan="9" style="text-align: center;">No data available</td>
+                            @else
                             <td colspan="8" style="text-align: center;">No data available</td>
+                            @endif
                         </tr>
                         @endforelse
                     </tbody>
