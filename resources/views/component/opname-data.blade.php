@@ -73,7 +73,7 @@
                             <td style="background-color: #03fc1350;">{{ $o->stock_opname }}</td>
                             <td style="background-color: #fc037f50;">{{ $o->difference }}</td>
                             @if(Auth::user()->access == 'master')
-                            <td>{{ $o->dealer_code }}</td>
+                            <td>{{ $o->stock->dealer->dealer_code }}</td>
                             @endif
                             <td>{{ $o->updatedBy->first_name }}</td>
                         </tr>
