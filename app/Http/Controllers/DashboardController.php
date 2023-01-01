@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unit;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -13,9 +14,11 @@ class DashboardController extends Controller
     }
 
     public function simulasi(){
+        $year = Carbon::now()->format('Y');
+        $lastYear = $year - 1;
         $data = Unit::join('colors','colors.id','=','units.color_id')
-        ->where('units.year_mc','2022')
-        ->orWhere('units.year_mc','2023')
+        ->where('units.year_mc',$lastYear)
+        ->orWhere('units.year_mc',$year)
         ->groupBy('units.model_name')
         ->orderBy('units.model_name', 'asc')
         ->get();

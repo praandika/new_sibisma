@@ -14,7 +14,7 @@ use App\Models\Entry;
 use App\Models\StockHistory;
 use App\Models\User;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PsiChart extends BaseChart
 {
