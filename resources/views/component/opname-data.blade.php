@@ -28,7 +28,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="multi-filter-select" class="display table table-striped table-hover" width="100%">
+                <table id="basic-datatables" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Date</th>
