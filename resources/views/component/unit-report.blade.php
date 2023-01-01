@@ -42,7 +42,7 @@
             <table>
                 @foreach($sentral as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -76,7 +76,7 @@
             <table>
                 @foreach($cokro as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -110,7 +110,7 @@
             <table>
                 @foreach($udbisma as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -144,7 +144,7 @@
             <table>
                 @foreach($tts as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -178,7 +178,7 @@
             <table>
                 @foreach($imbo as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -212,7 +212,7 @@
             <table>
                 @foreach($mandiri as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -246,7 +246,7 @@
             <table>
                 @foreach($supratman as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -280,7 +280,7 @@
             <table>
                 @foreach($sunset as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -314,7 +314,7 @@
             <table>
                 @foreach($dalung as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -348,7 +348,7 @@
             <table>
                 @foreach($fss as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
@@ -382,7 +382,7 @@
             <table>
                 @foreach($group as $o)
                     <tr>
-                        <td><span style="width: 5px; height: 15px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
+                        <td><span style="width: 5px; height: 10px; display: inline-block; background-color: <?php echo $o->unit->color->color_code ?>;"></span> {{ $o->qty }} | {{ $o->unit->model_name }} | {{ $o->unit->color->color_name }} | {{ $o->unit->year_mc }}</td>
                     </tr>
                 @endforeach
             </table>
