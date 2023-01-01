@@ -17,8 +17,7 @@ class DashboardController extends Controller
         $year = Carbon::now()->format('Y');
         $lastYear = $year - 1;
         $data = Unit::join('colors','colors.id','=','units.color_id')
-        ->where('units.year_mc',$lastYear)
-        ->orWhere('units.year_mc',$year)
+        ->where('units.year_mc',$year)
         ->groupBy('units.model_name')
         ->orderBy('units.model_name', 'asc')
         ->get();
