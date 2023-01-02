@@ -463,6 +463,7 @@ class ReportController extends Controller
             // Get lastStock
             $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
             ->orderBy('history_date','desc')->count();
+
             if ($cekStock > 0) {
                 $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
                 ->orderBy('history_date','desc')->pluck('last_stock');
@@ -470,6 +471,7 @@ class ReportController extends Controller
             } else {
                 $lastStock = 0;
             }
+            // dd($req->date, $cekStock, $lastStock);
 
             if ($cek > 0) {
                 alert()->warning('Warning','Report date already recorded!');
@@ -480,7 +482,7 @@ class ReportController extends Controller
                 $data->faktur = $req->faktur;
                 $data->service = $req->service;
                 $data->id_key = Carbon::now('GMT+8')->format('H').'sh'.$dc.Carbon::now('GMT+8')->format('Y').Carbon::now('GMT+8')->format('i').Carbon::now('GMT+8')->format('m').'b'.Carbon::now('GMT+8')->format('d').Carbon::now('GMT+8')->format('s');
-                $data->dealer_code = $dc;
+                $data->dealer_code = $req->dealer_code;
                 $data->first_stock = $lastStock;
                 $data->in_qty = 0;
                 $data->out_qty = 0;
