@@ -30,7 +30,7 @@
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-                <h4 class="card-title">Search Report Data</h4>
+                <h4 class="card-title">Search Report Data {{ $rid }}</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">

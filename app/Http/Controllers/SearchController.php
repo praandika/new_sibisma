@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Unit;
+use App\Models\StockHistory;
 use Symfony\Component\Console\Input\Input;
 
 class SearchController extends Controller
@@ -38,6 +39,6 @@ class SearchController extends Controller
             $data = StockHistory::where('id_key',$rid)
             ->orderBy('id','desc')->get();
         }
-        return view('haha', compact('data'));
+        return view('page', compact('data','rid'));
     }
 }

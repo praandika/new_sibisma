@@ -129,7 +129,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/report/{dealer}/{date}', 
 // END
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start?}/{end?}', [ReportController::class, 'reportPrint'])->name('report.print');
-Route::middleware(['auth:sanctum', 'verified'])->get('/report/search/{reportid?}', [SearchController::class, 'reportSearch'])->name('report.search-id');
+Route::middleware(['auth:sanctum', 'verified'])->get('/reportsearch/{reportid?}', [SearchController::class, 'reportSearch'])->name('report.search-id');
 // END REPORT
 
 // STOCK HISTORY
