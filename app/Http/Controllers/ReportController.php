@@ -297,7 +297,7 @@ class ReportController extends Controller
         } else {
             // If stock history has no data
             alert()->warning('Pemberitahuan','Belum ada riwayat stok tercatat');
-            return redirect()->back();
+            return redirect()->route('report.stock-history');
         }
         // END Check
     }
