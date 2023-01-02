@@ -377,7 +377,7 @@ class ReportController extends Controller
         }
     }
 
-    public function reportSearch(Request $req){
+    public function searchId(Request $req){
         $rid = $req->rid;
         if ($rid == null) {
             $data = StockHistory::orderBy('id','desc')->limit(20)->get();

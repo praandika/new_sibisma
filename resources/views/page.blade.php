@@ -259,7 +259,10 @@
             "ordering": false
         });
 
-        $('#basic-table-position').DataTable({});
+        $('#basic-table-position').DataTable({
+            "pageLength": 20,
+            "ordering": false
+        });
 
         $('#multi-filter-select').DataTable({
             "pageLength": 20,

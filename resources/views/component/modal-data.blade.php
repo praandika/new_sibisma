@@ -13,7 +13,7 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table id="tb-basic-datatables" class="display table table-striped table-hover" width="100%">
+                    <table id="tb-basic-table-position" class="display table table-striped table-hover" width="100%">
                         <!-- IF -->
                         @if(Route::is('stock.*'))
                         <thead>
@@ -299,12 +299,10 @@
 @endif
 
 <script>
-    $(document).ready(function () {
-        $('#tb-basic-datatables').DataTable({
+        $('#tb-basic-table-position').DataTable({
             "pageLength": 20,
             "ordering": false
         });
-    });
 
 </script>
 @endpush

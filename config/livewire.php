@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => "http://test.yamahabismagroup.com/test/public",
+    'asset_url' => "http://sibisma.yamahabismagroup.com/public",
 
     /*
     |--------------------------------------------------------------------------

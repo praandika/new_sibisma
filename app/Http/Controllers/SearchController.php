@@ -29,4 +29,15 @@ class SearchController extends Controller
         
         return view('component.image', compact('data'));
     }
+
+    public function reportSearch(Request $req){
+        $rid = $req->rid;
+        if ($rid == null) {
+            $data = StockHistory::orderBy('id','desc')->limit(20)->get();
+        } else {
+            $data = StockHistory::where('id_key',$rid)
+            ->orderBy('id','desc')->get();
+        }
+        return view('haha', compact('data'));
+    }
 }
