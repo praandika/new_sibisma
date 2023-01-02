@@ -494,7 +494,7 @@ class ReportController extends Controller
                 $data->save();
 
                 toast('Adjust stok berhasil disimpan','success');
-                return redirect()->back();
+                return redirect()->route('report.send-report');
             }
         }
         
