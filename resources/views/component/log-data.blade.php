@@ -70,7 +70,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $o->activity }}</td>
-                                <td>{{ $o->created_at }}</td>
+                                <td>{{ $o->created_at->timezone('Asia/Makassar')->toDateTimeString() }}</td>
                                 </td>
                             </tr>
                             @empty
