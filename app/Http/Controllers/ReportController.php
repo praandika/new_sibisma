@@ -93,200 +93,213 @@ class ReportController extends Controller
         ->where('dealer_code',$dc)
         ->first();
 
-        if ($fns == null) {
-            $fns = StockHistory::where('dealer_code',$dc)
-            ->orderBy('history_date','desc')
-            ->first();
+        $cek = StockHistory::where('dealer_code',$dc)
+        ->orderBy('history_date','desc')
+        ->count();
 
-            $faktur = StockHistory::where('dealer_code',$dc)
-            ->orderBy('history_date', 'desc')
-            ->pluck('faktur');
-
-            $service = StockHistory::where('dealer_code',$dc)
-            ->orderBy('history_date', 'desc')
-            ->pluck('service');
-
-            $faktur = $faktur[0];
-            $service = $service[0];
-        }else{
-            $faktur = StockHistory::where('history_date',$today)
-            ->where('dealer_code',$dc)
-            ->orderBy('history_date', 'desc')
-            ->sum('faktur');
-
-            $service = StockHistory::where('history_date',$today)
-            ->where('dealer_code',$dc)
-            ->orderBy('history_date', 'desc')
-            ->sum('service');
-        }
-        
-
-        if ($date == null) {
-                // Stock Report
-                $firstStock = StockHistory::where('history_date',$today)
-                ->where('dealer_code',$dc)->sum('first_stock');
-                
-                $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$today)
-                ->where('dealer_code','YIMM')
-                ->where('stocks.dealer_id',$did)->sum('in_qty');
-
-                $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$today)
-                ->where('dealer_code','!=','YIMM')
-                ->where('stocks.dealer_id',$did)->sum('in_qty');
-                
-                $out = Out::join('stocks','outs.stock_id','stocks.id')
-                ->where('out_date',$today)
-                ->where('stocks.dealer_id',$did)->sum('out_qty');
-                
-                $sale = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->where('sale_date',$today)
-                ->where('stocks.dealer_id',$did)->sum('sale_qty');
-                
-                $lastStock = StockHistory::where('history_date',$today)
-                ->where('dealer_code',$dc)->sum('last_stock');
-                
-                $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$today)
-                ->where('dealer_code','YIMM')
-                ->where('stocks.dealer_id',$did)->get();
-                
-                $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$today)
-                ->where('dealer_code','!=','YIMM')
-                ->where('stocks.dealer_id',$did)->get();
-                
-                $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
-                ->join('stocks','outs.stock_id','stocks.id')
-                ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
-                ->where('out_date',$today)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('dealers.id','stock_id')->get();
-
-                $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
-                ->join('stocks','sales.stock_id','stocks.id')
-                ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
-                ->where('sale_date',$today)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('stock_id','leasing_id')->get();
-
-                $dataFaktur = StockHistory::where('history_date',$today)
+        // Check if stock history is totally empty
+        // if stock history contains some data
+        if ($cek > 0) {
+            // Do this action
+            if ($fns == null) {
+                $fns = StockHistory::where('dealer_code',$dc)
+                ->orderBy('history_date','desc')
+                ->first();
+    
+                $faktur = StockHistory::where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->pluck('faktur');
+    
+                $service = StockHistory::where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->pluck('service');
+    
+                $faktur = $faktur[0];
+                $service = $service[0];
+            }else{
+                $faktur = StockHistory::where('history_date',$today)
                 ->where('dealer_code',$dc)
                 ->orderBy('history_date', 'desc')
                 ->sum('faktur');
-
-                $dataService = StockHistory::where('history_date',$today)
+    
+                $service = StockHistory::where('history_date',$today)
                 ->where('dealer_code',$dc)
                 ->orderBy('history_date', 'desc')
                 ->sum('service');
+            }
+            
+    
+            if ($date == null) {
+                    // Stock Report
+                    $firstStock = StockHistory::where('history_date',$today)
+                    ->where('dealer_code',$dc)->sum('first_stock');
+                    
+                    $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$today)
+                    ->where('dealer_code','YIMM')
+                    ->where('stocks.dealer_id',$did)->sum('in_qty');
+    
+                    $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$today)
+                    ->where('dealer_code','!=','YIMM')
+                    ->where('stocks.dealer_id',$did)->sum('in_qty');
+                    
+                    $out = Out::join('stocks','outs.stock_id','stocks.id')
+                    ->where('out_date',$today)
+                    ->where('stocks.dealer_id',$did)->sum('out_qty');
+                    
+                    $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->where('sale_date',$today)
+                    ->where('stocks.dealer_id',$did)->sum('sale_qty');
+                    
+                    $lastStock = StockHistory::where('history_date',$today)
+                    ->where('dealer_code',$dc)->sum('last_stock');
+                    
+                    $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$today)
+                    ->where('dealer_code','YIMM')
+                    ->where('stocks.dealer_id',$did)->get();
+                    
+                    $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$today)
+                    ->where('dealer_code','!=','YIMM')
+                    ->where('stocks.dealer_id',$did)->get();
+                    
+                    $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
+                    ->join('stocks','outs.stock_id','stocks.id')
+                    ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
+                    ->where('out_date',$today)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('dealers.id','stock_id')->get();
+    
+                    $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+                    ->join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+                    ->where('sale_date',$today)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('stock_id','leasing_id')->get();
+    
+                    $dataFaktur = StockHistory::where('history_date',$today)
+                    ->where('dealer_code',$dc)
+                    ->orderBy('history_date', 'desc')
+                    ->sum('faktur');
+    
+                    $dataService = StockHistory::where('history_date',$today)
+                    ->where('dealer_code',$dc)
+                    ->orderBy('history_date', 'desc')
+                    ->sum('service');
+                    
+                    $isIdKey = StockHistory::where('history_date',$today)
+                        ->where('dealer_code',$dc)->count('id_key');
+                    if ($isIdKey > 0) {
+                        $idKey = StockHistory::where('history_date',$today)
+                        ->where('dealer_code',$dc)->pluck('id_key');
+                        $reportId = $idKey[0];
+                    } else {
+                        $reportId = null;
+                    }
+    
+                    $stockOpname = Opname::join('stocks','opnames.stock_id','stocks.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->where('opname_date',$today)->sum('stock_opname');
+    
+                    $dateOpname = $today;
+    
+                    $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+                    $dealerName = $dealerName[0];
                 
-                $isIdKey = StockHistory::where('history_date',$today)
+            }else { //if contain date
+                
+                    // Stock Report
+                    $firstStock = StockHistory::where('history_date',$date)
+                    ->where('dealer_code',$dc)->sum('first_stock');
+                    $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$date)
+                    ->where('dealer_code','YIMM')
+                    ->where('stocks.dealer_id',$did)->sum('in_qty');
+                    $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$date)
+                    ->where('dealer_code','!=','YIMM')
+                    ->where('stocks.dealer_id',$did)->sum('in_qty');
+                    $out = Out::join('stocks','outs.stock_id','stocks.id')
+                    ->where('out_date',$date)
+                    ->where('stocks.dealer_id',$did)->sum('out_qty');
+                    $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->where('sale_date',$date)
+                    ->where('stocks.dealer_id',$did)->sum('sale_qty');
+                    $lastStock = StockHistory::where('history_date',$date)
+                    ->where('dealer_code',$dc)->sum('last_stock');
+    
+                    $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$date)
+                    ->where('dealer_code','YIMM')
+                    ->where('stocks.dealer_id',$did)->get();
+                    $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+                    ->join('stocks','entries.stock_id','stocks.id')
+                    ->where('entry_date',$date)
+                    ->where('dealer_code','!=','YIMM')
+                    ->where('stocks.dealer_id',$did)->get();
+                    $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
+                    ->join('stocks','outs.stock_id','stocks.id')
+                    ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
+                    ->where('out_date',$date)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('dealers.id','stock_id')->get();
+    
+                    $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+                    ->join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+                    ->where('sale_date',$date)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('stock_id','leasing_id')->get();
+    
+                    $dataFaktur = StockHistory::where('history_date',$date)
+                    ->where('dealer_code',$dc)
+                    ->orderBy('history_date', 'desc')
+                    ->sum('faktur');
+    
+                    $dataService = StockHistory::where('history_date',$date)
+                    ->where('dealer_code',$dc)
+                    ->orderBy('history_date', 'desc')
+                    ->sum('service');
+    
+                    $isIdKey = StockHistory::where('history_date',$date)
                     ->where('dealer_code',$dc)->count('id_key');
-                if ($isIdKey > 0) {
-                    $idKey = StockHistory::where('history_date',$today)
-                    ->where('dealer_code',$dc)->pluck('id_key');
-                    $reportId = $idKey[0];
-                } else {
-                    $reportId = null;
-                }
-
-                $stockOpname = Opname::join('stocks','opnames.stock_id','stocks.id')
-                ->where('stocks.dealer_id',$did)
-                ->where('opname_date',$today)->sum('stock_opname');
-
-                $dateOpname = $today;
-
-                $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
-                $dealerName = $dealerName[0];
+                    if ($isIdKey > 0) {
+                        $idKey = StockHistory::where('history_date',$date)
+                        ->where('dealer_code',$dc)->pluck('id_key');
+                        $reportId = $idKey[0];
+                    } else {
+                        $reportId = null;
+                    }
+    
+                    $stockOpname = Opname::join('stocks','opnames.stock_id','stocks.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->where('opname_date',$date)->sum('stock_opname');
+    
+                    $dateOpname = $date;
+    
+                    $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+                    $dealerName = $dealerName[0];
+            }
             
-        }else { //if contain date
-            
-                // Stock Report
-                $firstStock = StockHistory::where('history_date',$date)
-                ->where('dealer_code',$dc)->sum('first_stock');
-                $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$date)
-                ->where('dealer_code','YIMM')
-                ->where('stocks.dealer_id',$did)->sum('in_qty');
-                $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$date)
-                ->where('dealer_code','!=','YIMM')
-                ->where('stocks.dealer_id',$did)->sum('in_qty');
-                $out = Out::join('stocks','outs.stock_id','stocks.id')
-                ->where('out_date',$date)
-                ->where('stocks.dealer_id',$did)->sum('out_qty');
-                $sale = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->where('sale_date',$date)
-                ->where('stocks.dealer_id',$did)->sum('sale_qty');
-                $lastStock = StockHistory::where('history_date',$date)
-                ->where('dealer_code',$dc)->sum('last_stock');
-
-                $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$date)
-                ->where('dealer_code','YIMM')
-                ->where('stocks.dealer_id',$did)->get();
-                $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
-                ->join('stocks','entries.stock_id','stocks.id')
-                ->where('entry_date',$date)
-                ->where('dealer_code','!=','YIMM')
-                ->where('stocks.dealer_id',$did)->get();
-                $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
-                ->join('stocks','outs.stock_id','stocks.id')
-                ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
-                ->where('out_date',$date)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('dealers.id','stock_id')->get();
-
-                $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
-                ->join('stocks','sales.stock_id','stocks.id')
-                ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
-                ->where('sale_date',$date)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('stock_id','leasing_id')->get();
-
-                $dataFaktur = StockHistory::where('history_date',$date)
-                ->where('dealer_code',$dc)
-                ->orderBy('history_date', 'desc')
-                ->sum('faktur');
-
-                $dataService = StockHistory::where('history_date',$date)
-                ->where('dealer_code',$dc)
-                ->orderBy('history_date', 'desc')
-                ->sum('service');
-
-                $isIdKey = StockHistory::where('history_date',$date)
-                ->where('dealer_code',$dc)->count('id_key');
-                if ($isIdKey > 0) {
-                    $idKey = StockHistory::where('history_date',$date)
-                    ->where('dealer_code',$dc)->pluck('id_key');
-                    $reportId = $idKey[0];
-                } else {
-                    $reportId = null;
-                }
-
-                $stockOpname = Opname::join('stocks','opnames.stock_id','stocks.id')
-                ->where('stocks.dealer_id',$did)
-                ->where('opname_date',$date)->sum('stock_opname');
-
-                $dateOpname = $date;
-
-                $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
-                $dealerName = $dealerName[0];
+            // Data Report History
+                $data = StockHistory::where('dealer_code',$dc)->orderBy('history_date','desc')->limit(7)->get();
+    
+                return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','faktur','service','fns','dataFaktur','dataService'));
+        } else {
+            // If stock history has no data
+            alert()->warning('Pemberitahuan','Belum ada riwayat stok tercatat');
+            return redirect()->back();
         }
-        
-        // Data Report History
-            $data = StockHistory::where('dealer_code',$dc)->orderBy('history_date','desc')->limit(7)->get();
-
-            return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','faktur','service','fns','dataFaktur','dataService'));
-        
+        // END Check
     }
 
     public function sendReportGroup($dealer, $date){
