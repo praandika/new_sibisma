@@ -429,7 +429,11 @@ class ReportController extends Controller
                 ->orderBy('history_date','desc')->pluck('last_stock');
                 $lastStock = $lastStock[0];
             } else {
-                $lastStock = 0;
+                $cekQty = Stock::join('dealers','stocks.dealer_id','=','dealers.id')
+                ->selectRaw('SUM(stocks.qty) as stock')
+                ->where('dealers.dealer_code',$req->dealer_code)
+                ->pluck('stock');
+                $lastStock = $cekQty[0];
             }
 
             if ($cek > 0) {
@@ -469,7 +473,12 @@ class ReportController extends Controller
                 ->orderBy('history_date','desc')->pluck('last_stock');
                 $lastStock = $lastStock[0];
             } else {
-                $lastStock = 0;
+                $cekQty = Stock::join('dealers','stocks.dealer_id','=','dealers.id')
+                ->selectRaw('SUM(stocks.qty) as stock')
+                ->where('dealers.dealer_code',$req->dealer_code)
+                ->pluck('stock');
+                $lastStock = $cekQty[0];
+                // dd($lastStock);
             }
             // dd($req->date, $cekStock, $lastStock);
 
