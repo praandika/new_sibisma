@@ -6,8 +6,17 @@
                     <div class="card-title">Top Stocks</div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card-title" style="text-align: right; cursor: pointer; color:crimson;"
-                        data-toggle="modal" data-target=".modalTopStok"><i class="fa  fa-eye"></i> See All</div>
+                    <div class="card-title" style="text-align: right; cursor: pointer; color: #ffffff;"
+                            data-toggle="modal" data-target=".modalTopStok">
+                        <span class="bg-primary-gradient bubble-shadow" style="
+                            padding: 10px; 
+                            border-radius: 4px; 
+                            box-shadow: -7px 12px 17px -3px rgba(0,0,0,0.29);
+                            -webkit-box-shadow: -7px 12px 17px -3px rgba(0,0,0,0.29);
+                            -moz-box-shadow: -7px 12px 17px -3px rgba(0,0,0,0.29);">
+                            <i class="fa fa-eye"></i> See All
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="card-category">{{ $dealerName }}</div>
