@@ -20,6 +20,7 @@ class TopProductChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
+        $year = Carbon::now('GMT+8')->format('Y');
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
 
@@ -27,6 +28,7 @@ class TopProductChart extends BaseChart
             $top = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(sale_qty) as unit_sum, units.model_name')
+            ->whereYear('sales.sale_date', $year)
             ->groupBy('units.model_name')
             ->orderBy('unit_sum', 'desc')
             ->limit(5)
@@ -36,6 +38,7 @@ class TopProductChart extends BaseChart
             $sum = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(sale_qty) as unit_sum, units.model_name')
+            ->whereYear('sales.sale_date', $year)
             ->groupBy('units.model_name')
             ->orderBy('unit_sum', 'desc')
             ->limit(5)
@@ -45,6 +48,7 @@ class TopProductChart extends BaseChart
             $top = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(sale_qty) as unit_sum, units.model_name')
+            ->whereYear('sales.sale_date', $year)
             ->where('stocks.dealer_id',$did)
             ->groupBy('units.model_name')
             ->orderBy('unit_sum', 'desc')
@@ -55,6 +59,7 @@ class TopProductChart extends BaseChart
             $sum = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(sale_qty) as unit_sum, units.model_name')
+            ->whereYear('sales.sale_date', $year)
             ->where('stocks.dealer_id',$did)
             ->groupBy('units.model_name')
             ->orderBy('unit_sum', 'desc')
