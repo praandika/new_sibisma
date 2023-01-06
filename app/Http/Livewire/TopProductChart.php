@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Dealer;
 use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class TopProductChart extends Component
@@ -28,12 +29,15 @@ class TopProductChart extends Component
             }
         }
 
+        $year = Carbon::now('GMT+8')->format('Y');
+
         $aa0101 = Sale::join('stocks','sales.stock_id','stocks.id')
         ->join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','=','dealers.id')
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0101")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -44,6 +48,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0102")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -54,6 +59,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0104")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -64,6 +70,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0105")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -74,6 +81,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0106")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -84,6 +92,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0107")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -94,6 +103,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0108")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -104,6 +114,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0109")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -114,6 +125,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA010401")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
@@ -124,6 +136,7 @@ class TopProductChart extends Component
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
         ->where('dealers.dealer_code',"AA0104F")
         ->groupBy('units.model_name')
+        ->whereYear('sales.sale_date',$year)
         ->orderBy('sum_qty','desc')
         ->limit(5)
         ->get();
