@@ -12,6 +12,7 @@ class TopProductChart extends Component
 {
     public function render()
     {
+        $year = Carbon::now('GMT+8')->format('Y');
         $dc = Auth::user()->dealer_code;
         $cek = Dealer::where('dealer_code',$dc)->count();
         if ($cek > 0) {
@@ -28,8 +29,6 @@ class TopProductChart extends Component
                 $dealerName = null;
             }
         }
-
-        $year = Carbon::now('GMT+8')->format('Y');
 
         $aa0101 = Sale::join('stocks','sales.stock_id','stocks.id')
         ->join('units','stocks.unit_id','units.id')
@@ -145,6 +144,7 @@ class TopProductChart extends Component
         ->join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','=','dealers.id')
         ->selectRaw('sum(sales.sale_qty) as sum_qty, units.model_name, units.category, units.image')
+        ->whereYear('sales.sale_date',$year)
         ->groupBy('units.model_name')
         ->orderBy('sum_qty','desc')
         ->limit(5)
