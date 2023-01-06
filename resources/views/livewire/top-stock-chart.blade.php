@@ -1,7 +1,15 @@
 <div class="col-md-6">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Top Stocks</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-title">Top Stocks</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-title" style="text-align: right; cursor: pointer; color:crimson;"
+                        data-toggle="modal" data-target=".modalTopStok"><i class="fa  fa-eye"></i> See All</div>
+                </div>
+            </div>
             <div class="card-category">{{ $dealerName }}</div>
         </div>
         <div class="card-body pb-0">
@@ -51,6 +59,524 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL -->
+<div class="modal fade modalTopStok" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Top Stocks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Bisma Group -->
+                <a data-toggle="collapse" href="#bismaGroup" role="button" aria-expanded="false"
+                    aria-controls="bismaGroup" style="text-decoration: none;">
+                    <div class="card-header bg-dark-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Group</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaGroup" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($bismaGroup as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Group -->
+
+                <!-- Bisma Sentral -->
+                <a data-toggle="collapse" href="#bismaSentral" role="button" aria-expanded="false"
+                    aria-controls="bismaSentral" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Sentral</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaSentral" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0101 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Sentral -->
+
+                <!-- Bisma Cokro -->
+                <a data-toggle="collapse" href="#bismaCokro" role="button" aria-expanded="false"
+                    aria-controls="bismaCokro" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Cokro</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaCokro" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0102 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Cokro -->
+
+                <!-- Bisma Hasanudin -->
+                <a data-toggle="collapse" href="#bismaHasanudin" role="button" aria-expanded="false"
+                    aria-controls="bismaHasanudin" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Hasanudin</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaHasanudin" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0104 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Hasanudin -->
+
+                <!-- Bisma TTS -->
+                <a data-toggle="collapse" href="#bismaTTS" role="button" aria-expanded="false" aria-controls="bismaTTS"
+                    style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma TTS</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaTTS" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0105 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma TTS -->
+
+                <!-- Bisma Imbo -->
+                <a data-toggle="collapse" href="#bismaImbo" role="button" aria-expanded="false"
+                    aria-controls="bismaImbo" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Imbo</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaImbo" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0106 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Imbo -->
+
+                <!-- Bisma Mandiri -->
+                <a data-toggle="collapse" href="#bismaMandiri" role="button" aria-expanded="false"
+                    aria-controls="bismaMandiri" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Mandiri</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaMandiri" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0107 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Mandiri -->
+
+                <!-- Bisma Supratman -->
+                <a data-toggle="collapse" href="#bismaSupratman" role="button" aria-expanded="false"
+                    aria-controls="bismaSupratman" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Supratman</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaSupratman" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0108 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Supratman -->
+
+                <!-- Bisma Sunset Road -->
+                <a data-toggle="collapse" href="#bismaSunset Road" role="button" aria-expanded="false"
+                    aria-controls="bismaSunset Road" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Sunset Road</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaSunset Road" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0109 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Sunset Road -->
+
+                <!-- Bisma Dalung -->
+                <a data-toggle="collapse" href="#bismaDalung" role="button" aria-expanded="false"
+                    aria-controls="bismaDalung" style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma Dalung</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaDalung" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa010401 as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma Dalung -->
+
+                <!-- Bisma FSS -->
+                <a data-toggle="collapse" href="#bismaFSS" role="button" aria-expanded="false" aria-controls="bismaFSS"
+                    style="text-decoration: none;">
+                    <div class="card-header bg-info-gradient skew-shadow">
+                        <h4 class="card-title" style="color: #fff;">Bisma FSS</h4>
+                    </div>
+                </a>
+
+                <div class="card card-body">
+                    <div class="collapse show" id="bismaFSS" style="margin-top: 10px; margin-bottom: 10px;">
+                        @forelse($aa0104F as $o)
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/motorcycle/'.$o->image.'') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                                <small class="text-muted">{{ $o->category }}</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @empty
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..."
+                                    class="avatar-img rounded-circle">
+                            </div>
+                            <div class="flex-1 pt-1 ml-2">
+                                <h6 class="fw-bold mb-1">Model Name</h6>
+                                <small class="text-muted">No Data Available</small>
+                            </div>
+                            <div class="d-flex ml-auto align-items-center">
+                                <h3 class="text-info fw-bold">0</h3>
+                            </div>
+                        </div>
+                        <div class="separator-dashed"></div>
+                        @endif
+                    </div>
+                </div>
+                <!-- END Bisma FSS -->
+
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <p><strong>SiBisma</strong> v3.0 &copy; CRM Bisma | Est 2019</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
 
 @push('after-script')
 <script>
