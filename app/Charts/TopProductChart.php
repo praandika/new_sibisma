@@ -9,6 +9,7 @@ use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
 use App\Models\Dealer;
 use App\Models\Sale;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class TopProductChart extends BaseChart
