@@ -2,17 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Sale;
-use Carbon\Carbon;
+use App\Models\StockHistory;
 use Livewire\Component;
 
 class SaleStockInfo extends Component
 {
     public function render()
     {
-        $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->join('dealers','stocks.dealer_id','=','dealers.id')
-        ->orderBy('sales.sale_date','desc')
+        $data = StockHistory::join('dealers','stock_histories.dealer_code','=','dealers.dealer_code')
+        ->orderBy('stock_histories.history_date','desc')
         ->limit(8)
         ->get();
         return view('livewire.sale-stock-info', compact('data'));
