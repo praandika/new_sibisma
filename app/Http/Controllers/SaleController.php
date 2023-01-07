@@ -502,6 +502,7 @@ class SaleController extends Controller
                 ->orderBy('sale_date','desc')
                 ->select('*','sales.id as id_sale')
                 ->limit(20)->get();
+                // dd($data);
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)

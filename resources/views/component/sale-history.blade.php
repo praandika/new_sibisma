@@ -88,7 +88,7 @@
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id : $o->id_sale) }}" class="btnAction"
+                                    <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id_sale : $o->id_sale) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                         onclick="return tanya('Yakin hapus sale {{ $o->stock->unit->model_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
