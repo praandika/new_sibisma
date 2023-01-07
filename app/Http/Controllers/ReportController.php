@@ -639,7 +639,7 @@ class ReportController extends Controller
                 ['dealers.dealer_code','AA0101'],
                 ['stocks.qty','>',0],
             ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $cokro = Stock::join('units','stocks.unit_id','units.id')
@@ -648,7 +648,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0102'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $udbisma = Stock::join('units','stocks.unit_id','units.id')
@@ -657,7 +657,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0104'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $tts = Stock::join('units','stocks.unit_id','units.id')
@@ -666,7 +666,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0105'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $imbo = Stock::join('units','stocks.unit_id','units.id')
@@ -675,7 +675,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0106'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $mandiri = Stock::join('units','stocks.unit_id','units.id')
@@ -684,7 +684,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0107'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $supratman = Stock::join('units','stocks.unit_id','units.id')
@@ -693,7 +693,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0108'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $sunset = Stock::join('units','stocks.unit_id','units.id')
@@ -702,7 +702,7 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0109'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $dalung = Stock::join('units','stocks.unit_id','units.id')
@@ -711,7 +711,7 @@ class ReportController extends Controller
                 ['dealers.dealer_code','AA0104-01'],
                 ['stocks.qty','>',0],
             ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $fss = Stock::join('units','stocks.unit_id','units.id')
@@ -720,13 +720,13 @@ class ReportController extends Controller
             ['dealers.dealer_code','AA0104F'],
             ['stocks.qty','>',0],
         ])
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         $group = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('stocks.qty','>',0)
-        ->orderBy('units.year_mc', 'asc')
+        ->orderBy('stocks.qty', 'desc')
         ->get();
 
         return view('page',compact(
