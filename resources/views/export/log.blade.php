@@ -23,7 +23,7 @@
             <td>{{ $o->user->dealer_code }}</td>
             <td>{{ $o->user->access }}</td>
             <td>{{ $o->activity }}</td>
-            <td>{{ $o->created_at }}</td>
+            <td>{{ $o->created_at->timezone('Asia/Makassar')->toDateTimeString() }}</td>
         </tr>
         @empty
         <tr>
