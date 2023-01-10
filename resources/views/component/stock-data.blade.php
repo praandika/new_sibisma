@@ -26,9 +26,11 @@
             <div class="table-responsive">
                 <form action="{{ route('stock.deleteall') }}" method="post">
                     @csrf
+                    @if(Auth::user()->access == 'master')
                     <button class="btn btn-danger btn-round btnDelAll"
                         onclick="return tanya('Yakin hapus data terpilih?')"
                         style="margin-bottom: 10px; display: none;"><i class="far fa-trash-alt"></i> Selected</button>
+                    @endif
                     <table id="basic-datatables" class="display table table-striped table-hover"
                         width="100%">
                         <thead>
