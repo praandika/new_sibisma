@@ -21,9 +21,9 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Rank</th>
-                                <th>Dealer</th>
-                                <th>Sales</th>
+                                <th>Total</th>
+                                <td>Bisma Group</td>
+                                <td>{{ $total }} Unit</td>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -35,11 +35,6 @@
                                 <td>{{ $o->qty }} Unit</td>
                             </tr>
                             @endforeach
-                            <tr>
-                                <th>Total</th>
-                                <td>Bisma Group</td>
-                                <td>{{ $total }} Unit</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
