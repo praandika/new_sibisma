@@ -35,6 +35,11 @@
                                 <td>{{ $o->qty }} Unit</td>
                             </tr>
                             @endforeach
+                            <tr>
+                                <th>Total</th>
+                                <td>Bisma Group</td>
+                                <td>{{ $total }} Unit</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

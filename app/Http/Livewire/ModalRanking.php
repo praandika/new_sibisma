@@ -21,6 +21,10 @@ class ModalRanking extends Component
         ->orderBy('qty','desc')
         ->groupBy('stocks.dealer_id')
         ->get();
-        return view('livewire.modal-ranking', compact('rankData'));
+        $total = Sale::whereMonth('sale_date', $month)
+        ->whereYear('sale_date', $year)
+        ->sum('sale_qty');
+
+        return view('livewire.modal-ranking', compact('rankData','total'));
     }
 }
