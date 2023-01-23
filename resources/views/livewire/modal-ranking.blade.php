@@ -22,8 +22,8 @@
                         <tfoot>
                             <tr>
                                 <th>Total</th>
-                                <td>Bisma Group</td>
-                                <td>{{ $total }} Unit</td>
+                                <th>Bisma Group</th>
+                                <th>{{ $total }} Unit</th>
                             </tr>
                         </tfoot>
                         <tbody>
