@@ -1,6 +1,6 @@
 <li class="nav-item 
     @if(Auth::user()->access != 'owner') 
-        {{ Route::is('report.*') || Route::is('stock-history.edit') ? 'active' : '' }}
+        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*')  ? 'active' : '' }}
     @else
         {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') ? 'active' : '' }}
     @endif">
@@ -11,7 +11,7 @@
     </a>
     <div class="collapse 
     @if(Auth::user()->access != 'owner') 
-        {{ Route::is('report.*') || Route::is('stock-history.edit') ? 'show' : '' }}
+        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*')  ? 'show' : '' }}
     @else
         {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') ? 'show' : '' }}
     @endif" id="report">
@@ -68,6 +68,14 @@
                     <span class="sub-item">Unit Report</span>
                 </a>
             </li>
+
+            @if(Auth::user()->dealer_code == 'group')
+            <li class="{{ Route::is('stu.index') ? 'active' : '' }}">
+                <a href="{{ route('stu.index') }}">
+                    <span class="sub-item">Input STU</span>
+                </a>
+            </li>
+            @endif
         </ul>
     </div>
 </li>

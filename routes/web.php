@@ -22,6 +22,7 @@ use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SimpleSaleController;
 use App\Http\Controllers\SimpleOutController;
+use App\Http\Controllers\STUController;
 
 /*
 |--------------------------------------------------------------------------
@@ -178,6 +179,12 @@ Route::middleware(['auth:sanctum', 'verified'])->post('update-crud/{id}/{crud}',
 // SIMULASI KREDIT
 Route::get('/simulasi-kredit', [DashboardController::class, 'simulasi'])->name('simulasi');
 // END SIMULASI KREDIT
+
+// STU
+Route::middleware(['auth:sanctum', 'verified'])->resource('stu', STUController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/stu/delete/{id}', [STUController::class, 'delete'])->name('stu.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/stu/deleteall', [STUController::class, 'deleteall'])->name('stu.deleteall');
+// END STU
 
 // PRINT PDF
 Route::get('print-pdf-tr', function () {

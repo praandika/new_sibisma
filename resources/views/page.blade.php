@@ -251,7 +251,16 @@
         @elseif(Route::is('info.out-ach'))
             @include('component.out-ach')
         @endif
-    
+
+    <!-- Data STU -->
+    @elseif(Route::is('stu.*'))
+        @if(Route::is('stu.edit'))
+            @include('component.stu-edit')
+        @else
+            @include('component.stu-create')
+            @include('component.stu-data')
+        @endif
+        
     @endif
     
 @endsection
