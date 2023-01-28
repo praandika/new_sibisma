@@ -354,8 +354,8 @@ class STUController extends Controller
         // Dalung
         if ($stu_0401 == 0) {
             $vs_0401 = 0*100;
-            dd($stu_0401);
         } else {
+            dd($stu_0401.' / '.$real_0401);
             $get_vs_0401 = ($stu_0401 / $real_0401); 
             $vs_0401 = ($get_vs_0401 - 1)*100;
         }
