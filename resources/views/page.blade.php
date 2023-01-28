@@ -257,6 +257,8 @@
             @include('component.entry-ach')
         @elseif(Route::is('info.out-ach'))
             @include('component.out-ach')
+        @elseif(Route::is('info.stu-real-ach'))
+            @include('component.stu-real-ach')
         @endif
 
     <!-- Data STU -->

@@ -16,7 +16,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">STU vs Real Data</h4>
+            <h4 class="card-title">STU vs Real Sales</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -44,9 +44,9 @@
                                 <td>{{ $real_01 }}</td>
                                 <td @if($vs_01 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_01 > 100) 
+                                    @elseif($vs_01 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_01 < 100)
+                                    @elseif($vs_01 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -59,9 +59,9 @@
                                 <td>{{ $real_02 }}</td>
                                 <td @if($vs_02 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_02 > 100) 
+                                    @elseif($vs_02 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_02 < 100)
+                                    @elseif($vs_02 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -74,9 +74,9 @@
                                 <td>{{ $real_04 }}</td>
                                 <td @if($vs_04 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_04 > 100) 
+                                    @elseif($vs_04 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_04 < 100)
+                                    @elseif($vs_04 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -89,9 +89,9 @@
                                 <td>{{ $real_05 }}</td>
                                 <td @if($vs_05 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_05 > 100) 
+                                    @elseif($vs_05 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_05 < 100)
+                                    @elseif($vs_05 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -104,9 +104,9 @@
                                 <td>{{ $real_06 }}</td>
                                 <td @if($vs_06 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_06 > 100) 
+                                    @elseif($vs_06 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_06 < 100)
+                                    @elseif($vs_06 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -119,9 +119,9 @@
                                 <td>{{ $real_07 }}</td>
                                 <td @if($vs_07 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_07 > 100) 
+                                    @elseif($vs_07 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_07 < 100)
+                                    @elseif($vs_07 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -134,9 +134,9 @@
                                 <td>{{ $real_08 }}</td>
                                 <td @if($vs_08 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_08 > 100) 
+                                    @elseif($vs_08 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_08 < 100)
+                                    @elseif($vs_08 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -149,9 +149,9 @@
                                 <td>{{ $real_09 }}</td>
                                 <td @if($vs_09 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_09 > 100) 
+                                    @elseif($vs_09 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_09 < 100)
+                                    @elseif($vs_09 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -164,9 +164,9 @@
                                 <td>{{ $real_0401 }}</td>
                                 <td @if($vs_0401 == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_0401 > 100) 
+                                    @elseif($vs_0401 > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_0401 < 100)
+                                    @elseif($vs_0401 < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -179,9 +179,9 @@
                                 <td>{{ $real_04F }}</td>
                                 <td @if($vs_04F == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs_04F > 100) 
+                                    @elseif($vs_04F > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs_04F < 100)
+                                    @elseif($vs_04F < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -194,9 +194,9 @@
                                 <th>{{ $real }}</th>
                                 <td @if($vs == 0)
                                     style="background-color: transparent"
-                                    @elseif($vs > 100) 
+                                    @elseif($vs > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vs < 100)
+                                    @elseif($vs < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"
@@ -209,9 +209,9 @@
                                 <th>{{ $realPlus }}</th>
                                 <td @if($vsPlus == 0)
                                     style="background-color: transparent"
-                                    @elseif($vsPlus > 100) 
+                                    @elseif($vsPlus > 0) 
                                     style="background-color: #32a85250"
-                                    @elseif($vsPlus < 100)
+                                    @elseif($vsPlus < 0)
                                     style="background-color: #e81a1a50"
                                     @else
                                     style="background-color: transparent"

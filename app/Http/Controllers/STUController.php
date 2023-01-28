@@ -265,14 +265,14 @@ class STUController extends Controller
         ->sum('sale_qty');
         
         // Bisma Group
-        $stu = STU::whereYear('stu_date',$year)
-        ->where('stocks.dealer_id','!=',$fss)
+        $stu = STU::where('dealer_code','!=','AA0104F')
+        ->whereYear('stu_date',$year)
         ->whereMonth('stu_date',$month)
         ->where('stu_date','!=',$today)
         ->sum('stu');
         $real = Sale::join('stocks','sales.stock_id','stocks.id')
-        ->whereYear('sale_date',$year)
         ->where('stocks.dealer_id','!=',$fss)
+        ->whereYear('sale_date',$year)
         ->whereMonth('sale_date',$month)
         ->where('sale_date','!=',$today)
         ->sum('sale_qty');
@@ -292,84 +292,96 @@ class STUController extends Controller
         if ($stu_01 == 0) {
             $vs_01 = 0*100;
         } else {
-            $vs_01 = ($real_01 / $stu_01)*100;
+            $get_vs_01 = ($real_01 / $stu_01); 
+            $vs_01 = ($get_vs_01 - 1)*100;
         }
 
         // Cokro
         if ($stu_02 == 0) {
             $vs_02 = 0*100;
         } else {
-            $vs_02 = ($real_02 / $stu_02)*100;
+            $get_vs_02 = ($real_02 / $stu_02); 
+            $vs_02 = ($get_vs_02 - 1)*100;
         }
 
         // UD
         if ($stu_04 == 0) {
             $vs_04 = 0*100;
         } else {
-            $vs_04 = ($real_04 / $stu_04)*100;
+            $get_vs_04 = ($real_04 / $stu_04); 
+            $vs_04 = ($get_vs_04 - 1)*100;
         }
 
         // TTS
         if ($stu_05 == 0) {
             $vs_05 = 0*100;
         } else {
-            $vs_05 = ($real_05 / $stu_05)*100;
+            $get_vs_05 = ($real_05 / $stu_05); 
+            $vs_05 = ($get_vs_05 - 1)*100;
         }
 
         // Imbo
         if ($stu_06 == 0) {
             $vs_06 = 0*100;
         } else {
-            $vs_06 = ($real_06 / $stu_06)*100;
+            $get_vs_06 = ($real_06 / $stu_06); 
+            $vs_06 = ($get_vs_06 - 1)*100;
         }
 
         // Mandiri
         if ($stu_07 == 0) {
             $vs_07 = 0*100;
         } else {
-            $vs_07 = ($real_07 / $stu_07)*100;
+            $get_vs_07 = ($real_07 / $stu_07); 
+            $vs_07 = ($get_vs_07 - 1)*100;
         }
 
         // WR
         if ($stu_08 == 0) {
             $vs_08 = 0*100;
         } else {
-            $vs_08 = ($real_08 / $stu_08)*100;
+            $get_vs_08 = ($real_08 / $stu_08); 
+            $vs_08 = ($get_vs_08 - 1)*100;
         }
 
         // SR
         if ($stu_09 == 0) {
             $vs_09 = 0*100;
         } else {
-            $vs_09 = ($real_09 / $stu_09)*100;
+            $get_vs_09 = ($real_09 / $stu_09); 
+            $vs_09 = ($get_vs_09 - 1)*100;
         }
 
         // Dalung
         if ($stu_0401 == 0) {
             $vs_0401 = 0*100;
         } else {
-            $vs_0401 = ($real_0401 / $stu_0401)*100;
+            $get_vs_0401 = ($real_0401 / $stu_0401); 
+            $vs_0401 = ($get_vs_0401 - 1)*100;
         }
 
         // FSS
         if ($stu_04F == 0) {
             $vs_04F = 0*100;
         } else {
-            $vs_04F = ($real_04F / $stu_04F)*100;
+            $get_vs_04F = ($real_04F / $stu_04F); 
+            $vs_04F = ($get_vs_04F - 1)*100;
         }
 
         // Bisma Group
         if ($stu == 0) {
             $vs = 0*100;
         } else {
-            $vs = ($real / $stu)*100;
+            $get_vs = ($real / $stu); 
+            $vs = ($get_vs - 1)*100;
         }
 
         // Bisma Group + FSS
         if ($stuPlus == 0) {
             $vsPlus = 0*100;
         } else {
-            $vsPlus = ($realPlus / $stuPlus)*100;
+            $get_vsPlus = ($realPlus / $stuPlus); 
+            $vsPlus = ($get_vsPlus - 1)*100;
         }
 
         $vs_01 = number_format($vs_01, 1);
@@ -385,18 +397,18 @@ class STUController extends Controller
         $vs = number_format($vs, 1);
         $vsPlus = number_format($vsPlus, 1);
         return view('page', compact(
-            'last_01','data_01','vs_01',
-            'last_02','data_02','vs_02',
-            'last_04','data_04','vs_04',
-            'last_05','data_05','vs_05',
-            'last_06','data_06','vs_06',
-            'last_07','data_07','vs_07',
-            'last_08','data_08','vs_08',
-            'last_09','data_09','vs_09',
-            'last_0401','data_0401','vs_0401',
-            'last_04F','data_04F','vs_04F',
-            'last','data','vs',
-            'lastPlus','dataPlus','vsPlus'
+            'stu_01','real_01','vs_01',
+            'stu_02','real_02','vs_02',
+            'stu_04','real_04','vs_04',
+            'stu_05','real_05','vs_05',
+            'stu_06','real_06','vs_06',
+            'stu_07','real_07','vs_07',
+            'stu_08','real_08','vs_08',
+            'stu_09','real_09','vs_09',
+            'stu_0401','real_0401','vs_0401',
+            'stu_04F','real_04F','vs_04F',
+            'stu','real','vs',
+            'stuPlus','realPlus','vsPlus'
         ));
     }
 }
