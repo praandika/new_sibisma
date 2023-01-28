@@ -288,7 +288,7 @@ class STUController extends Controller
         ->sum('sale_qty');
 
         // Sentral
-        if ($stu_01 == 0) {
+        if ($real_01 == 0) {
             $vs_01 = 0*100;
         } else {
             $get_vs_01 = ($stu_01 / $real_01); 
@@ -296,7 +296,7 @@ class STUController extends Controller
         }
 
         // Cokro
-        if ($stu_02 == 0) {
+        if ($real_02 == 0) {
             $vs_02 = 0*100;
         } else {
             $get_vs_02 = ($stu_02 / $real_02); 
@@ -304,7 +304,7 @@ class STUController extends Controller
         }
 
         // UD
-        if ($stu_04 == 0) {
+        if ($real_04 == 0) {
             $vs_04 = 0*100;
         } else {
             $get_vs_04 = ($stu_04 / $real_04); 
@@ -312,7 +312,7 @@ class STUController extends Controller
         }
 
         // TTS
-        if ($stu_05 == 0) {
+        if ($real_05 == 0) {
             $vs_05 = 0*100;
         } else {
             $get_vs_05 = ($stu_05 / $real_05); 
@@ -320,7 +320,7 @@ class STUController extends Controller
         }
 
         // Imbo
-        if ($stu_06 == 0) {
+        if ($real_06 == 0) {
             $vs_06 = 0*100;
         } else {
             $get_vs_06 = ($stu_06 / $real_06); 
@@ -328,7 +328,7 @@ class STUController extends Controller
         }
 
         // Mandiri
-        if ($stu_07 == 0) {
+        if ($real_07 == 0) {
             $vs_07 = 0*100;
         } else {
             $get_vs_07 = ($stu_07 / $real_07); 
@@ -336,7 +336,7 @@ class STUController extends Controller
         }
 
         // WR
-        if ($stu_08 == 0) {
+        if ($real_08 == 0) {
             $vs_08 = 0*100;
         } else {
             $get_vs_08 = ($stu_08 / $real_08); 
@@ -344,7 +344,7 @@ class STUController extends Controller
         }
 
         // SR
-        if ($stu_09 == 0) {
+        if ($real_09 == 0) {
             $vs_09 = 0*100;
         } else {
             $get_vs_09 = ($stu_09 / $real_09); 
@@ -352,16 +352,15 @@ class STUController extends Controller
         }
 
         // Dalung
-        if ($stu_0401 == 0) {
+        if ($real_0401 == 0) {
             $vs_0401 = 0*100;
         } else {
-            dd($stu_0401.' / '.$real_0401);
             $get_vs_0401 = ($stu_0401 / $real_0401); 
             $vs_0401 = ($get_vs_0401 - 1)*100;
         }
 
         // FSS
-        if ($stu_04F == 0) {
+        if ($real_04F == 0) {
             $vs_04F = 0*100;
         } else {
             $get_vs_04F = ($stu_04F / $real_04F); 
@@ -369,7 +368,7 @@ class STUController extends Controller
         }
 
         // Bisma Group
-        if ($stu == 0) {
+        if ($real == 0) {
             $vs = 0*100;
         } else {
             $get_vs = ($stu / $real); 
@@ -377,7 +376,7 @@ class STUController extends Controller
         }
 
         // Bisma Group + FSS
-        if ($stuPlus == 0) {
+        if ($realPlus == 0) {
             $vsPlus = 0*100;
         } else {
             $get_vsPlus = ($stuPlus / $realPlus); 
