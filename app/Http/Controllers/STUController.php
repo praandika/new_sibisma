@@ -50,8 +50,6 @@ class STUController extends Controller
                 'stu_date' => $request->stu_date,
                 'dealer_code' => $request->dealer_code[$i],
                 'stu' => $request->stu[$i],
-                'created_by' => Auth::user()->id,
-                'updated_by' => Auth::user()->id,
             ]);
         }
         toast('Data STU berhasil disimpan','success');

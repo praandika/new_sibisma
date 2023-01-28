@@ -194,13 +194,4 @@ class User extends Authenticatable
     public function user(){
         return $this->hasMany(Log::class);
     }
-
-    // Relasi to created, updated STU
-    public function stuC(){
-        return $this->hasMany(STU::class, 'created_by');
-    }
-
-    public function stuU(){
-        return $this->hasMany(STU::class, 'updated_by');
-    }
 }

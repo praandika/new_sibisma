@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSTUSTable extends Migration
+class CreateSTUS extends Migration
 {
     /**
      * Run the migrations.
@@ -18,8 +18,6 @@ class CreateSTUSTable extends Migration
             $table->date('stu_date');
             $table->string('dealer_code');
             $table->integer('stu');
-            $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }
