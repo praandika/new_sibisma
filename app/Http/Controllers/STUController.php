@@ -291,7 +291,7 @@ class STUController extends Controller
         if ($stu_01 == 0) {
             $vs_01 = 0*100;
         } else {
-            $get_vs_01 = ($real_01 / $stu_01); 
+            $get_vs_01 = ($stu_01 / $real_01); 
             $vs_01 = ($get_vs_01 - 1)*100;
         }
 
@@ -299,7 +299,7 @@ class STUController extends Controller
         if ($stu_02 == 0) {
             $vs_02 = 0*100;
         } else {
-            $get_vs_02 = ($real_02 / $stu_02); 
+            $get_vs_02 = ($stu_02 / $real_02); 
             $vs_02 = ($get_vs_02 - 1)*100;
         }
 
@@ -307,7 +307,7 @@ class STUController extends Controller
         if ($stu_04 == 0) {
             $vs_04 = 0*100;
         } else {
-            $get_vs_04 = ($real_04 / $stu_04); 
+            $get_vs_04 = ($stu_04 / $real_04); 
             $vs_04 = ($get_vs_04 - 1)*100;
         }
 
@@ -315,7 +315,7 @@ class STUController extends Controller
         if ($stu_05 == 0) {
             $vs_05 = 0*100;
         } else {
-            $get_vs_05 = ($real_05 / $stu_05); 
+            $get_vs_05 = ($stu_05 / $real_05); 
             $vs_05 = ($get_vs_05 - 1)*100;
         }
 
@@ -323,7 +323,7 @@ class STUController extends Controller
         if ($stu_06 == 0) {
             $vs_06 = 0*100;
         } else {
-            $get_vs_06 = ($real_06 / $stu_06); 
+            $get_vs_06 = ($stu_06 / $real_06); 
             $vs_06 = ($get_vs_06 - 1)*100;
         }
 
@@ -331,7 +331,7 @@ class STUController extends Controller
         if ($stu_07 == 0) {
             $vs_07 = 0*100;
         } else {
-            $get_vs_07 = ($real_07 / $stu_07); 
+            $get_vs_07 = ($stu_07 / $real_07); 
             $vs_07 = ($get_vs_07 - 1)*100;
         }
 
@@ -339,7 +339,7 @@ class STUController extends Controller
         if ($stu_08 == 0) {
             $vs_08 = 0*100;
         } else {
-            $get_vs_08 = ($real_08 / $stu_08); 
+            $get_vs_08 = ($stu_08 / $real_08); 
             $vs_08 = ($get_vs_08 - 1)*100;
         }
 
@@ -347,7 +347,7 @@ class STUController extends Controller
         if ($stu_09 == 0) {
             $vs_09 = 0*100;
         } else {
-            $get_vs_09 = ($real_09 / $stu_09); 
+            $get_vs_09 = ($stu_09 / $real_09); 
             $vs_09 = ($get_vs_09 - 1)*100;
         }
 
@@ -355,7 +355,7 @@ class STUController extends Controller
         if ($stu_0401 == 0) {
             $vs_0401 = 0*100;
         } else {
-            $get_vs_0401 = ($real_0401 / $stu_0401); 
+            $get_vs_0401 = ($stu_0401 / $real_0401); 
             $vs_0401 = ($get_vs_0401 - 1)*100;
         }
 
@@ -363,7 +363,7 @@ class STUController extends Controller
         if ($stu_04F == 0) {
             $vs_04F = 0*100;
         } else {
-            $get_vs_04F = ($real_04F / $stu_04F); 
+            $get_vs_04F = ($stu_04F / $real_04F); 
             $vs_04F = ($get_vs_04F - 1)*100;
         }
 
@@ -371,7 +371,7 @@ class STUController extends Controller
         if ($stu == 0) {
             $vs = 0*100;
         } else {
-            $get_vs = ($real / $stu); 
+            $get_vs = ($stu / $real); 
             $vs = ($get_vs - 1)*100;
         }
 
@@ -379,7 +379,7 @@ class STUController extends Controller
         if ($stuPlus == 0) {
             $vsPlus = 0*100;
         } else {
-            $get_vsPlus = ($realPlus / $stuPlus); 
+            $get_vsPlus = ($stuPlus / $realPlus); 
             $vsPlus = ($get_vsPlus - 1)*100;
         }
 
