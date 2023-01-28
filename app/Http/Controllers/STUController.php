@@ -121,6 +121,7 @@ class STUController extends Controller
         $month = Carbon::now('GMT+8')->format('m');
         $year = Carbon::now('GMT+8')->format('Y');
         $tgl = Carbon::now('GMT+8');
+        $yesterday = Carbon::yesterday('GMT+8')->format('Y-m-d');
 
         $sentral = Dealer::where('dealer_code','AA0101')->sum('id');
         $cokro = Dealer::where('dealer_code','AA0102')->sum('id');
@@ -408,7 +409,8 @@ class STUController extends Controller
             'stu_0401','real_0401','vs_0401',
             'stu_04F','real_04F','vs_04F',
             'stu','real','vs',
-            'stuPlus','realPlus','vsPlus'
+            'stuPlus','realPlus','vsPlus',
+            'yesterday'
         ));
     }
 }
