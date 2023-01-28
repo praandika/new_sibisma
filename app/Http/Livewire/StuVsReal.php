@@ -2,7 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Dealer;
+use App\Models\Sale;
 use App\Models\STU;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class StuVsReal extends Component
@@ -18,29 +22,45 @@ class StuVsReal extends Component
 
     if ($dc == 'group') {
         // STU vs Real
-        $Yes = STU::whereYear('stu_date',$yesterday)->sum('stu');
+        $stu = STU::whereYear('stu_date',$year)
+        ->whereMonth('stu_date',$month)
+        ->where('stu_date','!=',$today)
+        ->sum('stu');
+        $real = Sale::whereYear('sale_date',$year)
+        ->whereMonth('sale_date',$month)
+        ->where('sale_date','!=',$today)
+        ->sum('sale_qty');
     }else{
         // STU vs Real
-        $Yes = STU::where('dealer_code',$dc)
-        ->whereYear('stu_date',$yesterday)->sum('stu');
+        $stu = STU::where('dealer_code',$dc)
+        ->whereYear('stu_date',$year)
+        ->whereMonth('stu_date',$month)
+        ->where('stu_date','!=',$today)
+        ->sum('stu');
+        $real = Sale::join('stocks','sales.stock_id','stocks.id')
+        ->where('stocks.dealer_id',$did)
+        ->whereYear('sale_date',$year)
+        ->whereMonth('sale_date',$month)
+        ->where('sale_date','!=',$today)
+        ->sum('sale_qty');
     }
         
-        if($LY <= 0 && $yearSales <= 0){
-            $vsLYach = 0;
-            $vsLY = 0;
-        }elseif ($LY <= 0 || $yearSales <= 0) {
-            if ($LY <= 0) {
-                $vsLYach = ($yearSales/$yearSales);
-                $vsLY = ($LY)*100;
+        if($stu <= 0 && $real <= 0){
+            $stuRealAch = 0;
+            $stuReal = 0;
+        }elseif ($stu <= 0 || $real <= 0) {
+            if ($stu <= 0) {
+                $stuRealAch = ($real/$real);
+                $stuReal = ($stu)*100;
             } else {
-                $vsLYach = 0;
-                $vsLY = (0-$LY)*100;
+                $stuRealAch = 0;
+                $stuReal = (0-$stu)*100;
             }
         } else {
-            $vsLYach = ($yearSales/$LY)*100;
-            $vsLY = ($yearSales/$LY-1)*100;
+            $stuRealAch = ($real/$stu)*100;
+            $stuReal = ($real/$stu-1)*100;
         }
 
-        return view('livewire.stu-vs-real', compact('today','vsLY','lastYear','vsLYach'));
+        return view('livewire.stu-vs-real', compact('today','stuReal','yesterday','stuRealAch'));
     }
 }

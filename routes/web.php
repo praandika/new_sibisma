@@ -184,6 +184,7 @@ Route::get('/simulasi-kredit', [DashboardController::class, 'simulasi'])->name('
 Route::middleware(['auth:sanctum', 'verified'])->resource('stu', STUController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/stu/delete/{id}', [STUController::class, 'delete'])->name('stu.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/stu/deleteall', [STUController::class, 'deleteall'])->name('stu.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/stu-real-ach', [STUController::class, 'achievement'])->name('info.stu-real-ach');
 // END STU
 
 // PRINT PDF

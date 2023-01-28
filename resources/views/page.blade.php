@@ -16,6 +16,7 @@
         <livewire:ratio-stock>
         <livewire:sale-l-m>
         <livewire:sale-l-y>
+        <livewire:stu-vs-real>
         <livewire:sale-by-dealer-chart>
         <livewire:top-product-chart>
         <livewire:top-stock-chart>
@@ -106,6 +107,7 @@
             <livewire:ratio-stock>
             <livewire:sale-l-m>
             <livewire:sale-l-y>
+            <livewire:stu-vs-real>
             @include('component.search-box')
             @include('component.sale-history')
         @else
@@ -117,6 +119,7 @@
             <livewire:ratio-stock>
             <livewire:sale-l-m>
             <livewire:sale-l-y>
+            <livewire:stu-vs-real>
             @include('component.sale-data')
         @endif
 
@@ -126,6 +129,7 @@
             <livewire:ratio-stock>
             <livewire:entry-l-m>
             <livewire:entry-l-y>
+            <livewire:stu-vs-real>
             @include('component.search-box')
             @include('component.entry-history')
         @else
@@ -133,6 +137,7 @@
             <livewire:ratio-stock>
             <livewire:entry-l-m>
             <livewire:entry-l-y>
+            <livewire:stu-vs-real>
             @include('component.entry-data')
         @endif
 
@@ -142,6 +147,7 @@
             <livewire:ratio-stock>
             <livewire:out-l-m>
             <livewire:out-l-y>
+            <livewire:stu-vs-real>
             @include('component.search-box')
             @include('component.out-history')
         @else
@@ -153,6 +159,7 @@
             <livewire:ratio-stock>
             <livewire:out-l-m>
             <livewire:out-l-y>
+            <livewire:stu-vs-real>
             @include('component.out-data')
         @endif
     
