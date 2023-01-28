@@ -449,18 +449,18 @@ class StockRatioDetail extends Component
         $ratioPlus = number_format($ratioPlus, 2);
 
         return view('livewire.stock-ratio-detail', compact(
-            'monthSaleOut_01','monthEntry_01','stockQty_01','ratio_01',
-            'monthSaleOut_02','monthEntry_02','stockQty_02','ratio_02',
-            'monthSaleOut_04','monthEntry_04','stockQty_04','ratio_04',
-            'monthSaleOut_05','monthEntry_05','stockQty_05','ratio_05',
-            'monthSaleOut_06','monthEntry_06','stockQty_06','ratio_06',
-            'monthSaleOut_07','monthEntry_07','stockQty_07','ratio_07',
-            'monthSaleOut_08','monthEntry_08','stockQty_08','ratio_08',
-            'monthSaleOut_09','monthEntry_09','stockQty_09','ratio_09',
-            'monthSaleOut_0401','monthEntry_0401','stockQty_0401','ratio_0401',
-            'monthSaleOut_04F','monthEntry_04F','stockQty_04F','ratio_04F',
-            'monthSaleOut','monthEntry','stockQty','ratio',
-            'monthSaleOutPlus','monthEntryPlus','stockQtyPlus','ratioPlus',
+            'monthSaleOut_01','monthEntry_01','stockQty_01','ratio_01','monthSales_01','monthOut_01',
+            'monthSaleOut_02','monthEntry_02','stockQty_02','ratio_02','monthSales_02','monthOut_02',
+            'monthSaleOut_04','monthEntry_04','stockQty_04','ratio_04','monthSales_04','monthOut_04',
+            'monthSaleOut_05','monthEntry_05','stockQty_05','ratio_05','monthSales_05','monthOut_05',
+            'monthSaleOut_06','monthEntry_06','stockQty_06','ratio_06','monthSales_06','monthOut_06',
+            'monthSaleOut_07','monthEntry_07','stockQty_07','ratio_07','monthSales_07','monthOut_07',
+            'monthSaleOut_08','monthEntry_08','stockQty_08','ratio_08','monthSales_08','monthOut_08',
+            'monthSaleOut_09','monthEntry_09','stockQty_09','ratio_09','monthSales_09','monthOut_09',
+            'monthSaleOut_0401','monthEntry_0401','stockQty_0401','ratio_0401','monthSales_0401','monthOut_0401',
+            'monthSaleOut_04F','monthEntry_04F','stockQty_04F','ratio_04F','monthSales_04F','monthOut_04F',
+            'monthSaleOut','monthEntry','stockQty','ratio','monthSales','monthOut',
+            'monthSaleOutPlus','monthEntryPlus','stockQtyPlus','ratioPlus','monthSalesPlus','monthOutPlus',
         ));
     }
 }
