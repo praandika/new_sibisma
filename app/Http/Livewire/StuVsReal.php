@@ -49,16 +49,16 @@ class StuVsReal extends Component
             $stuRealAch = 0;
             $stuReal = 0;
         }elseif ($stu <= 0 || $real <= 0) {
-            if ($stu <= 0) {
-                $stuRealAch = ($real/$real);
+            if ($real <= 0) {
+                $stuRealAch = ($stu/$stu);
                 $stuReal = ($stu)*100;
             } else {
                 $stuRealAch = 0;
-                $stuReal = (0-$stu)*100;
+                $stuReal = (0-$real)*100;
             }
         } else {
-            $stuRealAch = ($real/$stu)*100;
-            $stuReal = ($real/$stu-1)*100;
+            $stuRealAch = ($stu/$real)*100;
+            $stuReal = ($stu/$real-1)*100;
         }
 
         return view('livewire.stu-vs-real', compact('today','stuReal','yesterday','stuRealAch'));
