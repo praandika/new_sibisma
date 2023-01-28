@@ -4,7 +4,7 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h5><b>STU vs Real</b></h5>
-                    <p class="text-muted">{{ \Carbon\Carbon::parse($yesterday)->format('d M Y') }}</p>
+                    <p class="text-muted">per {{ \Carbon\Carbon::parse($yesterday)->format('d M Y') }}</p>
                 </div>
                 <h3 class="text-primary fw-bold">{{ $stuReal >= 0 ? '+'.number_format($stuReal,1) : number_format($stuReal,1) }}%</h3>
             </div>
