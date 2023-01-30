@@ -46,6 +46,7 @@ class STUController extends Controller
     public function store(Request $request)
     {
         for ($i=0; $i < count($request->dealer_code); $i++) { 
+            // dd($request->dealer_code[0],$request->dealer_code[1],$request->dealer_code[2],$request->dealer_code[3],$request->dealer_code[4],$request->dealer_code[5],$request->dealer_code[6],$request->dealer_code[7],$request->dealer_code[8],$request->dealer_code[9],count($request->dealer_code));
             STU::insert([
                 'stu_date' => $request->stu_date,
                 'dealer_code' => $request->dealer_code[$i],
@@ -251,13 +252,13 @@ class STUController extends Controller
         ->sum('sale_qty');
 
         // FSS
-        $stu_04F = STU::where('dealer_code','AA0104')
+        $stu_04F = STU::where('dealer_code','AA0104F')
         ->whereYear('stu_date',$year)
         ->whereMonth('stu_date',$month)
         ->where('stu_date','!=',$today)
         ->sum('stu');
         $real_04F = Sale::join('stocks','sales.stock_id','stocks.id')
-        ->where('stocks.dealer_id',$sentral)
+        ->where('stocks.dealer_id',$fss)
         ->whereYear('sale_date',$year)
         ->whereMonth('sale_date',$month)
         ->where('sale_date','!=',$today)
