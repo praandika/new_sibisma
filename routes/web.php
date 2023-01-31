@@ -190,7 +190,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stu-real-ach', [STUContro
 
 // SPK
 Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::class);
-Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('color.delete');
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id}', [SpkController::class, 'get'])->name('spk.get');
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
 // END SPK
 
 // PRINT PDF

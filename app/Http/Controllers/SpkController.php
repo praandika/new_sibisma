@@ -77,7 +77,33 @@ class SpkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->discount == '') {
+            $discount = 0;
+        } else {
+            $discount = $request->discount;
+        }
+        
+        $data = new Spk;
+        $data->spk_no = $request->spk_no;
+        $data->spk_date = $request->spk_date;
+        $data->order_name = $request->order_name;
+        $data->address = $request->address;
+        $data->phone = $request->phone;
+        $data->stnk_name = $request->stnk_name;
+        $data->stock_id = $request->stock_id;
+        $data->downpayment = $request->downpayment;
+        $data->discount = $discount;
+        $data->payment = $request->payment;
+        $data->leasing_id = $request->leasing_id;
+        $data->manpower_id = $request->manpower_id;
+        $data->description = $request->description;
+        $data->payment_method = $request->payment_method;
+        $data->credit_status = $request->credit_status;
+        $data->order_status = $request->order_status;
+        $data->created_by = Auth::user()->id;
+        $data->save();
+        toast('SPK berhasil dibuat','success');
+        return redirect()->route('spk.get',$request->spk_no);
     }
 
     /**
@@ -123,5 +149,15 @@ class SpkController extends Controller
     public function destroy(Spk $spk)
     {
         //
+    }
+
+    public function get($spk_no){
+        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
+        ->join('leasings','spks.leasing_id','=','leasings.id')
+        ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->where('spks.spk_no',$spk_no)
+        ->get();
+
+        return view('page', compact('data'));
     }
 }

@@ -274,6 +274,8 @@
     @elseif(Route::is('spk.*'))
         @if(Route::is('spk.edit'))
             @include('component.spk-edit')
+        @if(Route::is('spk.get'))
+            @include('component.spk-show')
         @else
             @include('component.spk-create')
             @include('component.spk-data')

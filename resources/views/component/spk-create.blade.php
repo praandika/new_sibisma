@@ -49,7 +49,7 @@
         <div class="card-body">
             <form action="{{ route('spk.store') }}" method="post" id="form">
                 @csrf
-                <div class="row">
+                <div class="row" style="background-color: #fff1cf; padding-top: 10px; border-radius: 10px;">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="payment_method" type="text" class="form-control input-border-bottom"
@@ -78,6 +78,7 @@
 
                 <br>
                 <div style="border: 1px dashed grey;"></div>
+                <br>
 
                 <input type="hidden" name="spk_no" value="{{ $spk_no }}" required>
                 <div class="row">
