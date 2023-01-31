@@ -191,6 +191,15 @@ class User extends Authenticatable
         return $this->hasMany(Stock::class, 'updated_by');
     }
 
+    // Relasi to created, updated SPK
+    public function spkC(){
+        return $this->hasMany(Spk::class, 'created_by');
+    }
+
+    public function spkU(){
+        return $this->hasMany(Spk::class, 'updated_by');
+    }
+
     public function user(){
         return $this->hasMany(Log::class);
     }

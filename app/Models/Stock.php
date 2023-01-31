@@ -8,6 +8,7 @@ use App\Models\Dealer;
 use App\Models\Unit;
 use App\Models\Entry;
 use App\Models\Opname;
+use App\Models\Spk;
 
 class Stock extends Model
 {
@@ -43,5 +44,10 @@ class Stock extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to SPK
+    public function spk(){
+        return $this->hasMany(Spk::class);
     }
 }

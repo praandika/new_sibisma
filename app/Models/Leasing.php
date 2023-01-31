@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Sale;
 use App\Models\User;
+use App\Models\Spk;
 
 class Leasing extends Model
 {
@@ -26,5 +27,10 @@ class Leasing extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to SPK
+    public function spk(){
+        return $this->hasMany(Spk::class);
     }
 }

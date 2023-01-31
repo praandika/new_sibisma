@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\SaleDelivery;
 use App\Models\BranchDelivery;
 use App\Models\Dealer;
+use App\Models\Spk;
 
 class Manpower extends Model
 {
@@ -47,5 +48,10 @@ class Manpower extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to SPK
+    public function spk(){
+        return $this->hasMany(Spk::class);
     }
 }

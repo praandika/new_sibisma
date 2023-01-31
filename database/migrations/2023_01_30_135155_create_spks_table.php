@@ -19,15 +19,20 @@ class CreateSpksTable extends Migration
             $table->date('spk_date');
             $table->string('order_name');
             $table->string('address');
-            $table->string('phone')->nullable();
+            $table->string('phone');
             $table->string('stnk_name');
             $table->unsignedInteger('stock_id');
             $table->integer('downpayment');
-            $table->integer('discount');
+            $table->integer('discount')->nullable();
             $table->integer('payment');
             $table->unsignedInteger('leasing_id');
             $table->unsignedInteger('manpower_id');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->enum('payment_method',['cash','credit']);
+            $table->enum('credit_status',['survey','acc','reject','cash']);
+            $table->enum('order_status',['indent','available']);
+            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

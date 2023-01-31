@@ -1,0 +1,260 @@
+@push('after-css')
+<style>
+    input[type=date]:required:invalid::-webkit-datetime-edit {
+        color: transparent;
+    }
+    input[type=date]:focus::-webkit-datetime-edit {
+        color: black !important;
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        text-transform: none;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+    ::placeholder { /* Recent browsers */
+        text-transform: none;
+    }
+</style>
+@endpush
+
+@push('button')
+    @section('button-title','SPK History')
+    @include('component.button-history')
+@endpush
+
+<div class="col-md-12" id="dataCreate">
+    <div class="card">
+        <div class="card-header">
+        <livewire:widget-stock-qty>
+            <span id="color_code" style="
+                width: 10px; height: 50%; 
+                display: inline-block;
+                position: absolute;
+                left: 0px;
+                top: 0px;">
+            </span>
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="card-title">Create SPK | {{ $spk_no }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('spk.store') }}" method="post" id="form">
+                @csrf
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="payment_method" type="text" class="form-control input-border-bottom"
+                                name="payment_method" value="{{ old('payment_method') }}" data-toggle="modal"
+                                data-target=".modalPaymentMethod" style="text-transform: uppercase;" required>
+                            <label for="payment_method" class="placeholder">Choose Payment Method *</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="credit_status" type="text" class="form-control input-border-bottom"
+                                name="credit_status" value="{{ old('credit_status') }}" data-toggle="modal"
+                                data-target=".modalCreditStatus" style="text-transform: uppercase;" required>
+                            <label for="credit_status" class="placeholder">Choose Credit Status *</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="order_status" type="text" class="form-control input-border-bottom"
+                                name="order_status" value="{{ old('order_status') }}" data-toggle="modal"
+                                data-target=".modalOrderStatus" style="text-transform: uppercase;" required>
+                            <label for="order_status" class="placeholder">Choose Order Status *</label>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <div style="border: 1px dashed grey;"></div>
+
+                <input type="hidden" name="spk_no" value="{{ $spk_no }}" required>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="spk_date" type="date" class="form-control input-border-bottom"
+                                name="spk_date" value="{{ old('spk_date') }}" required>
+                            <label for="spk_date" class="placeholder">Date *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="order_name" type="text" class="form-control input-border-bottom" style="text-transform: uppercase;" name="order_name" value="{{ old('order_name') }}" required>
+                            <label for="order_name" class="placeholder">Customer's Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}" style="text-transform: uppercase;" required>
+                            <label for="address" class="placeholder">Customer's Address</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" style="text-transform: uppercase;" required>
+                            <label for="phone" class="placeholder">Customer's Phone</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ old('stnk_name') }}" style="text-transform: uppercase;" required>
+                            <label for="stnk_name" class="placeholder">STNK Name</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
+                            <input id="on_hand" type="hidden" class="form-control input-border-bottom" name="on_hand" value="{{ old('on_hand') }}">
+
+                            <input id="model_name" type="text" class="form-control input-border-bottom"
+                                name="model_name" data-toggle="modal"
+                                data-target=".modalData" value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
+                            <label for="model_name" class="placeholder">Select Unit *</label>
+
+                            <span class="invalid-feedback">
+                                <strong><span id="error-msg"></span></strong>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr" value="{{ old('otr') }}" style="text-transform: uppercase;" required>
+                            <label for="otr" class="placeholder">OTR Price</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ old('downpayment') }}" style="text-transform: uppercase;" required>
+                            <label for="downpayment" class="placeholder">Down Payment</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ old('discount') }}"
+                                placeholder="Discount" style="text-transform: uppercase;" >
+                            <label for="discount" class="placeholder"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment" value="{{ old('payment') }}" style="text-transform: uppercase;" required>
+                            <label for="payment" class="placeholder">Payment</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
+                            <input id="leasing_code" type="text" class="form-control input-border-bottom"
+                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
+                                data-target=".modalLeasing" style="text-transform: uppercase;" required>
+                            <label for="leasing_code" class="placeholder">Select Finance *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="manpower_id" name="manpower_id" value="{{ old('manpower_id') }}" required>
+                            <input id="manpower" type="text" class="form-control input-border-bottom"
+                                name="manpower" value="{{ old('manpower') }}" data-toggle="modal"
+                                data-target=".modalManpower" style="text-transform: uppercase;" required>
+                            <label for="manpower" class="placeholder">Select Manpower *</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group form-floating-label">
+                            <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Description" value="{{ old('description') }}" style="border: 1px dashed #e6e6e6; padding: 10px;"></textarea>
+                            <label for="description" class="placeholder"></label>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                @if(Auth::user()->dealer_code == 'group')
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
+                            <input id="dealer" type="text" class="form-control input-border-bottom"
+                                name="dealer" value="{{ old('dealer') }}" style="text-transform: uppercase;" required>
+                            <label for="dealer" class="placeholder">Dealer *</label>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" style="text-transform: uppercase;" required>
+                @endif
+
+                <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
+                <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section('modal-title','Data Stock')
+@include('component.modal-data')
+@include('component.modal-leasing')
+@include('component.modal-manpower')
+@include('component.modal-payment-method')
+@include('component.modal-credit-status')
+@include('component.modal-order-status')
+
+@push('after-script')
+<script>
+    $(document).ready(function(){
+        $('#form').submit(function(e){
+            let onHand = $('#on_hand').val();
+            let stock = onHand - 1;
+            console.log(onHand);
+            console.log(stock);
+            if (stock < 0) {
+                e.preventDefault();
+                $('#on_hand').addClass('is-invalid');
+                $('#error-msg').text('out of stock!');
+            } else {
+                $('#form').submit();
+            }
+        });
+    });
+
+    $('#on_hand').keypress(function(e){
+        e.preventDefault();
+    });
+
+    $('#on_hand').keydown(function(e){
+        e.preventDefault();
+    });
+
+    // document.addEventListener('contextmenu', function(e){
+    //     e.preventDefault();
+    // });
+</script>
+@endpush

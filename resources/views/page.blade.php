@@ -269,6 +269,15 @@
             @include('component.stu-create')
             @include('component.stu-data')
         @endif
+
+    <!-- Data SPK -->
+    @elseif(Route::is('spk.*'))
+        @if(Route::is('spk.edit'))
+            @include('component.spk-edit')
+        @else
+            @include('component.spk-create')
+            @include('component.spk-data')
+        @endif
         
     @endif
     

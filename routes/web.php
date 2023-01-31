@@ -22,6 +22,7 @@ use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SimpleSaleController;
 use App\Http\Controllers\SimpleOutController;
+use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
 
 /*
@@ -186,6 +187,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stu/delete/{id}', [STUCon
 Route::middleware(['auth:sanctum', 'verified'])->post('/stu/deleteall', [STUController::class, 'deleteall'])->name('stu.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/stu-real-ach', [STUController::class, 'achievement'])->name('info.stu-real-ach');
 // END STU
+
+// SPK
+Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('color.delete');
+// END SPK
 
 // PRINT PDF
 Route::get('print-pdf-tr', function () {

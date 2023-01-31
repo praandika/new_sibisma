@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Spk;
 use App\Http\Controllers\Controller;
+use App\Models\Dealer;
+use App\Models\Leasing;
+use App\Models\Manpower;
+use App\Models\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SpkController extends Controller
 {
@@ -15,7 +21,42 @@ class SpkController extends Controller
      */
     public function index()
     {
-        //
+        $count = SPK::count();
+        $random = Carbon::now('GMT+8')->format('HmsYmd');
+        
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $spk_no = 'SPK'.$count.$random.$dc;
+
+        $leasing = Leasing::all();
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        if ($dc == 'group') {
+            $stock = Stock::orderBy('qty','desc')->get();
+            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
+            ->where('position','Branch Head')
+            ->orWhere('position','Supervisor')
+            ->orWhere('position','Sales Counter')
+            ->orWhere('position','Salesman')
+            ->get();
+            $data = Spk::where('spk_date',$today)->orderBy('id','desc')->get();
+            return view('page', compact('stock','leasing','today','data','manpower','spk_no'));
+        }else{
+            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
+            ->where('dealer_id',$did)
+            ->where('position','Branch Head')
+            ->orWhere('position','Supervisor')
+            ->orWhere('position','Sales Counter')
+            ->orWhere('position','Salesman')
+            ->get();
+            $dealerCode = $dc;
+            $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->where('spk_date',$today)->where('stocks.dealer_id',$did)->orderBy('spks.id','desc')
+            ->select('*','spks.id as id_spk')->get();
+            return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no'));
+        }
     }
 
     /**
