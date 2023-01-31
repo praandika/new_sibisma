@@ -19,20 +19,19 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+            <livewire:widget-stock-qty>
             <h4 class="card-title">SPK Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="display table table-striped table-hover" width="100%">
+                <table id="basic-datatables-spk" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>Status</th>
                             <th>Date</th>
                             <th>SPK No</th>
                             <th>Name</th>
-                            <th>STNK Name</th>
                             <th>Phone</th>
-                            <th>Address</th>
                             <th>Unit</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -40,13 +39,11 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>No</th>
+                            <th>Status</th>
                             <th>Date</th>
                             <th>SPK No</th>
                             <th>Name</th>
-                            <th>STNK Name</th>
                             <th>Phone</th>
-                            <th>Address</th>
                             <th>Unit</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -56,22 +53,29 @@
                         @php($no = 1)
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $no++ }}</td>
+                            <td @if($o->order_status == 'indent') style="color:crimson;" @else style="color:green;" @endif>
+                                {{ ucwords($o->order_status) }}
+                            </td>
                             <td>{{ $o->spk_date }}</td>
                             <td>{{ $o->spk_no }}</td>
                             <td>{{ $o->order_name }}</td>
-                            <td>{{ $o->stnk_name }}</td>
                             <td>{{ $o->phone }}</td>
-                            <td>{{ $o->address }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id : $o->id_sale) }}" class="btnAction"
+                                    <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Show" style="color:orange;"><i
+                                            class="fas fa-eye"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                            class="fas fa-edit"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('spk.delete',$o->id_spk) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                         onclick="return tanya('Yakin hapus sale {{ $o->stock->unit->model_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
-                                    
                                 </div>
                             </td>
                         </tr>
@@ -86,3 +90,14 @@
         </div>
     </div>
 </div>
+
+@push('after-script')
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables-spk').DataTable({
+            "pageLength": 20,
+            "ordering": false
+        });
+    });
+</script>
+@endpush

@@ -39,8 +39,11 @@ class SpkController extends Controller
             ->orWhere('position','Supervisor')
             ->orWhere('position','Sales Counter')
             ->orWhere('position','Salesman')
+            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
-            $data = Spk::where('spk_date',$today)->orderBy('id','desc')->get();
+            $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->where('spk_date',$today)->orderBy('spks.id','desc')
+            ->select('*','spks.id as id_spk')->get();
             return view('page', compact('stock','leasing','today','data','manpower','spk_no'));
         }else{
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
@@ -50,6 +53,7 @@ class SpkController extends Controller
             ->orWhere('position','Supervisor')
             ->orWhere('position','Sales Counter')
             ->orWhere('position','Salesman')
+            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
@@ -82,6 +86,15 @@ class SpkController extends Controller
         } else {
             $discount = $request->discount;
         }
+
+        if ($request->payment_method == 'cash') {
+            $credit_status = 'cash';
+            $leasing = 1;
+        } else {
+            $credit_status = $request->credit_status;
+            $leasing = $request->leasing_id;
+        }
+        
         
         $data = new Spk;
         $data->spk_no = $request->spk_no;
@@ -94,11 +107,11 @@ class SpkController extends Controller
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
         $data->payment = $request->payment;
-        $data->leasing_id = $request->leasing_id;
+        $data->leasing_id = $leasing;
         $data->manpower_id = $request->manpower_id;
         $data->description = $request->description;
         $data->payment_method = $request->payment_method;
-        $data->credit_status = $request->credit_status;
+        $data->credit_status = $credit_status;
         $data->order_status = $request->order_status;
         $data->created_by = Auth::user()->id;
         $data->save();
@@ -158,6 +171,6 @@ class SpkController extends Controller
         ->where('spks.spk_no',$spk_no)
         ->get();
 
-        return view('page', compact('data'));
+        return view('page', compact('data','spk_no'));
     }
 }

@@ -35,7 +35,7 @@
                         </tfoot>
                         <tbody>
                             @forelse($manpower as $o)
-                            <tr data-id="{{ $o->id }}" data-name="{{ $o->name }}" data-position="{{ $o->position }}" data-gender="{{ $o->gender == 'L' ? 'Laki-Laki' : 'Perempuan' }}" class="pilihManpower">
+                            <tr data-id="{{ $o->id_manpower }}" data-name="{{ $o->name }}" data-position="{{ $o->position }}" data-gender="{{ $o->gender == 'L' ? 'Laki-Laki' : 'Perempuan' }}" class="pilihManpower">
                                 <td>{{ $o->name }}</td>
                                 <td>{{ $o->position }}</td>
                                 <td>{{ $o->gender == 'L' ? 'Laki-Laki' : 'Perempuan' }}</td>

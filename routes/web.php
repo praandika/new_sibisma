@@ -202,4 +202,8 @@ Route::get('print-pdf-tr', function () {
 Route::get('print-pdf-tp', function () {
     return view('export.pdf-tp');
 })->name('printtppdf');
+
+Route::get('spk-print/{id}', function () {
+    return view('export.pdf-spk');
+})->name('spkprint');
 // END PRINT PDF

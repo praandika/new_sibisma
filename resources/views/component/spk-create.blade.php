@@ -27,12 +27,14 @@
 @push('button')
     @section('button-title','SPK History')
     @include('component.button-history')
+
+    <button class="btn btn-success btn-round" id="btnCreate" @if(Session::has('display')) style="margin-bottom: 20px; display: none;" @else style="margin-bottom: 20px; display: block;" @endif><i
+        class="fa fa-pencil-alt"></i>&nbsp;&nbsp; <strong>Create SPK</strong> </button>
 @endpush
 
-<div class="col-md-12" id="dataCreate">
+<div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
     <div class="card">
         <div class="card-header">
-        <livewire:widget-stock-qty>
             <span id="color_code" style="
                 width: 10px; height: 50%; 
                 display: inline-block;
@@ -41,8 +43,12 @@
                 top: 0px;">
             </span>
             <div class="row">
-                <div class="col-12">
+                <div class="col-10">
                     <h4 class="card-title">Create SPK | {{ $spk_no }}</h4>
+                </div>
+                <div class="col-2">
+                    <h4 class="card-title" style="text-align: right; cursor: pointer; color: red;" id="btnCloseCreate">
+                        <i class="fas fa-times-circle"></i></h4>
                 </div>
             </div>
         </div>
@@ -54,23 +60,23 @@
                         <div class="form-group form-floating-label">
                             <input id="payment_method" type="text" class="form-control input-border-bottom"
                                 name="payment_method" value="{{ old('payment_method') }}" data-toggle="modal"
-                                data-target=".modalPaymentMethod" style="text-transform: uppercase;" required>
+                                data-target=".modalPaymentMethod" style="text-transform: capitalize;" required>
                             <label for="payment_method" class="placeholder">Choose Payment Method *</label>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="col-credit-status">
                         <div class="form-group form-floating-label">
                             <input id="credit_status" type="text" class="form-control input-border-bottom"
                                 name="credit_status" value="{{ old('credit_status') }}" data-toggle="modal"
-                                data-target=".modalCreditStatus" style="text-transform: uppercase;" required>
-                            <label for="credit_status" class="placeholder">Choose Credit Status *</label>
+                                data-target=".modalCreditStatus" style="text-transform: capitalize;" required>
+                            <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status *</span></label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="order_status" type="text" class="form-control input-border-bottom"
                                 name="order_status" value="{{ old('order_status') }}" data-toggle="modal"
-                                data-target=".modalOrderStatus" style="text-transform: uppercase;" required>
+                                data-target=".modalOrderStatus" style="text-transform: capitalize;" required>
                             <label for="order_status" class="placeholder">Choose Order Status *</label>
                         </div>
                     </div>
@@ -85,28 +91,28 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="spk_date" type="date" class="form-control input-border-bottom"
-                                name="spk_date" value="{{ old('spk_date') }}" required>
+                                name="spk_date" value="{{ $today }}" required>
                             <label for="spk_date" class="placeholder">Date *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="order_name" type="text" class="form-control input-border-bottom" style="text-transform: uppercase;" name="order_name" value="{{ old('order_name') }}" required>
+                            <input id="order_name" type="text" class="form-control input-border-bottom" name="order_name" value="{{ old('order_name') }}" required>
                             <label for="order_name" class="placeholder">Customer's Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}" style="text-transform: uppercase;" required>
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}" required>
                             <label for="address" class="placeholder">Customer's Address</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" style="text-transform: uppercase;" required>
+                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
                         </div>
                     </div>
@@ -115,7 +121,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ old('stnk_name') }}" style="text-transform: uppercase;" required>
+                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ old('stnk_name') }}" required>
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
@@ -127,7 +133,7 @@
 
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal"
-                                data-target=".modalData" value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
+                                data-target=".modalData" value="{{ old('model_name') }}" required>
                             <label for="model_name" class="placeholder">Select Unit *</label>
 
                             <span class="invalid-feedback">
@@ -138,14 +144,14 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr" value="{{ old('otr') }}" style="text-transform: uppercase;" required>
+                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr" value="{{ old('otr') }}" required>
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ old('downpayment') }}" style="text-transform: uppercase;" required>
+                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ old('downpayment') }}" required>
                             <label for="downpayment" class="placeholder">Down Payment</label>
                         </div>
                     </div>
@@ -155,24 +161,24 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ old('discount') }}"
-                                placeholder="Discount" style="text-transform: uppercase;" >
+                                placeholder="Discount" >
                             <label for="discount" class="placeholder"></label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment" value="{{ old('payment') }}" style="text-transform: uppercase;" required>
+                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment" value="{{ old('payment') }}" required>
                             <label for="payment" class="placeholder">Payment</label>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" id="col-leasing">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
-                                data-target=".modalLeasing" style="text-transform: uppercase;" required>
+                                data-target=".modalLeasing" required>
                             <label for="leasing_code" class="placeholder">Select Finance *</label>
                         </div>
                     </div>
@@ -182,7 +188,7 @@
                             <input type="hidden" id="manpower_id" name="manpower_id" value="{{ old('manpower_id') }}" required>
                             <input id="manpower" type="text" class="form-control input-border-bottom"
                                 name="manpower" value="{{ old('manpower') }}" data-toggle="modal"
-                                data-target=".modalManpower" style="text-transform: uppercase;" required>
+                                data-target=".modalManpower" required>
                             <label for="manpower" class="placeholder">Select Manpower *</label>
                         </div>
                     </div>
@@ -204,13 +210,13 @@
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
                             <input id="dealer" type="text" class="form-control input-border-bottom"
-                                name="dealer" value="{{ old('dealer') }}" style="text-transform: uppercase;" required>
+                                name="dealer" value="{{ old('dealer') }}" required>
                             <label for="dealer" class="placeholder">Dealer *</label>
                         </div>
                     </div>
                 </div>
                 @else
-                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" style="text-transform: uppercase;" required>
+                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
                 @endif
 
                 <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
@@ -257,5 +263,40 @@
     // document.addEventListener('contextmenu', function(e){
     //     e.preventDefault();
     // });
+    $(document).ready(function () {
+        $('#btnCreate').click(function () {
+            $(this).css('display', 'none');
+            $('#dataCreate').fadeIn();
+        });
+
+        $('#btnCloseCreate').click(function () {
+            $('#dataCreate').css('display', 'none');
+            $('#btnCreate').fadeIn();
+        });
+    });
+
+    function disable(){
+        let creditStatus = document.getElementById("credit_status");
+        creditStatus.value = 'Cash';
+        creditStatus.setAttribute("disabled",true);
+        document.getElementById("place").innerHTML = "Cash";
+        document.getElementById("col-credit-status").setAttribute("hidden",true);
+
+        document.getElementById("leasing_id").value = '1';
+        document.getElementById("leasing_code").value = 'Cash';
+        document.getElementById("col-leasing").setAttribute("hidden",true);
+    }
+
+    function enable(){
+        let creditStatus = document.getElementById("credit_status");
+        creditStatus.value = '';
+        creditStatus.removeAttribute("disabled");
+        document.getElementById("place").innerHTML = "Choose Credit Status *";
+        document.getElementById("col-credit-status").removeAttribute("hidden");
+
+        document.getElementById("leasing_id").value = '';
+        document.getElementById("leasing_code").value = '';
+        document.getElementById("col-leasing").removeAttribute("hidden");
+    }
 </script>
 @endpush
