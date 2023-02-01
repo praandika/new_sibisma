@@ -15,6 +15,55 @@
     <a href="{{ route('spk.index') }}">Data SPK</a>
 </li>
 @endpush
+    <!-- Status -->
+    @foreach($data as $a)
+    <div class="col-md-4">
+        <div class="card card-dark bg-primary-gradient curves-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method.png') }}" alt="payment method"></div>
+                <h2 class="mb-2">{{ ucwords($a->payment_method) }}</h2>
+                <p>Payment Method</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-dark bg-info-gradient skew-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right">
+                    @if($a->credit_status == 'survey')
+                    <img src="{{ asset('img/survey.png') }}" alt="Survey">
+                    @elseif($a->credit_status == 'acc')
+                    <img src="{{ asset('img/acc.png') }}" alt="Acc">
+                    @elseif($a->credit_status == 'reject')
+                    <img src="{{ asset('img/reject.png') }}" alt="Reject">
+                    @else
+                    <img src="{{ asset('img/cash.png') }}" alt="Cash">
+                    @endif
+                </div>
+                <h2 class="mb-2">{{ ucwords($a->credit_status) }}</h2>
+                <p>Credit Status</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-dark bg-secondary-gradient bubble-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right">
+                    @if($a->order_status == 'indent')
+                    <img src="{{ asset('img/indent.png') }}" alt="Indent">
+                    @else
+                    <img src="{{ asset('img/available.png') }}" alt="Available">
+                    @endif
+                </div>
+                <h2 class="mb-2">{{ ucwords($a->order_status) }}</h2>
+                <p>Order Status</p>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    <!-- END Status -->
 
 <div class="col-md-12">
     <div class="card">
@@ -24,7 +73,9 @@
                     <h4 class="card-title">{{ $spk_no }}</h4>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <a href="{{ url('spk-print/',$spk_no) }}" class="btn btn-primary btn-round" style="margin-bottom: 20px;"><i class="fas fa-print"></i>&nbsp;&nbsp; <strong>Print</strong> </a>
+                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-primary btn-round"
+                        style="margin-bottom: 20px;"><i class="fas fa-print"></i>&nbsp;&nbsp; <strong>Print</strong>
+                    </a>
                 </div>
             </div>
         </div>
@@ -98,40 +149,56 @@
                     <br>
                     <div class="cekbox-container" style="padding-left: 30px;">
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi Pembelian</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi
+                                Pembelian</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi Pengiriman | Tgl_____________</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi Pengiriman
+                                | Tgl_____________</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">PDI</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">PDI</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Valid Data (KTP,KK,KIPEM)</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Valid Data
+                                (KTP,KK,KIPEM)</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">DPACK</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">DPACK</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Kepemilikan Motor</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Kepemilikan
+                                Motor</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Faktur | Tgl_____________</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Faktur |
+                                Tgl_____________</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Tagihan Leasing | Tgl_____________</label>
+                            <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                                for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Tagihan Leasing |
+                                Tgl_____________</label>
                         </div>
 
-                        <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Keterangan" value="{{ old('description') }}" style="border: 1px dashed grey; padding: 10px;"></textarea>
+                        <textarea name="description" id="description" cols="30" rows="10"
+                            class="form-control input-border-bottom" placeholder="Keterangan"
+                            value="{{ old('description') }}" style="border: 1px dashed grey; padding: 10px;"></textarea>
                     </div>
-                    
+
                 </div>
                 @empty
                 <div class="col-md-12">

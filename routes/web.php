@@ -24,6 +24,7 @@ use App\Http\Controllers\SimpleSaleController;
 use App\Http\Controllers\SimpleOutController;
 use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
+use App\Models\Spk;
 
 /*
 |--------------------------------------------------------------------------
@@ -203,7 +204,12 @@ Route::get('print-pdf-tp', function () {
     return view('export.pdf-tp');
 })->name('printtppdf');
 
-Route::get('spk-print/{id}', function () {
-    return view('export.pdf-spk');
+Route::get('spk-print/{id}', function ($spk_no) {
+    $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
+    ->join('leasings','spks.leasing_id','=','leasings.id')
+    ->join('manpowers','spks.manpower_id','=','manpowers.id')
+    ->where('spks.spk_no',$spk_no)
+    ->get();
+    return view('export.pdf-spk', compact('data'));
 })->name('spkprint');
 // END PRINT PDF
