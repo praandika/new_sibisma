@@ -4,6 +4,9 @@
         font-size: 20px;
     }
 
+    .print-pdf:focus{
+        color: #ffffff;
+    }
 </style>
 @endpush
 
@@ -73,8 +76,8 @@
                     <h4 class="card-title">{{ $spk_no }}</h4>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-primary btn-round"
-                        style="margin-bottom: 20px;"><i class="fas fa-print"></i>&nbsp;&nbsp; <strong>Print</strong>
+                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-primary btn-round print-pdf"
+                        style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Export PDF</strong>
                     </a>
                 </div>
             </div>
