@@ -204,12 +204,5 @@ Route::get('print-pdf-tp', function () {
     return view('export.pdf-tp');
 })->name('printtppdf');
 
-Route::get('spk-print/{id}', function ($spk_no) {
-    $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
-    ->join('leasings','spks.leasing_id','=','leasings.id')
-    ->join('manpowers','spks.manpower_id','=','manpowers.id')
-    ->where('spks.spk_no',$spk_no)
-    ->get();
-    return view('export.pdf-spk', compact('data'));
-})->name('spkprint');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-print/{id}', [SpkController::class, 'printPDF'])->name('spk.print');
 // END PRINT PDF

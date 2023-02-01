@@ -11,6 +11,7 @@ use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class SpkController extends Controller
 {
@@ -172,5 +173,16 @@ class SpkController extends Controller
         ->get();
 
         return view('page', compact('data','spk_no'));
+    }
+
+    public function printPDF($spk_no){
+        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
+        ->join('leasings','spks.leasing_id','=','leasings.id')
+        ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->where('spks.spk_no',$spk_no)
+        ->get();
+
+        $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no'));
+        return $pdf->download('spk_'.$spk_no.'.pdf');
     }
 }
