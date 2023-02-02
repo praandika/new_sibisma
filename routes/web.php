@@ -193,6 +193,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stu-real-ach', [STUContro
 Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id}', [SpkController::class, 'get'])->name('spk.get');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [SpkController::class, 'history'])->name('spk.history');
 // END SPK
 
 // PRINT PDF
@@ -205,4 +206,5 @@ Route::get('print-pdf-tp', function () {
 })->name('printtppdf');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('spk-print/{id}', [SpkController::class, 'printPDF'])->name('spk.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-download/{id}', [SpkController::class, 'downloadPDF'])->name('spk.download');
 // END PRINT PDF

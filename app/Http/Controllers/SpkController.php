@@ -165,10 +165,46 @@ class SpkController extends Controller
         //
     }
 
+    public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk')->limit(50)->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk')->limit(50)->get();
+            }
+            
+        } else {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->whereBetween('spk_date',[$req->start, $req->end])
+                ->orderBy('spk_date','desc')
+                ->select('*','spks.id as id_spk')->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('spk_date',[$req->start, $req->end])
+                ->orderBy('spk_date','desc')
+                ->select('*','spks.id as id_spk')->get();
+            }
+        }
+        return view('page', compact('data','start','end'));
+    }
+
     public function get($spk_no){
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->select('*','spks.address as customer_address')
         ->where('spks.spk_no',$spk_no)
         ->get();
 
@@ -176,13 +212,38 @@ class SpkController extends Controller
     }
 
     public function printPDF($spk_no){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealer = Dealer::where('dealer_code',$dc)->get();
+
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->select('*','spks.address as customer_address')
         ->where('spks.spk_no',$spk_no)
         ->get();
+        $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
-        $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no'));
+        $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no','printDate','dealer'));
+        $pdf->setPaper('A5', 'landscape');
+        return $pdf->stream('spk_'.$spk_no.'.pdf');
+    }
+
+    public function downloadPDF($spk_no){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealer = Dealer::where('dealer_code',$dc)->get();
+
+        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
+        ->join('leasings','spks.leasing_id','=','leasings.id')
+        ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->select('*','spks.address as customer_address')
+        ->where('spks.spk_no',$spk_no)
+        ->get();
+        $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
+
+        $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no','printDate','dealer'));
+        $pdf->setPaper('A5', 'landscape');
         return $pdf->download('spk_'.$spk_no.'.pdf');
     }
 }

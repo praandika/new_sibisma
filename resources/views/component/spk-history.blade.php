@@ -12,7 +12,13 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('sale.index') }}">Data SPK</a>
+    <a href="{{ route('out.index') }}">Data SPK</a>
+</li>
+<li class="separator">
+    <i class="flaticon-right-arrow"></i>
+</li>
+<li class="nav-item">
+    <a href="#">History</a>
 </li>
 @endpush
 
@@ -50,8 +56,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @php($no = 1)
-                        @forelse($data as $o)
+                    @forelse($data as $o)
                         <tr>
                             <td @if($o->order_status == 'indent') style="color:crimson;" @else style="color:green;" @endif>
                                 {{ ucwords($o->order_status) }}
@@ -90,14 +95,3 @@
         </div>
     </div>
 </div>
-
-@push('after-script')
-<script>
-    $(document).ready(function () {
-        $('#basic-datatables-spk').DataTable({
-            "pageLength": 20,
-            "ordering": false
-        });
-    });
-</script>
-@endpush

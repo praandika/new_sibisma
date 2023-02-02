@@ -76,8 +76,12 @@
                     <h4 class="card-title">{{ $spk_no }}</h4>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-primary btn-round print-pdf"
-                        style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Export PDF</strong>
+                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
+                        style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
+                    </a>
+                    &nbsp;
+                    <a href="{{ url('spk-download',$spk_no) }}" class="btn btn-success btn-round print-pdf"
+                        style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Download PDF</strong>
                     </a>
                 </div>
             </div>
@@ -101,7 +105,7 @@
                         </tr>
                         <tr>
                             <th width="200">Alamat</th>
-                            <td>: {{ $o->address }}</td>
+                            <td>: {{ $o->customer_address }}</td>
                         </tr>
                         <tr>
                             <th width="200">No. Telp</th>
@@ -171,7 +175,7 @@
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
                             <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
                                 for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Valid Data
-                                (KTP,KK,KIPEM)</label>
+                                (KTP,KK,Domisili)</label>
                         </div>
 
                         <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">

@@ -8,131 +8,200 @@
     <title>SPK {{ $spk_no }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <style>
+        *{
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Signika Negative', sans-serif;
+            font-family: sans-serif;
+            font-size: 9px;
+        }
+
+        .title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        table tr th,
+        table tr th {
+            padding: 5px;
+        }
+
+        .left {
+            float: left;
+            width: 50%;
+            margin-top: 50px;
+        }
+
+        .right {
+            float: right;
+            text-align: left;
+            width: 50%;
+            margin-top: 50px;
+        }
+
+        footer {
+            position: fixed; 
+            bottom: 0px; 
+            left: 0px; 
+            right: 0px;
+            font-size: 9px;
+        }
+
+        header {
+            position: fixed; 
+            top: 0px; 
+            left: 0px; 
+            right: 0px;
+            font-size: 9px;
+            border-bottom: 1px solid grey;
+            padding-bottom: 5px;
+        }
+
+        .container-img{
+            position: relative;
+        }
+
+        .container-img .info-dealer{
+            position: absolute;
+            top: -1px;
+        }
+
+        .container-logo{
+            margin: auto;
+            width: 50%;
         }
 
     </style>
 </head>
 
 <body>
-    <div class="row">
-        @forelse($data as $o)
-        <div class="col-md-6">
-            <center>
-                <h2>SURAT PESANAN KENDARAAN (SPK)</h2>
-            </center>
-            <br>
-            <table class="table table-striped">
-                <tr>
-                    <th width="200">Tanggal</th>
-                    <td>: {{ $o->spk_date }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Nama Pemesan</th>
-                    <td>: {{ $o->order_name }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Alamat</th>
-                    <td>: {{ $o->address }}</td>
-                </tr>
-                <tr>
-                    <th width="200">No. Telp</th>
-                    <td>: {{ $o->phone }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Nama STNK & BPKB</th>
-                    <td>: {{ $o->stnk_name }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Type Motor</th>
-                    <td>: {{ $o->stock->unit->model_name }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Harga OTR</th>
-                    <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Uang Muka</th>
-                    <td>: Rp {{ number_format($o->downpayment, 0, ',','.') }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Potongan</th>
-                    <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Pembayaran</th>
-                    <td>: Rp {{ number_format($o->payment, 0, ',','.') }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Finance</th>
-                    <td>: {{ $o->leasing_code }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Salesman</th>
-                    <td>: {{ $o->manpower->name }}</td>
-                </tr>
-                <tr>
-                    <th width="200">Keterangan</th>
-                    <td>: {{ $o->description }}</td>
-                </tr>
-            </table>
+    <header>
+        <div class="container-img">
+            <div class="container-logo">
+                <img src="img/logo-bisma.png" alt="BISMA" width="100px">
+                &nbsp;
+                @foreach($dealer as $a)
+                    <div class="info-dealer">
+                        <span style="font-weight: bold; font-size: 14px;">{{ $a->dealer_name }}</span><br>
+                        <span style="font-size: 10px;">{{ $a->address }}</span>
+                    </div>
+                @endforeach
+            </div>
         </div>
-        <div class="col-md-6">
-            <center>
-                <h2>FORM SPK Processing</h2>
-            </center>
-            <br>
-            <div class="cekbox-container" style="padding-left: 30px;">
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi Pembelian</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Konfirmasi Pengiriman |
-                        Tgl_____________</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">PDI</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Valid Data
-                        (KTP,KK,KIPEM)</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">DPACK</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Kepemilikan Motor</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Faktur |
-                        Tgl_____________</label>
-                </div>
-
-                <div class="cekbox-input" style="position: relative; margin-bottom: 15px;">
-                    <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                        for="konfirmasiPembelian" style="position: relative; bottom: 1px;">Tagihan Leasing |
-                        Tgl_____________</label>
-                </div>
-
-                <textarea name="description" id="description" cols="30" rows="10"
-                    class="form-control input-border-bottom" placeholder="Keterangan" value="{{ old('description') }}"
-                    style="border: 1px dashed grey; padding: 10px;"></textarea>
+    </header>
+    @forelse($data as $o)
+    <div class="left">
+        <center>
+            <p class="title">SURAT PESANAN KENDARAAN (SPK)</p>
+        </center>
+        <table>
+            <tr>
+                <th>Tanggal</th>
+                <td>: {{ $o->spk_date }}</td>
+            </tr>
+            <tr>
+                <th>Nama Pemesan</th>
+                <td>: {{ $o->order_name }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>: {{ $o->customer_address }}</td>
+            </tr>
+            <tr>
+                <th>No. Telp</th>
+                <td>: {{ $o->phone }}</td>
+            </tr>
+            <tr>
+                <th>Nama STNK & BPKB</th>
+                <td>: {{ $o->stnk_name }}</td>
+            </tr>
+            <tr>
+                <th>Type Motor</th>
+                <td>: {{ $o->stock->unit->model_name }}</td>
+            </tr>
+            <tr>
+                <th>Harga OTR</th>
+                <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
+            </tr>
+            <tr>
+                <th>Uang Muka</th>
+                <td>: Rp {{ number_format($o->downpayment, 0, ',','.') }}</td>
+            </tr>
+            <tr>
+                <th>Potongan</th>
+                <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
+            </tr>
+            <tr>
+                <th>Pembayaran</th>
+                <td>: Rp {{ number_format($o->payment, 0, ',','.') }}</td>
+            </tr>
+            <tr>
+                <th>Finance</th>
+                <td>: {{ $o->leasing_code }}</td>
+            </tr>
+            <tr>
+                <th>Salesman</th>
+                <td>: {{ $o->manpower->name }}</td>
+            </tr>
+            <tr>
+                <th>Keterangan</th>
+                <td>: {{ $o->description }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="right" style="font-size: 11px;">
+        <center>
+            <p class="title">FORM SPK Processing</p>
+        </center>
+        <div class="cekbox-container" style="padding-left: 30px;">
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Konfirmasi Pembelian</label>
             </div>
 
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Konfirmasi Pengiriman |
+                    Tgl_____________</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">PDI</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Valid Data
+                    (KTP,KK,Domisili)</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">DPACK</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Kepemilikan Motor</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Faktur |
+                    Tgl_____________</label>
+            </div>
+
+            <div class="cekbox-input" style="position: relative;">
+                <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Tagihan Leasing |
+                    Tgl_____________</label>
+            </div>
+            <br>
+            <label for="description">Keterangan:</label>
+
+            <div style="width: 300px; height: 120px; border: 1px solid grey;"></div>
         </div>
         @empty
         <div class="col-md-12">
@@ -140,6 +209,15 @@
         </div>
         @endforelse
     </div>
+
+    <footer>
+        <div style="float: right; width: 50%; font-size: 8px;">
+            {{ $spk_no }} | &copy; Sibisma
+        </div>
+        <div style="float: left; width: 50%; text-align: right; font-size: 8px;">
+            Printed at {{ $printDate }} WITA
+        </div>
+    </footer>
 </body>
 
 </html>
