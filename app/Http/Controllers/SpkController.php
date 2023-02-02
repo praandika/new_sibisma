@@ -49,13 +49,15 @@ class SpkController extends Controller
         }else{
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where('dealer_id',$did)
+            ->where('manpowers.dealer_id',$did)
             ->where('position','Branch Head')
             ->orWhere('position','Supervisor')
             ->orWhere('position','Sales Counter')
             ->orWhere('position','Salesman')
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
+            dd($dc, $did, $manpower);
+
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
             ->where('spk_date',$today)->where('stocks.dealer_id',$did)->orderBy('spks.id','desc')
