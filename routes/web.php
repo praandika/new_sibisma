@@ -18,6 +18,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleDeliveryController;
 use App\Http\Controllers\BranchDeliveryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeliveryOrderController;
+use App\Http\Controllers\KwitansiController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SimpleSaleController;
@@ -195,6 +197,18 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id}', [SpkContro
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [SpkController::class, 'history'])->name('spk.history');
 // END SPK
+
+// DO
+Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', DeliveryOrderController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order/get/{id}', [DeliveryOrderController::class, 'get'])->name('delivery-order.get');
+Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order-history/{date?}', [DeliveryOrderController::class, 'history'])->name('delivery-order.history');
+// END DO
+
+// KWITANSI
+Route::middleware(['auth:sanctum', 'verified'])->resource('kwitansi', KwitansiController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/kwitansi/get/{id}', [KwitansiController::class, 'get'])->name('kwitansi.get');
+Route::middleware(['auth:sanctum', 'verified'])->get('/kwitansi-history/{date?}', [KwitansiController::class, 'history'])->name('kwitansi.history');
+// END KWITANSI
 
 // PRINT PDF
 Route::get('print-pdf-tr', function () {
