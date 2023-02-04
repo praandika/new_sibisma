@@ -15,70 +15,92 @@
                         <thead>
                             <tr>
                                 <th>Position</th>
+                                <th>Category</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="pilihPosition" data-pos="Branch Head">
+                            <tr class="pilihPosition" data-pos="Branch Head" data-cat="SAL">
                                 <td>Branch Head</td>
+                                <td>SAL</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Supervisor">
+                            <tr class="pilihPosition" data-pos="Supervisor" data-cat="SAL">
                                 <td>Supervisor</td>
+                                <td>SAL</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Sales Counter">
+                            <tr class="pilihPosition" data-pos="Sales Counter" data-cat="SAL">
                                 <td>Sales Counter</td>
+                                <td>SAL</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Salesman">
+                            <tr class="pilihPosition" data-pos="Salesman" data-cat="SAL">
                                 <td>Salesman</td>
+                                <td>SAL</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Service Advisor">
+                            <tr class="pilihPosition" data-pos="Service Advisor" data-cat="SVC">
                                 <td>Service Advisor</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Chief Mechanic">
+                            <tr class="pilihPosition" data-pos="Chief Mechanic" data-cat="SVC">
                                 <td>Chief Mechanic</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Mechanic">
+                            <tr class="pilihPosition" data-pos="Mechanic" data-cat="SVC">
                                 <td>Mechanic</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Mechanic Helper">
+                            <tr class="pilihPosition" data-pos="Mechanic Helper" data-cat="SVC">
                                 <td>Mechanic Helper</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Service Counter">
+                            <tr class="pilihPosition" data-pos="Service Counter" data-cat="SVC">
                                 <td>Service Counter</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Workshop Head">
+                            <tr class="pilihPosition" data-pos="Workshop Head" data-cat="SVC">
                                 <td>Workshop Head</td>
+                                <td>SVC</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Sparepart Counter">
+                            <tr class="pilihPosition" data-pos="Sparepart Counter" data-cat="SP">
                                 <td>Sparepart Counter</td>
+                                <td>SP</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Cashier">
+                            <tr class="pilihPosition" data-pos="Cashier" data-cat="ADMIN">
                                 <td>Cashier</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Administration">
+                            <tr class="pilihPosition" data-pos="Administration" data-cat="ADMIN">
                                 <td>Administration</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Invoice Admin">
+                            <tr class="pilihPosition" data-pos="Invoice Admin" data-cat="ADMIN">
                                 <td>Invoice Admin</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Tax Admin">
+                            <tr class="pilihPosition" data-pos="Tax Admin" data-cat="ADMIN">
                                 <td>Tax Admin</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Sparepart Admin">
+                            <tr class="pilihPosition" data-pos="Sparepart Admin" data-cat="SP">
                                 <td>Sparepart Admin</td>
+                                <td>SP</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Finance">
+                            <tr class="pilihPosition" data-pos="Finance" data-cat="ADMIN">
                                 <td>Finance</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Accounting">
+                            <tr class="pilihPosition" data-pos="Accounting" data-cat="ADMIN">
                                 <td>Accounting</td>
+                                <td>ADMIN</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Driver">
+                            <tr class="pilihPosition" data-pos="Driver" data-cat="OPT">
                                 <td>Driver</td>
+                                <td>OPT</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Pre Delivery Inspection">
+                            <tr class="pilihPosition" data-pos="Pre Delivery Inspection" data-cat="OPT">
                                 <td>Pre Delivery Inspection</td>
+                                <td>OPT</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="CRM">
+                            <tr class="pilihPosition" data-pos="CRM" data-cat="CRM">
+                                <td>CRM</td>
                                 <td>CRM</td>
                             </tr>
                         </tbody>
@@ -97,6 +119,7 @@
 <script>
     $(document).on('click', '.pilihPosition', function (e) {
         $('#position').val($(this).attr('data-pos'));
+        $('#category').val($(this).attr('data-cat'));
         $('.modalPosition').modal('hide');
     });
 </script>

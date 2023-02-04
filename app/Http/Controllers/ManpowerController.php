@@ -61,6 +61,7 @@ class ManpowerController extends Controller
         $data->gender = $req->gender;
         $data->join_date = $req->join_date;
         $data->position = $req->position;
+        $data->category = $req->category;
         $data->years_of_service = $req->yos;
         $data->education = $req->education;
         $data->created_by = Auth::user()->id;
@@ -121,6 +122,7 @@ class ManpowerController extends Controller
             'resign_date' => $req->resign_date,
             'status' => $req->status,
             'position' => $req->position,
+            'category' => $req->category,
             'years_of_service' => $req->yos,
             'education' => $req->education,
             'updated_by' => Auth::user()->id,

@@ -36,10 +36,7 @@ class SpkController extends Controller
         if ($dc == 'group') {
             $stock = Stock::orderBy('qty','desc')->get();
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where('position','Branch Head')
-            ->orWhere('position','Supervisor')
-            ->orWhere('position','Sales Counter')
-            ->orWhere('position','Salesman')
+            ->where('manpowers.category','SAL')
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
@@ -49,14 +46,12 @@ class SpkController extends Controller
         }else{
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where('manpowers.dealer_id',$did)
-            ->where('position','Branch Head')
-            ->orWhere('position','Supervisor')
-            ->orWhere('position','Sales Counter')
-            ->orWhere('position','Salesman')
+            ->where([
+                ['manpowers.dealer_id',$did],
+                ['manpowers.category','SAL']
+            ])
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
-            dd($dc, $did, $manpower);
 
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')

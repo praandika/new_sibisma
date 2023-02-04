@@ -236,21 +236,21 @@
 
 @push('after-script')
 <script>
-    $(document).ready(function(){
-        $('#form').submit(function(e){
-            let onHand = $('#on_hand').val();
-            let stock = onHand - 1;
-            console.log(onHand);
-            console.log(stock);
-            if (stock < 0) {
-                e.preventDefault();
-                $('#on_hand').addClass('is-invalid');
-                $('#error-msg').text('out of stock!');
-            } else {
-                $('#form').submit();
-            }
-        });
-    });
+    // $(document).ready(function(){
+    //     $('#form').submit(function(e){
+    //         let onHand = $('#on_hand').val();
+    //         let stock = onHand - 1;
+    //         console.log(onHand);
+    //         console.log(stock);
+    //         if (stock < 0) {
+    //             e.preventDefault();
+    //             $('#on_hand').addClass('is-invalid');
+    //             $('#error-msg').text('out of stock!');
+    //         } else {
+    //             $('#form').submit();
+    //         }
+    //     });
+    // });
 
     $('#on_hand').keypress(function(e){
         e.preventDefault();

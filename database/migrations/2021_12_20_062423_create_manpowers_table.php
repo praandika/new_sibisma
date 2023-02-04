@@ -26,6 +26,7 @@ class CreateManpowersTable extends Migration
             $table->date('join_date');
             $table->date('resign_date')->nullable();
             $table->string('position');
+            $table->string('category');
             $table->string('years_of_service')->nullable();
             $table->string('education')->nullable();
             $table->unsignedInteger('created_by');

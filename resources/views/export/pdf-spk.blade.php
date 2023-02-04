@@ -8,9 +8,10 @@
     <title>SPK {{ $spk_no }}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <style>
-        *{
+        * {
             box-sizing: border-box;
         }
+
         body {
             font-family: sans-serif;
             font-size: 9px;
@@ -41,35 +42,35 @@
         }
 
         footer {
-            position: fixed; 
-            bottom: 0px; 
-            left: 0px; 
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
             right: 0px;
             font-size: 9px;
         }
 
         header {
-            position: fixed; 
-            top: 0px; 
-            left: 0px; 
+            position: fixed;
+            top: 0px;
+            left: 0px;
             right: 0px;
             font-size: 9px;
             border-bottom: 1px solid grey;
             padding-bottom: 5px;
         }
 
-        .container-img{
+        .container-img {
             position: relative;
         }
 
-        .container-img .info-dealer{
+        .container-img .info-dealer {
             position: absolute;
             top: -1px;
         }
 
-        .container-logo{
+        .container-logo {
             margin: auto;
-            width: 50%;
+            width: 100%;
         }
 
     </style>
@@ -82,11 +83,12 @@
                 <img src="img/logo-bisma.png" alt="BISMA" width="100px">
                 &nbsp;
                 @foreach($dealer as $a)
-                    <div class="info-dealer">
-                        <span style="font-weight: bold; font-size: 14px;">{{ $a->dealer_name }}</span><br>
-                        <span style="font-size: 10px;">{{ $a->address }}</span>
-                    </div>
+                <div class="info-dealer">
+                    <span style="font-weight: bold; font-size: 14px;">{{ $a->dealer_name }}</span><br>
+                    <span style="font-size: 10px;">{{ $a->address }}</span>
+                </div>
                 @endforeach
+                <img src="img/semakin-didepan.png" alt="BISMA" width="150px" style="position: absolute; right: 0px;">
             </div>
         </div>
     </header>
