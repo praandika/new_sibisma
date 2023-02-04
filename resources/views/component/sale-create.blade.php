@@ -42,14 +42,16 @@
             </span>
             <div class="row">
                 <div class="col-12">
-                    <h4 class="card-title">Add Sales</h4>
+                    <h4 class="card-title">Add Sales <span id="spk_no" style="font-weight: bold;"></span></h4>
                 </div>
             </div>
         </div>
         <div class="card-body">
             <form action="{{ route('sale.store') }}" method="post" id="form">
                 @csrf
-
+            
+                <input type="hidden" name="spk_no" id="spk" value="{{ old('spk_no') }}" required>
+                <input type="hidden" name="spk_id" id="spk_id" value="{{ old('spk_id') }}" required>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
@@ -64,8 +66,8 @@
                             <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal"
-                                data-target=".modalData" value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
-                            <label for="model_name" class="placeholder">Select Stock *</label>
+                                data-target=".modalSPK" value="{{ old('model_name') }}" style="text-transform: uppercase;" required>
+                            <label for="model_name" class="placeholder">Select SPK *</label>
                         </div>
                     </div>
 
@@ -103,9 +105,8 @@
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
-                                data-target=".modalLeasing" style="text-transform: uppercase;" required>
-                            <label for="leasing_code" class="placeholder">Select Leasing *</label>
+                                name="leasing_code" value="{{ old('leasing_code') }}" style="text-transform: uppercase;" required>
+                            <label for="leasing_code" class="placeholder">Leasing *</label>
                         </div>
                     </div>
                     
@@ -184,9 +185,7 @@
     </div>
 </div>
 
-@section('modal-title','Data Stock')
-@include('component.modal-data')
-@include('component.modal-leasing')
+@include('component.modal-spk')
 <livewire:modal-dealer/>
 
 @push('after-script')

@@ -26,6 +26,7 @@ class CreateSalesTable extends Migration
             $table->string('engine_no')->nullable();
             $table->enum('status',['pending','delivered']);
             $table->unsignedInteger('leasing_id');
+            $table->string('spk')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

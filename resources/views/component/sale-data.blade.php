@@ -72,7 +72,7 @@
                             @endif
                             <td>{{ $o->sale_qty }}</td>
                             <td>{{ $o->leasing->leasing_code }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id : $o->id_sale) }}" class="btnAction"

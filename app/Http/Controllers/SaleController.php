@@ -12,6 +12,7 @@ use App\Models\Leasing;
 use App\Models\Stock;
 use App\Models\Document;
 use App\Models\Log;
+use App\Models\Spk;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -29,20 +30,35 @@ class SaleController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
 
         $dealer = Dealer::all();
-        $leasing = Leasing::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         if ($dc == 'group') {
-            $stock = Stock::orderBy('qty','desc')->get();
+            $stock = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('leasings','spks.leasing_id','leasings.id')
+            ->where('spks.sale_status','pending')
+            ->orderBy('stocks.qty','desc')
+            ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
             $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
-            return view('page', compact('stock','leasing','today','data','dealer'));
+            return view('page', compact('stock','today','data','dealer'));
         }else{
-            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $stock = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('leasings','spks.leasing_id','leasings.id')
+            ->where('stocks.dealer_id',$did)
+            ->where('spks.sale_status','pending')
+            ->orderBy('stocks.qty','desc')
+            ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
             $dealerCode = $dc;
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->join('users','sales.created_by','users.id')
             ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
-            ->select('*','sales.id as id_sale')->get();
-            return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
+            ->select('*','sales.id as id_sale','users.first_name')->get();
+            return view('page', compact('stock','today','data','dealer','dealerCode'));
         }
         
     }
@@ -170,6 +186,7 @@ class SaleController extends Controller
             $data->frame_no = strtoupper($req->frame_no);
             $data->engine_no = $req->engine_no;
             $data->leasing_id = $req->leasing_id;
+            $data->spk = $req->spk_no;
             $data->created_by = Auth::user()->id;
             $data->updated_by = Auth::user()->id;
             $data->save();
@@ -302,6 +319,12 @@ class SaleController extends Controller
             }
             /** ============== END Create Or Update Stock History ============== */ 
 
+            // Update SPK
+            $spk = Spk::find($req->spk_id);
+            $spk->sale_status = 'sold';
+            $spk->update();
+            // END Update SPK
+
             // Write log
             $log = new Log;
             $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
@@ -372,6 +395,10 @@ class SaleController extends Controller
 
         // Get Deleted QTY
         $delQty = Sale::where('id',$id)->sum('sale_qty');
+
+        // Get SPK no
+        $spk_no = Sale::where('id',$id)->pluck('spk');
+        $spk_no = $spk_no[0];
 
         // Update Stock
         $updateStock = $latestStock + $delQty;
@@ -470,6 +497,12 @@ class SaleController extends Controller
             $docId = Document::where('sale_id',$id)->pluck('id');
             Document::where('id',$docId)->delete();
         }
+
+        // Update SPK
+        Spk::where('spk_no',$spk_no)->update([
+            'sale_status' => 'pending',
+        ]);
+        // END Update SPK
 
         // Write log
         $log = new Log;

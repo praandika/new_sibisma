@@ -31,6 +31,7 @@ class CreateSpksTable extends Migration
             $table->enum('payment_method',['cash','credit']);
             $table->enum('credit_status',['survey','acc','reject','cash']);
             $table->enum('order_status',['indent','available']);
+            $table->enum('sale_status',['pending','sold']);
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

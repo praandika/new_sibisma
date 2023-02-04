@@ -30,7 +30,7 @@ class SpkController extends Controller
 
         $spk_no = 'SPK'.$count.$random.$dc;
 
-        $leasing = Leasing::all();
+        $leasing = Leasing::where('leasing_code','!=','CASH')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         if ($dc == 'group') {
@@ -111,6 +111,7 @@ class SpkController extends Controller
         $data->payment_method = $request->payment_method;
         $data->credit_status = $credit_status;
         $data->order_status = $request->order_status;
+        $data->sale_status = 'pending';
         $data->created_by = Auth::user()->id;
         $data->save();
         toast('SPK berhasil dibuat','success');
