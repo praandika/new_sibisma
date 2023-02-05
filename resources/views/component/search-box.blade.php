@@ -22,6 +22,10 @@
                                 {{ route('document.history') }}
                             @elseif(Route::is('spk.*'))
                                 {{ route('spk.history') }}
+                            @elseif(Route::is('delivery-order.*'))
+                                {{ route('delivery-order.history') }}
+                            @elseif(Route::is('kwitansi.*'))
+                                {{ route('kwitansi.history') }}
                             @elseif(Route::is('log'))
                                 {{ route('log') }}
                             @elseif(Route::is('opname.*'))
@@ -44,7 +48,7 @@
                                 <button class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Search"><i class="fas fa-search"></i></button>
                             </div>
                         <!-- END FORM -->
-                            <div class="input-group-prepend {{ $start == null || $end == null ? 'd-none' : 'd-block' }}">
+                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('spk.*') || Route::is('delivery-order.*') || Route::is('kwitansi.*') ? 'd-none' : 'd-block' }}">
                                 <a href="
                                 @if(Route::is('sale.*'))
                                     {{ url('report/sale/'.$start.'/'.$end) }}

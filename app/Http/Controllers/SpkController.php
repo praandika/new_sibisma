@@ -57,9 +57,12 @@ class SpkController extends Controller
 
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->where('stocks.dealer_id',$did)
-            ->where('credit_status','survey')
-            ->orWhere('order_status','indent')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->where('dealers.dealer_code',$dc)
+            ->where(function($query){
+                $query->where('credit_status','survey')
+                      ->orWhere('order_status','indent');
+            })
             ->orderBy('spks.id','desc')
             ->select('*','spks.id as id_spk')->get();
             return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no'));

@@ -292,6 +292,15 @@
         @else
             @include('component.delivery-order-data')
         @endif
+
+        <!-- Data Kwitansi -->
+    @elseif(Route::is('kwitansi.*'))
+        @if(Route::is('kwitansi.history'))
+            @include('component.search-box')
+            @include('component.kwitansi-history')
+        @else
+            @include('component.kwitansi-data')
+        @endif
         
     @endif
     

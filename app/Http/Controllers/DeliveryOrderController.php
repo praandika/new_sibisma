@@ -71,6 +71,7 @@ class DeliveryOrderController extends Controller
     public function printPDF($id){
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealer = Dealer::where('dealer_code',$dc)->get();
 
         $name = Sale::where('id',$id)->pluck('customer_name');
         $name = $name[0];
@@ -87,7 +88,7 @@ class DeliveryOrderController extends Controller
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
-        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate'));
+        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
         return $pdf->stream('spk_'.$name.'-'.$unit.'.pdf');
     }
@@ -95,6 +96,7 @@ class DeliveryOrderController extends Controller
     public function downloadPDF($id){
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealer = Dealer::where('dealer_code',$dc)->get();
 
         $name = Sale::where('id',$id)->pluck('customer_name');
         $name = $name[0];
@@ -105,10 +107,14 @@ class DeliveryOrderController extends Controller
         ->pluck('model_name');
         $unit = $unit[0];
 
+        $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
+        ->where('sales.id',$id)
+        ->get();
+
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
-        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate'));
+        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
-        return $pdf->download('spk_'.$name.'-'.$unit.'.pdf');;
+        return $pdf->download('DO_'.$name.'-'.$unit.'.pdf');
     }
 }
