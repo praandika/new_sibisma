@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliveryOrder;
 use App\Http\Controllers\Controller;
+use App\Models\Dealer;
+use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class DeliveryOrderController extends Controller
 {
@@ -15,72 +20,95 @@ class DeliveryOrderController extends Controller
      */
     public function index()
     {
-        //
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        if ($dc == 'group') {
+            $data = Sale::orderBy('id','desc')->get();
+        } else {
+            $data = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->join('users','sales.created_by','users.id')
+            ->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
+            ->select('*','sales.id as id_sale','users.first_name')->get();
+        }
+        return view('page', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            if ($dc == 'group') {
+                $data = Sale::orderBy('id','desc')->limit(50)->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')
+                ->limit(50)->get();
+            }
+            
+        } else {
+            if ($dc == 'group') {
+                $data = Sale::orderBy('id','desc')
+                ->whereBetween('sale_date',[$req->start, $req->end])->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('sale_date',[$req->start, $req->end])
+                ->orderBy('sales.id','desc')
+                ->get();
+            }
+        }
+        return view('page', compact('data','start','end'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function printPDF($id){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $name = Sale::where('id',$id)->pluck('customer_name');
+        $name = $name[0];
+
+        $unit = Sale::join('stocks','sales.stock_id','=','stocks.id')
+        ->join('units','stocks.unit_id','=','units.id')
+        ->where('sales.id',$id)
+        ->pluck('model_name');
+        $unit = $unit[0];
+
+        $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
+        ->where('sales.id',$id)
+        ->get();
+
+        $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
+
+        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate'));
+        $pdf->setPaper('A5', 'potrait');
+        return $pdf->stream('spk_'.$name.'-'.$unit.'.pdf');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DeliveryOrder  $deliveryOrder
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DeliveryOrder $deliveryOrder)
-    {
-        //
-    }
+    public function downloadPDF($id){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DeliveryOrder  $deliveryOrder
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DeliveryOrder $deliveryOrder)
-    {
-        //
-    }
+        $name = Sale::where('id',$id)->pluck('customer_name');
+        $name = $name[0];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DeliveryOrder  $deliveryOrder
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DeliveryOrder $deliveryOrder)
-    {
-        //
-    }
+        $unit = Sale::join('stocks','sales.stock_id','=','stocks.id')
+        ->join('units','stocks.unit_id','=','units.id')
+        ->where('sales.id',$id)
+        ->pluck('model_name');
+        $unit = $unit[0];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DeliveryOrder  $deliveryOrder
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DeliveryOrder $deliveryOrder)
-    {
-        //
+        $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
+
+        $pdf = PDF::loadView('export.pdf-do',compact('data','printDate'));
+        $pdf->setPaper('A5', 'potrait');
+        return $pdf->download('spk_'.$name.'-'.$unit.'.pdf');;
     }
 }

@@ -40,7 +40,9 @@ class SpkController extends Controller
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->where('spk_date',$today)->orderBy('spks.id','desc')
+            ->where('credit_status','survey')
+            ->orWhere('order_status','indent')
+            ->orderBy('spks.id','desc')
             ->select('*','spks.id as id_spk')->get();
             return view('page', compact('stock','leasing','today','data','manpower','spk_no'));
         }else{
@@ -55,7 +57,10 @@ class SpkController extends Controller
 
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->where('spk_date',$today)->where('stocks.dealer_id',$did)->orderBy('spks.id','desc')
+            ->where('stocks.dealer_id',$did)
+            ->where('credit_status','survey')
+            ->orWhere('order_status','indent')
+            ->orderBy('spks.id','desc')
             ->select('*','spks.id as id_spk')->get();
             return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no'));
         }
@@ -137,7 +142,27 @@ class SpkController extends Controller
      */
     public function edit(Spk $spk)
     {
-        //
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $leasing = Leasing::where('leasing_code','!=','CASH')->get();
+
+        if ($dc == 'group') {
+            $stock = Stock::orderBy('qty','desc')->get();
+            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
+            ->where('manpowers.category','SAL')
+            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
+            ->get();
+        } else {
+            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
+            ->where([
+                ['manpowers.dealer_id',$did],
+                ['manpowers.category','SAL']
+            ])
+            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
+            ->get();
+        }
+        return view('page', compact('spk','stock','manpower','leasing'));
     }
 
     /**
@@ -149,7 +174,42 @@ class SpkController extends Controller
      */
     public function update(Request $request, Spk $spk)
     {
-        //
+        if ($request->discount == '') {
+            $discount = 0;
+        } else {
+            $discount = $request->discount;
+        }
+
+        if ($request->payment_method == 'cash') {
+            $credit_status = 'cash';
+            $leasing = 1;
+        } else {
+            $credit_status = $request->credit_status;
+            $leasing = $request->leasing_id;
+        }
+
+        $data = Spk::find($spk->id);
+        $data->spk_no = $request->spk_no;
+        $data->spk_date = $request->spk_date;
+        $data->order_name = $request->order_name;
+        $data->address = $request->address;
+        $data->phone = $request->phone;
+        $data->stnk_name = $request->stnk_name;
+        $data->stock_id = $request->stock_id;
+        $data->downpayment = $request->downpayment;
+        $data->discount = $discount;
+        $data->payment = $request->payment;
+        $data->leasing_id = $leasing;
+        $data->manpower_id = $request->manpower_id;
+        $data->description = $request->description;
+        $data->payment_method = $request->payment_method;
+        $data->credit_status = $credit_status;
+        $data->order_status = $request->order_status;
+        $data->sale_status = 'pending';
+        $data->created_by = Auth::user()->id;
+        $data->update();
+        toast('SPK berhasil diubah','success');
+        return redirect()->route('spk.get',$request->spk_no);
     }
 
     /**

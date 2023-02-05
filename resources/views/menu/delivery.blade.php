@@ -16,7 +16,7 @@
                     <span class="sub-item">Branch Delivery</span>
                 </a>
             </li>
-            <li class="{{ Route::is('delivery-order.index') || Route::is('delivery-order.history') || Route::is('delivery-order.show') || Route::is('delivery-order.edit') ? 'active' : '' }}">
+            <li class="{{ Route::is('delivery-order.index') || Route::is('delivery-order.history') || Route::is('delivery-order.show') || Route::is('delivery-order.edit') ? 'active' : '' }}" @if(Auth::user()->crud == 'simple') hidden @endif>
                 <a href="{{ route('delivery-order.index') }}">
                     <span class="sub-item">Delivery Order</span>
                 </a>

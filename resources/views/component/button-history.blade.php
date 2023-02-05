@@ -15,6 +15,8 @@
         {{ route('opname.history') }}
     @elseif(Route::is('spk.*'))
         {{ route('spk.history') }}
+    @elseif(Route::is('delivery-order.*'))
+        {{ route('delivery-order.history') }}
     @elseif(Route::is('report.send-report'))
         {{ route('report.stock-history') }}
     @elseif(Route::is('report.stock-history'))

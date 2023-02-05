@@ -283,6 +283,15 @@
             @include('component.spk-create')
             @include('component.spk-data')
         @endif
+
+    <!-- Data DO -->
+    @elseif(Route::is('delivery-order.*'))
+        @if(Route::is('delivery-order.history'))
+            @include('component.search-box')
+            @include('component.delivery-order-history')
+        @else
+            @include('component.delivery-order-data')
+        @endif
         
     @endif
     

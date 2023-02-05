@@ -69,7 +69,7 @@
                 </a>
             </li>
 
-            <li class="{{ Route::is('kwitansi.index') ? 'active' : '' }}">
+            <li class="{{ Route::is('kwitansi.index') ? 'active' : '' }}" @if(Auth::user()->crud == 'simple') hidden @endif>
                 <a href="{{ route('kwitansi.index') }}">
                     <span class="sub-item">Kwitansi</span>
                 </a>

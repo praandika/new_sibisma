@@ -9,32 +9,35 @@
     .td-group .secondary-data{
         font-size: 12px;
         display: block;
-        background
     }
 </style>
 @endpush
 
-@section('title','SPK')
-@section('page-title','SPK')
+@section('title','Delivery Order')
+@section('page-title','Delivery Order')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK</a>
+    <a href="{{ route('delivery-order.index') }}">Data Delivery Order</a>
 </li>
+@endpush
+
+@push('button')
+    @section('button-title','Delivery Order History')
+    @include('component.button-history')
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-            <h4 class="card-title">SPK Data</h4>
+            <h4 class="card-title">DO Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="basic-datatables-spk" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th>Status</th>
                             <th>Date</th>
                             <th>SPK No</th>
                             <th>Name</th>
@@ -46,7 +49,6 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Status</th>
                             <th>Date</th>
                             <th>SPK No</th>
                             <th>Name</th>
@@ -60,41 +62,29 @@
                         @php($no = 1)
                         @forelse($data as $o)
                         <tr>
-                            <td @if($o->order_status == 'indent') style="color:crimson;" @else style="color:green;" @endif>
-                                <div class="td-group">
-                                    <span class="main-data">{{ ucwords($o->order_status) }}</span>
-                                    <span class="secondary-data">
-                                        <span class="status-1">{{ ucwords($o->credit_status) }}</span>
-                                        <span class="status-2">{{ ucwords($o->payment_method) }}</span>
-                                    </span>
-                                </div>
+                            <td>{{ \Carbon\Carbon::parse($o->sale_date)->format('j F Y') }}</td>
+                            <td>
+                                <a href="{{ route('spk.get', $o->spk) }}" target="_blank">
+                                    {{ $o->spk }}
+                                </a>
                             </td>
-                            <td>{{ $o->spk_date }}</td>
-                            <td>{{ $o->spk_no }}</td>
-                            <td>{{ $o->order_name }}</td>
+                            <td>{{ $o->customer_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Show" style="color:orange;"><i
-                                            class="fas fa-eye"></i></a>
+                                    <a href="{{ route('do.print', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                            class="fas fa-edit"></i></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('spk.delete',$o->id_spk) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                        onclick="return tanya('Yakin hapus {{ $o->spk_no }} {{ $o->order_name }}?')"><i
-                                            class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ route('do.download', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
                                 </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" style="text-align: center;">No data available</td>
+                            <td colspan="7" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

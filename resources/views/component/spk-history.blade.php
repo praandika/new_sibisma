@@ -4,6 +4,13 @@
         font-size: 20px;
     }
 
+    .td-group .main-data{
+        font-weight: bold;
+    }
+    .td-group .secondary-data{
+        font-size: 12px;
+        display: block;
+    }
 </style>
 @endpush
 
@@ -12,7 +19,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('out.index') }}">Data SPK</a>
+    <a href="{{ route('spk.index') }}">Data SPK</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
@@ -59,7 +66,13 @@
                     @forelse($data as $o)
                         <tr>
                             <td @if($o->order_status == 'indent') style="color:crimson;" @else style="color:green;" @endif>
-                                {{ ucwords($o->order_status) }}
+                                <div class="td-group">
+                                    <span class="main-data">{{ ucwords($o->order_status) }}</span>
+                                    <span class="secondary-data">
+                                        <span class="status-1">{{ ucwords($o->credit_status) }}</span>
+                                        <span class="status-2">{{ ucwords($o->payment_method) }}</span>
+                                    </span>
+                                </div>
                             </td>
                             <td>{{ $o->spk_date }}</td>
                             <td>{{ $o->spk_no }}</td>
@@ -95,3 +108,14 @@
         </div>
     </div>
 </div>
+
+@push('after-script')
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables-spk').DataTable({
+            "pageLength": 20,
+            "ordering": false
+        });
+    });
+</script>
+@endpush
