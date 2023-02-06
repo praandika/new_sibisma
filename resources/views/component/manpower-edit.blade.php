@@ -111,6 +111,7 @@
                                     data-target=".modalPosition" required>
                             <label for="position" class="placeholder">Position</label>
                         </div>
+                        <input type="hidden" id="category" name="category" value="{{ $manpower->category }}" required>
                     </div>
 
                     <div class="col-md-2">

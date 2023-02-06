@@ -123,6 +123,7 @@ class ManpowerController extends Controller
             'status' => $req->status,
             'position' => $req->position,
             'category' => $req->category,
+            'category' => $req->category,
             'years_of_service' => $req->yos,
             'education' => $req->education,
             'updated_by' => Auth::user()->id,
