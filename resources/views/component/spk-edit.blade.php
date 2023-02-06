@@ -89,6 +89,7 @@
                 <br>
 
                 <input type="hidden" name="spk_no" value="{{ $spk->spk_no }}" required>
+                <input type="hidden" name="sale_status" value="{{ $spk->sale_status }}" required>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">

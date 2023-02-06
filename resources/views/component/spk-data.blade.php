@@ -9,7 +9,6 @@
     .td-group .secondary-data{
         font-size: 12px;
         display: block;
-        background
     }
 </style>
 @endpush
@@ -70,11 +69,47 @@
                                 </div>
                             </td>
                             <td>{{ $o->spk_date }}</td>
-                            <td>{{ $o->spk_no }}</td>
+                            <td>
+                                @if($o->sale_status == 'pending')
+                                <span style="position: relative;">
+                                    <span style="
+                                    width: 50px; 
+                                    height: 12px; 
+                                    background-color: pink; 
+                                    display: inline-block; 
+                                    position: absolute; 
+                                    top: -20px; 
+                                    left: -25px; 
+                                    border-radius: 0 0 15px 0;">
+                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: crimson; top: -7px; left: 5px;">
+                                        pending
+                                    </span>
+                                </span>
+                                @else
+                                <span style="position: relative;">
+                                    <span style="
+                                    width: 50px; 
+                                    height: 12px; 
+                                    background-color: #cfffd5; 
+                                    display: inline-block; 
+                                    position: absolute; 
+                                    top: -20px; 
+                                    left: -25px; 
+                                    border-radius: 0 0 15px 0;">
+                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: seagreen; top: -7px; left: 5px;">
+                                        sold 
+                                    </span>
+                                </span>
+                                @endif
+                                    <span>
+                                        {{ $o->spk_no }}
+                                    </span>
+                                </span>
+                            </td>
                             <td>{{ $o->order_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"
@@ -84,11 +119,6 @@
                                     <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('spk.delete',$o->id_spk) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                        onclick="return tanya('Yakin hapus {{ $o->spk_no }} {{ $o->order_name }}?')"><i
-                                            class="fas fa-trash-alt"></i></a>
                                 </div>
                             </td>
                         </tr>

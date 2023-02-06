@@ -58,7 +58,73 @@
                                 data-dealercode="{{ $o->dealer_code }}"
                                 data-dealername="{{ $o->dealer_name }}"
                                 class="klik">
-                                <td @if($o->order_status == 'indent') style="background-color: crimson; color: #fff;" @else style="background-color: forestgreen; color: #fff;" @endif>{{ $o->spk_no }}</td>
+                                <td>
+                                    @if($o->payment_method == 'credit')
+                                    <span style="position: relative;">
+                                        <span style="
+                                        width: 50px; 
+                                        height: 12px; 
+                                        background-color: #fff1cf; 
+                                        display: inline-block; 
+                                        position: absolute; 
+                                        top: -20px; 
+                                        left: -25px; 
+                                        border-radius: 0 0 0 0;">
+                                        <span style="font-size: 10px; font-weight: bold; position: relative; color: #b87c04; top: -7px; left: 5px;">
+                                            credit
+                                        </span>
+                                    </span>
+                                    @else
+                                    <span style="position: relative;">
+                                        <span style="
+                                        width: 50px; 
+                                        height: 12px; 
+                                        background-color: #cfe4ff; 
+                                        display: inline-block; 
+                                        position: absolute; 
+                                        top: -20px; 
+                                        left: -25px; 
+                                        border-radius: 0 0 0 0;">
+                                        <span style="font-size: 10px; font-weight: bold; position: relative; color: #0258c2; top: -7px; left: 5px;">
+                                            cash 
+                                        </span>
+                                    </span>
+                                    @endif
+
+                                    <span style="position: relative;">
+                                        <span style="
+                                        width: 52px; 
+                                        height: 12px; 
+                                        background-color: #daf2ef; 
+                                        display: inline-block; 
+                                        position: absolute; 
+                                        top: -20px; 
+                                        left: 25px; 
+                                        border-radius: 0 0 0 0;">
+                                        <span style="font-size: 10px; font-weight: bold; position: relative; color: #036657; top: -7px; left: 5px;">
+                                            {{ $o->order_status }} 
+                                        </span>
+                                    </span>
+
+                                    <span style="position: relative;">
+                                        <span style="
+                                        width: 52px; 
+                                        height: 12px; 
+                                        background-color: #c4d9c1;
+                                        display: inline-block; 
+                                        position: absolute; 
+                                        top: -20px; 
+                                        left: 75px; 
+                                        border-radius: 0 0 15px 0;">
+                                        <span style="font-size: 10px; font-weight: bold; position: relative; color: #0d5201; top: -7px; left: 5px;">
+                                            {{ $o->credit_status }} 
+                                        </span>
+                                    </span>
+                                        <span>
+                                            {{ $o->spk_no }}
+                                        </span>
+                                    </span>
+                                </td>
                                 <td>{{ $o->order_name }}</td>
                                 <td>{{ $o->model_name }}</td>
                                 <td style="background-color: <?php echo $o->color_code ?>50 ;">

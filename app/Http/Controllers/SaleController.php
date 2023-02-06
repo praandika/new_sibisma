@@ -40,6 +40,11 @@ class SaleController extends Controller
             ->join('leasings','spks.leasing_id','leasings.id')
             ->where('spks.sale_status','pending')
             ->where('spks.order_status','available')
+            ->where(function($query){
+                $query->where('spks.order_status','!=','indent')
+                      ->where('spks.credit_status','acc')
+                      ->orWhere('spks.credit_status','cash');
+            })
             ->orderBy('stocks.qty','desc')
             ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
             $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
@@ -53,6 +58,11 @@ class SaleController extends Controller
             ->where('stocks.dealer_id',$did)
             ->where('spks.sale_status','pending')
             ->where('spks.order_status','available')
+            ->where(function($query){
+                $query->where('spks.order_status','!=','indent')
+                      ->where('spks.credit_status','acc')
+                      ->orWhere('spks.credit_status','cash');
+            })
             ->orderBy('stocks.qty','desc')
             ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
             $dealerCode = $dc;

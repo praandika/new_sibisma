@@ -41,10 +41,11 @@ class SpkController extends Controller
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('users','spks.created_by','users.id')
             ->where('credit_status','survey')
             ->orWhere('order_status','indent')
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk')->get();
+            ->select('*','spks.id as id_spk','users.first_name')->get();
             $countManpower = Manpower::count();
             if ($countManpower <= 0) {
                 alert()->warning('Add Manpower','Manpower data is not available!');
@@ -64,6 +65,7 @@ class SpkController extends Controller
 
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('users','spks.created_by','users.id')
             ->join('dealers','stocks.dealer_id','dealers.id')
             ->where('dealers.dealer_code',$dc)
             ->where(function($query){
@@ -71,7 +73,7 @@ class SpkController extends Controller
                       ->orWhere('order_status','indent');
             })
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk')->get();
+            ->select('*','spks.id as id_spk','users.first_name')->get();
             $countManpower = Manpower::where('dealer_id',$did)
             ->count();
             if ($countManpower <= 0) {
@@ -222,7 +224,7 @@ class SpkController extends Controller
         $data->payment_method = $request->payment_method;
         $data->credit_status = $credit_status;
         $data->order_status = $request->order_status;
-        $data->sale_status = 'pending';
+        $data->sale_status = $request->sale_status;
         $data->created_by = Auth::user()->id;
         $data->update();
         toast('SPK berhasil diubah','success');
@@ -249,27 +251,31 @@ class SpkController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('users','spks.created_by','users.id')
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk')->limit(50)->get();
+                ->select('*','spks.id as id_spk','users.first_name')->limit(50)->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('users','spks.created_by','users.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk')->limit(50)->get();
+                ->select('*','spks.id as id_spk','users.first_name')->limit(50)->get();
             }
             
         } else {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('users','spks.created_by','users.id')
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk')->get();
+                ->select('*','spks.id as id_spk','users.first_name')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('users','spks.created_by','users.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk')->get();
+                ->select('*','spks.id as id_spk','users.first_name')->get();
             }
         }
         return view('page', compact('data','start','end'));
