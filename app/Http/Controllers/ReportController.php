@@ -211,6 +211,11 @@ class ReportController extends Controller
     
                     $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
                     $dealerName = $dealerName[0];
+
+                    $isComplete = StockHistory::where('dealer_code',$dc)
+                    ->orderBy('history_date','desc')
+                    ->pluck('status');
+                    $isComplete = $isComplete[0];
                 
             }else { //if contain date
                 
@@ -288,12 +293,18 @@ class ReportController extends Controller
     
                     $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
                     $dealerName = $dealerName[0];
+
+                    $isComplete = StockHistory::where('dealer_code',$dc)
+                    ->where('history_date',$date)
+                    ->orderBy('history_date','desc')
+                    ->pluck('status');
+                    $isComplete = $isComplete[0];
             }
             
             // Data Report History
                 $data = StockHistory::where('dealer_code',$dc)->orderBy('history_date','desc')->limit(7)->get();
     
-                return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','faktur','service','fns','dataFaktur','dataService'));
+                return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','faktur','service','fns','dataFaktur','dataService','isComplete'));
         } else {
             // If stock history has no data
             alert()->warning('Pemberitahuan','Belum ada riwayat stok tercatat');

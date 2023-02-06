@@ -11,8 +11,8 @@
                     <span class="sub-item">Entry Unit</span>
                 </a>
             </li>
-            <li class="{{ Route::is('sale.index') || Route::is('sale.history') ? 'active' : '' }}">
-                <a href="{{ route('sale.index') }}">
+            <li class="{{ Route::is('sale.index') || Route::is('sale.history') || Route::is('sale.simple-index') ? 'active' : '' }}">
+                <a href="{{ Auth::user()->crud == 'simple' ? route('sale.simple-index') : route('sale.index') }}">
                     <span class="sub-item">Unit Sales</span>
                 </a>
             </li>

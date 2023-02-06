@@ -95,6 +95,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleCo
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history/{date?}', [SaleController::class, 'history'])->name('sale.history');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale-ach/{param}', [SaleController::class, 'achievment'])->name('info.sale-ach');
 Route::middleware(['auth:sanctum', 'verified'])->post('/sale-simple', [SimpleSaleController::class, 'store'])->name('sale.simple-store');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-view', [SimpleSaleController::class, 'index'])->name('sale.simple-index');
 // END SALE
 
 // ENTRY

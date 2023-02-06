@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Dealer;
 use App\Models\Entry;
+use App\Models\Leasing;
 use App\Models\Sale;
 use App\Models\Out;
 use App\Models\Stock;
@@ -16,6 +17,30 @@ use Illuminate\Support\Facades\Auth;
 
 class SimpleSaleController extends Controller
 {
+    public function index()
+    {
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $dealer = Dealer::all();
+        $leasing = Leasing::all();
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        if ($dc == 'group') {
+            $stock = Stock::orderBy('qty','desc')->get();
+            $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
+            return view('page', compact('stock','leasing','today','data','dealer'));
+        }else{
+            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $dealerCode = $dc;
+            $data = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
+            ->select('*','sales.id as id_sale')->get();
+            return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
+        }
+        
+    }
+
     public function store(Request $req){
         if (Auth::user()->dealer_code == 'group') {
             $dealer_code = $req->dealer_code;

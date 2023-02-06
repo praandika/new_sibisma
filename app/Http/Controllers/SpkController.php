@@ -33,6 +33,7 @@ class SpkController extends Controller
         $leasing = Leasing::where('leasing_code','!=','CASH')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
+
         if ($dc == 'group') {
             $stock = Stock::orderBy('qty','desc')->get();
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
@@ -44,7 +45,13 @@ class SpkController extends Controller
             ->orWhere('order_status','indent')
             ->orderBy('spks.id','desc')
             ->select('*','spks.id as id_spk')->get();
-            return view('page', compact('stock','leasing','today','data','manpower','spk_no'));
+            $countManpower = Manpower::count();
+            if ($countManpower <= 0) {
+                alert()->warning('Add Manpower','Manpower data is not available!');
+                return redirect()->route('manpower.index');
+            } else {
+                return view('page', compact('stock','leasing','today','data','manpower','spk_no'));
+            }
         }else{
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
@@ -65,7 +72,14 @@ class SpkController extends Controller
             })
             ->orderBy('spks.id','desc')
             ->select('*','spks.id as id_spk')->get();
-            return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no'));
+            $countManpower = Manpower::where('dealer_id',$did)
+            ->count();
+            if ($countManpower <= 0) {
+                alert()->warning('Add Manpower','Manpower data is not available!');
+                return redirect()->route('manpower.index');
+            } else {
+                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no'));
+            }
         }
     }
 

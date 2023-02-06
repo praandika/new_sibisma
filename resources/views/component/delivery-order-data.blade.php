@@ -73,7 +73,7 @@
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
                             <td>{{ $o->first_name }}</td>
                             <td>
-                                <div class="form-button-action">
+                                <div class="form-button-action" @if($o->spk == null) hidden @endif>
                                     <a href="{{ route('do.print', $o->id_sale) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;" target="_blank"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

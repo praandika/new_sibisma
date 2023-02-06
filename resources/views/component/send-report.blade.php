@@ -66,7 +66,7 @@
     @include('component.button-history')
 @endpush
 
-@if($faktur == 0 && $service == 0)
+@if($isComplete == 'uncompleted')
 <div class="col-md-6">
     <div class="card">
         <div class="card-header">
@@ -83,7 +83,7 @@
 </div>
 @endif
 
-<div class="col-md-6" @if($faktur == 0 && $service == 0) hidden @endif>
+<div class="col-md-6" @if($isComplete == 'uncompleted') hidden @endif>
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Stock Report</h4>
