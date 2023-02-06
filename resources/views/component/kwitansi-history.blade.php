@@ -3,6 +3,7 @@
     a.btnAction {
         font-size: 20px;
     }
+
     .td-group .main-data{
         font-weight: bold;
     }
@@ -13,35 +14,34 @@
 </style>
 @endpush
 
-@section('title','Delivery Order')
-@section('page-title','Delivery Order')
+@section('title','Kwitansi')
+@section('page-title','Kwitansi')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('delivery-order.index') }}">Data Delivery Order</a>
+    <a href="{{ route('kwitansi.index') }}">Data Kwitansi</a>
 </li>
-@endpush
-
-@push('button')
-    @section('button-title','Delivery Order History')
-    @include('component.button-history')
+<li class="separator">
+    <i class="flaticon-right-arrow"></i>
+</li>
+<li class="nav-item">
+    <a href="#">History</a>
+</li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-            <h4 class="card-title">DO Data</h4>
+            <h4 class="card-title">Kwitansi Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="basic-datatables-spk" class="display table table-striped table-hover" width="100%">
+            <table id="basic-datatables-spk" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>SPK No</th>
-                            <th>Name</th>
-                            <th>Phone</th>
                             <th>Unit</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -51,8 +51,6 @@
                         <tr>
                             <th>Date</th>
                             <th>SPK No</th>
-                            <th>Name</th>
-                            <th>Phone</th>
                             <th>Unit</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -68,26 +66,21 @@
                                     {{ $o->spk }}
                                 </a>
                             </td>
-                            <td>{{ $o->customer_name }}</td>
-                            <td>{{ $o->phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
                             <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('do.print', $o->id_sale) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;" target="_blank"><i class="fa fa-print"></i></a>
+                                    <a href="{{ route('kwitansi.print', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('do.download', $o->id_sale) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Download DO" style="color:darkorange;"><i class="fa fa-file"></i></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('kwitansi.download', $o->id_sale) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Download Kwitansi" style="color:crimson;"><i class="fa fa-newspaper"></i></a>
+                                    <a href="{{ route('kwitansi.download', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
                                 </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" style="text-align: center;">No data available</td>
+                            <td colspan="5" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

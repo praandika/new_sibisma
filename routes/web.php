@@ -193,7 +193,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stu-real-ach', [STUContro
 
 // SPK
 Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::class);
-Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id}', [SpkController::class, 'get'])->name('spk.get');
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id?}', [SpkController::class, 'get'])->name('spk.get');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [SpkController::class, 'history'])->name('spk.history');
 // END SPK
@@ -224,4 +224,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('spk-download/{id}', [SpkCo
 
 Route::middleware(['auth:sanctum', 'verified'])->get('do-print/{id}', [DeliveryOrderController::class, 'printPDF'])->name('do.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('do-download/{id}', [DeliveryOrderController::class, 'downloadPDF'])->name('do.download');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-print/{id}', [KwitansiController::class, 'printPDF'])->name('kwitansi.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-download/{id}', [KwitansiController::class, 'downloadPDF'])->name('kwitansi.download');
 // END PRINT PDF

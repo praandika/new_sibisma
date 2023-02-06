@@ -29,7 +29,7 @@ class DeliveryOrderController extends Controller
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('users','sales.created_by','users.id')
             ->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
-            ->select('*','sales.id as id_sale','users.first_name')->get();
+            ->select('*','sales.id as id_sale','users.first_name')->limit(400)->get();
         }
         return view('page', compact('data'));
     }
@@ -90,7 +90,7 @@ class DeliveryOrderController extends Controller
 
         $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
-        return $pdf->stream('spk_'.$name.'-'.$unit.'.pdf');
+        return $pdf->stream('DO_'.$name.'-'.$unit.'.pdf');
     }
 
     public function downloadPDF($id){
@@ -115,6 +115,7 @@ class DeliveryOrderController extends Controller
 
         $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
+        
         return $pdf->download('DO_'.$name.'-'.$unit.'.pdf');
     }
 }
