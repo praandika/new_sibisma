@@ -166,13 +166,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment" value="{{ old('payment') }}" required>
-                            <label for="payment" class="placeholder">Payment</label>
-                        </div>
-                    </div>
-
                     <div class="col-md-3" id="col-leasing">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
@@ -190,6 +183,21 @@
                                 name="manpower" value="{{ old('manpower') }}" data-toggle="modal"
                                 data-target=".modalManpower" required>
                             <label for="manpower" class="placeholder">Select Manpower *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="picture" type="file" accept="image/*" capture="user" class="form-control input-border-bottom" name="picture" value="{{ old('picture') }}" style="visibility: hidden;" required>
+                            <label for="picture" class="placeholder" style="
+                            background-color: teal; 
+                            color: #ffffff !important; 
+                            font-weight: bold; 
+                            padding-left: 10px; 
+                            padding-right: 10px;
+                            padding-top: 10px; 
+                            border-radius: 5px; 
+                            cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take an ID / KTP photo</label>
                         </div>
                     </div>
                 </div>
@@ -298,5 +306,12 @@
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
     }
+
+    $(document).ready(function () {
+        $("#picture").change(function() {
+            filename = this.picture[0].name;
+            console.log(filename);
+        });
+    });
 </script>
 @endpush

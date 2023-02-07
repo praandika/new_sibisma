@@ -30,7 +30,7 @@ class SpkController extends Controller
 
         $spk_no = 'SPK'.$count.$random.$dc;
 
-        $leasing = Leasing::where('leasing_code','!=','CASH')->get();
+        $leasing = Leasing::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
 
