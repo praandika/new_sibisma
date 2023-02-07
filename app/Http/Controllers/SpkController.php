@@ -45,7 +45,7 @@ class SpkController extends Controller
             ->where('credit_status','survey')
             ->orWhere('order_status','indent')
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk','users.first_name')->get();
+            ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             $countManpower = Manpower::count();
             if ($countManpower <= 0) {
                 alert()->warning('Add Manpower','Manpower data is not available!');
@@ -73,7 +73,7 @@ class SpkController extends Controller
                       ->orWhere('order_status','indent');
             })
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk','users.first_name')->get();
+            ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             $countManpower = Manpower::where('dealer_id',$did)
             ->count();
             if ($countManpower <= 0) {
@@ -253,13 +253,13 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('users','spks.created_by','users.id')
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name')->limit(50)->get();
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('users','spks.created_by','users.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name')->limit(50)->get();
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
             }
             
         } else {
@@ -268,14 +268,14 @@ class SpkController extends Controller
                 ->join('users','spks.created_by','users.id')
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk','users.first_name')->get();
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('users','spks.created_by','users.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk','users.first_name')->get();
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }
         }
         return view('page', compact('data','start','end'));
@@ -285,7 +285,7 @@ class SpkController extends Controller
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address')
+        ->select('*','spks.address as customer_address','spks.phone as customer_phone')
         ->where('spks.spk_no',$spk_no)
         ->get();
 
@@ -300,7 +300,7 @@ class SpkController extends Controller
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address')
+        ->select('*','spks.address as customer_address','spks.phone as customer_phone')
         ->where('spks.spk_no',$spk_no)
         ->get();
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
@@ -318,7 +318,7 @@ class SpkController extends Controller
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address')
+        ->select('*','spks.address as customer_address','spks.phone as customer_phone')
         ->where('spks.spk_no',$spk_no)
         ->get();
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');

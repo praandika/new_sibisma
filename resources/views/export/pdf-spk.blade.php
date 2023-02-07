@@ -112,7 +112,7 @@
             </tr>
             <tr>
                 <th>No. Telp</th>
-                <td>: {{ $o->phone }}</td>
+                <td>: {{ $o->customer_phone }}</td>
             </tr>
             <tr>
                 <th>Nama STNK & BPKB</th>
