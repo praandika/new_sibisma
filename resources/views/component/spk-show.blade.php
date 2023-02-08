@@ -210,8 +210,13 @@
                         <textarea name="description" id="description" cols="30" rows="10"
                             class="form-control input-border-bottom" placeholder="Keterangan"
                             value="{{ old('description') }}" style="border: 1px dashed grey; padding: 10px;"></textarea>
+                        
+                            <div class="card" style="margin-top: 10px;">
+                                <div class="card-body">
+                                    <img src="{{ $o->ktp == '' ? asset('img/noimage.jpg') : asset('img/ktp/'.$o->ktp.'') }}" alt="{{ $o->ktp }}" style="width: 100%; height: 100%;">
+                                </div>
+                            </div>
                     </div>
-
                 </div>
                 @empty
                 <div class="col-md-12">

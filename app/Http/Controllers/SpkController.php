@@ -117,7 +117,27 @@ class SpkController extends Controller
             $leasing = $request->leasing_id;
         }
         
+        // Get KTP image
+        if ($request->picture != '') {
+            $img = $request->file('picture');
+            $ktp_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/ktp';
+            $img->move($dir_img,$ktp_file);
+        } elseif ($request->photo != '') {
+            $img = $request->file('photo');
+            $ktp_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/ktp';
+            $img->move($dir_img,$ktp_file);
+        } elseif ($request->picture != '' && $request->photo != '') {
+            $img = $request->file('picture');
+            $ktp_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/ktp';
+            $img->move($dir_img,$ktp_file);
+        } else {
+            $ktp_file = 'noimage.jpg';
+        }
         
+
         $data = new Spk;
         $data->spk_no = $request->spk_no;
         $data->spk_date = $request->spk_date;
@@ -136,6 +156,7 @@ class SpkController extends Controller
         $data->credit_status = $credit_status;
         $data->order_status = $request->order_status;
         $data->sale_status = 'pending';
+        $data->ktp = $ktp_file;
         $data->created_by = Auth::user()->id;
         $data->save();
         toast('SPK berhasil dibuat','success');
@@ -225,6 +246,31 @@ class SpkController extends Controller
         $data->credit_status = $credit_status;
         $data->order_status = $request->order_status;
         $data->sale_status = $request->sale_status;
+        // Get KTP image
+        if ($request->hasfile('picture')) {
+            if ($request->ktp_file_prev != '' && $request->ktp_file_prev != 'noimage.jpg') {
+                $img_prev = $request->ktp_file_prev;
+                dd($img_prev);
+                unlink('img/ktp/'.$img_prev);
+            }
+
+            $img = $request->file('picture');
+            $ktp_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/ktp';
+            $img->move($dir_img,$ktp_file);
+            $data->ktp = $ktp_file;
+        } elseif ($request->hasfile('photo')) {
+            if ($request->ktp_file_prev != '' && $request->ktp_file_prev != 'noimage.jpg') {
+                $img_prev = $request->ktp_file_prev;
+                unlink('img/ktp/'.$img_prev);
+            }
+
+            $img = $request->file('photo');
+            $ktp_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/ktp';
+            $img->move($dir_img,$ktp_file);
+            $data->ktp = $ktp_file;
+        }
         $data->created_by = Auth::user()->id;
         $data->update();
         toast('SPK berhasil diubah','success');

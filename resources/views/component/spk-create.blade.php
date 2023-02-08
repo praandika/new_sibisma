@@ -3,36 +3,50 @@
     input[type=date]:required:invalid::-webkit-datetime-edit {
         color: transparent;
     }
+
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
-    ::-webkit-input-placeholder { /* WebKit browsers */
+
+    ::-webkit-input-placeholder {
+        /* WebKit browsers */
         text-transform: none;
     }
-    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+
+    :-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
         text-transform: none;
     }
-    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+
+    ::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
         text-transform: none;
     }
-    :-ms-input-placeholder { /* Internet Explorer 10+ */
+
+    :-ms-input-placeholder {
+        /* Internet Explorer 10+ */
         text-transform: none;
     }
-    ::placeholder { /* Recent browsers */
+
+    ::placeholder {
+        /* Recent browsers */
         text-transform: none;
     }
+
 </style>
 @endpush
 
 @push('button')
-    @section('button-title','SPK History')
-    @include('component.button-history')
+@section('button-title','SPK History')
+@include('component.button-history')
 
-    <button class="btn btn-success btn-round" id="btnCreate" @if(Session::has('display')) style="margin-bottom: 20px; display: none;" @else style="margin-bottom: 20px; display: block;" @endif><i
+<button class="btn btn-success btn-round" id="btnCreate" @if(Session::has('display'))
+    style="margin-bottom: 20px; display: none;" @else style="margin-bottom: 20px; display: block;" @endif><i
         class="fa fa-pencil-alt"></i>&nbsp;&nbsp; <strong>Create SPK</strong> </button>
 @endpush
 
-<div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
+<div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;"
+    @endif>
     <div class="card">
         <div class="card-header">
             <span id="color_code" style="
@@ -53,7 +67,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('spk.store') }}" method="post" id="form">
+            <form action="{{ route('spk.store') }}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 <div class="row" style="background-color: #fff1cf; padding-top: 10px; border-radius: 10px;">
                     <div class="col-md-4">
@@ -69,7 +83,8 @@
                             <input id="credit_status" type="text" class="form-control input-border-bottom"
                                 name="credit_status" value="{{ old('credit_status') }}" data-toggle="modal"
                                 data-target=".modalCreditStatus" style="text-transform: capitalize;" required>
-                            <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status *</span></label>
+                            <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status
+                                    *</span></label>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -90,29 +105,32 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="spk_date" type="date" class="form-control input-border-bottom"
-                                name="spk_date" value="{{ $today }}" required>
+                            <input id="spk_date" type="date" class="form-control input-border-bottom" name="spk_date"
+                                value="{{ $today }}" required>
                             <label for="spk_date" class="placeholder">Date *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="order_name" type="text" class="form-control input-border-bottom" name="order_name" value="{{ old('order_name') }}" required>
+                            <input id="order_name" type="text" class="form-control input-border-bottom"
+                                name="order_name" value="{{ old('order_name') }}" required>
                             <label for="order_name" class="placeholder">Customer's Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}" required>
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address"
+                                value="{{ old('address') }}" required>
                             <label for="address" class="placeholder">Customer's Address</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}" required>
+                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone"
+                                value="{{ old('phone') }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
                         </div>
                     </div>
@@ -121,7 +139,8 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ old('stnk_name') }}" required>
+                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name"
+                                value="{{ old('stnk_name') }}" required>
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
@@ -129,11 +148,12 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
-                            <input id="on_hand" type="hidden" class="form-control input-border-bottom" name="on_hand" value="{{ old('on_hand') }}">
+                            <input id="on_hand" type="hidden" class="form-control input-border-bottom" name="on_hand"
+                                value="{{ old('on_hand') }}">
 
                             <input id="model_name" type="text" class="form-control input-border-bottom"
-                                name="model_name" data-toggle="modal"
-                                data-target=".modalData" value="{{ old('model_name') }}" required>
+                                name="model_name" data-toggle="modal" data-target=".modalData"
+                                value="{{ old('model_name') }}" required>
                             <label for="model_name" class="placeholder">Select Unit *</label>
 
                             <span class="invalid-feedback">
@@ -144,14 +164,16 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr" value="{{ old('otr') }}" required>
+                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr"
+                                value="{{ old('otr') }}" required>
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ old('downpayment') }}" required>
+                            <input id="downpayment" type="number" class="form-control input-border-bottom"
+                                name="downpayment" value="{{ old('downpayment') }}" required>
                             <label for="downpayment" class="placeholder">Down Payment</label>
                         </div>
                     </div>
@@ -160,15 +182,24 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ old('discount') }}"
-                                placeholder="Discount" >
-                            <label for="discount" class="placeholder"></label>
+                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount"
+                                value="{{ old('discount') }}" required>
+                            <label for="discount" class="placeholder">Discount</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment"
+                                value="{{ old('payment') }}" required>
+                            <label for="payment" class="placeholder">Payment</label>
                         </div>
                     </div>
 
                     <div class="col-md-3" id="col-leasing">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
+                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}"
+                                required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
                                 data-target=".modalLeasing" required>
@@ -178,57 +209,94 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="manpower_id" name="manpower_id" value="{{ old('manpower_id') }}" required>
-                            <input id="manpower" type="text" class="form-control input-border-bottom"
-                                name="manpower" value="{{ old('manpower') }}" data-toggle="modal"
-                                data-target=".modalManpower" required>
+                            <input type="hidden" id="manpower_id" name="manpower_id" value="{{ old('manpower_id') }}"
+                                required>
+                            <input id="manpower" type="text" class="form-control input-border-bottom" name="manpower"
+                                value="{{ old('manpower') }}" data-toggle="modal" data-target=".modalManpower" required>
                             <label for="manpower" class="placeholder">Select Manpower *</label>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="picture" type="file" accept="image/*" capture="user" class="form-control input-border-bottom" name="picture" value="{{ old('picture') }}" style="visibility: hidden;" required>
-                            <label for="picture" class="placeholder" style="
-                            background-color: teal; 
-                            color: #ffffff !important; 
-                            font-weight: bold; 
-                            padding-left: 10px; 
-                            padding-right: 10px;
-                            padding-top: 10px; 
-                            border-radius: 5px; 
-                            cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take an ID / KTP photo</label>
+                        <br>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp" style="font-weight: bold;">
+                            Upload / Take an ID-KTP photo
+                        </button>
+                        <div class="collapse" id="uploadKtp">
+                            <div class="card card-body">
+                                <div class="form-group form-floating-label">
+                                    <input id="picture" type="file" class="form-control input-border-bottom" name="picture"
+                                        value="{{ old('picture') }}">
+                                    <label for="picture" class="placeholder" style="
+                                background-color: forestgreen; 
+                                color: #ffffff !important; 
+                                font-weight: bold;
+                                width: 200px; 
+                                padding-left: 20px; 
+                                padding-right: 20px;
+                                padding-top: 10px; 
+                                border-radius: 5px;
+                                position: absolute;
+                                top: 20px;
+                                cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
+                                </div>
+
+                                <div class="form-group form-floating-label" style="position: relative;">
+                                    <input id="photo" type="file" accept="image/*" capture="user"
+                                        class="form-control input-border-bottom" name="photo"
+                                        value="{{ old('photo') }}">
+                                    <label for="photo" class="placeholder" style="
+                                background-color: teal; 
+                                color: #ffffff !important; 
+                                font-weight: bold;
+                                width: 200px; 
+                                padding-left: 20px; 
+                                padding-right: 20px;
+                                padding-top: 10px; 
+                                border-radius: 5px;
+                                position: absolute;
+                                top: 20px;
+                                cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                </div>
+                            </div>
                         </div>
+                        <br><br>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
-                            <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Description" value="{{ old('description') }}" style="border: 1px dashed #e6e6e6; padding: 10px;"></textarea>
+                            <textarea name="description" id="description" cols="30" rows="10"
+                                class="form-control input-border-bottom" placeholder="Description"
+                                value="{{ old('description') }}"
+                                style="border: 1px dashed #e6e6e6; padding: 10px;"></textarea>
                             <label for="description" class="placeholder"></label>
                         </div>
                     </div>
 
-                    
-                </div>
-                @if(Auth::user()->dealer_code == 'group')
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
-                            <input id="dealer" type="text" class="form-control input-border-bottom"
-                                name="dealer" value="{{ old('dealer') }}" required>
-                            <label for="dealer" class="placeholder">Dealer *</label>
+
+                    </div>
+                    @if(Auth::user()->dealer_code == 'group')
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <input type="hidden" id="dealer_code" name="dealer_code"
+                                    value="{{ old('dealer_code') }}" required>
+                                <input id="dealer" type="text" class="form-control input-border-bottom" name="dealer"
+                                    value="{{ old('dealer') }}" required>
+                                <label for="dealer" class="placeholder">Dealer *</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @else
-                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
-                @endif
+                    @else
+                    <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
+                    @endif
 
-                <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
-                <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
+                    <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
+                    <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
             </form>
         </div>
     </div>
@@ -260,11 +328,11 @@
     //     });
     // });
 
-    $('#on_hand').keypress(function(e){
+    $('#on_hand').keypress(function (e) {
         e.preventDefault();
     });
 
-    $('#on_hand').keydown(function(e){
+    $('#on_hand').keydown(function (e) {
         e.preventDefault();
     });
 
@@ -283,19 +351,19 @@
         });
     });
 
-    function disable(){
+    function disable() {
         let creditStatus = document.getElementById("credit_status");
         creditStatus.value = 'Cash';
-        creditStatus.setAttribute("disabled",true);
+        creditStatus.setAttribute("disabled", true);
         document.getElementById("place").innerHTML = "Cash";
-        document.getElementById("col-credit-status").setAttribute("hidden",true);
+        document.getElementById("col-credit-status").setAttribute("hidden", true);
 
         document.getElementById("leasing_id").value = '1';
         document.getElementById("leasing_code").value = 'Cash';
-        document.getElementById("col-leasing").setAttribute("hidden",true);
+        document.getElementById("col-leasing").setAttribute("hidden", true);
     }
 
-    function enable(){
+    function enable() {
         let creditStatus = document.getElementById("credit_status");
         creditStatus.value = '';
         creditStatus.removeAttribute("disabled");
@@ -307,9 +375,18 @@
         document.getElementById("col-leasing").removeAttribute("hidden");
     }
 
+    // Custom Upload File
     $(document).ready(function () {
-        $("#picture").change(function() {
+        $("#picture").change(function () {
             filename = this.picture[0].name;
+            console.log(filename);
+        });
+    });
+
+    // Custom Upload File
+    $(document).ready(function () {
+        $("#photo").change(function () {
+            filename = this.photo[0].name;
             console.log(filename);
         });
     });

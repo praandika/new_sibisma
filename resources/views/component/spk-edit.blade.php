@@ -197,6 +197,64 @@
                     </div>
                 </div>
 
+                <div class="row" style="margin-bottom: -80px;">
+                    <div class="col-md-3">
+                        <div class="card" style="margin-top: 10px;">
+                            <img src="{{ $spk->ktp == '' ? asset('img/noimage.jpg') : asset('img/ktp/'.$spk->ktp.'') }}" alt="{{ $spk->ktp }}" style="width: 100%; height: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <br>
+                        <button id="formImage" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp" style="font-weight: bold; width: 100%;">
+                            Change ID-KTP photo
+                        </button>
+                        <div class="collapse" id="uploadKtp">
+                            <div class="card card-body">
+                                <div class="form-group form-floating-label">
+                                    <input id="picture" type="file" class="form-control input-border-bottom" name="picture"
+                                        value="{{ old('picture') }}">
+                                    <label for="picture" class="placeholder" style="
+                                background-color: forestgreen; 
+                                color: #ffffff !important; 
+                                font-weight: bold;
+                                width: 200px; 
+                                padding-left: 20px; 
+                                padding-right: 20px;
+                                padding-top: 10px; 
+                                border-radius: 5px;
+                                position: absolute;
+                                top: 20px;
+                                cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
+                                </div>
+
+                                <div class="form-group form-floating-label" style="position: relative;">
+                                    <input id="photo" type="file" accept="image/*" capture="user"
+                                        class="form-control input-border-bottom" name="photo"
+                                        value="{{ old('photo') }}">
+                                    <label for="photo" class="placeholder" style="
+                                background-color: teal; 
+                                color: #ffffff !important; 
+                                font-weight: bold;
+                                width: 200px; 
+                                padding-left: 20px; 
+                                padding-right: 20px;
+                                padding-top: 10px; 
+                                border-radius: 5px;
+                                position: absolute;
+                                top: 20px;
+                                cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+
+                <input type="text" value="{{ $spk->ktp }}" name="ktp_file_prev">
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
@@ -290,5 +348,21 @@
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
     }
+
+    // Custom Upload File
+    $(document).ready(function () {
+        $("#picture").change(function () {
+            filename = this.picture[0].name;
+            console.log(filename);
+        });
+    });
+
+    // Custom Upload File
+    $(document).ready(function () {
+        $("#photo").change(function () {
+            filename = this.photo[0].name;
+            console.log(filename);
+        });
+    });
 </script>
 @endpush
