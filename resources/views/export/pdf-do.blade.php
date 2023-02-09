@@ -118,7 +118,7 @@
             </tr>
             <tr>
                 <th>Nomor Rangka</th>
-                <td>:</td>
+                <td>: {{ $o->frame_no }}</td>
             </tr>
             <tr>
                 <th>Nomor Mesin</th>

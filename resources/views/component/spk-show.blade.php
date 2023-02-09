@@ -126,6 +126,10 @@
                             <td>: {{ $o->stock->unit->model_name }}</td>
                         </tr>
                         <tr>
+                            <th width="200">Warna Motor</th>
+                            <td>: {{ $o->stock->unit->color->color_name }}</td>
+                        </tr>
+                        <tr>
                             <th width="200">Harga OTR</th>
                             <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
                         </tr>

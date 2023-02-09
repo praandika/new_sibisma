@@ -14,7 +14,7 @@
 
         body {
             font-family: sans-serif;
-            font-size: 9px;
+            font-size: 11px;
         }
 
         .title {
@@ -123,6 +123,10 @@
                 <td>: {{ $o->stock->unit->model_name }}</td>
             </tr>
             <tr>
+                <th>Warna Motor</th>
+                <td>: {{ $o->stock->unit->color->color_name }}</td>
+            </tr>
+            <tr>
                 <th>Harga OTR</th>
                 <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
             </tr>
@@ -133,10 +137,6 @@
             <tr>
                 <th>Potongan</th>
                 <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
-            </tr>
-            <tr>
-                <th>Pembayaran</th>
-                <td>: Rp {{ number_format($o->payment, 0, ',','.') }}</td>
             </tr>
             <tr>
                 <th>Finance</th>
