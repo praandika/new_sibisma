@@ -114,7 +114,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="order_name" type="text" class="form-control input-border-bottom"
-                                name="order_name" value="{{ old('order_name') }}" required>
+                                name="order_name" value="{{ old('order_name') }}" style="text-transform: uppercase;" required>
                             <label for="order_name" class="placeholder">Customer's Name</label>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom" name="address"
-                                value="{{ old('address') }}" required>
+                                value="{{ old('address') }}" style="text-transform: uppercase" required>
                             <label for="address" class="placeholder">Customer's Address</label>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name"
-                                value="{{ old('stnk_name') }}" required>
+                                value="{{ old('stnk_name') }}" style="text-transform: uppercase" required>
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
                             <textarea name="description" id="description" cols="30" rows="10"
                                 class="form-control input-border-bottom" placeholder="Description"
                                 value="{{ old('description') }}"
-                                style="border: 1px dashed #e6e6e6; padding: 10px;"></textarea>
+                                style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
                             <label for="description" class="placeholder"></label>
                         </div>
                     </div>

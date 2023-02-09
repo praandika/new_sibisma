@@ -101,9 +101,9 @@
         {{ $o->phone }} <br>
         di- <br>
         <p style="text-indent: 30px;">Tempat</p>
-        <span style="text-indent: 30px; display: block; margin-bottom: -10px;">Dengan Hormat, </span>
+        <span display: block; margin-bottom: -10px;">Dengan Hormat, </span>
         <br>
-        <span style="text-indent: 30px; display: block;">Mohon diterima _____________________ buah kendaraan sesuai dengan identitas dibawah ini:</span>
+        <span display: block;">Mohon diterima 1 unit kendaraan sesuai dengan identitas dibawah ini:</span>
 
         <br>
 
@@ -122,7 +122,7 @@
             </tr>
             <tr>
                 <th>Nomor Mesin</th>
-                <td>:</td>
+                <td>: {{ $o->engine_no }}</td>
             </tr>
             <tr>
                 <th>Nomor Polisi</th>
@@ -136,7 +136,7 @@
 
         <br>
 
-        <p style="text-indent: 30px;">Demikian <i>Delivery Order</i> ini, atas kerjasama Bapak/Ibu kami ucapkan terima kasih</p>
+        <p>Demikian <i>Delivery Order</i> ini, atas kerjasama Bapak/Ibu kami ucapkan terima kasih</p>
 
         <hr>
 
