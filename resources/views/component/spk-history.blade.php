@@ -29,6 +29,12 @@
 </li>
 @endpush
 
+@push('button')
+    @include('component.button-filter')
+@endpush
+
+@include('component.filter-box')
+
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">

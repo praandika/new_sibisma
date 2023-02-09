@@ -279,6 +279,9 @@
         @elseif(Route::is('spk.history'))
             @include('component.search-box')
             @include('component.spk-history')
+        @elseif(Route::is('spk.filter'))
+            @include('component.filter-box')
+            @include('component.spk-history')
         @else
             @include('component.spk-create')
             @include('component.spk-data')
