@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('spk.update', $spk->id) }}" method="post" id="form">
+            <form action="{{ route('spk.update', $spk->id) }}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row" style="background-color: #fff1cf; padding-top: 10px; border-radius: 10px;">
@@ -253,7 +253,7 @@
                     </div>
                 </div>
 
-                <input type="text" value="{{ $spk->ktp }}" name="ktp_file_prev">
+                <input type="hidden" value="{{ $spk->ktp }}" name="ktp_file_prev">
 
                 <div class="row">
                     <div class="col-md-12">

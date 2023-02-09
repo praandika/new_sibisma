@@ -211,7 +211,46 @@
         </div>
         @endforelse
     </div>
-
+    <center>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}">
+    </center>
     <footer>
         <div style="float: right; width: 50%; font-size: 8px;">
             {{ $spk_no }} | &copy; Sibisma
