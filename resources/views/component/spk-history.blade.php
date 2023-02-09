@@ -125,6 +125,13 @@
                                     <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
+                                    @if($o->sale_status == 'pending')
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="{{ route('spk.delete', $o->id_spk) }}" class="btnAction"
+                                            data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
+                                            onclick="return tanya('Yakin hapus SPK {{ $o->spk_no }} {{ $o->order_name }}?')"><i
+                                                class="fas fa-trash-alt"></i></a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

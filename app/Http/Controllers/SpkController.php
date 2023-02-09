@@ -410,4 +410,16 @@ class SpkController extends Controller
         $pdf->setPaper('A5', 'landscape');
         return $pdf->download('spk_'.$spk_no.'.pdf');
     }
+
+    public function delete($id){
+        $spk_no = Spk::where('id',$id)->pluck('spk_no');
+        $spk_no = $spk_no[0];
+
+        $name = Spk::where('id',$id)->pluck('order_name');
+        $name = $name[0];
+
+        Spk::find($id)->delete();
+        toast('Data spk '.$spk_no.' '.$name.' berhasil dihapus','success');
+        return redirect()->back();
+    }
 }
