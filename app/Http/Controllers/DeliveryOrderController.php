@@ -24,7 +24,10 @@ class DeliveryOrderController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
 
         if ($dc == 'group') {
-            $data = Sale::orderBy('id','desc')->get();
+            $data = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->join('users','sales.created_by','users.id')
+            ->orderBy('sales.id','desc')
+            ->select('*','sales.id as id_sale','users.first_name')->limit(400)->get();
         } else {
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
             ->join('users','sales.created_by','users.id')
@@ -42,7 +45,10 @@ class DeliveryOrderController extends Controller
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = Sale::orderBy('id','desc')->limit(50)->get();
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')->limit(50)->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('users','sales.created_by','users.id')
