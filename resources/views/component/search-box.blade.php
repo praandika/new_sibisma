@@ -20,8 +20,10 @@
                                 {{ route('report.stock-history') }}
                             @elseif(Route::is('document.*'))
                                 {{ route('document.history') }}
-                            @elseif(Route::is('spk.*'))
+                            @elseif(Route::is('spk.history'))
                                 {{ route('spk.history') }}
+                            @elseif(Route::is('spk.index'))
+                                {{ route('spk.filter') }}
                             @elseif(Route::is('delivery-order.*'))
                                 {{ route('delivery-order.history') }}
                             @elseif(Route::is('kwitansi.*'))

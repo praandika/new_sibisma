@@ -1,15 +1,10 @@
-@if(Route::is('spk.index'))
 <div class="col-md-12" id="dataFilter">
-@else
-<div class="col-md-12" id="dataFilter"  @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif >
-@endif
     <div class="card" style="background-color: #1b6cb2;">
         <div class="card-header">
             <div class="form-group">
                 <div class="row">
                     <!-- FORM -->
-                    <form action="{{ route('spk.filter') }}" method="get">
-                        @csrf
+                    <form action="{{ route('spk.filter') }}" method="post">
                         <div class="col-md-4">
                             <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Select Unit" aria-label=""
