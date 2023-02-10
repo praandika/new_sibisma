@@ -188,13 +188,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="payment" type="number" class="form-control input-border-bottom" name="payment"
                                 value="{{ old('payment') }}" required>
                             <label for="payment" class="placeholder">Payment</label>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3" id="col-leasing">
                         <div class="form-group form-floating-label">
@@ -216,11 +216,8 @@
                             <label for="manpower" class="placeholder">Select Manpower *</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <br>
+                    <div class="col-md-3" style="margin-top: 12px;">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp" style="font-weight: bold;">
                             Upload / Take an ID-KTP photo
                         </button>
@@ -262,7 +259,6 @@
                                 </div>
                             </div>
                         </div>
-                        <br><br>
                     </div>
                 </div>
 

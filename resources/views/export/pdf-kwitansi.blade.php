@@ -24,7 +24,7 @@
 
         table tr th,
         table tr th {
-            padding: 10px;
+            padding: 5px 5px 5px 10px;
         }
 
         footer {
@@ -114,6 +114,10 @@
                 <tr>
                     <th>No</th>
                     <td>: {{ $count }}</td>
+                </tr>
+                <tr>
+                    <th>Yth Bapak/Ibu</th>
+                    <td>: {{ $o->customer_name }}</td>
                 </tr>
                 <tr>
                     <th>Sudah terima dari</th>

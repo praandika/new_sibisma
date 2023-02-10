@@ -142,10 +142,6 @@
                             <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
                         </tr>
                         <tr>
-                            <th width="200">Pembayaran</th>
-                            <td>: Rp {{ number_format($o->payment, 0, ',','.') }}</td>
-                        </tr>
-                        <tr>
                             <th width="200">Finance</th>
                             <td>: {{ $o->leasing_code }}</td>
                         </tr>

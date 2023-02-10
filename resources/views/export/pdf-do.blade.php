@@ -20,7 +20,7 @@
         .title {
             font-size: 12px;
             font-weight: bold;
-            margin-top: 70px;
+            margin-top: 35px;
             text-align: center;
         }
 
@@ -74,6 +74,23 @@
         .tandatangan{
             text-align: center;
         }
+
+        .tbKelengkapan{
+            border: 1px solid black;
+            width: 100%;
+        }
+
+        .tbKelengkapan tr td,
+        .tbKelengkapan tr th{
+            padding: 5px;
+        }
+
+        .centang{
+            width: 8px;
+            height: 8px;
+            border: 1px solid black;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -124,17 +141,30 @@
                 <th>Nomor Mesin</th>
                 <td>: {{ $o->engine_no }}</td>
             </tr>
+        </table>
+
+        <table class="tbKelengkapan">
             <tr>
-                <th>Nomor Polisi</th>
-                <td>:</td>
+                <th colspan="4" style="text-align: center;">Perlengkapan</th>
             </tr>
             <tr>
-                <th>Perlengkapan</th>
-                <td>:</td>
+                <td><span class="centang"></span> Unit</td>
+                <td><span class="centang"></span> Helm</td>
+                <td><span class="centang"></span> Cover Plat</td>
+                <td><span class="centang"></span> Jaket</td>
+            </tr>
+            <tr>
+                <td><span class="centang"></span> Remote SKS <span style="color: red;">*</span></td>
+                <td><span class="centang"></span> Pin Remote <span style="color: red;">*</span></td>
+                <td colspan="2"><span class="centang"></span> Kunci Emergency <span style="color: red;">*</span></td>
+            </tr>
+            <tr>
+                <td colspan="4"> <br>
+                    Lain-lain :...........................................................</td>
             </tr>
         </table>
 
-        <br>
+        <p style="color: red;">* hanya tipe keyless</p>
 
         <p>Demikian <i>Delivery Order</i> ini, atas kerjasama Bapak/Ibu kami ucapkan terima kasih</p>
 

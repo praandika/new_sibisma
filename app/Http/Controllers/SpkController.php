@@ -159,7 +159,6 @@ class SpkController extends Controller
         $data->stock_id = $request->stock_id;
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
-        $data->payment = $request->payment;
         $data->leasing_id = $leasing;
         $data->manpower_id = $request->manpower_id;
         $data->description = strtoupper($request->description);
