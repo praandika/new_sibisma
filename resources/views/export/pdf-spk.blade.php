@@ -211,6 +211,15 @@
         </div>
         @endforelse
     </div>
+    <footer>
+        <div style="float: right; width: 50%; font-size: 8px;">
+            {{ $spk_no }} | &copy; Sibisma
+        </div>
+        <div style="float: left; width: 50%; text-align: right; font-size: 8px;">
+            Printed at {{ $printDate }} WITA &nbsp;
+        </div>
+    </footer>
+
     <center>
         <p></p>
         <p></p>
@@ -244,21 +253,25 @@
         <p></p>
         <p></p>
         <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+        <table>
+            <tr>
+                <td>
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                </td>
+                <td>
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                </td>
+                <td>
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                </td>
+            </tr>
+        </table>
     </center>
-    <footer>
-        <div style="float: right; width: 50%; font-size: 8px;">
-            {{ $spk_no }} | &copy; Sibisma
-        </div>
-        <div style="float: left; width: 50%; text-align: right; font-size: 8px;">
-            Printed at {{ $printDate }} WITA
-        </div>
-    </footer>
 </body>
 
 </html>
