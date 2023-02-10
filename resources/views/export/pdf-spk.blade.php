@@ -249,7 +249,7 @@
         <p></p>
         <p></p>
         <p></p>
-        <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}">
+        <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
     </center>
     <footer>
         <div style="float: right; width: 50%; font-size: 8px;">
