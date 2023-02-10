@@ -52,7 +52,7 @@
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Unit</th>
-                            <th>Created By</th>
+                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -64,7 +64,7 @@
                             <th>Name</th>
                             <th>Phone</th>
                             <th>Unit</th>
-                            <th>Created By</th>
+                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -121,7 +121,7 @@
                             <td>{{ $o->order_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
-                            <td>{{ $o->first_name }}</td>
+                            <td>{{ $o->salesman }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"

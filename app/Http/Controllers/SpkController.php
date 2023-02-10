@@ -52,11 +52,11 @@ class SpkController extends Controller
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('users','spks.created_by','users.id')
+            ->join('manpowers','spks.manpower_id','manpowers.id')
             ->where('credit_status','survey')
             ->orWhere('order_status','indent')
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             $countManpower = Manpower::count();
             if ($countManpower <= 0) {
                 alert()->warning('Add Manpower','Manpower data is not available!');
@@ -76,7 +76,7 @@ class SpkController extends Controller
 
             $dealerCode = $dc;
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('users','spks.created_by','users.id')
+            ->join('manpowers','spks.manpower_id','manpowers.id')
             ->join('dealers','stocks.dealer_id','dealers.id')
             ->where('dealers.dealer_code',$dc)
             ->where(function($query){
@@ -84,7 +84,7 @@ class SpkController extends Controller
                       ->orWhere('order_status','indent');
             })
             ->orderBy('spks.id','desc')
-            ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             $countManpower = Manpower::where('dealer_id',$did)
             ->count();
             if ($countManpower <= 0) {
@@ -355,31 +355,31 @@ class SpkController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->limit(50)->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->limit(50)->get();
             }
             
         } else {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('spk_date',[$req->start, $req->end])
                 ->orderBy('spk_date','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
         }
         return view('page', compact('data','start','end','unitData','colorData'));
@@ -469,19 +469,19 @@ class SpkController extends Controller
         if ($unit == null && $color == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('spks.payment_method',$paymentMethod)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
         
         // Filter Color
@@ -490,21 +490,21 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('colors.color_code',$color)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['colors.color_code',$color],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
 
         // Filter Unit
@@ -512,20 +512,20 @@ class SpkController extends Controller
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('units.id',$unit)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['units.id',$unit],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
 
         // Filter Unit & Color
@@ -534,25 +534,25 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['units.id',$unit],
                     ['colors.color_code',$color],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['units.id',$unit],
                     ['colors.color_code',$color],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
         
         // Filter Unit && Payment Method
@@ -561,25 +561,25 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['units.id',$unit],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['units.id',$unit],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
 
         // Filter Color && Payment Method
@@ -588,25 +588,25 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['colors.color_code',$color],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['colors.color_code',$color],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
 
         // Filter All
@@ -615,19 +615,19 @@ class SpkController extends Controller
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['units.id',$unit],
                     ['colors.color_code',$color],
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('colors','units.color_id','colors.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where([
                     ['stocks.dealer_id',$did],
                     ['units.id',$unit],
@@ -635,20 +635,20 @@ class SpkController extends Controller
                     ['spks.payment_method',$paymentMethod],
                 ])
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->get();
             }
         }else {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->limit(50)->get();
             }else{
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
-                ->join('users','spks.created_by','users.id')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('spks.id','desc')
-                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
+                ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.phone as customer_phone')->limit(50)->get();
             }
         }
         return view('page', compact('data','unitName','colorName','paymentMethod','unit','color','unitData','colorData'));

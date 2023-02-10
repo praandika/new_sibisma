@@ -22,8 +22,6 @@
                                 {{ route('document.history') }}
                             @elseif(Route::is('spk.history'))
                                 {{ route('spk.history') }}
-                            @elseif(Route::is('spk.index'))
-                                {{ route('spk.filter') }}
                             @elseif(Route::is('delivery-order.*'))
                                 {{ route('delivery-order.history') }}
                             @elseif(Route::is('kwitansi.*'))
@@ -51,7 +49,7 @@
                             </div>
                             </form>
                         <!-- END FORM -->
-                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('spk.*') || Route::is('delivery-order.*') || Route::is('kwitansi.*') ? 'd-none' : 'd-block' }}">
+                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') ? 'd-none' : 'd-block' }}">
                                 <a href="
                                 @if(Route::is('sale.*'))
                                     {{ url('report/sale/'.$start.'/'.$end) }}
@@ -73,6 +71,8 @@
                                     {{ url('report/log/'.$start.'/'.$end) }}
                                 @elseif(Route::is('opname.*'))
                                     {{ url('report/opname/'.$start.'/'.$end) }}
+                                @elseif(Route::is('spk.*'))
+                                    {{ url('report/spk/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif

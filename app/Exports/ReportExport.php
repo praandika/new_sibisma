@@ -12,6 +12,7 @@ use App\Models\StockHistory;
 use App\Models\Dealer;
 use App\Models\Log;
 use App\Models\Opname;
+use App\Models\Spk;
 use App\Models\Stock;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -169,6 +170,31 @@ class ReportExport implements FromView
                     ->where('stocks.dealer_id',$did)
                     ->whereBetween('opname_date', [$this->start, $this->end])
                     ->orderBy('opname_date','asc')->get()
+                ]);
+            }
+        }elseif($this->param == 'spk'){
+            if ($dc == 'group') {
+                return view('export.spk',[
+                    'data' => Spk::join('stocks','spks.stock_id','stocks.id')
+                    ->join('units','stocks.unit_id','units.id')
+                    ->join('colors','units.color_id','colors.id')
+                    ->join('users','spks.created_by','users.id')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->whereBetween('spks.spk_date', [$this->start, $this->end])
+                    ->orderBy('spks.spk_date','asc')->get()
+                ]);
+            } else {
+                $dc = Auth::user()->dealer_code;
+                $did = Dealer::where('dealer_code',$dc)->sum('id');
+                return view('export.spk',[
+                    'data' => Spk::join('stocks','spks.stock_id','stocks.id')
+                    ->join('units','stocks.unit_id','units.id')
+                    ->join('colors','units.color_id','colors.id')
+                    ->join('users','spks.created_by','users.id')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->whereBetween('spks.spk_date', [$this->start, $this->end])
+                    ->orderBy('spks.spk_date','asc')->get()
                 ]);
             }
         }elseif($this->param == 'log') {

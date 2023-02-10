@@ -74,6 +74,8 @@ class ReportController extends Controller
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Log_report_'.$start.'-'.$end.'.xlsx');
         }elseif($param == 'opname') {
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Opname_report_'.$start.'-'.$end.'.xlsx');
+        }elseif($param == 'spk') {
+            return (new ReportExport)->param($param)->start($start)->end($end)->download('Spk_report_'.$start.'-'.$end.'.xlsx');
         }elseif($param == 'stock') {
             return (new ReportExport)->param($param)->download('Stock_report.xlsx');
         }else{
