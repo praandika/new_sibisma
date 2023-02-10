@@ -25,7 +25,7 @@
 
         table tr th,
         table tr th {
-            padding: 5px;
+            padding: 2px;
         }
 
         .left {
