@@ -38,10 +38,12 @@ class SpkController extends Controller
         $yearNow = Carbon::now('GMT+8')->format('Y');
         $yearBefore = $yearNow - 1;
 
-        $unit = Unit::groupBy('model_name')
+        $unitData = Unit::where('year_mc',$yearNow)
+        ->orWhere('year_mc',$yearBefore)
+        ->groupBy('model_name')
         ->get();
 
-        $color = Color::all();
+        $colorData = Color::all();
 
         if ($dc == 'group') {
             $stock = Stock::orderBy('qty','desc')->get();
@@ -60,7 +62,7 @@ class SpkController extends Controller
                 alert()->warning('Add Manpower','Manpower data is not available!');
                 return redirect()->route('manpower.index');
             } else {
-                return view('page', compact('stock','leasing','today','data','manpower','spk_no','unit','color'));
+                return view('page', compact('stock','leasing','today','data','manpower','spk_no','unitData','colorData'));
             }
         }else{
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
@@ -89,7 +91,7 @@ class SpkController extends Controller
                 alert()->warning('Add Manpower','Manpower data is not available!');
                 return redirect()->route('manpower.index');
             } else {
-                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no','unit','color'));
+                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no','unitData','colorData'));
             }
         }
     }
@@ -341,10 +343,12 @@ class SpkController extends Controller
         $yearNow = Carbon::now('GMT+8')->format('Y');
         $yearBefore = $yearNow - 1;
 
-        $unit = Unit::groupBy('model_name')
+        $unitData = Unit::where('year_mc',$yearNow)
+        ->orWhere('year_mc',$yearBefore)
+        ->groupBy('model_name')
         ->get();
 
-        $color = Color::all();
+        $colorData = Color::all();
 
         $start = $req->start;
         $end = $req->end;
@@ -378,7 +382,7 @@ class SpkController extends Controller
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }
         }
-        return view('page', compact('data','start','end','unit','color'));
+        return view('page', compact('data','start','end','unitData','colorData'));
     }
 
     public function get($spk_no){
@@ -447,12 +451,12 @@ class SpkController extends Controller
         $yearNow = Carbon::now('GMT+8')->format('Y');
         $yearBefore = $yearNow - 1;
 
-        $unit = Unit::where('year_mc',$yearNow)
+        $unitData = Unit::where('year_mc',$yearNow)
         ->orWhere('year_mc',$yearBefore)
         ->groupBy('model_name')
         ->get();
 
-        $color = Color::all();
+        $colorData = Color::all();
 
         $unit = $req->unit;
         $color = $req->color;
@@ -461,6 +465,7 @@ class SpkController extends Controller
         $unitName = $req->unitName;
         $colorName = $req->colorName;
 
+        // Filter Payment Method
         if ($unit == null && $color == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
@@ -478,6 +483,8 @@ class SpkController extends Controller
                 ->orderBy('spks.id','desc')
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }
+        
+        // Filter Color
         } elseif ($unit == null && $paymentMethod == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
@@ -499,12 +506,14 @@ class SpkController extends Controller
                 ->orderBy('spks.id','desc')
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }
+
+        // Filter Unit
         } elseif ($color == null && $paymentMethod == null) {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('units','stocks.unit_id','units.id')
                 ->join('users','spks.created_by','users.id')
-                ->where('units.unit_id',$unit)
+                ->where('units.id',$unit)
                 ->orderBy('spks.id','desc')
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }else{
@@ -513,12 +522,122 @@ class SpkController extends Controller
                 ->join('users','spks.created_by','users.id')
                 ->where([
                     ['stocks.dealer_id',$did],
-                    ['units.unit_id',$unit],
+                    ['units.id',$unit],
                 ])
                 ->orderBy('spks.id','desc')
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
             }
-        } else {
+
+        // Filter Unit & Color
+        } elseif ($paymentMethod == null) {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['units.id',$unit],
+                    ['colors.color_code',$color],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['units.id',$unit],
+                    ['colors.color_code',$color],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }
+        
+        // Filter Unit && Payment Method
+        } elseif ($color == null) {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['units.id',$unit],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['units.id',$unit],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }
+
+        // Filter Color && Payment Method
+        } elseif ($unit == null) {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['colors.color_code',$color],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['colors.color_code',$color],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }
+
+        // Filter All
+        } elseif ($unit != null && $color != null && $paymentMethod != null) {
+            if ($dc == 'group') {
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['units.id',$unit],
+                    ['colors.color_code',$color],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }else{
+                $data = Spk::join('stocks','spks.stock_id','stocks.id')
+                ->join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('users','spks.created_by','users.id')
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['units.id',$unit],
+                    ['colors.color_code',$color],
+                    ['spks.payment_method',$paymentMethod],
+                ])
+                ->orderBy('spks.id','desc')
+                ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->get();
+            }
+        }else {
             if ($dc == 'group') {
                 $data = Spk::join('stocks','spks.stock_id','stocks.id')
                 ->join('users','spks.created_by','users.id')
@@ -532,6 +651,6 @@ class SpkController extends Controller
                 ->select('*','spks.id as id_spk','users.first_name','spks.phone as customer_phone')->limit(50)->get();
             }
         }
-        return view('page', compact('data','unitName','colorName','paymentMethod','unit','color'));
+        return view('page', compact('data','unitName','colorName','paymentMethod','unit','color','unitData','colorData'));
     }
 }

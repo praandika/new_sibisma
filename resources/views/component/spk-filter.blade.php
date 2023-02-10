@@ -14,28 +14,20 @@ a.btnAction {
 </style>
 @endpush
 
-@section('title','SPK Search {{ $unitName }} {{ $colorName }} {{ $paymentMethod }}')
+@section('title','SPK Search '.$unitName.' '.$colorName.' '.$paymentMethod)
 @section('page-title','SPK Search')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK | {{ $unitName }} {{ $colorName }} {{ $paymentMethod }}</a>
+    <a href="{{ route('spk.index') }}">Data SPK</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
 </li>
 <li class="nav-item">
-    <a href="{{ route('spk.history') }}">History</a>
-</li>
-<li class="separator">
-    <i class="flaticon-right-arrow"></i>
-</li>
-<li class="nav-item">
-    <a href="#">Search</a>
+    <a href="#">Search | {{ $unitName }} {{ $colorName }} {{ $paymentMethod }}</a>
 </li>
 @endpush
-
-@include('component.filter-box')
 
 <div class="col-md-12">
     <div class="card">

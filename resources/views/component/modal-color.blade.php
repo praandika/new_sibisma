@@ -27,7 +27,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse($color as $o)
+                            @forelse($colorData as $o)
                             <tr data-id="{{ $o->id }}" data-code="{{ $o->color_code }}" data-color="{{ $o->color_name }}" class="pilihColor">
                                 <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->color_code }}</td>
                                 <td>{{ $o->color_name }}</td>

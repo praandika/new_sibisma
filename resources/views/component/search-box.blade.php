@@ -49,6 +49,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Search"><i class="fas fa-search"></i></button>
                             </div>
+                            </form>
                         <!-- END FORM -->
                             <div class="input-group-prepend {{ $start == null || $end == null || Route::is('spk.*') || Route::is('delivery-order.*') || Route::is('kwitansi.*') ? 'd-none' : 'd-block' }}">
                                 <a href="

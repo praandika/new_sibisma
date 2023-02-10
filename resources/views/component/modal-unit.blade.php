@@ -25,7 +25,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse($unit as $o)
+                            @forelse($unitData as $o)
                             <tr data-id="{{ $o->id }}" data-unit="{{ $o->model_name }}" class="pilihUnit">
                                 <td>{{ $o->model_name }}</td>
                             </tr>
