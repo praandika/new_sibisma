@@ -431,6 +431,24 @@ class SpkController extends Controller
         return $pdf->download('spk_'.$spk_no.'.pdf');
     }
 
+    public function ktpPDF($spk_no){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealer = Dealer::where('dealer_code',$dc)->get();
+
+        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
+        ->join('leasings','spks.leasing_id','=','leasings.id')
+        ->join('manpowers','spks.manpower_id','=','manpowers.id')
+        ->select('*','spks.address as customer_address','spks.phone as customer_phone')
+        ->where('spks.spk_no',$spk_no)
+        ->get();
+        $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
+
+        $pdf = PDF::loadView('export.pdf-ktp',compact('data','spk_no','printDate','dealer'));
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream('ktp_'.$spk_no.'.pdf');
+    }
+
     public function delete($id){
         $spk_no = Spk::where('id',$id)->pluck('spk_no');
         $spk_no = $spk_no[0];

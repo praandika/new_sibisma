@@ -89,6 +89,10 @@
                     <a href="{{ url('spk-download',$spk_no) }}" class="btn btn-success btn-round print-pdf"
                         style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Download PDF</strong>
                     </a>
+                    &nbsp;
+                    <a href="{{ route('spk.ktp-print',$spk_no) }}" class="btn btn-danger btn-round print-pdf"
+                        style="margin-bottom: 20px;" target="_blank"><i class="fa fa-id-card"></i>&nbsp;&nbsp; <strong>Print KTP</strong>
+                    </a>
                 </div>
             </div>
         </div>

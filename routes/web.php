@@ -225,6 +225,7 @@ Route::get('print-pdf-tp', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('spk-print/{id}', [SpkController::class, 'printPDF'])->name('spk.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('spk-download/{id}', [SpkController::class, 'downloadPDF'])->name('spk.download');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-ktp-print/{id}', [SpkController::class, 'ktpPDF'])->name('spk.ktp-print');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('do-print/{id}', [DeliveryOrderController::class, 'printPDF'])->name('do.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('do-download/{id}', [DeliveryOrderController::class, 'downloadPDF'])->name('do.download');

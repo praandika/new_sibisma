@@ -145,21 +145,20 @@
 
         <table class="tbKelengkapan">
             <tr>
-                <th colspan="4" style="text-align: center;">Perlengkapan</th>
+                <th colspan="3" style="text-align: center;">Perlengkapan</th>
             </tr>
             <tr>
                 <td><span class="centang"></span> Unit</td>
                 <td><span class="centang"></span> Helm</td>
                 <td><span class="centang"></span> Cover Plat</td>
-                <td><span class="centang"></span> Jaket</td>
             </tr>
             <tr>
                 <td><span class="centang"></span> Remote SKS <span style="color: red;">*</span></td>
                 <td><span class="centang"></span> Pin Remote <span style="color: red;">*</span></td>
-                <td colspan="2"><span class="centang"></span> Kunci Emergency <span style="color: red;">*</span></td>
+                <td><span class="centang"></span> Kunci Emergency <span style="color: red;">*</span></td>
             </tr>
             <tr>
-                <td colspan="4"> <br>
+                <td colspan="3"> <br>
                     Lain-lain :...........................................................</td>
             </tr>
         </table>

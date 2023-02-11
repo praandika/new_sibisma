@@ -219,59 +219,6 @@
             Printed at {{ $printDate }} WITA &nbsp;
         </div>
     </footer>
-
-    <center>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <table>
-            <tr>
-                <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
-                </td>
-                <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
-                </td>
-                <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
-                </td>
-            </tr>
-        </table>
-    </center>
 </body>
 
 </html>
