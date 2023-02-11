@@ -181,6 +181,7 @@ class ReportExport implements FromView
                     ->join('users','spks.created_by','users.id')
                     ->join('manpowers','spks.manpower_id','manpowers.id')
                     ->whereBetween('spks.spk_date', [$this->start, $this->end])
+                    ->select('*','spks.address as customer_address')
                     ->orderBy('spks.spk_date','asc')->get()
                 ]);
             } else {
@@ -194,6 +195,7 @@ class ReportExport implements FromView
                     ->join('manpowers','spks.manpower_id','manpowers.id')
                     ->where('stocks.dealer_id',$did)
                     ->whereBetween('spks.spk_date', [$this->start, $this->end])
+                    ->select('*','spks.address as customer_address')
                     ->orderBy('spks.spk_date','asc')->get()
                 ]);
             }
