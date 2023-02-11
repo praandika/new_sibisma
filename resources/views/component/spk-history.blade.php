@@ -53,6 +53,9 @@
                             <th>Phone</th>
                             <th>Unit</th>
                             <th>Salesman</th>
+                            @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,6 +68,9 @@
                             <th>Phone</th>
                             <th>Unit</th>
                             <th>Salesman</th>
+                            @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -122,6 +128,9 @@
                             <td>{{ $o->phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
                             <td>{{ $o->salesman }}</td>
+                            @if(Auth::user()->dealer_code == 'group')
+                                <td>{{ $o->stock->dealer->dealer_code }}</td>
+                            @endif
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"
@@ -143,7 +152,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" style="text-align: center;">No data available</td>
+                            <td colspan="{{ Auth::user()->dealer_code == 'group' ? '9' : '8' }}" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

@@ -30,18 +30,18 @@
         <table>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 321px; height: 207px">
+                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
                 </td>
             </tr>
         </table>
