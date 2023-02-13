@@ -101,14 +101,14 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="order_name" type="text" class="form-control input-border-bottom" name="order_name" value="{{ $spk->order_name }}" required>
+                            <input id="order_name" type="text" class="form-control input-border-bottom" name="order_name" value="{{ $spk->order_name }}" style="text-transform: uppercase;" required>
                             <label for="order_name" class="placeholder">Customer's Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ $spk->address }}" required>
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ $spk->address }}" style="text-transform: uppercase;" required>
                             <label for="address" class="placeholder">Customer's Address</label>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ $spk->stnk_name }}" required>
+                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ $spk->stnk_name }}" style="text-transform: uppercase;" required>
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
@@ -253,7 +253,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" value="{{ $spk->ktp }}" name="ktp_file_prev">
+                <input type="text" value="{{ $spk->ktp }}" name="ktp_file_prev">
 
                 <div class="row">
                     <div class="col-md-12">

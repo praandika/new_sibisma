@@ -238,6 +238,26 @@ class SpkController extends Controller
             $leasing = $request->leasing_id;
         }
 
+        $data = Spk::find($spk->id);
+        $data->spk_no = $request->spk_no;
+        $data->spk_date = $request->spk_date;
+        $data->order_name = strtoupper($request->order_name);
+        $data->address = strtoupper($request->address);
+        $data->phone = $request->phone;
+        $data->stnk_name = strtoupper($request->stnk_name);
+        $data->stock_id = $request->stock_id;
+        $data->downpayment = $request->downpayment;
+        $data->discount = $discount;
+        $data->payment = $request->payment;
+        $data->leasing_id = $leasing;
+        $data->manpower_id = $request->manpower_id;
+        $data->description = strtoupper($request->description);
+        $data->payment_method = $request->payment_method;
+        $data->credit_status = $credit_status;
+        $data->order_status = $request->order_status;
+        $data->sale_status = $request->sale_status;
+        $data->created_by = Auth::user()->id;
+
         if ($request->ktp_file_prev == '' || $request->ktp_file_prev == null) {
             // Get KTP image and Store
             if ($request->picture != '') {
@@ -258,6 +278,12 @@ class SpkController extends Controller
             } else {
                 $ktp_file = 'noimage.jpg';
             }
+
+        $data->ktp = $ktp_file;
+        $data->update();
+        toast('SPK berhasil diubah','success');
+        return redirect()->route('spk.get',$request->spk_no);
+
         } else {
             //  Get KTP image and update
             if ($request->picture != '') {
@@ -271,6 +297,12 @@ class SpkController extends Controller
                     $ktp_file = time()."_".$img->getClientOriginalName();
                     $dir_img = 'img/ktp';
                     $img->move($dir_img,$ktp_file);
+
+        $data->ktp = $ktp_file;
+        $data->update();
+        toast('SPK berhasil diubah','success');
+        return redirect()->route('spk.get',$request->spk_no);
+
                 }
             } elseif ($request->photo != '') {
                 if ($request->hasfile('photo')) {
@@ -283,6 +315,12 @@ class SpkController extends Controller
                     $ktp_file = time()."_".$img->getClientOriginalName();
                     $dir_img = 'img/ktp';
                     $img->move($dir_img,$ktp_file);
+            
+        $data->ktp = $ktp_file;
+        $data->update();
+        toast('SPK berhasil diubah','success');
+        return redirect()->route('spk.get',$request->spk_no);
+
                 }
             } elseif ($request->picture != '' && $request->photo != '') {
                 if ($request->hasfile('picture')) {
@@ -295,33 +333,18 @@ class SpkController extends Controller
                     $ktp_file = time()."_".$img->getClientOriginalName();
                     $dir_img = 'img/ktp';
                     $img->move($dir_img,$ktp_file);
-                }
-            }
-        }
 
-        $data = Spk::find($spk->id);
-        $data->spk_no = $request->spk_no;
-        $data->spk_date = $request->spk_date;
-        $data->order_name = $request->order_name;
-        $data->address = $request->address;
-        $data->phone = $request->phone;
-        $data->stnk_name = $request->stnk_name;
-        $data->stock_id = $request->stock_id;
-        $data->downpayment = $request->downpayment;
-        $data->discount = $discount;
-        $data->payment = $request->payment;
-        $data->leasing_id = $leasing;
-        $data->manpower_id = $request->manpower_id;
-        $data->description = $request->description;
-        $data->payment_method = $request->payment_method;
-        $data->credit_status = $credit_status;
-        $data->order_status = $request->order_status;
-        $data->sale_status = $request->sale_status;
         $data->ktp = $ktp_file;
-        $data->created_by = Auth::user()->id;
         $data->update();
         toast('SPK berhasil diubah','success');
         return redirect()->route('spk.get',$request->spk_no);
+                }
+            } else {
+                $data->update();
+                toast('SPK berhasil diubah','success');
+                return redirect()->route('spk.get',$request->spk_no);
+            }
+        }
     }
 
     /**

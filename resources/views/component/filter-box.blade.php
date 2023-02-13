@@ -17,7 +17,7 @@
                                         data-toggle="modal" 
                                         data-target=".modalUnit"
                                         id="unitName">
-                                    <input type="hidden" name="unit" id="unit">
+                                    <input type="text" name="unit" id="unit">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -27,7 +27,7 @@
                                         data-toggle="modal" 
                                         data-target=".modalColor"
                                         id="colorName">
-                                    <input type="hidden" name="color" id="color">
+                                    <input type="text" name="color" id="color">
                             </div>
                         </div>
                         <div class="col-md-4">
