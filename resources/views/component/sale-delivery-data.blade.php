@@ -35,7 +35,7 @@
                             <th>Phone</th>
                             <th>Driver</th>
                             <th>PIC</th>
-                            <th>Created By</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@
                             <th>Phone</th>
                             <th>Driver</th>
                             <th>PIC</th>
-                            <th>Created By</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -68,7 +68,7 @@
                             <td>{{ $o->sale->phone }}</td>
                             <td>{{ $o->mainDriver->name }}</td>
                             <td>{{ $o->backupDriver->name }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->note }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale-delivery.show', $o->id) }}" class="btnAction" data-toggle="tooltip"
