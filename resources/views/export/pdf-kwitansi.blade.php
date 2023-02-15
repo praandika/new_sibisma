@@ -116,12 +116,8 @@
                     <td>: {{ $count }}</td>
                 </tr>
                 <tr>
-                    <th>Yth Bapak/Ibu</th>
-                    <td>: {{ $o->customer_name }}</td>
-                </tr>
-                <tr>
                     <th>Sudah terima dari</th>
-                    <td>: {{ $o->manpower }}</td>
+                    <td>: {{ $o->customer_name }}</td>
                 </tr>
                 <tr>
                     <th>Banyaknya uang</th>
@@ -135,6 +131,14 @@
                     <th width="150px"></th>
                     <td> &nbsp;____________________________________________________________________________________________________</td>
                 </tr>
+                <tr>
+                    <th>Nomor Rangka</th>
+                    <td>: {{ $o->frame_no }}</td>
+                </tr>
+                <tr>
+                    <th>Nomor Mesin</th>
+                    <td>: {{ $o->engine_no }}</td>
+                </tr>
             @empty
             @endforelse
             </table>
@@ -145,13 +149,23 @@
                         <table style="border-top: 5px double black; border-bottom: 5px double black; width: 400px;">
                             <tr>
                                 <td style="padding: 10px 0 10px 0;">Terbilang Rp.</td>
-                                <th><span style="display: inline-block; border-top: 1px solid black; border-bottom: 1px solid black; margin-top: -5px; margin-bottom: -5px; margin-right: -100px; height: 35px; width: 200px;"></span></th>
+                                <th>
+                                    <span style="display: inline-block; border-top: 1px solid black; border-bottom: 1px solid black; margin-top: -5px; margin-bottom: -5px; margin-right: -100px; height: 35px; width: 200px; position: relative;">
+                                            <span style="position: absolute; left: 50px; font-size: 20px;">
+                                                @if($o->payment_method == 'cash')
+                                                    {{ number_format($o->stock->unit->price - $o->discount) }}
+                                                @elseif($o->payment_method == 'credit')
+                                                    {{ number_format($o->downpayment - $o->discount) }}
+                                                @endif
+                                            </span>
+                                    </span>
+                                </th>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="tandatangan" style="padding-right: 30px;">
-                    Denpasar,_____________________ 20 __
+                    Denpasar, {{ Carbon\Carbon::parse($o->sale_date)->format('j F Y') }}
                 </div>
             </div>
         </div>
