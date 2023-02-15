@@ -30,7 +30,8 @@ class SaleDeliveryController extends Controller
         if ($dc == 'group') {
             $data = SaleDelivery::orderBy('sale_delivery_date','desc')->get();
             $manpower = Manpower::where('position','Driver')->get();
-            $sale = Sale::all();
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
         }else{
             $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
