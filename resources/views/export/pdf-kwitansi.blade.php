@@ -113,7 +113,7 @@
             @forelse($data as $o)
                 <tr>
                     <th>No</th>
-                    <td>: {{ $count }}</td>
+                    <td>: {{ $noKw }}</td>
                 </tr>
                 <tr>
                     <th>Sudah terima dari</th>

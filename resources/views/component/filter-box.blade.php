@@ -10,27 +10,41 @@
                 <div class="row">
                     <!-- FORM -->
                     
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Select Unit" aria-label=""
                                         aria-describedby="basic-addon1" name="unitName"
                                         data-toggle="modal" 
                                         data-target=".modalUnit"
                                         id="unitName">
-                                    <input type="text" name="unit" id="unit">
+                                    <input type="hidden" name="unit" id="unit">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Customer Name" name="customerName" style="text-transform: capitalize;">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Select Color" aria-label=""
                                         aria-describedby="basic-addon1" name="colorName"
                                         data-toggle="modal" 
                                         data-target=".modalColor"
                                         id="colorName">
-                                    <input type="text" name="color" id="color">
+                                    <input type="hidden" name="color" id="color">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Select Credit Status" aria-label=""
+                                    aria-describedby="basic-addon1" name="creditStatus" 
+                                    data-toggle="modal"
+                                    data-target=".modalCreditStatusSearch"
+                                    id="creditStatus" style="text-transform: capitalize;">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Select Payment Method" aria-label=""
                                     aria-describedby="basic-addon1" name="paymentMethod" 

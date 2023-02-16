@@ -253,7 +253,7 @@
                     </div>
                 </div>
 
-                <input type="text" value="{{ $spk->ktp }}" name="ktp_file_prev">
+                <input type="hidden" value="{{ $spk->ktp }}" name="ktp_file_prev">
 
                 <div class="row">
                     <div class="col-md-12">

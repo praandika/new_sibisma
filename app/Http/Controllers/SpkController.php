@@ -499,8 +499,11 @@ class SpkController extends Controller
         $colorData = Color::all();
 
         $unit = $req->unit;
+        $nameCustomer = $req->customerName;
         $color = $req->color;
+        $creditStatus = $req->creditStatus;
         $paymentMethod = $req->paymentMethod;
+
 
         $unitName = $req->unitName;
         $colorName = $req->colorName;

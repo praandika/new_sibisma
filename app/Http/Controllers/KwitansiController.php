@@ -81,11 +81,40 @@ class KwitansiController extends Controller
     public function printPDF($id){
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
-        $dealer = Dealer::where('dealer_code',$dc)->get();
 
-        $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->where('stocks.dealer_id',$did)
-        ->count();
+        if ($dc == 'group') {
+            $dealerId = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('sales.id',$id)
+            ->pluck('dealers.id');
+            $dealerId = $dealerId[0];
+
+            $dealerCode = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('stocks.dealer_id',$dealerId)
+            ->pluck('dealer_code');
+            $dealerCode = $dealerCode[0];
+
+            $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->where('stocks.dealer_id',$dealerId)
+            ->count();
+            $noKw = $dealerCode.'-'.$count;
+
+            $dealer = Dealer::where('dealer_code',$dealerCode)->get();
+        } else {
+            $dealerCode = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('stocks.dealer_id',$did)
+            ->pluck('dealer_code');
+            $dealerCode = $dealerCode[0];
+
+            $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->count();
+            $noKw = $dealerCode.'-'.$count;
+
+            $dealer = Dealer::where('dealer_code',$dc)->get();
+        }
 
         $name = Sale::where('id',$id)->pluck('customer_name');
         $name = $name[0];
@@ -107,7 +136,7 @@ class KwitansiController extends Controller
 
         $customPaper = array(0,0,850,320);
 
-        $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','count'));
+        $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
         $pdf->setPaper($customPaper);
         return $pdf->stream('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
@@ -117,9 +146,39 @@ class KwitansiController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         $dealer = Dealer::where('dealer_code',$dc)->get();
 
-        $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->where('stocks.dealer_id',$did)
-        ->count();
+        if ($dc == 'group') {
+            $dealerId = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('sales.id',$id)
+            ->pluck('dealers.id');
+            $dealerId = $dealerId[0];
+
+            $dealerCode = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('stocks.dealer_id',$dealerId)
+            ->pluck('dealer_code');
+            $dealerCode = $dealerCode[0];
+
+            $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->where('stocks.dealer_id',$dealerId)
+            ->count();
+            $noKw = $dealerCode.'-'.$count;
+
+            $dealer = Dealer::where('dealer_code',$dealerCode)->get();
+        } else {
+            $dealerCode = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->join('dealers','stocks.dealer_id','=','dealers.id')
+            ->where('stocks.dealer_id',$did)
+            ->pluck('dealer_code');
+            $dealerCode = $dealerCode[0];
+
+            $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->count();
+            $noKw = $dealerCode.'-'.$count;
+
+            $dealer = Dealer::where('dealer_code',$dc)->get();
+        }
 
         $name = Sale::where('id',$id)->pluck('customer_name');
         $name = $name[0];
@@ -138,7 +197,7 @@ class KwitansiController extends Controller
 
         $customPaper = array(0,0,850,320);
 
-        $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','count'));
+        $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
         $pdf->setPaper($customPaper);
         return $pdf->download('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
