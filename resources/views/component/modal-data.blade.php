@@ -110,10 +110,11 @@
                         @elseif(Route::is('document.*') || Route::is('sale-delivery.*'))
                         <thead>
                             <tr>
+                                <th>Sale Date</th>
                                 <th>Customer</th>
                                 <th>Model Name</th>
                                 <th>Color</th>
-                                <th>Year</th>
+                                <th>Year MC</th>
                                 <th>Frame No</th>
                                 @if(Auth::user()->dealer_code == 'group')
                                 <th>Dealer</th>
@@ -122,10 +123,11 @@
                         </thead>
                         <tfoot>
                             <tr>
+                                <th>Sale Date</th>
                                 <th>Customer</th>
                                 <th>Model Name</th>
                                 <th>Color</th>
-                                <th>Year</th>
+                                <th>Year MC</th>
                                 <th>Frame No</th>
                                 @if(Auth::user()->dealer_code == 'group')
                                 <th>Dealer</th>
@@ -145,11 +147,12 @@
                                 data-engine="{{ $o->engine_no }}"
                                 data-colorcode="{{ $o->stock->unit->color->color_code }}"
                                 class="klik">
+                                <td>{{ $o->sale_date }}</td>
                                 <td>{{ $o->customer_name }}</td>
-                                <td>{{ $o->stock->unit->color->color_name }}</td>
                                 <td>{{ $o->stock->unit->model_name }}</td>
-                                <td>{{ $o->frame_no }}</td>
+                                <td>{{ $o->stock->unit->color->color_name }}</td>
                                 <td>{{ $o->stock->unit->year_mc }}</td>
+                                <td>{{ $o->frame_no }}</td>
                                 @if(Auth::user()->dealer_code == 'group')
                                 <td>{{ $o->stock->dealer->dealer_code }}</td>
                                 @endif
