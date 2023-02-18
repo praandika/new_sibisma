@@ -38,6 +38,7 @@ class SaleDeliveryController extends Controller
             $manpower = Manpower::where('position','Driver')->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
+            ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
         }else{
@@ -52,6 +53,7 @@ class SaleDeliveryController extends Controller
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
             ->where('stocks.dealer_id',$did)
+            ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
         }
