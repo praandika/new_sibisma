@@ -34,7 +34,7 @@ class SaleDeliveryController extends Controller
             ->join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
             ->orderBy('sale_delivery_date','desc')
-            ->select('*','sale_deliveries.id as delivery_id')->get()->get();
+            ->select('*','sale_deliveries.id as delivery_id')->get();
             $manpower = Manpower::where('position','Driver')->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->select('sales.*','stocks.unit_id')->get();
@@ -183,7 +183,7 @@ class SaleDeliveryController extends Controller
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->whereYear('sales.sale_date',$year)
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
+                ->select('*','sale_deliveries.id as delivery_id')->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
@@ -198,14 +198,14 @@ class SaleDeliveryController extends Controller
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->whereBetween('sale_delivery_date',[$req->start, $req->end])
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
+                ->select('*','sale_deliveries.id as delivery_id')->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_delivery_date',[$req->start, $req->end])
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
+                ->select('*','sale_deliveries.id as delivery_id')->get();
             }
             
         }
