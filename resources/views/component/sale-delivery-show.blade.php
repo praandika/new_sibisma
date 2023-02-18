@@ -55,7 +55,7 @@
                             <div class="form-group form-group-default">
                                 <label>Delivery Time</label>
                                 <p type="text" class="form-control" style="margin-bottom: -4px;">
-                                    {{ $saleDelivery->delivery_time }}</p>
+                                    {{ $saleDelivery->delivery_time == null ? 'N/A' : $saleDelivery->delivery_time }}</p>
                             </div>
                         </div>
 

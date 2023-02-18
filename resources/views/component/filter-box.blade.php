@@ -9,7 +9,6 @@
             <form action="{{ route('spk.filter') }}" method="get">
                 <div class="row">
                     <!-- FORM -->
-                    
                         <div class="col-md-3">
                             <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Select Unit" aria-label=""
@@ -66,5 +65,6 @@
 </div>
 
 @include('component.modal-payment-method-search')
+@include('component.modal-credit-status-search')
 @include('component.modal-unit')
 @include('component.modal-color')

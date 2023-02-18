@@ -27,8 +27,14 @@ class SaleDeliveryController extends Controller
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $time = Carbon::now('GMT+8')->format('h:i:s');
 
+        $year = Carbon::now('GMT+8')->format('Y');
+
         if ($dc == 'group') {
-            $data = SaleDelivery::orderBy('sale_delivery_date','desc')->get();
+            $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
+            ->join('stocks','sales.stock_id','stocks.id')
+            ->whereYear('sales.sale_date',$year)
+            ->orderBy('sale_delivery_date','desc')
+            ->select('*','sale_deliveries.id as delivery_id')->get()->get();
             $manpower = Manpower::where('position','Driver')->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->select('sales.*','stocks.unit_id')->get();
@@ -36,9 +42,10 @@ class SaleDeliveryController extends Controller
         }else{
             $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
             ->join('stocks','sales.stock_id','stocks.id')
+            ->whereYear('sales.sale_date',$year)
             ->where('stocks.dealer_id',$did)
             ->orderBy('sale_delivery_date','desc')
-            ->select('stocks.*','sale_deliveries.*')->get();
+            ->select('*','sale_deliveries.id as delivery_id')->get();
             $manpower = Manpower::where('position','Driver')
             ->where('dealer_id',$did)->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
@@ -69,8 +76,6 @@ class SaleDeliveryController extends Controller
         $data = new SaleDelivery;
         $data->sale_delivery_date = $req->sale_delivery_date;
         $data->sale_id = $req->sale_id;
-        $data->delivery_time = $req->delivery_time;
-        $data->arrival_time = $req->arrival_time;
         $data->main_driver = $req->main_driver;
         $data->backup_driver = $req->backup_driver;
         $data->note = $req->note;
@@ -122,8 +127,6 @@ class SaleDeliveryController extends Controller
     public function update(Request $req, SaleDelivery $saleDelivery)
     {
         $data = SaleDelivery::find($saleDelivery->id);
-        $data->delivery_time = $req->delivery_time;
-        $data->arrival_time = $req->arrival_time;
         $data->main_driver = $req->main_driver;
         $data->backup_driver = $req->backup_driver;
         $data->note = $req->note;
@@ -170,28 +173,39 @@ class SaleDeliveryController extends Controller
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
 
+        $year = Carbon::now('GMT+8')->format('Y');
+
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
             if ($dc == 'group') {
-                $data = SaleDelivery::orderBy('sale_delivery_date','desc')->get();
+                $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
+                ->join('stocks','sales.stock_id','stocks.id')
+                ->whereYear('sales.sale_date',$year)
+                ->orderBy('sale_delivery_date','desc')
+                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
+                ->whereYear('sales.sale_date',$year)
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('sale_delivery_date','desc')
-                ->select('stocks.*','sale_deliveries.*')->get();
+                ->select('*','sale_deliveries.id as delivery_id')->get();
             }
         } else {
             if ($dc == 'group') {
-                $data = SaleDelivery::whereBetween('sale_delivery_date',[$req->start, $req->end])->get();
+                $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
+                ->join('stocks','sales.stock_id','stocks.id')
+                ->whereBetween('sale_delivery_date',[$req->start, $req->end])
+                ->orderBy('sale_delivery_date','desc')
+                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_delivery_date',[$req->start, $req->end])
                 ->orderBy('sale_delivery_date','desc')
-                ->select('stocks.*','sale_deliveries.*')->get();
+                ->select('*','sale_deliveries.id as delivery_id')->get()->get();
             }
             
         }

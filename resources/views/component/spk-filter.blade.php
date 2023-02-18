@@ -25,7 +25,7 @@ a.btnAction {
     <i class="flaticon-right-arrow"></i>
 </li>
 <li class="nav-item">
-    <a href="#">Search | {{ $unitName }} {{ $colorName }} {{ $paymentMethod }}</a>
+    <a href="#">Search | {{ $unitName }} {{ $colorName }} {{ $paymentMethod }} {{ ucwords($creditStatus) }} {{ $paymentMethod }} {{ $nameCustomer }}</a>
 </li>
 @endpush
 
@@ -33,7 +33,7 @@ a.btnAction {
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-            <h4 class="card-title">SPK Search {{ $unitName }} {{ $colorName }} {{ $paymentMethod }}</h4>
+            <h4 class="card-title">SPK Search {{ $unitName }} {{ $colorName }} {{ $paymentMethod }} {{ ucwords($creditStatus) }} {{ $paymentMethod }} {{ $nameCustomer }}</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">

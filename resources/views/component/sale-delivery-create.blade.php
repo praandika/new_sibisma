@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="delivery_time" type="time" class="form-control input-border-bottom"
                                 name="delivery_time" value="{{ old('delivery_time') }}" value="{{ $time }}" style="text-transform: uppercase;" required>
@@ -137,7 +137,7 @@
                                 name="arrival_time" value="{{ old('arrival_time') }}" value="{{ $time }}" style="text-transform: uppercase;">
                             <label for="arrival_time" class="placeholder">Arrival Time</label>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
@@ -160,10 +160,8 @@
                             <label for="pic_name" class="placeholder">Select PIC *</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group form-floating-label">
                             <textarea id="note" type="text" class="form-control input-border-bottom"
                                 name="note" value="{{ old('note') }}"

@@ -18,7 +18,7 @@ class CreateSaleDeliveriesTable extends Migration
             $table->date('sale_delivery_date');
             $table->unsignedInteger('sale_id');
             $table->string('down_payment')->nullable();
-            $table->time('delivery_time');
+            $table->time('delivery_time')->nullable();
             $table->time('arrival_time')->nullable();
             $table->unsignedInteger('main_driver');
             $table->unsignedInteger('backup_driver');

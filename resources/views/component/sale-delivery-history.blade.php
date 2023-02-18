@@ -77,14 +77,14 @@
                             <td>{{ $o->note }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('sale-delivery.show', $o->id) }}" class="btnAction" data-toggle="tooltip"
+                                    <a href="{{ route('sale-delivery.show', $o->delivery_id) }}" class="btnAction" data-toggle="tooltip"
                                         data-placement="top" title="Detail" style="color:orange;"><i
                                             class="fa fa-eye"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('sale-delivery.edit', $o->id) }}" class="btnAction" data-toggle="tooltip"
+                                    <a href="{{ route('sale-delivery.edit', $o->delivery_id) }}" class="btnAction" data-toggle="tooltip"
                                         data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('sale-delivery.delete', $o->id) }}" class="btnAction"
+                                    <a href="{{ route('sale-delivery.delete', $o->delivery_id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                         onclick="return tanya('Yakin hapus sale delivery {{ $o->sale->customer_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
