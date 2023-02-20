@@ -23,6 +23,7 @@ class CreateDocumentsTable extends Migration
             $table->enum('stnk_status', ['pending','on process','finished']);
             $table->string('bpkb')->nullable();
             $table->enum('bpkb_status', ['pending','on process','finished']);
+            $table->string('nopol')->nullable();
             $table->text('document_note')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();

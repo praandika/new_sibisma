@@ -74,14 +74,21 @@
                             <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no"
                                 value="{{ $document->sale->engine_no }}" autofocus required>
                             <label for="engine_no" class="placeholder">Engine Number</label>
-                        </div>
+                        </div> 
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="leasing" type="text" class="form-control input-border-bottom" name="leasing"
-                                value="{{ $document->sale->leasing->leasing_name }}" autofocus required>
-                            <label for="leasing" class="placeholder">Engine Number</label>
+                                value="{{ $document->sale->leasing->leasing_name }}" autofocus required readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="nopol" type="text" class="form-control input-border-bottom" name="nopol"
+                                value="{{ $document->nopol }}" autofocus placeholder="Input No. Polisi...">
+                            <label for="nopol" class="placeholder">No. Polisi</label>
                         </div>
                     </div>
                 </div>
@@ -93,7 +100,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stck" type="text" class="form-control input-border-bottom" name="stck"
-                                value="{{ $document->stck }}" autofocus>
+                                value="{{ $document->stck }}" autofocus placeholder="Input STCK...">
                             <label for="stck" class="placeholder">STCK</label>
                         </div>
                     </div>
@@ -109,7 +116,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stnk" type="text" class="form-control input-border-bottom" name="stnk"
-                                value="{{ $document->stnk }}" autofocus>
+                                value="{{ $document->stnk }}" autofocus placeholder="Input STNK...">
                             <label for="stnk" class="placeholder">STNK</label>
                         </div>
                     </div>
@@ -126,7 +133,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="bpkb" type="text" class="form-control input-border-bottom" name="bpkb"
-                                value="{{ $document->bpkb }}" autofocus>
+                                value="{{ $document->bpkb }}" autofocus placeholder="Input BPKB...">
                             <label for="bpkb" class="placeholder">BPKB</label>
                         </div>
                     </div>

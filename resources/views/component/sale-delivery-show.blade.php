@@ -86,6 +86,14 @@
                         <p type="text" class="form-control" style="margin-bottom: -4px;">
                             {{ $saleDelivery->note }}</p>
                     </div>
+
+                    <div class="form-group form-group-default">
+                        <label>SPK No.</label>
+                        <a href="{{ route('spk.get',$saleDelivery->sale->spk) }}" target="_blank">
+                        <p type="text" class="form-control" style="margin-bottom: -4px; color: crimson; font-weight: bold;">
+                            {{ $saleDelivery->sale->spk }}</p>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="col-md-4">

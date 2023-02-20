@@ -22,9 +22,9 @@ class CreateSpksTable extends Migration
             $table->string('phone');
             $table->string('stnk_name');
             $table->unsignedInteger('stock_id');
-            $table->integer('downpayment')->nullable();;
+            $table->integer('downpayment')->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('payment')->nullable();;
+            $table->integer('payment')->nullable();
             $table->unsignedInteger('leasing_id');
             $table->unsignedInteger('manpower_id');
             $table->text('description')->nullable();

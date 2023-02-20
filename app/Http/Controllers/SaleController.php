@@ -233,6 +233,7 @@ class SaleController extends Controller
                 $data->stck = $req->stck;
                 $data->stnk = $req->stnk;
                 $data->bpkb = $req->bpkb;
+                $data->nopol = $req->nopol;
                 $data->document_note = $req->document_note;
                 $data->created_by = Auth::user()->id;
                 $data->updated_by = Auth::user()->id;

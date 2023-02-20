@@ -33,7 +33,6 @@
                     <thead>
                         <tr>
                             <th>Delivery Date</th>
-                            <th>Status</th>
                             <th>Customer</th>
                             <th>Model Name</th>
                             <th>Frame No</th>
@@ -48,7 +47,6 @@
                     <tfoot>
                         <tr>
                             <th>Delivery Date</th>
-                            <th>Status</th>
                             <th>Customer</th>
                             <th>Model Name</th>
                             <th>Frame No</th>
@@ -64,7 +62,6 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($o->sale_delivery_date)->format('j M Y') }}</td>
-                            <td>{{ $o->status }}</td>
                             <td>{{ $o->sale->customer_name }}</td>
                             <td style="background-color: <?php echo $o->sale->stock->unit->color->color_code ?>50 ;">
                                 {{ $o->sale->stock->unit->model_name }}
@@ -93,7 +90,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="11" style="text-align: center;">No data available</td>
+                            <td colspan="10" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

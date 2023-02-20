@@ -23,11 +23,10 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="multi-filter-select" class="display table table-striped table-hover" width="100%">
+                <table id="basic-datatables-delivery" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Delivery Date</th>
-                            <th>Status</th>
                             <th>Customer</th>
                             <th>Model Name</th>
                             <th>Frame No</th>
@@ -42,7 +41,6 @@
                     <tfoot>
                         <tr>
                             <th>Delivery Date</th>
-                            <th>Status</th>
                             <th>Customer</th>
                             <th>Model Name</th>
                             <th>Frame No</th>
@@ -58,8 +56,27 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($o->sale_delivery_date)->format('j M Y') }}</td>
-                            <td>{{ $o->status }}</td>
-                            <td>{{ $o->sale->customer_name }}</td>
+                            <td>
+                                @if($o->delivery_status == 'self pick up')
+                                <span style="position: relative;">
+                                    <span style="
+                                    width: 70px; 
+                                    height: 12px; 
+                                    background-color: #efdcfc; 
+                                    display: inline-block; 
+                                    position: absolute; 
+                                    top: -12px; 
+                                    left: -25px; 
+                                    border-radius: 0 0 15px 0;">
+                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: indigo; top: -7px; left: 5px;">
+                                        {{ ucwords($o->delivery_status) }}
+                                    </span>
+                                </span>
+                                @endif
+                                <span>
+                                    {{ $o->sale->customer_name }}
+                                </span>
+                            </td>
                             <td style="background-color: <?php echo $o->sale->stock->unit->color->color_code ?>50 ;">
                                 {{ $o->sale->stock->unit->model_name }}
                             </td>
@@ -87,7 +104,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="11" style="text-align: center;">No data available</td>
+                            <td colspan="10" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -96,3 +113,12 @@
         </div>
     </div>
 </div>
+
+@push('after-script')
+<script>
+    $('#basic-datatables-delivery').DataTable({
+        "pageLength": 20,
+        "ordering": false
+    });
+</script>
+@endpush

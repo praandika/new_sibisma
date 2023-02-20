@@ -161,7 +161,16 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-3">
+                        <label class="imagecheck mb-4">
+                            <input name="selfpickup" type="checkbox" class="imagecheck-input">
+                            <figure class="imagecheck-figure">
+                                <img src="{{ asset('img/selfpickup.png') }}" alt="title" class="imagecheck-image">
+                            </figure>
+                        </label>
+                    </div>
+
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <textarea id="note" type="text" class="form-control input-border-bottom"
                                 name="note" value="{{ old('note') }}"

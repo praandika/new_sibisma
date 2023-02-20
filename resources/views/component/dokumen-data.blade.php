@@ -38,6 +38,7 @@
                             <th>STCK</th>
                             <th>STNK</th>
                             <th>BPKB</th>
+                            <th>No. Pol</th>
                             <th>Frame No.</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -52,6 +53,7 @@
                             <th>STCK</th>
                             <th>STNK</th>
                             <th>BPKB</th>
+                            <th>No. Pol</th>
                             <th>Frame No.</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -93,6 +95,16 @@
                                 @else
                                 <td>
                                 {{ $o->bpkb }}
+                                </td>
+                                @endif
+
+                                @if($o->nopol == "")
+                                <td style="background-color:#eb343480">
+                                -
+                                </td>
+                                @else
+                                <td>
+                                {{ $o->nopol }}
                                 </td>
                                 @endif
 

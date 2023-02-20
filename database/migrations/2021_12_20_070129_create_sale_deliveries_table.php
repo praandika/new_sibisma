@@ -22,7 +22,7 @@ class CreateSaleDeliveriesTable extends Migration
             $table->time('arrival_time')->nullable();
             $table->unsignedInteger('main_driver');
             $table->unsignedInteger('backup_driver');
-            $table->enum('status',['prepared','on the way','has arrived']);
+            $table->enum('status',['prepared','on the way','has arrived','self pick up']);
             $table->text('note')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();

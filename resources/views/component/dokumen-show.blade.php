@@ -138,6 +138,13 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-group-default">
+                            <label>No. Polisi</label>
+                            <p type="text" class="form-control" style="margin-bottom: -4px;">{{ $document->nopol }}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-group-default">
                             <label>Document Note</label>
                             <p type="text" class="form-control" style="margin-bottom: -4px;">
                                 {{ $document->document_note }}</p>

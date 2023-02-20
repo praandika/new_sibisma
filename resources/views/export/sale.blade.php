@@ -14,6 +14,7 @@
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Address</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Payment Method</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Qty</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Salesman</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +33,7 @@
             <td>{{ $o->address }}</td>
             <td>{{ $o->leasing->leasing_code }}</td>
             <td>{{ $o->sale_qty }}</td>
+            <td>{{ $o->salesman }}</td>
         </tr>
         @empty
         <tr>

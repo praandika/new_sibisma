@@ -29,7 +29,7 @@ class DokumenController extends Controller
             ->join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->join('users','documents.created_by','users.id')
-            ->select('sales.sale_date', 'sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name')
+            ->select('sales.sale_date', 'sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name','documents.nopol')
             ->limit(20)->get();
             return view('page', compact('data','today','sale'));
         }else{
@@ -40,7 +40,7 @@ class DokumenController extends Controller
             ->join('stocks','sales.stock_id','stocks.id')
             ->join('units','stocks.unit_id','units.id')
             ->join('users','documents.created_by','users.id')
-            ->select('sales.sale_date', 'sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name')
+            ->select('sales.sale_date', 'sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name','documents.nopol')
             ->where('stocks.dealer_id',$did)
             ->limit(20)->get();
             return view('page', compact('data','today','sale'));
@@ -74,6 +74,7 @@ class DokumenController extends Controller
             $data->stck = $req->stck;
             $data->stnk = $req->stnk;
             $data->bpkb = $req->bpkb;
+            $data->nopol = $req->nopol;
             $data->document_note = $req->document_note;
             $data->created_by = Auth::user()->id;
             $data->updated_by = Auth::user()->id;
@@ -132,6 +133,7 @@ class DokumenController extends Controller
         $data->stck = $req->stck;
         $data->stnk = $req->stnk;
         $data->bpkb = $req->bpkb;
+        $data->nopol = $req->nopol;
         if($req->stck != 0)
         {
             $data->stck_status = 'finished';

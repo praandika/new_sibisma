@@ -63,15 +63,21 @@ class ReportExport implements FromView
         }elseif($this->param == 'sale') {
             if ($dc == 'group') {
                 return view('export.sale',[
-                    'data' => Sale::whereBetween('sale_date', [$this->start, $this->end])
-                    ->orderBy('sale_date','asc')->get()
+                    'data' => Sale::join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->whereBetween('sales.sale_date', [$this->start, $this->end])
+                    ->orderBy('sales.sale_date','asc')
+                    ->select('*','manpowers.name as salesman')->get()
                 ]);
             } else {
                 return view('export.sale',[
                     'data' => Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
                     ->where('stocks.dealer_id',$did)
-                    ->whereBetween('sale_date', [$this->start, $this->end])
-                    ->orderBy('sale_date','asc')->get()
+                    ->whereBetween('sales.sale_date', [$this->start, $this->end])
+                    ->orderBy('sales.sale_date','asc')
+                    ->select('*','manpowers.name as salesman')->get()
                 ]);
             }
         }elseif($this->param == 'out') {

@@ -34,10 +34,11 @@ class SaleDeliveryController extends Controller
             ->join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
             ->orderBy('sale_delivery_date','desc')
-            ->select('*','sale_deliveries.id as delivery_id')->get();
+            ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             $manpower = Manpower::where('position','Driver')->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
+            ->where('sales.status','pending')
             ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
@@ -47,12 +48,15 @@ class SaleDeliveryController extends Controller
             ->whereYear('sales.sale_date',$year)
             ->where('stocks.dealer_id',$did)
             ->orderBy('sale_delivery_date','desc')
-            ->select('*','sale_deliveries.id as delivery_id')->get();
+            ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             $manpower = Manpower::where('position','Driver')
             ->where('dealer_id',$did)->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
-            ->where('stocks.dealer_id',$did)
+            ->where([
+                ['stocks.dealer_id',$did],
+                ['sales.status','pending'],
+            ])
             ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
@@ -85,7 +89,18 @@ class SaleDeliveryController extends Controller
         $data->note = $req->note;
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
-        $data->save();
+        if ($req->has('selfpickup')) {
+            $data->status = 'self pick up';
+            $data->save();
+        } else {
+            $data->save();
+        }
+        
+
+        // Update Sale Status
+        $sale = Sale::find($req->sale_id);
+        $sale->status = 'delivered';
+        $sale->update();
 
         // Write log
         $log = new Log;
@@ -160,7 +175,16 @@ class SaleDeliveryController extends Controller
     }
 
     public function delete($id){
+        $sale_id = SaleDelivery::where('id',$id)
+        ->pluck('sale_id');
+        $sale_id = $sale_id[0];
+        
         SaleDelivery::find($id)->delete();
+
+        // Update Sale Status
+        $sale = Sale::find($sale_id);
+        $sale->status = 'pending';
+        $sale->update();
 
         // Write log
         $log = new Log;
