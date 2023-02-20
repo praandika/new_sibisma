@@ -62,23 +62,29 @@ class ReportExport implements FromView
             }
         }elseif($this->param == 'sale') {
             if ($dc == 'group') {
-                return view('export.sale',[
-                    'data' => Sale::join('spks','sales.spk','spks.spk_no')
-                    ->join('manpowers','spks.manpower_id','manpowers.id')
-                    ->whereBetween('sales.sale_date', [$this->start, $this->end])
-                    ->orderBy('sales.sale_date','asc')
-                    ->select('*','manpowers.name as salesman')->get()
+                return view('export.sale_simple',[
+                    'data' => Sale::whereBetween('sales.sale_date', [$this->start, $this->end])
+                    ->orderBy('sales.sale_date','asc')->get()
                 ]);
             } else {
-                return view('export.sale',[
-                    'data' => Sale::join('stocks','sales.stock_id','stocks.id')
-                    ->join('spks','sales.spk','spks.spk_no')
-                    ->join('manpowers','spks.manpower_id','manpowers.id')
-                    ->where('stocks.dealer_id',$did)
-                    ->whereBetween('sales.sale_date', [$this->start, $this->end])
-                    ->orderBy('sales.sale_date','asc')
-                    ->select('*','manpowers.name as salesman')->get()
-                ]);
+                if (Auth::user()->crud == 'simple') {
+                    return view('export.sale_simple',[
+                        'data' => Sale::join('stocks','sales.stock_id','stocks.id')
+                        ->where('stocks.dealer_id',$did)
+                        ->whereBetween('sales.sale_date', [$this->start, $this->end])
+                        ->orderBy('sales.sale_date','asc')->get()
+                    ]);
+                } else {
+                    return view('export.sale',[
+                        'data' => Sale::join('stocks','sales.stock_id','stocks.id')
+                        ->join('spks','sales.spk','spks.spk_no')
+                        ->join('manpowers','spks.manpower_id','manpowers.id')
+                        ->where('stocks.dealer_id',$did)
+                        ->whereBetween('sales.sale_date', [$this->start, $this->end])
+                        ->orderBy('sales.sale_date','asc')
+                        ->select('*','manpowers.name as salesman')->get()
+                    ]);
+                }
             }
         }elseif($this->param == 'out') {
             if ($dc == 'group') {
