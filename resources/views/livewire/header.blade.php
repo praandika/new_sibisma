@@ -63,8 +63,10 @@
                     </a>
                 </li>
                 <!-- END Go to website -->
-
+                
+                @if(Auth::user()->access != 'salesman')
                 <livewire:notification>
+                @endif
 
                 <li class="nav-item dropdown hidden-caret">
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())

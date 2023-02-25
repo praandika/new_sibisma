@@ -136,6 +136,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/report/{dealer}/{date}', 
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start?}/{end?}', [ReportController::class, 'reportPrint'])->name('report.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('/reportsearch/{reportid?}', [SearchController::class, 'reportSearch'])->name('report.search-id');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/do-kwitansi-leasing/{date?}', [ReportController::class, 'doKwitansiLeasing'])->name('do-kwitansi.leasing');
+
 // END REPORT
 
 // STOCK HISTORY
@@ -197,6 +200,8 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id?}', [SpkController::class, 'get'])->name('spk.get');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [SpkController::class, 'history'])->name('spk.history');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-salesman', [SpkController::class, 'spkSalesman'])->name('spk.salesman');
 
 // Filter SPK
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [SpkController::class, 'filter'])->name('spk.filter');

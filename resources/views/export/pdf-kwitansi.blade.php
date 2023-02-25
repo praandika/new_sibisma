@@ -13,18 +13,18 @@
         }
         body {
             font-family: sans-serif;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .title {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             margin-top: 5px;
         }
 
         table tr th,
         table tr th {
-            padding: 5px 5px 5px 10px;
+            padding: 4px;
         }
 
         footer {
@@ -45,37 +45,18 @@
             padding-bottom: 5px;
         }
 
-        .left{
-            float: left;
-            width: 10%;
-        }
-
-        .right{
-            float: right;
-            width: 90%;
-        }
-
-        .container-header{
+        .container-img {
             position: relative;
-            height: 90%;
         }
 
-        span.header{
-            display: inline-block;
-            transform: rotate(-90deg);
+        .container-img .info-dealer {
             position: absolute;
-            bottom: 0px;
-            top: 0px;
-            left: 0px;
-            right: -100px;
-            text-align: center;
-            word-wrap: break-word;
-            width: 350px;
+            top: -8px;
         }
 
-        span.header .name{
-            font-size: 25px;
-            font-weight: bold;
+        .container-logo {
+            margin: auto;
+            width: 100%;
         }
 
         .terbilang{
@@ -87,28 +68,37 @@
         .tandatangan{
             float: right;
             width: 50%;
-            margin-top: 30px;
+            margin-top: 50px;
             text-align: right;
         }
 
+        .data{
+            margin-top: 60px;
+        }
     </style>
 </head>
 
 <body>
+    <header>
+        <div class="container-img">
+            <div class="container-logo">
+                <img src="img/logo-bisma.png" alt="BISMA" width="100px">
+                &nbsp;
+                @foreach($dealer as $a)
+                <div class="info-dealer">
+                    <span style="font-weight: bold; font-size: 14px;">{{ $a->dealer_name }}</span><br>
+                    <span style="font-size: 10px;">{{ $a->address }} <br> {{ $a->phone }}</span>
+                </div>
+                @endforeach
+                <img src="img/semakin-didepan.png" alt="BISMA" width="150px" style="position: absolute; right: 0px;">
+            </div>
+        </div>
+    </header>
     <div class="row">
-        <div class="left" style="border-right: 5px double black;">
-        @foreach($dealer as $a)
-        <div class="container-header">
-            <span class="header">
-                <span class="name">{{ $a->dealer_name }}</span> <br>
-                {{ $a->address }} <br>
-                {{ $a->phone }}
-            </span>
-        </div>
-        @endforeach
-
-        </div>
-        <div class="right">
+        <div class="data">
+            <center>
+                <p class="title">KWITANSI</p>
+            </center>
             <table>
             @forelse($data as $o)
                 <tr>
@@ -125,11 +115,7 @@
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
-                    <td> :____________________________________________________________________________________________________</td>
-                </tr>
-                <tr>
-                    <th width="150px"></th>
-                    <td> &nbsp;____________________________________________________________________________________________________</td>
+                    <td> :________________________________________________________________________</td>
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
@@ -171,13 +157,8 @@
         </div>
     </div>
 
-    <footer>
-        <span>
-            &copy; Sibisma | 
-        </span>
-        <span>
-            Printed at {{ $printDate }} WITA
-        </span>
+    <footer style="text-align: right;">
+        &copy; Sibisma | Printed at {{ $printDate }} WITA
     </footer>
 </body>
 

@@ -98,7 +98,7 @@ class KwitansiController extends Controller
             $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
             ->where('stocks.dealer_id',$dealerId)
             ->count();
-            $noKw = $dealerCode.'-'.$count;
+            $noKw = $dealerCode.'-'.$id;
 
             $dealer = Dealer::where('dealer_code',$dealerCode)->get();
         } else {
@@ -111,7 +111,7 @@ class KwitansiController extends Controller
             $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
             ->where('stocks.dealer_id',$did)
             ->count();
-            $noKw = $dealerCode.'-'.$count;
+            $noKw = $dealerCode.'-'.$id;
 
             $dealer = Dealer::where('dealer_code',$dc)->get();
         }
@@ -134,10 +134,10 @@ class KwitansiController extends Controller
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
-        $customPaper = array(0,0,850,320);
+        // $customPaper = array(0,0,850,320);
 
         $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
-        $pdf->setPaper($customPaper);
+        $pdf->setPaper('A5','landscape');
         return $pdf->stream('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
 
@@ -162,7 +162,7 @@ class KwitansiController extends Controller
             $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
             ->where('stocks.dealer_id',$dealerId)
             ->count();
-            $noKw = $dealerCode.'-'.$count;
+            $noKw = $dealerCode.'-'.$id;
 
             $dealer = Dealer::where('dealer_code',$dealerCode)->get();
         } else {
@@ -175,7 +175,7 @@ class KwitansiController extends Controller
             $count = Sale::join('stocks','sales.stock_id','=','stocks.id')
             ->where('stocks.dealer_id',$did)
             ->count();
-            $noKw = $dealerCode.'-'.$count;
+            $noKw = $dealerCode.'-'.$id;
 
             $dealer = Dealer::where('dealer_code',$dc)->get();
         }
@@ -195,10 +195,10 @@ class KwitansiController extends Controller
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
-        $customPaper = array(0,0,850,320);
+        // $customPaper = array(0,0,850,320);
 
         $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
-        $pdf->setPaper($customPaper);
+        $pdf->setPaper('A5','landscape');
         return $pdf->download('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
 }

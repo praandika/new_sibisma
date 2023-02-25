@@ -54,7 +54,8 @@
             <!-- END Account Info -->
 
             <ul class="nav nav-primary">
-                @include('menu.dashboard')
+            @if(Auth::user()-> access != 'salesman')
+                    @include('menu.dashboard')
 
                 @if(Auth::user()-> access != 'owner')
                     @include('menu.stock')
@@ -80,6 +81,7 @@
                     @include('menu.user')
                     @include('menu.log')
                 @endif
+            @endif
             </ul>
         </div>
     </div>

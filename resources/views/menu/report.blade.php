@@ -1,6 +1,6 @@
 <li class="nav-item 
     @if(Auth::user()->access != 'owner') 
-        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*') || Route::is('kwitansi.*')   ? 'active' : '' }}
+        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'active' : '' }}
     @else
         {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') ? 'active' : '' }}
     @endif">
@@ -11,7 +11,7 @@
     </a>
     <div class="collapse 
     @if(Auth::user()->access != 'owner') 
-        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*') || Route::is('kwitansi.*')  ? 'show' : '' }}
+        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'show' : '' }}
     @else
         {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') ? 'show' : '' }}
     @endif" id="report">
@@ -72,6 +72,12 @@
             <li class="{{ Route::is('kwitansi.index') ? 'active' : '' }}" @if(Auth::user()->crud == 'simple') hidden @endif>
                 <a href="{{ route('kwitansi.index') }}">
                     <span class="sub-item">Kwitansi</span>
+                </a>
+            </li>
+
+            <li class="{{ Route::is('do-kwitansi.leasing') ? 'active' : '' }}" @if(Auth::user()->crud == 'simple') hidden @endif>
+                <a href="{{ route('do-kwitansi.leasing') }}">
+                    <span class="sub-item">Leasing</span>
                 </a>
             </li>
 

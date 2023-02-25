@@ -2,31 +2,34 @@
 
 @section('content')
     @if(Route::is('dashboard'))
-        @section('title','Dashboard')
-        @section('page-title','Dashboard')
+        @if(Auth::user()->access == 'salesman')
+            @include('component.salesman-home')
+        @else
+            @section('title','Dashboard')
+            @section('page-title','Dashboard')
 
-        @push('link-bread')
-        <li class="nav-item">
-            <a href="{{ route('dashboard') }}">Dashboard</a>
-        </li>
-        @endpush
-        
-        <livewire:rank>
-        <livewire:sale-chart>
-        <livewire:ratio-stock>
-        <livewire:sale-l-m>
-        <livewire:sale-l-y>
-        <livewire:stu-vs-real>
-        <livewire:sale-by-dealer-chart>
-        <livewire:top-product-chart>
-        <livewire:top-stock-chart>
-        <livewire:modal-ranking>
-        @if(Auth::user()->dealer_code == 'group')
-        <livewire:sale-stock-info>
-        <livewire:in-stock-info>
-        <livewire:out-stock-info>
+            @push('link-bread')
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}">Dashboard</a>
+            </li>
+            @endpush
+            
+            <livewire:rank>
+            <livewire:sale-chart>
+            <livewire:ratio-stock>
+            <livewire:sale-l-m>
+            <livewire:sale-l-y>
+            <livewire:stu-vs-real>
+            <livewire:sale-by-dealer-chart>
+            <livewire:top-product-chart>
+            <livewire:top-stock-chart>
+            <livewire:modal-ranking>
+            @if(Auth::user()->dealer_code == 'group')
+            <livewire:sale-stock-info>
+            <livewire:in-stock-info>
+            <livewire:out-stock-info>
+            @endif
         @endif
-
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
         @if(Route::is('dealer.edit'))
@@ -282,6 +285,8 @@
         @elseif(Route::is('spk.filter'))
             @include('component.filter-box')
             @include('component.spk-filter')
+        @elseif(Route::is('spk.salesman'))
+            @include('component.spk-salesman')
         @else
             @include('component.spk-create')
             @include('component.spk-data')
@@ -296,7 +301,7 @@
             @include('component.delivery-order-data')
         @endif
 
-        <!-- Data Kwitansi -->
+    <!-- Data Kwitansi -->
     @elseif(Route::is('kwitansi.*'))
         @if(Route::is('kwitansi.history'))
             @include('component.search-box')
@@ -304,6 +309,11 @@
         @else
             @include('component.kwitansi-data')
         @endif
+
+    <!-- DO & Kwitansi for Leasing -->
+    @elseif(Route::is('do-kwitansi.leasing'))
+            @include('component.search-box')
+            @include('component.do-kwitansi-leasing-data')
         
     @endif
     

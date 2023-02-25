@@ -36,17 +36,7 @@
 </style>
 @endpush
 
-@push('button')
-    @section('button-title','SPK History')
-    @include('component.button-history')
-
-    <button class="btn btn-success btn-round" id="btnCreate" @if(Session::has('display'))
-        style="margin-bottom: 20px; display: none;" @else style="margin-bottom: 20px; display: block;" @endif><i
-            class="fa fa-pencil-alt"></i>&nbsp;&nbsp; <strong>Create SPK</strong> </button>
-@endpush
-
-<div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;"
-    @endif>
+<div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <span id="color_code" style="
@@ -57,12 +47,8 @@
                 top: 0px;">
             </span>
             <div class="row">
-                <div class="col-10">
+                <div class="col-12">
                     <h4 class="card-title">Create SPK | {{ $spk_no }}</h4>
-                </div>
-                <div class="col-2">
-                    <h4 class="card-title" style="text-align: right; cursor: pointer; color: red;" id="btnCloseCreate">
-                        <i class="fas fa-times-circle"></i></h4>
                 </div>
             </div>
         </div>
@@ -209,12 +195,9 @@
                     
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                                <input type="hidden" id="manpower_id" name="manpower_id" value="{{ old('manpower_id') }}"
-                                    required>
-                                <input id="manpower" type="text" class="form-control input-border-bottom" name="manpower"
-                                    value="{{ old('manpower') }}" data-toggle="modal" data-target=".modalManpower" required>
-                                <label for="manpower" class="placeholder">Select Manpower *</label>
-                            
+                            <input type="hidden" id="manpower_id" name="manpower_id" value="{{ $manpowerID }}" required>
+                            <input id="manpower" type="text" class="form-control input-border-bottom" name="manpower" value="{{ $manpowerName }}" required>
+                            <label for="manpower" class="placeholder">Manpower *</label>
                         </div>
                     </div>
 
@@ -273,24 +256,8 @@
                             <label for="description" class="placeholder"></label>
                         </div>
                     </div>
-
-
-                    </div>
-                    @if(Auth::user()->dealer_code == 'group')
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group form-floating-label">
-                                <input type="hidden" id="dealer_code" name="dealer_code"
-                                    value="{{ old('dealer_code') }}" required>
-                                <input id="dealer" type="text" class="form-control input-border-bottom" name="dealer"
-                                    value="{{ old('dealer') }}" required>
-                                <label for="dealer" class="placeholder">Dealer *</label>
-                            </div>
-                        </div>
-                    </div>
-                    @else
+                    
                     <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
-                    @endif
 
                     <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                     <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
@@ -299,10 +266,9 @@
     </div>
 </div>
 
-@section('modal-title','Data Stock')
-@include('component.modal-data')
+@include('component.spk-data')
+@include('component.modal-stock')
 @include('component.modal-leasing')
-@include('component.modal-manpower')
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')
 @include('component.modal-order-status')

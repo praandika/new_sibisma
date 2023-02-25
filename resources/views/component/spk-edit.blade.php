@@ -163,9 +163,8 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ $spk->discount }}"
-                                placeholder="Discount" >
-                            <label for="discount" class="placeholder"></label>
+                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ $spk->discount }}">
+                            <label for="discount" class="placeholder">Discount</label>
                         </div>
                     </div>
 

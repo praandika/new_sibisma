@@ -748,4 +748,43 @@ class ReportController extends Controller
             'supratmanYearMC','sunsetYearMC','dalungYearMC','fssYearMC','groupYearMC'
         ));
     }
+
+    public function doKwitansiLeasing(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            if ($dc == 'group') {
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')->limit(50)->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')
+                ->limit(50)->get();
+            }
+            
+        } else {
+            if ($dc == 'group') {
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->whereBetween('sale_date',[$req->start, $req->end])
+                ->orderBy('sales.id','desc')
+                ->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('users','sales.created_by','users.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('sale_date',[$req->start, $req->end])
+                ->orderBy('sales.id','desc')
+                ->get();
+            }
+        }
+        return view('page', compact('data','start','end'));
+    }
 }

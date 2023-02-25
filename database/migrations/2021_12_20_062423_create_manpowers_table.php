@@ -17,6 +17,7 @@ class CreateManpowersTable extends Migration
             $table->id();
             $table->enum('status',['active','mutation','resign']);
             $table->unsignedInteger('dealer_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->string('name');
             $table->text('address');
             $table->string('phone');

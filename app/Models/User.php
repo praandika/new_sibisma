@@ -137,6 +137,10 @@ class User extends Authenticatable
         return $this->hasMany(Manpower::class, 'updated_by');
     }
 
+    public function manpower(){
+        return $this->hasOne(Manpower::class, 'user_id');
+    }
+
     // Relasi to created, updated Branch Deliveries
     public function branchDeliveryC(){
         return $this->hasMany(BranchDelivery::class, 'created_by');

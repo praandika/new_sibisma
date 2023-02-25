@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Manpower;
 use App\Models\Dealer;
 use App\Models\Log;
+use App\Models\User;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ManpowerController extends Controller
 {
@@ -23,11 +25,13 @@ class ManpowerController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
 
         if ($dc == 'group') {
-            $data = Manpower::all();
+            $data = Manpower::select('*',DB::raw('IF(user_id > 0, "Yes","No") as system_user'))
+            ->get();
             $dealer = Dealer::all();
             return view('page', compact('data','dealer'));
         }else{
-            $data = Manpower::where('dealer_id',$did)->get();
+            $data = Manpower::select('*',DB::raw('IF(user_id > 0, "Yes","No") as system_user'))
+            ->where('dealer_id',$did)->get();
             $dealer = $did;
             return view('page', compact('data','dealer'));
         }
@@ -98,8 +102,23 @@ class ManpowerController extends Controller
      */
     public function edit(Manpower $manpower)
     {
-        $dealer = Dealer::all();
-        return view('page', compact('manpower','dealer'));
+        if (Auth::user()->access == 'master') {
+            $isUserId = $manpower->user_id;
+            if ($isUserId == 0 || $isUserId == '' || $isUserId == null) {
+                $manpower;
+            } else {
+                $manpower = Manpower::join('users','manpowers.user_id','users.id')->where('manpowers.id',$manpower->id)
+                ->select('manpowers.*','users.first_name')->get();
+            }
+            
+            $dealer = Dealer::all();
+            $user = User::all();
+            return view('page', compact('manpower','dealer','isUserId','user'));
+        } else {
+            $dealer = Dealer::all();
+            return view('page', compact('manpower','dealer'));
+        }
+        
     }
 
     /**
@@ -113,6 +132,7 @@ class ManpowerController extends Controller
     {
         Manpower::where('id',$manpower->id)->update([
             'dealer_id' => $req->dealer_id,
+            'user_id' => $req->user_id,
             'name' => $req->name,
             'address' => $req->address,
             'phone' => $req->phone,

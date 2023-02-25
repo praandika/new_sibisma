@@ -15,7 +15,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK</a>
+    <a href="{{ Auth::user()->access == 'salesman' ? route('spk.salesman') : route('spk.index') }}">Data SPK</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>

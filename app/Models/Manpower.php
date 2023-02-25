@@ -50,6 +50,11 @@ class Manpower extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    // Relasi to User
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     // Relasi to SPK
     public function spk(){
         return $this->hasMany(Spk::class);

@@ -30,6 +30,7 @@
                             <th>Dealer</th>
                             <th>Contact</th>
                             <th>Position</th>
+                            <th>System User</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                             <th width="120">Action</th>
@@ -41,6 +42,7 @@
                             <th>Dealer</th>
                             <th>Contact</th>
                             <th>Position</th>
+                            <th>System User</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                             <th width="120">Action</th>
@@ -53,6 +55,7 @@
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td>{{ $o->position }}</td>
+                            <td style="{{ $o->system_user == 'Yes' ? 'color:blue; font-weight:bold;' : 'color:grey;' }}" >{{ $o->system_user }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
@@ -75,7 +78,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" style="text-align: center;">No data available</td>
+                            <td colspan="8" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

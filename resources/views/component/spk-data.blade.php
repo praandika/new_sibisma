@@ -18,13 +18,15 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK</a>
+    <a href="{{ Auth::user()->access == 'salesman' ? route('spk.salesman') : route('spk.index') }}">Data SPK</a>
 </li>
 @endpush
 
-@push('button')
-    @include('component.button-filter')
-@endpush
+@if(Auth::user()->access != 'salesman')
+    @push('button')
+        @include('component.button-filter')
+    @endpush
+@endif
 
 @include('component.filter-box')
 

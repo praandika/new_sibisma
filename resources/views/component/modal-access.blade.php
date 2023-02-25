@@ -28,6 +28,9 @@
                             <tr class="pilihAccess" data-access="owner">
                                 <td>Owner</td>
                             </tr>
+                            <tr class="pilihAccess" data-access="salesman">
+                                <td>Salesman</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

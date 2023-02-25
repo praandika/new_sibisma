@@ -30,6 +30,8 @@
                                 {{ route('log') }}
                             @elseif(Route::is('opname.*'))
                                 {{ route('opname.history') }}
+                            @elseif(Route::is('do-kwitansi.leasing'))
+                                {{ route('do-kwitansi.leasing') }}
                             @else
                                 #
                             @endif
@@ -49,7 +51,7 @@
                             </div>
                             </form>
                         <!-- END FORM -->
-                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') ? 'd-none' : 'd-block' }}">
+                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'd-none' : 'd-block' }}">
                                 <a href="
                                 @if(Route::is('sale.*'))
                                     {{ url('report/sale/'.$start.'/'.$end) }}
