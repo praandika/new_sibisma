@@ -76,7 +76,10 @@
                                     <a href="{{ route('do.print', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('do.download', $o->id) }}" class="btnAction"
+                                    <a href="{{ route('kwitansi-dp-nodiscount.print', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('kwitansi-pelunasan.print', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
                                 </div>
                             </td>

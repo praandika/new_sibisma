@@ -237,4 +237,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('do-download/{id}', [Delive
 
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-print/{id}', [KwitansiController::class, 'printPDF'])->name('kwitansi.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-download/{id}', [KwitansiController::class, 'downloadPDF'])->name('kwitansi.download');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-dp-nodiscount-print/{id}', [LeasingController::class, 'printKwitansiDpPDF'])->name('kwitansi-dp-nodiscount.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-pelunasan-print/{id}', [LeasingController::class, 'printKwitansiPelunasan'])->name('kwitansi-pelunasan.print');
 // END PRINT PDF
