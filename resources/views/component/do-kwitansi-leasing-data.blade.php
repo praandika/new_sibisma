@@ -73,14 +73,14 @@
                             <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('do.print', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;"><i class="fa fa-print"></i></a>
+                                    <a href="{{ route('do.print', $o->id_sale) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="DO Print" style="color:forestgreen;" target="_blank"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('kwitansi-dp-nodiscount.print', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
+                                    <a href="{{ route('kwitansi-dp-nodiscount.print', $o->id_sale) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Kwitansi DP Print" style="color:crimson;" target="_blank"><i class="fa fa-file"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('kwitansi-pelunasan.print', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
+                                    <a href="{{ route('kwitansi-pelunasan.print', $o->id_sale) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Kwitansi Pelunasan Print" style="color:darkorange;" target="_blank"><i class="fa fa-newspaper"></i></a>
                                 </div>
                             </td>
                         </tr>
