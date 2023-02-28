@@ -190,7 +190,10 @@ class KwitansiController extends Controller
         $unit = $unit[0];
 
         $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
+        ->join('spks','sales.spk','=','spks.spk_no')
+        ->join('manpowers','spks.manpower_id','=','manpowers.id')
         ->where('sales.id',$id)
+        ->select('*','manpowers.name as manpower')
         ->get();
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');

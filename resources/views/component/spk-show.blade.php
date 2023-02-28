@@ -119,7 +119,7 @@
                         </tr>
                         <tr>
                             <th width="200">No. Telp</th>
-                            <td>: {{ $o->customer_phone }}</td>
+                            <td>: {{ $o->spk_phone }}</td>
                         </tr>
                         <tr>
                             <th width="200">Nama STNK & BPKB</th>
@@ -127,15 +127,15 @@
                         </tr>
                         <tr>
                             <th width="200">Type Motor</th>
-                            <td>: {{ $o->stock->unit->model_name }}</td>
+                            <td>: {{ $o->model_name }}</td>
                         </tr>
                         <tr>
                             <th width="200">Warna Motor</th>
-                            <td>: {{ $o->stock->unit->color->color_name }}</td>
+                            <td>: {{ $o->color_name }}</td>
                         </tr>
                         <tr>
                             <th width="200">Harga OTR</th>
-                            <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
+                            <td>: Rp {{ number_format($o->price, 0, ',','.') }}</td>
                         </tr>
                         <tr>
                             <th width="200">Uang Muka</th>
@@ -151,7 +151,7 @@
                         </tr>
                         <tr>
                             <th width="200">Salesman</th>
-                            <td>: {{ $o->manpower->name }}</td>
+                            <td>: {{ $o->salesman }}</td>
                         </tr>
                         <tr>
                             <th width="200">Keterangan</th>

@@ -115,7 +115,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ $spk->phone }}" required>
+                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ $spk->spk_phone }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
                         </div>
                     </div>

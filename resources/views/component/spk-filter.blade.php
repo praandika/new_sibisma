@@ -113,7 +113,7 @@ a.btnAction {
                                 </span>
                             </td>
                             <td>{{ $o->order_name }}</td>
-                            <td>{{ $o->phone }}</td>
+                            <td>{{ $o->spk_phone }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">{{ $o->stock->unit->model_name }}</td>
                             <td>{{ $o->salesman }}</td>
                             <td>

@@ -35,7 +35,7 @@
             <td>{{ $o->spk_no }}</td>
             <td>{{ $o->order_name }}</td>
             <td>{{ $o->stnk_name }}</td>
-            <td>{{ $o->phone }}</td>
+            <td>{{ $o->spk_phone }}</td>
             <td>{{ $o->customer_address }}</td>
             <td>{{ $o->stock->unit->model_name }}</td>
             <td>{{ $o->stock->unit->color->color_name }}</td>

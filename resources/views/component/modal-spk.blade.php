@@ -45,7 +45,7 @@
                             <tr data-spk="{{ $o->spk_no }}"
                                 data-spk_id="{{ $o->idspk }}"
                                 data-name="{{ $o->stnk_name }}"
-                                data-phone="{{ $o->phone }}"
+                                data-phone="{{ $o->spk_phone }}"
                                 data-leasing_id="{{ $o->leasing_id }}"
                                 data-leasing="{{ $o->leasing_code }}"
                                 data-address="{{ $o->address }}"

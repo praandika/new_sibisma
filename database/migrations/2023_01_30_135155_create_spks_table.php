@@ -19,7 +19,7 @@ class CreateSpksTable extends Migration
             $table->date('spk_date');
             $table->string('order_name');
             $table->string('address');
-            $table->string('phone');
+            $table->string('spk_phone');
             $table->string('stnk_name');
             $table->unsignedInteger('stock_id');
             $table->integer('downpayment')->nullable();
