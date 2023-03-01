@@ -4,7 +4,7 @@
     <a href="{{ route('spk.salesman') }}">Home SPK</a>
 </li>
 @endpush
-<div class="col-md-12" data-toggle="modal" data-target=".modalRanking">
+<div class="col-md-12">
     <a href="{{ route('spk.salesman') }}">
         <div class="card card-dark bg-primary-gradient curves-shadow">
             <div class="card-body pb-0">

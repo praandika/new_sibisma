@@ -143,7 +143,7 @@ class SpkController extends Controller
             ->orWhere('order_status','indent');
         })
         ->orderBy('spks.id','desc')
-        ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone as customer_phone')->get();
+        ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone')->get();
 
         return view('page', compact('stock','leasing','today','data','manpowerID','manpowerName','dealerCode','spk_no','unitData','colorData'));
     }
