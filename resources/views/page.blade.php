@@ -2,7 +2,9 @@
 
 @section('content')
     @if(Route::is('dashboard'))
-        
+        @if(Auth::user()->access == 'salesman')
+            @include('component.salesman-home')
+        @else
             @section('title','Dashboard')
             @section('page-title','Dashboard')
 
@@ -27,6 +29,7 @@
             <livewire:in-stock-info>
             <livewire:out-stock-info>
             @endif
+        @endif
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
         @if(Route::is('dealer.edit'))

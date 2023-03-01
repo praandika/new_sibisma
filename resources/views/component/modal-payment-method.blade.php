@@ -13,10 +13,10 @@
                 <div class="table-responsive">
                     <table class="display table table-striped table-hover" width="100%" style="text-align: center;">
                         <tbody>
-                            <tr data-payment-method="cash" class="pilihPaymentMethod" @if(Route::is('spk.index')) onclick="disable()" @endif>
+                            <tr data-payment-method="cash" class="pilihPaymentMethod" @if(Route::is('spk.index') || Route::is('spk.salesman')) onclick="disable()" @endif>
                                 <td>Cash</td>
                             </tr>
-                            <tr data-payment-method="credit" class="pilihPaymentMethod" @if(Route::is('spk.index')) onclick="enable()" @endif>
+                            <tr data-payment-method="credit" class="pilihPaymentMethod" @if(Route::is('spk.index') || Route::is('spk.salesman')) onclick="enable()" @endif>
                                 <td>Credit</td>
                             </tr>
                         </tbody>

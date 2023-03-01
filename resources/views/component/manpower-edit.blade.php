@@ -152,7 +152,7 @@
 
                     <div class="col-md-2">
                         <div class="form-group form-floating-label">
-                            <input id="user_id" type="hidden" class="form-control input-border-bottom" name="user_id"
+                            <input id="user_id" type="text" class="form-control input-border-bottom" name="user_id"
                                 @if($isUserId == 0 || $isUserId == '' || $isUserId == null)
                                     value="0"
                                 @else

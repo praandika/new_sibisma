@@ -135,6 +135,8 @@ class SpkController extends Controller
         
 
         $data = Spk::join('stocks','spks.stock_id','stocks.id')
+        ->join('units','stocks.unit_id','units.id')
+        ->join('colors','units.color_id','colors.id')
         ->join('manpowers','spks.manpower_id','manpowers.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('spks.manpower_id',$manpowerID)
@@ -143,7 +145,7 @@ class SpkController extends Controller
             ->orWhere('order_status','indent');
         })
         ->orderBy('spks.id','desc')
-        ->select('*','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone')->get();
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name')->get();
 
         return view('page', compact('stock','leasing','today','data','manpowerID','manpowerName','dealerCode','spk_no','unitData','colorData'));
     }
