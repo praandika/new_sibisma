@@ -33,7 +33,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="card-title">Edit {{ $o->name }}</h4>
+                    <h4 class="card-title">Edit {{ $o->first_name }}</h4>
                 </div>
             </div>
         </div>
