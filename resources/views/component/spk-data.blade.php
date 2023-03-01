@@ -125,7 +125,7 @@
                             <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->model_name }}</td>
                             <td>{{ $o->salesman }}</td>
                             @if(Auth::user()->dealer_code == 'group')
-                                <td>{{ $o->stock->dealer->dealer_code }}</td>
+                                <td>{{ $o->dealer_code }}</td>
                             @endif
                             <td>
                                 <div class="form-button-action">
