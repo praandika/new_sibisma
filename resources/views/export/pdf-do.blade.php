@@ -139,7 +139,7 @@
             </tr>
             <tr>
                 <th>Nomor Mesin</th>
-                <td>: {{ $o->engine_no }}</td>
+                <td>: {{ strtoupper($o->engine_no) }}</td>
             </tr>
         </table>
 
