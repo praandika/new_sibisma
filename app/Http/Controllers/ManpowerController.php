@@ -105,10 +105,12 @@ class ManpowerController extends Controller
         if (Auth::user()->access == 'master') {
             $isUserId = $manpower->user_id;
             if ($isUserId == 0 || $isUserId == '' || $isUserId == null) {
-                $manpower;
+                $manpower = Manpower::where('manpowers.id',$manpower->id)
+                ->get();
             } else {
-                $manpower = Manpower::join('users','manpowers.user_id','users.id')->where('manpowers.id',$manpower->id)
-                ->select('manpowers.*','users.first_name')->get();
+                $manpower = Manpower::join('users','manpowers.user_id','users.id')
+                ->where('manpowers.id',$manpower->id)
+                ->select('manpowers.*','users.first_name','manpowers.name as manpower_name')->get();
             }
             
             $dealer = Dealer::all();
