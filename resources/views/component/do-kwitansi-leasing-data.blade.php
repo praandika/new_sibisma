@@ -63,9 +63,25 @@
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($o->sale_date)->format('j F Y') }}</td>
                             <td>
-                                <a href="{{ route('spk.get', $o->spk) }}" target="_blank">
-                                    {{ $o->spk }}
-                                </a>
+                                <span style="position: relative;">
+                                    <span style="
+                                    width: 50px; 
+                                    height: 12px; 
+                                    background-color: #144799; 
+                                    display: inline-block; 
+                                    position: absolute; 
+                                    top: -20px; 
+                                    left: -25px; 
+                                    border-radius: 0 0 15px 0;">
+                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: #f7c50f; top: -7px; left: 5px;">
+                                        {{ $o->leasing->leasing_code }}
+                                    </span>
+                                </span>
+                                <span>
+                                    <a href="{{ route('spk.get', $o->spk) }}" target="_blank">
+                                        {{ $o->spk }}
+                                    </a>
+                                </span>
                             </td>
                             <td>{{ $o->customer_name }}</td>
                             <td>{{ $o->phone }}</td>

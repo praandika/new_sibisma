@@ -68,7 +68,7 @@
         .tandatangan{
             float: right;
             width: 50%;
-            margin-top: 50px;
+            margin-top: 10px;
             text-align: right;
         }
 
@@ -119,7 +119,7 @@
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
-                    <td> :________________________________________________________________________</td>
+                    <td> : Pelunasan pembelian 1 (satu) unit sepeda motor Yamaha {{ $o->stock->unit->model_name }} Warna {{ $o->stock->unit->color->color_name }}</td>
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
@@ -128,6 +128,10 @@
                 <tr>
                     <th>Nomor Mesin</th>
                     <td>: {{ $o->engine_no }}</td>
+                </tr>
+                <tr>
+                    <th>Uang Muka</th>
+                    <td>: Rp. {{ number_format($o->downpayment) }}</td>
                 </tr>
             @empty
             @endforelse

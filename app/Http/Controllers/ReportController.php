@@ -758,12 +758,20 @@ class ReportController extends Controller
             if ($dc == 'group') {
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('users','sales.created_by','users.id')
+                ->where([
+                    ['sales.leasing_id','!=',1],
+                    ['sales.spk','!=',null],
+                ])
                 ->orderBy('sales.id','desc')
                 ->select('*','sales.id as id_sale','users.first_name')->limit(50)->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('users','sales.created_by','users.id')
-                ->where('stocks.dealer_id',$did)
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['sales.leasing_id','!=',1],
+                    ['sales.spk','!=',null],
+                ])
                 ->orderBy('sales.id','desc')
                 ->select('*','sales.id as id_sale','users.first_name')
                 ->limit(50)->get();
@@ -773,13 +781,21 @@ class ReportController extends Controller
             if ($dc == 'group') {
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('users','sales.created_by','users.id')
+                ->where([
+                    ['sales.leasing_id','!=',1],
+                    ['sales.spk','!=',null],
+                ])
                 ->whereBetween('sale_date',[$req->start, $req->end])
                 ->orderBy('sales.id','desc')
                 ->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('users','sales.created_by','users.id')
-                ->where('stocks.dealer_id',$did)
+                ->where([
+                    ['stocks.dealer_id',$did],
+                    ['sales.leasing_id','!=',1],
+                    ['sales.spk','!=',null],
+                ])
                 ->whereBetween('sale_date',[$req->start, $req->end])
                 ->orderBy('sales.id','desc')
                 ->get();
