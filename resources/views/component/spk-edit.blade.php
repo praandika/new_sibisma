@@ -154,13 +154,21 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ $spk->downpayment }}" required>
-                            <label for="downpayment" class="placeholder">Down Payment</label>
+                            <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
+                                value="{{ $spk->tandajadi }}" required>
+                            <label for="tandajadi" class="placeholder">Tanda Jadi</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ $spk->downpayment }}" required>
+                            <label for="downpayment" class="placeholder">Down Payment</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ $spk->discount }}">

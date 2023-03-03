@@ -174,6 +174,12 @@ class SpkController extends Controller
             $discount = $request->discount;
         }
 
+        if ($request->tandajadi == '') {
+            $tandajadi = 0;
+        } else {
+            $tandajadi = $request->tandajadi;
+        }
+
         if ($request->payment_method == 'cash') {
             $credit_status = 'cash';
             $leasing = 1;
@@ -211,6 +217,7 @@ class SpkController extends Controller
         $data->spk_phone = $request->phone;
         $data->stnk_name = strtoupper($request->stnk_name);
         $data->stock_id = $request->stock_id;
+        $data->tandajadi = $tandajadi;
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
         $data->leasing_id = $leasing;
@@ -284,6 +291,12 @@ class SpkController extends Controller
             $discount = $request->discount;
         }
 
+        if ($request->tandajadi == '') {
+            $tandajadi = 0;
+        } else {
+            $tandajadi = $request->tandajadi;
+        }
+
         if ($request->payment_method == 'cash') {
             $credit_status = 'cash';
             $leasing = 1;
@@ -300,6 +313,7 @@ class SpkController extends Controller
         $data->spk_phone = $request->phone;
         $data->stnk_name = strtoupper($request->stnk_name);
         $data->stock_id = $request->stock_id;
+        $data->tandajadi = $tandajadi;
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
         $data->payment = $request->payment;
@@ -480,7 +494,7 @@ class SpkController extends Controller
         ->join('colors','units.color_id','colors.id')
         ->join('manpowers','spks.manpower_id','manpowers.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_name','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_name','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment')
         ->where('spks.spk_no',$spk_no)
         ->get();
 

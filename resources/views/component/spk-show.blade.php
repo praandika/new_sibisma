@@ -212,8 +212,8 @@
                         </div>
 
                         <textarea name="description" id="description" cols="30" rows="10"
-                            class="form-control input-border-bottom" placeholder="Keterangan"
-                            value="{{ old('description') }}" style="border: 1px dashed grey; padding: 10px;"></textarea>
+                            class="form-control input-border-bottom" placeholder="{{ $o->order_status == 'indent' ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : 'Keterangan' }}"
+                            style="border: 1px dashed grey; padding: 10px;"></textarea>
                         
                             <div class="card" style="margin-top: 10px;">
                                 <div class="card-body">

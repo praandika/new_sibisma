@@ -203,7 +203,7 @@
             <br>
             <label for="description">Keterangan:</label>
 
-            <div style="width: 300px; height: 120px; border: 1px solid grey;">&nbsp;{{ $o->description }}</div>
+            <div style="width: 300px; height: 120px; border: 1px solid grey;">&nbsp;{{ $o->order_status == 'indent' ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }}</div>
         </div>
         @empty
         <div class="col-md-12">

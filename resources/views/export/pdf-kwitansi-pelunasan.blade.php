@@ -133,7 +133,12 @@
                 </tr>
                 <tr>
                     <th>Uang Muka</th>
-                    <td>: Rp. {{ number_format($o->downpayment) }}</td>
+                    <td>: Rp. @if($o->tandajadi > 0)
+                                {{ number_format($o->downpayment + $o->tandajadi) }}
+                            @else
+                                {{ number_format($o->downpayment) }}
+                            @endif
+                    </td>
                 </tr>
             @empty
             @endforelse
@@ -148,7 +153,11 @@
                                 <th>
                                     <span style="display: inline-block; border-top: 1px solid black; border-bottom: 1px solid black; margin-top: -5px; margin-bottom: -5px; margin-right: -100px; height: 35px; width: 200px; position: relative;">
                                             <span style="position: absolute; left: 50px; font-size: 20px;">
-                                            {{ number_format($o->stock->unit->price - $o->downpayment) }}
+                                            @if($o->tandajadi > 0)
+                                                {{ number_format($o->stock->unit->price - $o->downpayment - $o->tandajadi) }}
+                                            @else
+                                                {{ number_format($o->stock->unit->price - $o->downpayment) }}
+                                            @endif
                                             </span>
                                     </span>
                                 </th>
