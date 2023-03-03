@@ -233,7 +233,7 @@ class LeasingController extends Controller
         ->join('spks','sales.spk','=','spks.spk_no')
         ->join('manpowers','spks.manpower_id','=','manpowers.id')
         ->where('sales.id',$id)
-        ->select('*','manpowers.name as manpower')
+        ->select('*','manpowers.name as manpower','spks.order_status')
         ->get();
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
