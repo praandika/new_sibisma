@@ -115,7 +115,7 @@
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
-                    <td> :________________________________________________________________________</td>
+                    <td> : Pembelian  1 (satu) unit Yamaha {{ $o->stock->unit->model_name }} warna {{ $o->stock->unit->color->color_name }}</td>
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
@@ -202,7 +202,7 @@
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
-                    <td> :________________________________________________________________________</td>
+                    <td> : Pembelian  1 (satu) unit Yamaha {{ $o->stock->unit->model_name }} warna {{ $o->stock->unit->color->color_name }}</td>
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
