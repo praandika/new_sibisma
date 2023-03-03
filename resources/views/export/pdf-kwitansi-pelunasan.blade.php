@@ -79,6 +79,8 @@
 </head>
 
 <body>
+    @include('export.terbilang')
+
     <header>
         <div class="container-img">
             <div class="container-logo">
@@ -115,7 +117,7 @@
                 </tr>
                 <tr>
                     <th>Banyaknya uang</th>
-                    <td>:</td>
+                    <td>: {{ terbilang($o->stock->unit->price - $o->downpayment) }} Rupiah</td>
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
