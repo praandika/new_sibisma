@@ -137,7 +137,7 @@ class KwitansiController extends Controller
         // $customPaper = array(0,0,850,320);
 
         $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
-        $pdf->setPaper('A5','landscape');
+        $pdf->setPaper('A4','potrait');
         return $pdf->stream('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
 
@@ -201,7 +201,7 @@ class KwitansiController extends Controller
         // $customPaper = array(0,0,850,320);
 
         $pdf = PDF::loadView('export.pdf-kwitansi',compact('data','printDate','dealer','noKw'));
-        $pdf->setPaper('A5','landscape');
+        $pdf->setPaper('A4','potrait');
         return $pdf->download('Kwitansi_'.$name.'-'.$unit.'.pdf');
     }
 }
