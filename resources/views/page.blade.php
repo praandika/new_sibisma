@@ -24,11 +24,6 @@
             <livewire:top-product-chart>
             <livewire:top-stock-chart>
             <livewire:modal-ranking>
-            @if(Auth::user()->dealer_code == 'group')
-            <livewire:sale-stock-info>
-            <livewire:in-stock-info>
-            <livewire:out-stock-info>
-            @endif
         @endif
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))

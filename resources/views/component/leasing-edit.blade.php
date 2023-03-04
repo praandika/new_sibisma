@@ -28,7 +28,7 @@
                 @method('PUT')
                 <div class="wrapperInput">
                     <div class="row inputan">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="leasing_code" type="text" class="form-control input-border-bottom"
                                     name="leasing_code" value="{{ $leasing->leasing_code }}" required>
@@ -36,11 +36,27 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="leasing_name" type="text" class="form-control input-border-bottom"
                                     name="leasing_name" value="{{ $leasing->leasing_name }}" required>
                                 <label for="leasing_name" class="placeholder">Leasing Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group form-floating-label">
+                                <select class="form-control input-border-bottom"
+                                    name="leasing_category" style="text-transform: uppercase;" id="leasing_category" required>
+                                    <option value="{{ $leasing->leasing_category }}">{{ ucwords($leasing->leasing_category) }}</option>
+                                    <option readonly>-----------------------------</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="credit">Credit</option>
+                                    <option value="instansi">Instansi</option>
+                                    <option value="microfinance">Microfinance</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <label for="leasing_category" class="placeholder">Leasing Category</label>
                             </div>
                         </div>
                     </div>

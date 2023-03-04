@@ -73,7 +73,25 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->leasing_name }}</td>
+                                <td>
+                                    <span style="position: relative;">
+                                        <span style="
+                                        width: 80px; 
+                                        height: 12px; 
+                                        background-color: #32a852; 
+                                        display: inline-block; 
+                                        position: absolute; 
+                                        top: -20px; 
+                                        left: -25px; 
+                                        border-radius: 0 0 15px 0;">
+                                        <span style="font-size: 10px; font-weight: bold; position: relative; color: #e3fae9; top: -7px; left: 5px;">
+                                            {{ ucwords($o->leasing_category) }}
+                                        </span>
+                                    </span>
+                                    <span>
+                                        {{ $o->leasing_name }}
+                                    </span>
+                                </td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
                                 <td>

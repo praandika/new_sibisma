@@ -17,6 +17,7 @@ class CreateLeasingsTable extends Migration
             $table->id();
             $table->string('leasing_code')->unique();
             $table->string('leasing_name');
+            $table->string('leasing_category');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

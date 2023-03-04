@@ -47,6 +47,7 @@ class LeasingController extends Controller
             Leasing::insert([
                 'leasing_code' => $req->leasing_code[$i],
                 'leasing_name' => $req->leasing_name[$i],
+                'leasing_category' => $req->leasing_category[$i],
                 'created_by' => Auth::user()->id,
                 'updated_by' => Auth::user()->id,
             ]);
@@ -89,6 +90,7 @@ class LeasingController extends Controller
         Leasing::where('id',$leasing->id)->update([
             'leasing_code' => $req->leasing_code,
             'leasing_name' => $req->leasing_name,
+            'leasing_category' => $req->leasing_category,
             'updated_by' => Auth::user()->id,
         ]);
         toast('Data leasing berhasil diubah','success');
