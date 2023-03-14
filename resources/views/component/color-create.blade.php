@@ -52,11 +52,19 @@
                 @csrf
                 <div class="wrapperInput">
                     <div class="row inputan">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="color_name" type="text" class="form-control input-border-bottom"
                                     name="color_name[]" value="{{ old('color_name') }}" style="text-transform: uppercase;" required>
                                 <label for="color_name" class="placeholder">Color Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group form-floating-label">
+                                <input id="color_faktur" type="text" class="form-control input-border-bottom"
+                                    name="color_faktur[]" value="{{ old('color_faktur') }}" style="text-transform: uppercase;" required>
+                                <label for="color_faktur" class="placeholder">Color Faktur</label>
                             </div>
                         </div>
 

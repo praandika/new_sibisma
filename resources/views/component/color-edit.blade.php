@@ -44,7 +44,7 @@
                 @method('PUT')
                 <div class="wrapperInput">
                     <div class="row inputan">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="color_name" type="text" class="form-control input-border-bottom"
                                     name="color_name" value="{{ $color->color_name }}" required>
@@ -52,7 +52,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group form-floating-label">
+                                <input id="color_faktur" type="text" class="form-control input-border-bottom"
+                                    name="color_faktur" value="{{ $color->color_faktur }}" required>
+                                <label for="color_faktur" class="placeholder">Color Faktur</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="color_code" type="color" class="form-control input-border-bottom"
                                     name="color_code" value="{{ $color->color_code }}" required>

@@ -39,6 +39,7 @@
                                         </label>
                                     </div>
                                 </th>
+                                <th>Color Faktur</th>
                                 <th>Color Code</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
@@ -55,6 +56,7 @@
                                         </label>
                                     </div>
                                 </th>
+                                <th>Color Faktur</th>
                                 <th>Color Code</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
@@ -74,7 +76,9 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->color_code }}</td>
+                                <td>{{ $o->color_faktur }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                {{ $o->color_code }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
                                 <td>

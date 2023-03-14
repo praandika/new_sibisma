@@ -131,7 +131,7 @@
                         </tr>
                         <tr>
                             <th width="200">Warna Motor</th>
-                            <td>: {{ $o->color_name }}</td>
+                            <td>: {{ $o->color_faktur }}</td>
                         </tr>
                         <tr>
                             <th width="200">Harga OTR</th>

@@ -41,6 +41,7 @@ class ColorController extends Controller
         for ($i=0; $i < count($req->color_name); $i++) { 
             Color::insert([
                 'color_name' => $req->color_name[$i],
+                'color_faktur' => $req->color_faktur[$i],
                 'color_code' => $req->color_code[$i],
                 'created_by' => Auth::user()->id,
                 'updated_by' => Auth::user()->id,
@@ -83,6 +84,7 @@ class ColorController extends Controller
     {
         Color::where('id',$color->id)->update([
             'color_name' => $req->color_name,
+            'color_faktur' => $req->color_faktur,
             'color_code' => $req->color_code,
             'updated_by' => Auth::user()->id,
         ]);

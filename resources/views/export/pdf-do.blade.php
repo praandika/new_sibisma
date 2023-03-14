@@ -131,7 +131,7 @@
             </tr>
             <tr>
                 <th>Warna</th>
-                <td>: {{ $o->stock->unit->color->color_name }}</td>
+                <td>: {{ $o->stock->unit->color->color_faktur }}</td>
             </tr>
             <tr>
                 <th>Nomor Rangka</th>

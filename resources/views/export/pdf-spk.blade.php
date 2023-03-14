@@ -124,7 +124,7 @@
             </tr>
             <tr>
                 <th>Warna Motor</th>
-                <td>: {{ $o->stock->unit->color->color_name }}</td>
+                <td>: {{ $o->stock->unit->color->color_faktur }}</td>
             </tr>
             <tr>
                 <th>Harga OTR</th>

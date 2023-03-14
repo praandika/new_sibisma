@@ -121,7 +121,7 @@
                 </tr>
                 <tr>
                     <th width="150px">Untuk pembayaran</th>
-                    <td> : Pelunasan pembelian 1 (satu) unit sepeda motor Yamaha {{ $o->stock->unit->model_name }} Warna {{ $o->stock->unit->color->color_name }}</td>
+                    <td> : Pelunasan pembelian 1 (satu) unit sepeda motor Yamaha {{ $o->stock->unit->model_name }} Warna {{ $o->stock->unit->color->color_faktur }}</td>
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
