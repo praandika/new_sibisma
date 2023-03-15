@@ -84,15 +84,17 @@ class SaleDeliveryController extends Controller
         $data = new SaleDelivery;
         $data->sale_delivery_date = $req->sale_delivery_date;
         $data->sale_id = $req->sale_id;
-        $data->main_driver = $req->main_driver;
-        $data->backup_driver = $req->backup_driver;
         $data->note = $req->note;
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
         if ($req->has('selfpickup')) {
             $data->status = 'self pick up';
+            $data->main_driver = 38;
+            $data->backup_driver = 38;
             $data->save();
         } else {
+            $data->main_driver = $req->main_driver;
+            $data->backup_driver = $req->backup_driver;
             $data->save();
         }
         

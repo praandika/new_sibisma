@@ -139,31 +139,31 @@
                         </div>
                     </div> -->
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" id="mainDriver">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="main_driver" name="main_driver" value="{{ old('main_driver') }}"
-                                required>
+                            >
                             <input id="driver_name" type="text" class="form-control input-border-bottom"
                                 name="driver_name" value="{{ old('driver_name') }}" data-toggle="modal"
-                                data-target=".modalMainDriver" style="text-transform: uppercase;" required>
-                            <label for="driver_name" class="placeholder">Select Driver *</label>
+                                data-target=".modalMainDriver" style="text-transform: uppercase;" placeholder="Select Driver *">
+                            <label for="driver_name" class="placeholder"></label>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" id="backupDriver">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="backup_driver" name="backup_driver"
-                                value="{{ old('backup_driver') }}" required>
+                                value="{{ old('backup_driver') }}">
                             <input id="pic_name" type="text" class="form-control input-border-bottom" name="pic_name"
-                                value="{{ old('pic_name') }}" data-toggle="modal" data-target=".modalBackupDriver" style="text-transform: uppercase;"
-                                required>
-                            <label for="pic_name" class="placeholder">Select PIC *</label>
+                                value="{{ old('pic_name') }}" data-toggle="modal" data-target=".modalBackupDriver" style="text-transform: uppercase;" placeholder="Select PIC *"
+                            >
+                            <label for="pic_name" class="placeholder"></label>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" id="selfPickUp">
                         <label class="imagecheck mb-4">
-                            <input name="selfpickup" type="checkbox" class="imagecheck-input">
+                            <input name="selfpickup" type="checkbox" class="imagecheck-input" id="checkSelfPickUp">
                             <figure class="imagecheck-figure">
                                 <img src="{{ asset('img/selfpickup.png') }}" alt="title" class="imagecheck-image">
                             </figure>
@@ -191,3 +191,20 @@
 @include('component.modal-data')
 @include('component.modal-main-driver')
 @include('component.modal-backup-driver')
+
+@push('after-script')
+    <script>
+        // Hidden input driver when self pick up is checked
+        $(document).ready(function(){
+            $('#selfPickUp').on('click', function(){
+                if ($('#checkSelfPickUp').is(':checked')) {
+                    $('#mainDriver').css('display','none');
+                    $('#backupDriver').css('display','none');
+                } else {
+                    $('#mainDriver').css('display','block');
+                    $('#backupDriver').css('display','block');
+                }
+            });
+        });
+    </script>
+@endpush
