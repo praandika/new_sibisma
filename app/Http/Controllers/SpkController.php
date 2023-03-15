@@ -49,7 +49,10 @@ class SpkController extends Controller
         if ($dc == 'group') {
             $stock = Stock::orderBy('qty','desc')->get();
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where('manpowers.category','SAL')
+            ->where([
+                ['manpowers.category','SAL'],
+                ['manpowers.status','active']
+            ])
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
             $data = Spk::join('stocks','spks.stock_id','stocks.id')
@@ -76,7 +79,8 @@ class SpkController extends Controller
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
             ->where([
                 ['manpowers.dealer_id',$did],
-                ['manpowers.category','SAL']
+                ['manpowers.category','SAL'],
+                ['manpowers.status','active']
             ])
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();

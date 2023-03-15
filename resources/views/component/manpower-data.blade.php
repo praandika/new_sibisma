@@ -51,7 +51,32 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td @if($o->gender == 'L') style="background-color: #76b2e380;" @else style="background-color: pink;" @endif>{{ $o->name }}</td>
+                            <td @if($o->gender == 'L') style="background-color: #76b2e380;" @else style="background-color: pink;" @endif>
+                                <span style="position: relative;">
+                                    <span style="
+                                    width: 55px; 
+                                    height: 12px; 
+                                    background-color: #ffffff; 
+                                    display: inline-block; 
+                                    position: absolute; 
+                                    top: -20px; 
+                                    left: -25px; 
+                                    border-radius: 0 0 15px 0;">
+                                    <span 
+                                    @if($o->status == 'resign')
+                                        style="font-size: 10px; font-weight: bold; position: relative; color: crimson; top: -7px; left: 5px;"
+                                    @elseif($o->status == 'mutation')
+                                        style="font-size: 10px; font-weight: bold; position: relative; color: dodgerblue; top: -7px; left: 5px;"
+                                    @else
+                                        style="font-size: 10px; font-weight: bold; position: relative; color: seagreen; top: -7px; left: 5px;"
+                                    @endif>
+                                        {{ $o->status }}
+                                    </span>
+                                </span>
+                                <span>
+                                    {{ $o->name }}
+                                </span>
+                            </td>
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td>{{ $o->position }}</td>
