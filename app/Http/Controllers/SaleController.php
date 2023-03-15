@@ -545,28 +545,37 @@ class SaleController extends Controller
         if ($start == null && $end == null) {
             if ($dc == 'group') {
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('spks','sales.spk','spks.spk_no')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale')
+                ->select('*','sales.id as id_sale','manpowers.name as salesman')
                 ->limit(20)->get();
                 // dd($data);
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('spks','sales.spk','spks.spk_no')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale')
+                ->select('*','sales.id as id_sale','manpowers.name as salesman')
                 ->limit(20)->get();
+                // dd($data);
             }
             
         } else {
             if ($dc == 'group') {
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('spks','sales.spk','spks.spk_no')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale')->get();
+                ->select('*','sales.id as id_sale','manpowers.name as salesman')->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->join('spks','sales.spk','spks.spk_no')
+                ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale')->get();
+                ->select('*','sales.id as id_sale','manpowers.name as salesman')->get();
             }
         }
         return view('page', compact('data','start','end'));

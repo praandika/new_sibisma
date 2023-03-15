@@ -45,7 +45,7 @@
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
-                            <th>Created By</th>
+                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -63,7 +63,7 @@
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
-                            <th>Created By</th>
+                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -85,7 +85,7 @@
                             <td>{{ $o->frame_no }}</td>
                             @endif
                             <td>{{ $o->sale_qty }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->salesman }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id_sale : $o->id_sale) }}" class="btnAction"
