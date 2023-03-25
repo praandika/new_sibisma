@@ -200,6 +200,7 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('spk', SpkController::
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/get/{id?}', [SpkController::class, 'get'])->name('spk.get');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/delete/{id}', [SpkController::class, 'delete'])->name('spk.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [SpkController::class, 'history'])->name('spk.history');
+Route::middleware(['auth:sanctum', 'verified'])->post('/spk-check', [SpkController::class, 'check'])->name('spk.check');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-salesman', [SpkController::class, 'spkSalesman'])->name('spk.salesman');
 

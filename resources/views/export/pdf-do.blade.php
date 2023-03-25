@@ -148,7 +148,7 @@
                 <th colspan="3" style="text-align: center;">Perlengkapan</th>
             </tr>
             <tr>
-                <td><span class="centang"></span> Unit</td>
+                <td><span class="centang"></span> Buku Service / Garansi</td>
                 <td><span class="centang"></span> Helm</td>
                 <td><span class="centang"></span> Cover Plat</td>
             </tr>
