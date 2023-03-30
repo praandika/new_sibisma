@@ -38,7 +38,10 @@ class SaleDeliveryController extends Controller
             $manpower = Manpower::where('position','Driver')->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->whereYear('sales.sale_date',$year)
-            ->where('sales.status','pending')
+            ->where([
+                ['sales.status','pending'],
+                ['sales.frame_no','!=',null],
+            ])
             ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
             return view('page', compact('data','manpower','today','sale','time'));
@@ -56,6 +59,7 @@ class SaleDeliveryController extends Controller
             ->where([
                 ['stocks.dealer_id',$did],
                 ['sales.status','pending'],
+                ['sales.frame_no','!=',null],
             ])
             ->orderBy('sales.sale_date','desc')
             ->select('sales.*','stocks.unit_id')->get();
