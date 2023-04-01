@@ -548,7 +548,7 @@ class SaleController extends Controller
                 ->join('spks','sales.spk','spks.spk_no')
                 ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale','manpowers.name as salesman')
+                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
                 ->limit(20)->get();
                 // dd($data);
             }else{
@@ -557,7 +557,7 @@ class SaleController extends Controller
                 ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale','manpowers.name as salesman')
+                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
                 ->limit(20)->get();
                 // dd($data);
             }
@@ -568,14 +568,14 @@ class SaleController extends Controller
                 ->join('spks','sales.spk','spks.spk_no')
                 ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale','manpowers.name as salesman')->get();
+                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->join('spks','sales.spk','spks.spk_no')
                 ->join('manpowers','spks.manpower_id','manpowers.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale','manpowers.name as salesman')->get();
+                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
             }
         }
         return view('page', compact('data','start','end'));

@@ -80,7 +80,7 @@
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
                             <td>{{ $o->customer_name }}</td>
-                            <td>{{ $o->phone }}</td>
+                            <td>{{ $o->salesphone }}</td>
                             @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->frame_no }}</td>
                             @endif
