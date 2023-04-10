@@ -114,7 +114,8 @@ class EntryController extends Controller
             ->where('sale_date',$req->entry_date)
             ->where('stocks.dealer_id',$dealerId)->sum('sale_qty');
             $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
-            $firstStock = $stock - ($in + $out + $sale);
+            $ios = $in + $out + $sale;
+            $firstStock = $stock - $ios;
         }else{
             $isSale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->where('sale_date',$req->entry_date)
@@ -140,7 +141,8 @@ class EntryController extends Controller
             ->where('sale_date',$req->entry_date)
             ->where('stocks.dealer_id',$did)->sum('sale_qty');
             $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
-            $firstStock = $stock - ($in + $out + $sale);
+            $ios = $in + $out + $sale;
+            $firstStock = $stock - $ios;
         }
         
         /** ============== END Create Or Update Stock History ============== */ 
