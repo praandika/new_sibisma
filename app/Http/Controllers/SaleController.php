@@ -207,7 +207,7 @@ class SaleController extends Controller
             $stock = Stock::where('id',$stockId)->first();
             $stock->qty = $updateStock;
             $stock->updated_by = Auth::user()->id;
-            $stock->save();
+            $stock->update();
             
             /** ============== Create Documents ============== */ 
             if ($dc == 'group') {
@@ -272,7 +272,7 @@ class SaleController extends Controller
                 $his->sale_qty = $sale_qty;
                 $his->last_stock = $lastStock;
                 $his->updated_by = Auth::user()->id;
-                $his->save();
+                $his->update();
             } elseif($isEntry > 0 || $isOut > 0 || $isSale > 0) {
                 // If one of them have records -> Update History
                 if ($dc == 'group') {
@@ -288,7 +288,7 @@ class SaleController extends Controller
                 $his->sale_qty = $sale_qty;
                 $his->last_stock = $lastStock;
                 $his->updated_by = Auth::user()->id;
-                $his->save();
+                $his->update();
             } else {
                 // If no record by input date in DB -> Create History
                 if ($dc == 'group') {
@@ -313,7 +313,7 @@ class SaleController extends Controller
                     $his->sale_qty = $sale_qty;
                     $his->last_stock = $lastStock;
                     $his->updated_by = Auth::user()->id;
-                    $his->save();
+                    $his->update();
                 } else {
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
