@@ -52,6 +52,7 @@ class SaleDeliveryController extends Controller
             ->where('stocks.dealer_id',$did)
             ->orderBy('sale_delivery_date','desc')
             ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
+
             $manpower = Manpower::where('position','Driver')
             ->where('dealer_id',$did)->get();
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
