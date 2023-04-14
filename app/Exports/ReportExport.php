@@ -83,7 +83,7 @@ class ReportExport implements FromView
                         ->where('stocks.dealer_id',$did)
                         ->whereBetween('sales.sale_date', [$this->start, $this->end])
                         ->orderBy('sales.sale_date','asc')
-                        ->select('*','manpowers.name as salesman')->get()
+                        ->select('*','manpowers.name as salesman','sales.address as sale_address')->get()
                     ]);
                 }
             }
