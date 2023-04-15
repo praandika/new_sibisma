@@ -70,7 +70,7 @@ class SpkController extends Controller
                 alert()->warning('Add Manpower','Manpower data is not available!');
                 return redirect()->route('manpower.index');
             } else {
-                return view('page', compact('stock','leasing','today','data','manpower','spk_no','unitData','colorData'));
+                return view('page', compact('stock','leasing','today','data','manpower','spk_no','unitData','colorData','microfinance'));
             }
             
         }else{

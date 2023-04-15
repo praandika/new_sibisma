@@ -221,6 +221,7 @@
                             <input id="leasing_code_cash" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ old('leasing_code') }}" required>
                             <label for="leasing_code_cash" class="placeholder">Select Micro/Instansi *</label>
+                            <span style="padding: 5px; color: #ffffff; background-color: forestgreen; position: absolute; right: 25px; top: 10px;">new!</span>
                         </div>
                     </div>
                     
