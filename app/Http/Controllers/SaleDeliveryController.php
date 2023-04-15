@@ -218,14 +218,14 @@ class SaleDeliveryController extends Controller
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->whereYear('sales.sale_date',$year)
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get();
+                ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->whereYear('sales.sale_date',$year)
                 ->where('stocks.dealer_id',$did)
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get();
+                ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             }
         } else {
             if ($dc == 'group') {
@@ -233,14 +233,14 @@ class SaleDeliveryController extends Controller
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->whereBetween('sale_delivery_date',[$req->start, $req->end])
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get();
+                ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             }else{
                 $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
                 ->join('stocks','sales.stock_id','stocks.id')
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_delivery_date',[$req->start, $req->end])
                 ->orderBy('sale_delivery_date','desc')
-                ->select('*','sale_deliveries.id as delivery_id')->get();
+                ->select('*','sale_deliveries.id as delivery_id','sale_deliveries.status as delivery_status')->get();
             }
             
         }

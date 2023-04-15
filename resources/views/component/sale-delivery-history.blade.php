@@ -69,8 +69,8 @@
                             <td>{{ $o->sale->frame_no }}</td>
                             <td>{{ $o->sale->address }}</td>
                             <td>{{ $o->sale->phone }}</td>
-                            <td>{{ $o->mainDriver->name }}</td>
-                            <td>{{ $o->backupDriver->name }}</td>
+                            <td>{{ $o->mainDriver->name ?? 'None' }}</td>
+                            <td>{{ $o->backupDriver->name ?? 'None' }}</td>
                             <td>{{ $o->note }}</td>
                             <td>
                                 <div class="form-button-action">
