@@ -34,6 +34,7 @@ class SpkController extends Controller
         $spk_no = 'SPK'.$count.$random.$dc;
 
         $leasing = Leasing::all();
+        $microfinance = Leasing::where('leasing_category','!=','credit')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         $yearNow = Carbon::now('GMT+8')->format('Y');
@@ -104,7 +105,7 @@ class SpkController extends Controller
                 alert()->warning('Add Manpower','Manpower data is not available!');
                 return redirect()->route('manpower.index');
             } else {
-                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no','unitData','colorData'));
+                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no','unitData','colorData','microfinance'));
             }
         }
     }
@@ -120,6 +121,7 @@ class SpkController extends Controller
         $spk_no = 'SPK'.$count.$random.$dc;
 
         $leasing = Leasing::all();
+        $microfinance = Leasing::where('leasing_category','!=','credit')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         $yearNow = Carbon::now('GMT+8')->format('Y');
@@ -151,7 +153,7 @@ class SpkController extends Controller
         ->orderBy('spks.id','desc')
         ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name')->get();
 
-        return view('page', compact('stock','leasing','today','data','manpowerID','manpowerName','dealerCode','spk_no','unitData','colorData'));
+        return view('page', compact('stock','leasing','today','data','manpowerID','manpowerName','dealerCode','spk_no','unitData','colorData','microfinance'));
     }
 
     /**
@@ -186,11 +188,12 @@ class SpkController extends Controller
 
         if ($request->payment_method == 'cash') {
             $credit_status = 'cash';
-            $leasing = 1;
+            $leasing = $request->leasing_id_cash;
         } else {
             $credit_status = $request->credit_status;
             $leasing = $request->leasing_id;
         }
+        
         
         // Get KTP image
         if ($request->picture != '') {
