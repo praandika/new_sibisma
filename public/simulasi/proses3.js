@@ -350,8 +350,6 @@ function kredit_menurun(){
 
   // Show Button WA
   document.getElementById("inputWhatsappTr").removeAttribute("hidden");
-
-  console.log(`otr ${otr}`, '\n', `dp ${dp}`, '\n', `tenor ${tenor12}`, '\n', `bunga pertahun ${bungaPerTahun}`, '\n', `bunga perbulan ${bunga}`, '\n', `uang muka murni ${uangMukaMurni_12}`, '\n', `admministrasi ${admin}`, '\n', `asuransi ${asuransi_12}`, '\n', `pokok hutang ${pokokHutang_12}`, '\n', `angsuran pokok ${angsuranPokok_12}`, '\n', `bunga pertama ${bungaPertama_12}`, '\n', `angsuran pertama ${angsuran_12}`);
 }
 
 // Use this function
