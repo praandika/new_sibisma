@@ -129,16 +129,16 @@ function hitung_kredit(){
   console.log(`DP Menetap ${dp}`);
 }
 
-function kredit_menurun(){
+function kredit_menurun_old(){
   let otr = document.getElementById("angka_motor_menurun").value;
 
   let dp = document.getElementById("pass_dp").value;
 
   let bunga = document.getElementById("bunga_menurun").value;
   if (bunga == 0.0240) {
-    admin = 1400000;
+    admin = 1518000;
   } else {
-    admin = 1800000;
+    admin = 1818000;
   }
   let tenor12 = 12;
   let tenor24 = 24;
@@ -228,8 +228,133 @@ function kredit_menurun(){
 
   // Show Button WA
   document.getElementById("inputWhatsappTr").removeAttribute("hidden");
+
+  console.log(`admin ${admin}`, `asuransi ${asuransi_12}`);
 }
 
+// Now Use this function
+function kredit_menurun(){
+  let otr = document.getElementById("angka_motor_menurun").value;
+
+  let dp = document.getElementById("pass_dp").value;
+
+  let bunga = document.getElementById("bunga_menurun").value;
+  if (bunga == 0.0240) {
+    admin = 1518000;
+    bungaPerTahun = 0.288;
+  } else {
+    admin = 1818000;
+    bungaPerTahun = 0.21;
+  }
+  
+  let tenor12 = 12;
+  let tenor24 = 24;
+  let tenor36 = 36;
+  let tenor48 = 48;
+
+  let rateAss12 = 0.0080;
+  let rateAss24 = 0.0144;
+  let rateAss36 = 0.0200;
+  let rateAss48 = 0.0248;
+
+  // Tenor 12 Bulan
+  let asuransi_12 = parseFloat(otr)*parseFloat(rateAss12);
+  let uangMukaMurni_12 = dp - (admin + asuransi_12);
+  let pokokHutang_12 = otr - uangMukaMurni_12;
+  let angsuranPokok_12 = pokokHutang_12 / tenor12;
+  let bungaPertama_12 = pokokHutang_12 * (bungaPerTahun / 12);
+  angsuranPokok_12 = Math.round(angsuranPokok_12);
+  bungaPertama_12 = Math.round(bungaPertama_12);
+  let sum_12 = angsuranPokok_12 + bungaPertama_12;
+  let angsuran_12 = roundUp(sum_12, -2);
+  let rupiah_12 = formatter.format(angsuran_12);
+
+  // Tenor 24 Bulan
+  let asuransi_24 = parseFloat(otr)*parseFloat(rateAss24);
+  let uangMukaMurni_24 = dp - (admin + asuransi_24);
+  let pokokHutang_24 = otr - uangMukaMurni_24;
+  let angsuranPokok_24 = pokokHutang_24 / tenor24;
+  let bungaPertama_24 = pokokHutang_24 * (bungaPerTahun / 12);
+  angsuranPokok_24 = Math.round(angsuranPokok_24);
+  bungaPertama_24 = Math.round(bungaPertama_24);
+  let sum_24 = angsuranPokok_24 + bungaPertama_24;
+  let angsuran_24 = roundUp(sum_24, -2);
+  let rupiah_24 = formatter.format(angsuran_24);
+
+  // Tenor 36 Bulan
+  let asuransi_36 = parseFloat(otr)*parseFloat(rateAss36);
+  let uangMukaMurni_36 = dp - (admin + asuransi_36);
+  let pokokHutang_36 = otr - uangMukaMurni_36;
+  let angsuranPokok_36 = pokokHutang_36 / tenor36;
+  let bungaPertama_36 = pokokHutang_36 * (bungaPerTahun / 12);
+  angsuranPokok_36 = Math.round(angsuranPokok_36);
+  bungaPertama_36 = Math.round(bungaPertama_36);
+  let sum_36 = angsuranPokok_36 + bungaPertama_36;
+  let angsuran_36 = roundUp(sum_36, -2);
+  let rupiah_36 = formatter.format(angsuran_36);
+
+  // Tenor 48 Bulan
+  let asuransi_48 = parseFloat(otr)*parseFloat(rateAss48);
+  let uangMukaMurni_48 = dp - (admin + asuransi_48);
+  let pokokHutang_48 = otr - uangMukaMurni_48;
+  let angsuranPokok_48 = pokokHutang_48 / tenor48;
+  let bungaPertama_48 = pokokHutang_48 * (bungaPerTahun / 12);
+  angsuranPokok_48 = Math.round(angsuranPokok_48);
+  bungaPertama_48 = Math.round(bungaPertama_48);
+  let sum_48 = angsuranPokok_48 + bungaPertama_48;
+  let angsuran_48 = roundUp(sum_48, -2);
+  let rupiah_48 = formatter.format(angsuran_48);
+
+  if ((!isNaN(angsuran_12)) || (!isNaN(angsuran_24)) || (!isNaN(angsuran_36)) || (!isNaN(angsuran_48))) {
+    document.getElementById("angsuran_menurun_12").innerHTML = "<h2 class='font_angsuran'>"+rupiah_12+"</h2>";
+    document.getElementById("angsuran_menurun_24").innerHTML = "<h2 class='font_angsuran'>"+rupiah_24+"</h2>";
+    document.getElementById("angsuran_menurun_36").innerHTML = "<h2 class='font_angsuran'>"+rupiah_36+"</h2>";
+    document.getElementById("angsuran_menurun_48").innerHTML = "<h2 class='font_angsuran'>"+rupiah_48+"</h2>";
+  }else{
+    document.getElementById("angsuran_menurun_12").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+    document.getElementById("angsuran_menurun_24").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+    document.getElementById("angsuran_menurun_36").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+    document.getElementById("angsuran_menurun_48").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+  }
+
+  // Save Temp Data
+  localStorage.setItem("unitTr",document.getElementById("motor_menurun").value);
+
+  localStorage.setItem("otrTr",otr);
+  localStorage.setItem("dpTr",dp);
+  localStorage.setItem("bungaTr",bunga);
+  localStorage.setItem("adminTr",admin);
+
+  localStorage.setItem("asuransiTr12",asuransi_12);
+  localStorage.setItem("asuransiTr24",asuransi_24);
+  localStorage.setItem("asuransiTr36",asuransi_36);
+  localStorage.setItem("asuransiTr48",asuransi_48);
+
+  localStorage.setItem("angsuranTr12",angsuran_12);
+  localStorage.setItem("angsuranTr24",angsuran_24);
+  localStorage.setItem("angsuranTr36",angsuran_36);
+  localStorage.setItem("angsuranTr48",angsuran_48);
+
+  localStorage.setItem("rupiahTr12",rupiah_12);
+  localStorage.setItem("rupiahTr24",rupiah_24);
+  localStorage.setItem("rupiahTr36",rupiah_36);
+  localStorage.setItem("rupiahTr48",rupiah_48);
+
+  localStorage.setItem("rateAssTr12",rateAss12);
+  localStorage.setItem("rateAssTr24",rateAss24);
+  localStorage.setItem("rateAssTr36",rateAss36);
+  localStorage.setItem("rateAssTr48",rateAss48);
+
+  // Show Button Print
+  document.getElementById("printButtonMenurun").removeAttribute("hidden");
+
+  // Show Button WA
+  document.getElementById("inputWhatsappTr").removeAttribute("hidden");
+
+  console.log(`otr ${otr}`, '\n', `dp ${dp}`, '\n', `tenor ${tenor12}`, '\n', `bunga pertahun ${bungaPerTahun}`, '\n', `bunga perbulan ${bunga}`, '\n', `uang muka murni ${uangMukaMurni_12}`, '\n', `admministrasi ${admin}`, '\n', `asuransi ${asuransi_12}`, '\n', `pokok hutang ${pokokHutang_12}`, '\n', `angsuran pokok ${angsuranPokok_12}`, '\n', `bunga pertama ${bungaPertama_12}`, '\n', `angsuran pertama ${angsuran_12}`);
+}
+
+// Use this function
 function kredit_menetap(){
   let effectiveRate = 34;
   let adminFee = 1000000;
