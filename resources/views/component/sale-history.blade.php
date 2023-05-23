@@ -39,13 +39,15 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Customer</th>
                             <th>Phone</th>
-                            @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Salesman</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -57,13 +59,15 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Customer</th>
                             <th>Phone</th>
-                            @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
                             @endif
                             <th>Qty</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Salesman</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -79,13 +83,15 @@
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
+                            @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->customer_name }}</td>
                             <td>{{ $o->salesphone }}</td>
-                            @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->frame_no }}</td>
                             @endif
                             <td>{{ $o->sale_qty }}</td>
+                            @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->salesman }}</td>
+                            @endif
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', Auth::user()->dealer_code == 'group' ? $o->id_sale : $o->id_sale) }}" class="btnAction"
@@ -100,7 +106,7 @@
                         @if(Auth::user()->crud == 'normal')
                             <td colspan="12" style="text-align: center;">No data available</td>
                         @else
-                            <td colspan="11" style="text-align: center;">No data available</td>
+                            <td colspan="8" style="text-align: center;">No data available</td>
                         @endif
                         </tr>
                         @endforelse

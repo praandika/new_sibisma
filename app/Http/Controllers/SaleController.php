@@ -541,45 +541,78 @@ class SaleController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $yes = Carbon::yesterday('GMT+8')->format('Y-m-d');
+        $mode = Auth::user()->crud;
 
         $start = $req->start;
         $end = $req->end;
-        if ($start == null && $end == null) {
-            if ($dc == 'group') {
-                $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->join('spks','sales.spk','spks.spk_no')
-                ->join('manpowers','spks.manpower_id','manpowers.id')
-                ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
-                ->limit(20)->get();
-                // dd($data);
-            }else{
-                $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->join('spks','sales.spk','spks.spk_no')
-                ->join('manpowers','spks.manpower_id','manpowers.id')
-                ->where('stocks.dealer_id',$did)
-                ->orderBy('sale_date','desc')
-                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
-                ->limit(20)->get();
-                // dd($data);
+        if ($mode == 'normal') {
+            if ($start == null && $end == null) {
+                if ($dc == 'group') {
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->orderBy('sale_date','desc')
+                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
+                    ->limit(20)->get();
+                    // dd($data);
+                }else{
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->orderBy('sale_date','desc')
+                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
+                    ->limit(20)->get();
+                    // dd($data);
+                }
+                
+            } else {
+                if ($dc == 'group') {
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->whereBetween('sale_date',[$req->start, $req->end])
+                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
+                }else{
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->join('spks','sales.spk','spks.spk_no')
+                    ->join('manpowers','spks.manpower_id','manpowers.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->whereBetween('sale_date',[$req->start, $req->end])
+                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
+                }
             }
-            
         } else {
-            if ($dc == 'group') {
-                $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->join('spks','sales.spk','spks.spk_no')
-                ->join('manpowers','spks.manpower_id','manpowers.id')
-                ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
-            }else{
-                $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                ->join('spks','sales.spk','spks.spk_no')
-                ->join('manpowers','spks.manpower_id','manpowers.id')
-                ->where('stocks.dealer_id',$did)
-                ->whereBetween('sale_date',[$req->start, $req->end])
-                ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')->get();
+            if ($start == null && $end == null) {
+                if ($dc == 'group') {
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->orderBy('sale_date','desc')
+                    ->select('*','sales.id as id_sale')
+                    ->limit(20)->get();
+                    // dd($data);
+                }else{
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->orderBy('sale_date','desc')
+                    ->select('*','sales.id as id_sale')
+                    ->limit(20)->get();
+                    // dd($data);
+                }
+                
+            } else {
+                if ($dc == 'group') {
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->whereBetween('sale_date',[$req->start, $req->end])
+                    ->select('*','sales.id as id_sale')->get();
+                }else{
+                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->where('stocks.dealer_id',$did)
+                    ->whereBetween('sale_date',[$req->start, $req->end])
+                    ->select('*','sales.id as id_sale')->get();
+                }
             }
         }
+        
         return view('page', compact('data','start','end'));
     }
 
