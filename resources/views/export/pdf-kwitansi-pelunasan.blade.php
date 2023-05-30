@@ -154,7 +154,8 @@
                                     <span style="display: inline-block; border-top: 1px solid black; border-bottom: 1px solid black; margin-top: -5px; margin-bottom: -5px; margin-right: -100px; height: 35px; width: 200px; position: relative;">
                                             <span style="position: absolute; left: 50px; font-size: 20px;">
                                             @if($o->tandajadi > 0)
-                                                {{ number_format($o->stock->unit->price - $o->downpayment - $o->tandajadi) }}
+                                                <!-- Previous formula price - downpayment - tandajadi -->
+                                                {{ number_format($o->stock->unit->price - $o->downpayment) }} 
                                             @else
                                                 {{ number_format($o->stock->unit->price - $o->downpayment) }}
                                             @endif
