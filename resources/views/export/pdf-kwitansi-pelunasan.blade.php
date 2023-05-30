@@ -134,7 +134,8 @@
                 <tr>
                     <th>Uang Muka</th>
                     <td>: Rp. @if($o->tandajadi > 0)
-                                {{ number_format($o->downpayment + $o->tandajadi) }}
+                            <!-- Previous downpayment + tandajadi -->
+                                {{ number_format($o->downpayment) }}
                             @else
                                 {{ number_format($o->downpayment) }}
                             @endif
