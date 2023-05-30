@@ -98,6 +98,13 @@
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                         onclick="return tanya('Yakin hapus sale {{ $o->stock->unit->model_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
+
+                                    @if(Auth::user()->crud == 'normal')
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('sale.edit', Auth::user()->dealer_code == 'group' ? $o->id_sale : $o->id_sale) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Edit" style="color:#19A7CE;"><i
+                                            class="fas fa-edit"></i></a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
