@@ -52,185 +52,185 @@ function hitung_dp(){
   }
 }
 
-function hitung_kredit_menurun(){
-  let otr = document.getElementById("angka_motor_menurun").value;
+// function hitung_kredit_menurun(){
+//   let otr = document.getElementById("angka_motor_menurun").value;
 
-  let dp = document.getElementById("pass_dp").value;
+//   let dp = document.getElementById("pass_dp").value;
 
-  let bunga = document.getElementById("bunga_menurun").value;
-  if (bunga == 0.0240) {
-    admin = 1400000;
-  } else {
-    admin = 1800000;
-  }
-  let tenor = document.getElementById("tenor_menurun").value;
-  if (tenor == 12) {
-    rateAss = 0.0080;
-  } else if(tenor == 24) {
-    rateAss = 0.0144;
-  } else if(tenor == 36) {
-    rateAss = 0.0200;
-  } else if(tenor == 48) {
-    rateAss = 0.0248;
-  } else {
-    rateAss = 0;
-  }
-  let asuransi = parseFloat(otr)*parseFloat(rateAss);
-  let sph = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi);
-  let hasil = (parseFloat(sph)/parseFloat(tenor))+parseFloat(sph)*parseFloat(bunga);
-  let angsuran = hasil.toFixed(0);
-  let rupiah = formatter.format(angsuran);
+//   let bunga = document.getElementById("bunga_menurun").value;
+//   if (bunga == 0.0240) {
+//     admin = 1400000;
+//   } else {
+//     admin = 1800000;
+//   }
+//   let tenor = document.getElementById("tenor_menurun").value;
+//   if (tenor == 12) {
+//     rateAss = 0.0080;
+//   } else if(tenor == 24) {
+//     rateAss = 0.0144;
+//   } else if(tenor == 36) {
+//     rateAss = 0.0200;
+//   } else if(tenor == 48) {
+//     rateAss = 0.0248;
+//   } else {
+//     rateAss = 0;
+//   }
+//   let asuransi = parseFloat(otr)*parseFloat(rateAss);
+//   let sph = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi);
+//   let hasil = (parseFloat(sph)/parseFloat(tenor))+parseFloat(sph)*parseFloat(bunga);
+//   let angsuran = hasil.toFixed(0);
+//   let rupiah = formatter.format(angsuran);
 
-  if (!isNaN(angsuran)) {
-    document.getElementById("angsuran_menurun").innerHTML = "<p>Angsuran</p><h2>"+rupiah+"</h2>";
-  }else{
-    document.getElementById("angsuran_menurun").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-  }
+//   if (!isNaN(angsuran)) {
+//     document.getElementById("angsuran_menurun").innerHTML = "<p>Angsuran</p><h2>"+rupiah+"</h2>";
+//   }else{
+//     document.getElementById("angsuran_menurun").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//   }
 
-  console.log(`DP ${dp}`);
-}
+//   console.log(`DP ${dp}`);
+// }
 
-function hitung_kredit(){
-  let effectiveRate = 34;
-  let adminFee = 1000000;
-  let otr = document.getElementById("angka_motor").value;
+// function hitung_kredit(){
+//   let effectiveRate = 34;
+//   let adminFee = 1000000;
+//   let otr = document.getElementById("angka_motor").value;
 
-  let dp = document.getElementById("pass_dp_menetap").value;
+//   let dp = document.getElementById("pass_dp_menetap").value;
 
-  let tenor = document.getElementById("tenor").value;
-  if (tenor == 12) {
-    rateAss = 0.0093;
-  } else if(tenor == 24) {
-    rateAss = 0.0169;
-  } else if(tenor == 36) {
-    rateAss = 0.0237;
-  } else if(tenor == 48) {
-    rateAss = 0.0290;
-  }else if(tenor == 60) {
-    rateAss = 0.0432;
-  } else {
-    rateAss = 0;
-  }
-  let rounding = 2;
+//   let tenor = document.getElementById("tenor").value;
+//   if (tenor == 12) {
+//     rateAss = 0.0093;
+//   } else if(tenor == 24) {
+//     rateAss = 0.0169;
+//   } else if(tenor == 36) {
+//     rateAss = 0.0237;
+//   } else if(tenor == 48) {
+//     rateAss = 0.0290;
+//   }else if(tenor == 60) {
+//     rateAss = 0.0432;
+//   } else {
+//     rateAss = 0;
+//   }
+//   let rounding = 2;
 
-  let rate = parseFloat(effectiveRate/1200);
-  let jumlahPinjaman = -(parseFloat(otr)-(parseFloat(dp)-parseFloat(adminFee)-parseFloat(rateAss)*parseFloat(otr)));
+//   let rate = parseFloat(effectiveRate/1200);
+//   let jumlahPinjaman = -(parseFloat(otr)-(parseFloat(dp)-parseFloat(adminFee)-parseFloat(rateAss)*parseFloat(otr)));
   
-  let hasil = roundUp(pmt(rate,tenor,jumlahPinjaman,0,0),rounding);
-  let angsuran = hasil.toFixed(0);
-  let rupiah = formatter.format(angsuran);
+//   let hasil = roundUp(pmt(rate,tenor,jumlahPinjaman,0,0),rounding);
+//   let angsuran = hasil.toFixed(0);
+//   let rupiah = formatter.format(angsuran);
 
-  if (!isNaN(angsuran)) {
-    document.getElementById("angsuran").innerHTML = "<p>Angsuran</p><h2>"+rupiah+"</h2>";
-  }else{
-    document.getElementById("angsuran").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-  }
+//   if (!isNaN(angsuran)) {
+//     document.getElementById("angsuran").innerHTML = "<p>Angsuran</p><h2>"+rupiah+"</h2>";
+//   }else{
+//     document.getElementById("angsuran").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//   }
 
-  console.log(`DP Menetap ${dp}`);
-}
+//   console.log(`DP Menetap ${dp}`);
+// }
 
-function kredit_menurun_old(){
-  let otr = document.getElementById("angka_motor_menurun").value;
+// function kredit_menurun_old(){
+//   let otr = document.getElementById("angka_motor_menurun").value;
 
-  let dp = document.getElementById("pass_dp").value;
+//   let dp = document.getElementById("pass_dp").value;
 
-  let bunga = document.getElementById("bunga_menurun").value;
-  if (bunga == 0.0240) {
-    admin = 1518000;
-  } else {
-    admin = 1818000;
-  }
-  let tenor12 = 12;
-  let tenor24 = 24;
-  let tenor36 = 36;
-  let tenor48 = 48;
+//   let bunga = document.getElementById("bunga_menurun").value;
+//   if (bunga == 0.0240) {
+//     admin = 1518000;
+//   } else {
+//     admin = 1818000;
+//   }
+//   let tenor12 = 12;
+//   let tenor24 = 24;
+//   let tenor36 = 36;
+//   let tenor48 = 48;
 
-  let rateAss12 = 0.0080;
-  let rateAss24 = 0.0144;
-  let rateAss36 = 0.0200;
-  let rateAss48 = 0.0248;
+//   let rateAss12 = 0.0080;
+//   let rateAss24 = 0.0144;
+//   let rateAss36 = 0.0200;
+//   let rateAss48 = 0.0248;
 
-  // Tenor 12 Bulan
-  let asuransi_12 = parseFloat(otr)*parseFloat(rateAss12);
-  let sph_12 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_12);
-  let hasil_12 = (parseFloat(sph_12)/parseFloat(tenor12))+parseFloat(sph_12)*parseFloat(bunga);
-  let angsuran_12 = hasil_12.toFixed(0);
-  let rupiah_12 = formatter.format(angsuran_12);
+//   // Tenor 12 Bulan
+//   let asuransi_12 = parseFloat(otr)*parseFloat(rateAss12);
+//   let sph_12 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_12);
+//   let hasil_12 = (parseFloat(sph_12)/parseFloat(tenor12))+parseFloat(sph_12)*parseFloat(bunga);
+//   let angsuran_12 = hasil_12.toFixed(0);
+//   let rupiah_12 = formatter.format(angsuran_12);
 
-  // Tenor 24 Bulan
-  let asuransi_24 = parseFloat(otr)*parseFloat(rateAss24);
-  let sph_24 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_24);
-  let hasil_24 = (parseFloat(sph_24)/parseFloat(tenor24))+parseFloat(sph_24)*parseFloat(bunga);
-  let angsuran_24 = hasil_24.toFixed(0);
-  let rupiah_24 = formatter.format(angsuran_24);
+//   // Tenor 24 Bulan
+//   let asuransi_24 = parseFloat(otr)*parseFloat(rateAss24);
+//   let sph_24 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_24);
+//   let hasil_24 = (parseFloat(sph_24)/parseFloat(tenor24))+parseFloat(sph_24)*parseFloat(bunga);
+//   let angsuran_24 = hasil_24.toFixed(0);
+//   let rupiah_24 = formatter.format(angsuran_24);
 
-  // Tenor 36 Bulan
-  let asuransi_36 = parseFloat(otr)*parseFloat(rateAss36);
-  let sph_36 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_36);
-  let hasil_36 = (parseFloat(sph_36)/parseFloat(tenor36))+parseFloat(sph_36)*parseFloat(bunga);
-  let angsuran_36 = hasil_36.toFixed(0);
-  let rupiah_36 = formatter.format(angsuran_36);
+//   // Tenor 36 Bulan
+//   let asuransi_36 = parseFloat(otr)*parseFloat(rateAss36);
+//   let sph_36 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_36);
+//   let hasil_36 = (parseFloat(sph_36)/parseFloat(tenor36))+parseFloat(sph_36)*parseFloat(bunga);
+//   let angsuran_36 = hasil_36.toFixed(0);
+//   let rupiah_36 = formatter.format(angsuran_36);
 
-  // Tenor 48 Bulan
-  let asuransi_48 = parseFloat(otr)*parseFloat(rateAss48);
-  let sph_48 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_48);
-  let hasil_48 = (parseFloat(sph_48)/parseFloat(tenor48))+parseFloat(sph_48)*parseFloat(bunga);
-  let angsuran_48 = hasil_48.toFixed(0);
-  let rupiah_48 = formatter.format(angsuran_48);
+//   // Tenor 48 Bulan
+//   let asuransi_48 = parseFloat(otr)*parseFloat(rateAss48);
+//   let sph_48 = parseFloat(otr)-parseFloat(dp)+parseFloat(admin)+parseFloat(asuransi_48);
+//   let hasil_48 = (parseFloat(sph_48)/parseFloat(tenor48))+parseFloat(sph_48)*parseFloat(bunga);
+//   let angsuran_48 = hasil_48.toFixed(0);
+//   let rupiah_48 = formatter.format(angsuran_48);
 
-  if ((!isNaN(angsuran_12)) || (!isNaN(angsuran_24)) || (!isNaN(angsuran_36)) || (!isNaN(angsuran_48))) {
-    document.getElementById("angsuran_menurun_12").innerHTML = "<h2 class='font_angsuran'>"+rupiah_12+"</h2>";
-    document.getElementById("angsuran_menurun_24").innerHTML = "<h2 class='font_angsuran'>"+rupiah_24+"</h2>";
-    document.getElementById("angsuran_menurun_36").innerHTML = "<h2 class='font_angsuran'>"+rupiah_36+"</h2>";
-    document.getElementById("angsuran_menurun_48").innerHTML = "<h2 class='font_angsuran'>"+rupiah_48+"</h2>";
-  }else{
-    document.getElementById("angsuran_menurun_12").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-    document.getElementById("angsuran_menurun_24").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-    document.getElementById("angsuran_menurun_36").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-    document.getElementById("angsuran_menurun_48").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
-  }
+//   if ((!isNaN(angsuran_12)) || (!isNaN(angsuran_24)) || (!isNaN(angsuran_36)) || (!isNaN(angsuran_48))) {
+//     document.getElementById("angsuran_menurun_12").innerHTML = "<h2 class='font_angsuran'>"+rupiah_12+"</h2>";
+//     document.getElementById("angsuran_menurun_24").innerHTML = "<h2 class='font_angsuran'>"+rupiah_24+"</h2>";
+//     document.getElementById("angsuran_menurun_36").innerHTML = "<h2 class='font_angsuran'>"+rupiah_36+"</h2>";
+//     document.getElementById("angsuran_menurun_48").innerHTML = "<h2 class='font_angsuran'>"+rupiah_48+"</h2>";
+//   }else{
+//     document.getElementById("angsuran_menurun_12").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//     document.getElementById("angsuran_menurun_24").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//     document.getElementById("angsuran_menurun_36").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//     document.getElementById("angsuran_menurun_48").innerHTML = "<h2 style='color: #f490c3;'>Informasi Tidak Lengkap</h2>";
+//   }
 
-  // Save Temp Data
-  localStorage.setItem("unitTr",document.getElementById("motor_menurun").value);
+//   // Save Temp Data
+//   localStorage.setItem("unitTr",document.getElementById("motor_menurun").value);
 
-  localStorage.setItem("otrTr",otr);
-  localStorage.setItem("dpTr",dp);
-  localStorage.setItem("bungaTr",bunga);
-  localStorage.setItem("adminTr",admin);
+//   localStorage.setItem("otrTr",otr);
+//   localStorage.setItem("dpTr",dp);
+//   localStorage.setItem("bungaTr",bunga);
+//   localStorage.setItem("adminTr",admin);
 
-  localStorage.setItem("asuransiTr12",asuransi_12);
-  localStorage.setItem("asuransiTr24",asuransi_24);
-  localStorage.setItem("asuransiTr36",asuransi_36);
-  localStorage.setItem("asuransiTr48",asuransi_48);
+//   localStorage.setItem("asuransiTr12",asuransi_12);
+//   localStorage.setItem("asuransiTr24",asuransi_24);
+//   localStorage.setItem("asuransiTr36",asuransi_36);
+//   localStorage.setItem("asuransiTr48",asuransi_48);
 
-  localStorage.setItem("sphTr12",sph_12);
-  localStorage.setItem("sphTr24",sph_24);
-  localStorage.setItem("sphTr36",sph_36);
-  localStorage.setItem("sphTr48",sph_48);
+//   localStorage.setItem("sphTr12",sph_12);
+//   localStorage.setItem("sphTr24",sph_24);
+//   localStorage.setItem("sphTr36",sph_36);
+//   localStorage.setItem("sphTr48",sph_48);
 
-  localStorage.setItem("angsuranTr12",angsuran_12);
-  localStorage.setItem("angsuranTr24",angsuran_24);
-  localStorage.setItem("angsuranTr36",angsuran_36);
-  localStorage.setItem("angsuranTr48",angsuran_48);
+//   localStorage.setItem("angsuranTr12",angsuran_12);
+//   localStorage.setItem("angsuranTr24",angsuran_24);
+//   localStorage.setItem("angsuranTr36",angsuran_36);
+//   localStorage.setItem("angsuranTr48",angsuran_48);
 
-  localStorage.setItem("rupiahTr12",rupiah_12);
-  localStorage.setItem("rupiahTr24",rupiah_24);
-  localStorage.setItem("rupiahTr36",rupiah_36);
-  localStorage.setItem("rupiahTr48",rupiah_48);
+//   localStorage.setItem("rupiahTr12",rupiah_12);
+//   localStorage.setItem("rupiahTr24",rupiah_24);
+//   localStorage.setItem("rupiahTr36",rupiah_36);
+//   localStorage.setItem("rupiahTr48",rupiah_48);
 
-  localStorage.setItem("rateAssTr12",rateAss12);
-  localStorage.setItem("rateAssTr24",rateAss24);
-  localStorage.setItem("rateAssTr36",rateAss36);
-  localStorage.setItem("rateAssTr48",rateAss48);
+//   localStorage.setItem("rateAssTr12",rateAss12);
+//   localStorage.setItem("rateAssTr24",rateAss24);
+//   localStorage.setItem("rateAssTr36",rateAss36);
+//   localStorage.setItem("rateAssTr48",rateAss48);
 
-  // Show Button Print
-  document.getElementById("printButtonMenurun").removeAttribute("hidden");
+//   // Show Button Print
+//   document.getElementById("printButtonMenurun").removeAttribute("hidden");
 
-  // Show Button WA
-  document.getElementById("inputWhatsappTr").removeAttribute("hidden");
+//   // Show Button WA
+//   document.getElementById("inputWhatsappTr").removeAttribute("hidden");
 
-  console.log(`admin ${admin}`, `asuransi ${asuransi_12}`);
-}
+//   console.log(`admin ${admin}`, `asuransi ${asuransi_12}`);
+// }
 
 // Now Use this function
 function kredit_menurun(){
@@ -432,7 +432,7 @@ function kredit_menetap(){
   let rupiah_otr = formatter.format(otr);
   let rupiah_dp = formatter.format(dp);
 
-  localStorage.setItem("unitTp",document.getElementById("motor").value);
+  localStorage.setItem("unitTp",document.getElementById("motorMenetap").value);
 
   localStorage.setItem("otrTp",rupiah_otr);
   localStorage.setItem("dpTp",rupiah_dp);
@@ -477,7 +477,7 @@ function send_wa_tr(){
 
 function send_wa_tp(){
   let number = document.getElementById("whatsappNumberTp").value;
-  let unit = localStorage.getItem("unitTr");
+  let unit = localStorage.getItem("unitTp");
   let otr = localStorage.getItem("otrTp");
   let dp = localStorage.getItem("dpTp");
   let angsuran12 = localStorage.getItem("rupiahTp12");

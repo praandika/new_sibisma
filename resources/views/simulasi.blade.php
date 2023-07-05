@@ -237,7 +237,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="motor">Pilih Motor</label>
-                                    <input type="text" class="form-control inputcustom" id="motor" data-toggle="modal"
+                                    <input type="text" class="form-control inputcustom" id="motorMenetap" data-toggle="modal"
                                         data-target="#menu_motor">
                                 </div>
                                 <div class="form-group col-md-6">
@@ -538,7 +538,7 @@
         });
 
         $(document).on('click', '.pilih', function (e) {
-            document.getElementById("motor").value = $(this).attr('data-motor');
+            document.getElementById("motorMenetap").value = $(this).attr('data-motor');
             document.getElementById("harga_motor").innerHTML = $(this).attr('data-harga_motor');
             document.getElementById("angka_motor").value = $(this).attr('data-angka_motor');
             document.getElementById("unit_img").value = $(this).attr('data-unit_img');
