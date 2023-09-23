@@ -24,8 +24,8 @@
             <td>{{ $o->stock->dealer->dealer_name }}</td>
             <td>{{ $o->sale_date }}</td>
             <td>{{ $o->stock->unit->model_name }}</td>
-            <td>{{ $o->frame_no }}</td>
-            <td>{{ $o->engine_no }}</td>
+            <td>{{ strtoupper($o->frame_no) }}</td>
+            <td>{{ strtoupper($o->engine_no) }}</td>
             <td>{{ $o->stock->unit->color->color_name }}</td>
             <td>{{ $o->stock->unit->year_mc }}</td>
             <td>{{ $o->customer_name }}</td>

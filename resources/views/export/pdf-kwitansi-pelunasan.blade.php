@@ -125,7 +125,7 @@
                 </tr>
                 <tr>
                     <th>Nomor Rangka</th>
-                    <td>: {{ $o->frame_no }}</td>
+                    <td>: {{ strtoupper($o->frame_no) }}</td>
                 </tr>
                 <tr>
                     <th>Nomor Mesin</th>
