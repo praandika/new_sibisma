@@ -80,10 +80,11 @@ class ReportExport implements FromView
                         'data' => Sale::join('stocks','sales.stock_id','stocks.id')
                         ->join('spks','sales.spk','spks.spk_no')
                         ->join('manpowers','spks.manpower_id','manpowers.id')
+                        ->join('units','stocks.unit_id','units.id')
                         ->where('stocks.dealer_id',$did)
                         ->whereBetween('sales.sale_date', [$this->start, $this->end])
                         ->orderBy('sales.sale_date','asc')
-                        ->select('*','manpowers.name as salesman','sales.address as sale_address')->get()
+                        ->select('*','manpowers.name as salesman','sales.address as sale_address','sales.phone as sale_phone')->get()
                     ]);
                 }
             }
