@@ -13,23 +13,23 @@
         }
         body {
             font-family: sans-serif;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .title {
             font-size: 14px;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 0px;
         }
 
         table tr th,
         table tr th {
-            padding: 4px;
+            padding: 2px
         }
 
         footer {
             position: fixed;
-            bottom: 0px;
+            bottom: -25px;
             left: 0px;
             right: 0px;
             font-size: 9px;
@@ -62,13 +62,14 @@
         .terbilang{
             float: left;
             width: 50%;
-            margin-top: 50px;
+            margin-top: 20px;
+            margin-left: -14px;
             font-weight: bold;
         }
         .tandatangan{
             float: right;
             width: 50%;
-            margin-top: 10px;
+            margin-top: -10px;
             text-align: right;
         }
 
