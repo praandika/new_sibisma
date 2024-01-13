@@ -48,7 +48,7 @@
 
         <center>
             <strong>
-                <p>&copy;CRM Bisma</p>
+                <p>&copy;CRM Bisma | Andika</p>
             </strong>
         </center>
     </x-jet-authentication-card>
