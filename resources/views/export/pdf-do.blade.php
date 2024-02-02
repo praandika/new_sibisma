@@ -180,7 +180,8 @@
                 <p>Denpasar, _________________</p>
                 <p>Hormat Kami,</p>
                 <br><br><br>
-                <p>( {{ $o->salesman }} )</p> 
+                <p>( {{ $o->stock->dealer->dealer_name }} )</p>
+                <div style="font-size: 8px; margin-top: -10px;">&nbsp;&nbsp;{{ $o->salesman }}&nbsp;&nbsp;</div>
                 <!-- Change to Manpower Name -->
             </div>
         </div>
