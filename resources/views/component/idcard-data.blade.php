@@ -7,19 +7,19 @@
 </style>
 @endpush
 
-@section('title','Manpower')
-@section('page-title','Manpower')
+@section('title','ID Card')
+@section('page-title','ID Card')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('manpower.index') }}">Data Manpower</a>
+    <a href="{{ route('idcard.index') }}">Data ID Card</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Manpower Data</h4>
+            <h4 class="card-title">ID Card {{ $dealer }} - Total {{ $total }} - (ID Card: {{ $idCardYes }})</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,9 +30,7 @@
                             <th>Dealer</th>
                             <th>Contact</th>
                             <th>Position</th>
-                            <th>System User</th>
-                            <th>Created By</th>
-                            <th>Updated By</th>
+                            <th>Photo</th>
                             <th width="120">Action</th>
                         </tr>
                     </thead>
@@ -42,9 +40,7 @@
                             <th>Dealer</th>
                             <th>Contact</th>
                             <th>Position</th>
-                            <th>System User</th>
-                            <th>Created By</th>
-                            <th>Updated By</th>
+                            <th>Photo</th>
                             <th width="120">Action</th>
                         </tr>
                     </tfoot>
@@ -80,27 +76,33 @@
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td>{{ $o->position }}</td>
-                            <td style="{{ $o->system_user == 'Yes' ? 'color:blue; font-weight:bold;' : 'color:grey;' }}" >{{ $o->system_user }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
-                            <td>{{ $o->updatedBy->first_name }}</td>
+                            <td><i class="fas fa-image" style="color: {{ $o->image == '' || $o->image == 'noimage.jpg' ? 'grey;' : '#00cc14;' }} font-size: 20px;"></i></td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('manpower.show', $o->id) }}" class="btnAction"
+                                    @if($o->image == '' || $o->image == 'noimage.jpg')
+                                    <a href="#" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="No Photo Available" style="color: grey;"><i
+                                            class="fas fa-download"></i></a>
+                                    @else
+                                    <a href="{{ asset('img/idcard/'.$o->image.'') }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Download" style="color: #00cc14" download><i
+                                            class="fas fa-download"></i></a>
+                                    @endif
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('idcard.show', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Detail"
                                         style="color:orange;"><i class="fa fa-eye"></i></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('manpower.edit', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                            class="fas fa-edit"></i></a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('manpower.edit', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="{{ $o->image == '' || $o->image == 'noimage.jpg' ? 'Add Photo' : 'Photo Added' }}"><i
-                                            class="fas fa-image" style="color: {{ $o->image == '' || $o->image == 'noimage.jpg' ? 'grey;' : '#00cc14' }}"></i></a>
-                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('manpower.delete', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                        onclick="return tanya('Yakin hapus manpower {{ $o->name }}?')"><i
-                                            class="fas fa-trash-alt"></i></a> -->
+                                    <a href="{{ url('idcard/change/'.$o->id.'/'.$o->idcard.'') }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="{{ $o->idcard == '1' ? 'Active' : 'None' }}">
+
+                                        @if($o->idcard == '1') 
+                                        <i class="fas fa-toggle-on" style="color:#007bff;"></i>
+                                        @else
+                                        <i class="fas fa-toggle-off" style="color:grey;"></i>
+                                        @endif
+                                    </a>
                                 </div>
 
                             </td>

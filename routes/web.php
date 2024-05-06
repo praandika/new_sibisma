@@ -27,6 +27,7 @@ use App\Http\Controllers\SimpleOutController;
 use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\IDCardController;
 use App\Models\Spk;
 
 /*
@@ -62,6 +63,13 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/deleteall', [Deal
 Route::middleware(['auth:sanctum', 'verified'])->resource('manpower', ManpowerController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/manpower/delete/{id}', [ManpowerController::class, 'delete'])->name('manpower.delete');
 // END MANPOWER
+
+// ID CARD
+Route::middleware(['auth:sanctum', 'verified'])->get('/idcard', [IDCardController::class, 'index'])->name('idcard.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/idcard/{dealer}', [IDCardController::class, 'data'])->name('idcard.data');
+Route::middleware(['auth:sanctum', 'verified'])->get('/idcard/{id}/show', [IDCardController::class, 'show'])->name('idcard.show');
+Route::middleware(['auth:sanctum', 'verified'])->get('/idcard/change/{id}/{status}', [IDCardController::class, 'changeStatusIdCard'])->name('idcard.update-status');
+// END ID CARD
 
 // COLOR
 Route::middleware(['auth:sanctum', 'verified'])->resource('color', ColorController::class);

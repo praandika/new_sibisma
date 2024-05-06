@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('manpower.update', $o->id) }}" method="post">
+            <form action="{{ route('manpower.update', $o->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -149,6 +149,40 @@
                             </span>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-post card-round">
+                            <img class="card-img-top"
+                                src="{{ $o->image == '' || $o->image == 'noimage.jpg' ? asset('img/noimage.jpg') : asset('img/idcard/'.$o->image.'') }}"
+                                alt="Card image cap">
+                            <div class="card-body">
+                                <div class="separator-solid"></div>
+                                <input type="hidden" value="{{ $o->image }}" name="img_prev">
+                                <p class="card-category text-info mb-1"><a href="#">File name :
+                                        {{ $o->image == '' ? 'No image available' : $o->image }}</a></p>
+                                <h3 class="card-title">
+                                    <a href="#">
+                                        {{ $o->name }}'s Photo
+                                    </a>
+                                </h3>
+                                <p></p>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-rounded btn-sm" id="btnImage" style="color: #fff;">{{ $o->image == '' ? 'Add Photo' : 'Change Photo'}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label" style="display: none;" id="formImage">
+                            <input id="image" type="file" class="form-control input-border-bottom" name="image">
+                            <label for="image" class="placeholder">Photo for ID Card</label>
+
+                            <span class="badge badge-warning">
+                                <strong style="color: black;">format required: jpg | jpeg | png</strong>
+                            </span>
+                        </div>
+                    </div>
 
                     <div class="col-md-2">
                         <div class="form-group form-floating-label">
@@ -188,7 +222,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('manpower.update', $manpower->id) }}" method="post">
+            <form action="{{ route('manpower.update', $manpower->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -301,6 +335,40 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-post card-round">
+                            <img class="card-img-top"
+                                src="{{ $manpower->image == '' || $manpower->image == 'noimage.jpg' ? asset('img/noimage.jpg') : asset('img/idcard/'.$manpower->image.'') }}"
+                                alt="Card image cap">
+                            <div class="card-body">
+                                <div class="separator-solid"></div>
+                                <input type="hidden" value="{{ $manpower->image }}" name="img_prev">
+                                <p class="card-category text-info mb-1"><a href="#">File name :
+                                        {{ $manpower->image == '' ? 'No image available' : $manpower->image }}</a></p>
+                                <h3 class="card-title">
+                                    <a href="#">
+                                        {{ $manpower->name }}'s Photo
+                                    </a>
+                                </h3>
+                                <p></p>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-rounded btn-sm" id="btnImage" style="color: #fff;">{{ $manpower->image == '' ? 'Add Photo' : 'Change Photo'}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label" style="display: none;" id="formImage">
+                            <input id="image" type="file" class="form-control input-border-bottom" name="image">
+                            <label for="image" class="placeholder">Photo for ID Card</label>
+
+                            <span class="badge badge-warning">
+                                <strong style="color: black;">format required: jpg | jpeg | png</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <button class="btn btn-success" type="submit"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
             </form>
@@ -363,6 +431,13 @@
                 $('#resignDate').addClass('fadeInKanan');
                 $('#resignDate').css('display','block');
             }
+        });
+    </script>
+
+    <script>
+        $('#btnImage').on('click', function () {
+            $('#formImage').css('display', 'block');
+            $('#formImage').addClass('fadeInBawah');
         });
     </script>
 @endpush

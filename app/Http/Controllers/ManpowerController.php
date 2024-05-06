@@ -56,6 +56,10 @@ class ManpowerController extends Controller
      */
     public function store(Request $req)
     {
+        $req->validate([
+            'image' => 'image|mimes:jpeg,png,jpg',
+        ]);
+
         $data = new Manpower;
         $data->dealer_id = $req->dealer_id;
         $data->name = $req->name;
@@ -68,8 +72,18 @@ class ManpowerController extends Controller
         $data->category = $req->category;
         $data->years_of_service = $req->yos;
         $data->education = $req->education;
+        $data->idcard = 0;
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
+        if ($req->image == '') {
+            $data->image = 'noimage.jpg';
+        } else {
+            $img = $req->file('image');
+            $img_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/idcard';
+            $img->move($dir_img,$img_file);
+            $data->image = $img_file;
+        }
         $data->save();
 
         // Write log
@@ -80,7 +94,7 @@ class ManpowerController extends Controller
         $log->save();
 
         toast('Data manpower berhasil disimpan','success');
-        return redirect()->route('manpower.index')->with('display', true);;
+        return redirect()->route('manpower.index')->with('display', true);
     }
 
     /**
@@ -132,24 +146,40 @@ class ManpowerController extends Controller
      */
     public function update(Request $req, Manpower $manpower)
     {
-        Manpower::where('id',$manpower->id)->update([
-            'dealer_id' => $req->dealer_id,
-            'user_id' => $req->user_id,
-            'name' => $req->name,
-            'address' => $req->address,
-            'phone' => $req->phone,
-            'birthday' => $req->birthday,
-            'gender' => $req->gender,
-            'join_date' => $req->join_date,
-            'resign_date' => $req->resign_date,
-            'status' => $req->status,
-            'position' => $req->position,
-            'category' => $req->category,
-            'category' => $req->category,
-            'years_of_service' => $req->yos,
-            'education' => $req->education,
-            'updated_by' => Auth::user()->id,
-        ]);
+        $data = Manpower::find($manpower->id);
+        $data->dealer_id = $req->dealer_id;
+        $data->user_id = $req->user_id;
+        $data->name = $req->name;
+        $data->address = $req->address;
+        $data->phone = $req->phone;
+        $data->birthday = $req->birthday;
+        $data->gender = $req->gender;
+        $data->join_date = $req->join_date;
+        $data->resign_date = $req->resign_date;
+        $data->status = $req->status;
+        $data->position = $req->position;
+        $data->category = $req->category;
+        $data->years_of_service = $req->yos;
+        $data->education = $req->education;
+        $data->idcard = $req->idcard;
+        $data->updated_by = Auth::user()->id;
+
+        if ($req->hasfile('image')) {
+            if ($data->image != '' && $data->image != 'noimage.jpg') {
+                $img_prev = $req->img_prev;
+                unlink('img/idcard/'.$img_prev);
+            }
+
+            $img = $req->file('image');
+            $img_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/idcard';
+            $img->move($dir_img,$img_file);
+
+            $data->image = $img_file;
+            $data->save();
+        }else{
+            $data->save();
+        }
 
         // Write log
         $log = new Log;

@@ -45,6 +45,18 @@
             @include('component.manpower-data')
         @endif
 
+    <!-- ID Card Page -->
+    @elseif(Route::is('idcard.*'))
+        @if(Route::is('idcard.edit'))
+            @include('component.idcard-edit')
+        @elseif(Route::is('idcard.show'))
+            @include('component.idcard-show')
+        @elseif(Route::is('idcard.data'))
+            @include('component.idcard-data')
+        @else
+            @include('component.idcard-dealer')
+        @endif
+
     <!-- Dokumen Page -->
     @elseif(Route::is('document.*'))
         {{-- @include('component.dokumen-create') --}}

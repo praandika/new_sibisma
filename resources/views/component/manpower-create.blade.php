@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('manpower.store') }}" method="post">
+            <form action="{{ route('manpower.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                 @if(Auth::user()->dealer_code == 'group')
@@ -130,6 +130,20 @@
                                     name="education" value="{{ old('education') }}" data-toggle="modal"
                                     data-target=".modalEducation" style="text-transform: uppercase;" required>
                             <label for="education" class="placeholder">Select Education *</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="image" type="file" class="form-control input-border-bottom"
+                                name="image" value="{{ old('image') }}">
+                            <label for="image" class="placeholder">Photo for ID Card</label>
+
+                            <span class="invalid-feedback">
+                                <strong>format required: jpg|jpeg|png</strong>
+                            </span>
                         </div>
                     </div>
                 </div>

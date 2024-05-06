@@ -79,6 +79,7 @@
                     </li>
                     @include('menu.datamaster')
                     @include('menu.user')
+                    @include('menu.idcard')
                     @include('menu.log')
                 @endif
             @endif
