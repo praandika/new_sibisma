@@ -19,7 +19,10 @@ class IDCardController extends Controller
     public function data($dealerId){
         $dealer = Dealer::where('id', $dealerId)->pluck('dealer_name');
         $dealer = $dealer[0];
-        $data = Manpower::where('dealer_id', $dealerId)->get();
+        $data = Manpower::where([
+            ['dealer_id', $dealerId],
+            ['status','active'],
+        ])->get();
         $total = Manpower::where([
             ['dealer_id', $dealerId],
             ['status','active'],
