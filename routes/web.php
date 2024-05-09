@@ -251,16 +251,3 @@ Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-download/{id}', [
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-dp-nodiscount-print/{id}', [LeasingController::class, 'printKwitansiDpPDF'])->name('kwitansi-dp-nodiscount.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-pelunasan-print/{id}', [LeasingController::class, 'printKwitansiPelunasan'])->name('kwitansi-pelunasan.print');
 // END PRINT PDF
-
-// CRM System
-Route::resource('activity', ActivityController::class);
-Route::get('/crm', [ActivityController::class, 'landing'])->name('crm.landing');
-Route::post('/activity/login', [ActivityController::class, 'loginPost'])->name('activity.login');
-Route::post('/activity/logout', [ActivityController::class, 'logoutPost'])->name('activity.logout');
-Route::get('/activity/addphoto/{id}', [ActivityController::class, 'addPhoto'])->name('photo.add');
-Route::post('/activity/addphotostore', [ActivityController::class, 'addPhotoStore'])->name('photo.store');
-Route::post('activity/{id}/updateact', [ActivityController::class, 'updateAct'])->name('activity.updateact');
-Route::get('/activity/{id}/changethumb', [ActivityController::class, 'changeThumbEdit'])->name('activity.changethumb');
-Route::post('/activity/{id}/changethumbupdate', [ActivityController::class, 'changeThumbUpdate'])->name('activity.changethumbupdate');
-Route::get('/activity/{id}/photodelete', [ActivityController::class, 'photoDelete'])->name('photo.delete');
-// END CRM System
