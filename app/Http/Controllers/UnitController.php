@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\UnitResource;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Color;
@@ -199,5 +201,32 @@ class UnitController extends Controller
             toast(count($data).' stock '.$req->year_mc.' berhasil disimpan','success');
             return redirect()->back()->with('display', true);
         }
+    }
+
+    public function sendModel() {
+        $year = Carbon::now()->format('Y');
+        $data = Unit::where('year_mc', $year)
+        ->groupBy('model_name')
+        ->get();
+        return UnitResource::collection($data);
+    }
+
+    public function sendModelDetail($cat) {
+        $year = Carbon::now()->format('Y');
+        $data = Unit::where([
+            ['year_mc',$year],
+            ['category',$cat]
+        ])
+        ->groupBy('model_name')
+        ->get();
+        return UnitResource::collection($data);
+    }
+
+    public function sendCategory(){
+        $year = Carbon::now()->format('Y');
+        $data = Unit::where('year_mc',$year)
+        ->groupBy('category')
+        ->get();
+        return CategoryResource::collection($data);
     }
 }
