@@ -4,7 +4,7 @@
         <p>Data Master</p>
         <span class="caret"></span>
     </a>
-    <div class="collapse {{ Route::is('unit.*') || Route::is('color.*') || Route::is('leasing.*') ? 'show' : '' }}" id="dataMaster">
+    <div class="collapse {{ Route::is('unit.*') || Route::is('color.*') || Route::is('leasing.*') || Route::is('sparepart.*') ? 'show' : '' }}" id="dataMaster">
         <ul class="nav nav-collapse">
             <li class="{{ Route::is('unit.index') ? 'active' : '' }}">
                 <a href="{{ route('unit.index') }}">
@@ -19,6 +19,11 @@
             <li class="{{ Route::is('leasing.index') ? 'active' : '' }}">
                 <a href="{{ route('leasing.index') }}">
                     <span class="sub-item">Data Leasing</span>
+                </a>
+            </li>
+            <li class="{{ Route::is('sparepart.index') ? 'active' : '' }}">
+                <a href="{{ route('sparepart.index') }}">
+                    <span class="sub-item">Data Sparepart</span>
                 </a>
             </li>
             <li class="{{ Route::is('unit.add-all') ? 'active' : '' }}">

@@ -84,6 +84,17 @@
             @include('component.unit-data')
         @endif
 
+    <!-- Sparepart Page -->
+    @elseif(Route::is('sparepart.*'))
+        @if(Route::is('sparepart.edit'))
+            @include('component.sparepart-edit')
+        @elseif(Route::is('sparepart.show'))
+            @include('component.sparepart-show')
+        @else
+            @include('component.sparepart-create')
+            @include('component.sparepart-data')
+        @endif
+
     <!-- Color Page -->
     @elseif(Route::is('color.*'))
         @if(Route::is('color.edit'))

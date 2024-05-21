@@ -26,8 +26,8 @@ use App\Http\Controllers\SimpleSaleController;
 use App\Http\Controllers\SimpleOutController;
 use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
-use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\IDCardController;
+use App\Http\Controllers\SparepartController;
 use App\Models\Spk;
 
 /*
@@ -84,6 +84,12 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/unit/deleteall', [UnitCo
 Route::middleware(['auth:sanctum', 'verified'])->get('/unitaddall', [UnitController::class, 'addalltostock'])->name('unit.add-all');
 Route::middleware(['auth:sanctum', 'verified'])->post('/unitaddall/store', [UnitController::class, 'addalltostockStore'])->name('unit.add-all-unit-store');
 // END UNIT
+
+// SPAREPART
+Route::middleware(['auth:sanctum', 'verified'])->resource('sparepart', SparepartController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/sparepart/delete/{id}', [SparepartController::class, 'delete'])->name('sparepart.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/sparepart/deleteall', [SparepartController::class, 'deleteall'])->name('sparepart.deleteall');
+// END SPAREPART
 
 // LEASING
 Route::middleware(['auth:sanctum', 'verified'])->resource('leasing', LeasingController::class);

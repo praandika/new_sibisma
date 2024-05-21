@@ -211,7 +211,7 @@ class UnitController extends Controller
         return UnitResource::collection($data);
     }
 
-    public function sendModelDetail($cat) {
+    public function sendModelCat($cat) {
         $year = Carbon::now()->format('Y');
         $data = Unit::where([
             ['year_mc',$year],
