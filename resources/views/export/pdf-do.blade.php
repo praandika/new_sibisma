@@ -142,7 +142,7 @@
                 <td>: {{ strtoupper($o->engine_no) }}</td>
             </tr>
         </table>
-
+        <span>Motor diterima dalam keadaan yg baik</span>
         <table class="tbKelengkapan">
             <tr>
                 <th colspan="3" style="text-align: center;">Perlengkapan</th>
@@ -163,7 +163,7 @@
             </tr>
         </table>
 
-        <p style="color: red;">* hanya tipe keyless</p>
+        <span style="color: red;">* hanya tipe keyless</span>
 
         <p>Demikian <i>Delivery Order</i> ini, atas kerjasama Bapak/Ibu kami ucapkan terima kasih</p>
 
