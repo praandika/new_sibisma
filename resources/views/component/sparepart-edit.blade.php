@@ -66,12 +66,6 @@
                         </div>
 
                         <div class="form-group form-floating-label">
-                            <input id="year_parts" type="number" class="form-control input-border-bottom" name="year_parts"
-                                value="{{ $sparepart->year_parts }}" required>
-                            <label for="year_parts" class="placeholder">Year Parts</label>
-                        </div>
-
-                        <div class="form-group form-floating-label">
                             <input id="price" type="text" class="form-control input-border-bottom" name="price"
                                 value="{{ $sparepart->price }}" required>
                             <label for="price" class="placeholder">Price</label>

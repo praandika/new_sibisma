@@ -40,7 +40,7 @@
             <form action="{{ route('sparepart.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group form-floating-label">
                             <input id="parts_name" type="text" class="form-control input-border-bottom"
                                 name="parts_name" value="{{ old('parts_name') }}" style="text-transform: uppercase;" autofocus required>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="category" name="category"
                             style="text-transform: uppercase;" required>
@@ -58,14 +58,6 @@
                                 <option value="helmet">Helmet</option>
                             </select>
                             <label for="category" class="placeholder">Select Category</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group form-floating-label">
-                            <input id="address" type="number" class="form-control input-border-bottom"
-                                name="year_parts" value="{{ old('year_parts') }}" style="text-transform: uppercase;" required>
-                            <label for="year_parts" class="placeholder">Year Parts</label>
                         </div>
                     </div>
                 </div>

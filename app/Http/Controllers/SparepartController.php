@@ -47,7 +47,6 @@ class SparepartController extends Controller
         $data = new Sparepart();
         $data->parts_name = $req->parts_name;
         $data->category = $req->category;
-        $data->year_parts = $req->year_parts;
         $data->price = $req->price;
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
@@ -102,7 +101,6 @@ class SparepartController extends Controller
         $data = Sparepart::find($sparepart->id);
         $data->parts_name = $req->parts_name;
         $data->category = $req->category;
-        $data->year_parts = $req->year_parts;
         $data->price = $req->price;
         if ($req->hasfile('image')) {
             if ($data->image != '' && $data->image != 'noimage.jpg') {

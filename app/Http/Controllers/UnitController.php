@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ColorResource;
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\UnitDetailResource;
 use App\Http\Resources\UnitResource;
 use Illuminate\Http\Request;
 use App\Models\Unit;
@@ -222,11 +225,46 @@ class UnitController extends Controller
         return UnitResource::collection($data);
     }
 
+    public function sendModelDetail($model) {
+        $year = Carbon::now()->format('Y');
+        $data = Unit::where([
+            ['year_mc',$year],
+            ['model_name',str_replace('_', ' ', $model)]
+        ])
+        ->groupBy('model_name')
+        ->get();
+        return UnitDetailResource::collection($data);
+    }
+
     public function sendCategory(){
         $year = Carbon::now()->format('Y');
         $data = Unit::where('year_mc',$year)
         ->groupBy('category')
         ->get();
         return CategoryResource::collection($data);
+    }
+
+    public function sendColor($model) {
+        $year = Carbon::now()->format('Y');
+        $data = Unit::join('colors','units.color_id','colors.id')
+        ->where([
+            ['units.year_mc',$year],
+            ['units.model_name',str_replace('_', ' ', $model)]
+        ])
+        ->groupBy('colors.color_name')
+        ->get();
+        return ColorResource::collection($data);
+    }
+
+    public function sendImage($model) {
+        $year = Carbon::now()->format('Y');
+        $data = Unit::join('colors','units.color_id','colors.id')
+        ->where([
+            ['units.year_mc',$year],
+            ['units.model_name',str_replace('_', ' ', $model)]
+        ])
+        ->groupBy('colors.color_name')
+        ->get();
+        return ImageResource::collection($data);
     }
 }

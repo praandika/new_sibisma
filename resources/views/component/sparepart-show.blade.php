@@ -54,11 +54,6 @@
                     </div>
 
                     <div class="form-group form-group-default">
-                        <label>Year Parts</label>
-                        <p type="text" class="form-control" style="margin-bottom: -4px;">{{ $sparepart->year_parts }}</p>
-                    </div>
-
-                    <div class="form-group form-group-default">
                         <label>Price</label>
                         <p type="text" class="form-control" style="margin-bottom: -4px;">Rp
                             {{ $sparepart->price }}</p>

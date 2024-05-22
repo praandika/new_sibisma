@@ -41,7 +41,6 @@
                                     </div>
                                 </th>
                                 <th>Category</th>
-                                <th>Year</th>
                                 <th>Price (Rp)</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
@@ -59,7 +58,6 @@
                                     </div>
                                 </th>
                                 <th>Category</th>
-                                <th>Year</th>
                                 <th>Price (Rp)</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
@@ -78,7 +76,6 @@
                                     </div>
                                 </td>
                                 <td>{{ $o->category }}</td>
-                                <td>{{ $o->year_parts }}</td>
                                 <td>Rp{{ $o->price }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
@@ -106,7 +103,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" style="text-align: center;">No data available</td>
+                                <td colspan="6" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

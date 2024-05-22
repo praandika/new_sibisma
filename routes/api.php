@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Http\Request;
@@ -22,7 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/zhismodel', [UnitController::class, 'sendModel']);
 Route::get('/zhismodel/{cat}', [UnitController::class, 'sendModelCat']);
+Route::get('/zhismodeldetail/{model}', [UnitController::class, 'sendModelDetail']);
 Route::get('/zhiscat', [UnitController::class, 'sendCategory']);
 Route::get('/zhisparts', [SparepartController::class, 'sendParts']);
 Route::get('/zhisparts/{cat}', [SparepartController::class, 'sendPartsCat']);
 Route::get('/zhispartcat', [SparepartController::class, 'sendPartsCategory']);
+Route::get('/zhiscolor/{model}', [UnitController::class, 'sendColor']);
+Route::get('/zhisimage/{model}', [UnitController::class, 'sendImage']);
