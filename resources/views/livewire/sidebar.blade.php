@@ -78,6 +78,7 @@
                         <h4 class="text-section">Admin</h4>
                     </li>
                     @include('menu.datamaster')
+                    @include('menu.datawebsite')
                     @include('menu.user')
                     @include('menu.idcard')
                     @include('menu.log')

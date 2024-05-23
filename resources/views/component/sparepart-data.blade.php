@@ -48,7 +48,7 @@
                             </tr>
                         </thead>
                         <tfoot>
-                        <tr>
+                            <tr>
                                 <th>
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -62,6 +62,7 @@
                                 <th>Created By</th>
                                 <th>Updated By</th>
                                 <th width="120">Action</th>
+                            </tr>
                         </tfoot>
                         <tbody>
                             @forelse($data as $o)

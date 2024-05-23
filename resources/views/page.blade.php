@@ -95,6 +95,17 @@
             @include('component.sparepart-data')
         @endif
 
+    <!-- Specification Page -->
+    @elseif(Route::is('specification.*'))
+        @if(Route::is('specification.edit'))
+            @include('component.specification-edit')
+        @elseif(Route::is('specification.show'))
+            @include('component.specification-show')
+        @else
+            @include('component.specification-create')
+            @include('component.specification-data')
+        @endif
+
     <!-- Color Page -->
     @elseif(Route::is('color.*'))
         @if(Route::is('color.edit'))
