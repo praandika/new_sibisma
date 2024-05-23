@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Specification;
 use App\Http\Controllers\Controller;
+use App\Models\Specification;
 use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SpecificationController extends Controller
 {
@@ -26,9 +27,19 @@ class SpecificationController extends Controller
         ->groupBy('model_name')
         ->get();
 
+        $mesin = Specification::where('model_name','Aerox 155')->pluck('mesin');
+        if (count($mesin) > 0) {
+            $mesin = json_decode($mesin[0], true);
+        }
+
+        $rangka = Specification::where('model_name','Aerox 155')->pluck('rangka');
+        if (count($rangka) > 0) {
+            $rangka = json_decode($rangka[0], true);
+        }
+
         $data = Specification::select('model_name','mesin','rangka','dimensi','kelistrikan','id')
         ->get();
-        return view('page', compact('data','dataUnit'));
+        return view('page', compact('data','dataUnit','mesin','rangka'));
     }
 
     /**
@@ -49,22 +60,25 @@ class SpecificationController extends Controller
      */
     public function store(Request $req)
     {
-        Specification::insert([
-            'model_name' => $req->model_name
-        ]);
-
+        
+        $dataMesin = [];
         for ($i=0; $i < count($req->mesin_title); $i++) { 
-            $dataMesin = [$req->]
-            Specification::insert([
-                'mesin' => $req->color_name[$i],
-                'color_faktur' => $req->color_faktur[$i],
-                'color_code' => $req->color_code[$i],
-                'created_by' => Auth::user()->id,
-                'updated_by' => Auth::user()->id,
-            ]);
+            $newDataMesin = [$req->mesin_title[$i] => $req->mesin_spec[$i]];
+            $dataMesin += $newDataMesin;
         }
+
+        $dataRangka = [];
+        for ($i=0; $i < count($req->rangka_title); $i++) { 
+            $newDataRangka = [$req->rangka_title[$i] => $req->rangka_spec[$i]];
+            $dataRangka += $newDataRangka;
+        }
+        Specification::insert([
+            'model_name' => $req->model_name,
+            'mesin' => json_encode($dataMesin),
+            'rangka' => json_encode($dataRangka)
+        ]);
         toast('Data color berhasil disimpan','success');
-        return redirect()->route('color.index');
+        return redirect()->route('specification.index');
     }
 
     /**
