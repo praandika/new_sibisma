@@ -77,29 +77,6 @@
                         @endforelse
                     </tbody>
                 </table>
-                <h1>Mesin</h1>
-                <table>
-                    <tbody>
-                        @foreach($mesin as $mesinTitle => $mesinSpec)
-                        <tr>
-                            <th>{{ $mesinTitle }}</th>
-                            <td>: {{ $mesinSpec }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <br><br>
-                <h1>Rangka</h1>
-                <table>
-                    <tbody>
-                        @foreach($rangka as $rangkaTitle => $rangkaSpec)
-                        <tr>
-                            <th>{{ $rangkaTitle }}</th>
-                            <td>: {{ $rangkaSpec }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

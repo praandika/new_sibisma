@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SparepartController;
+use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,7 @@ Route::get('/zhisparts/{cat}', [SparepartController::class, 'sendPartsCat']);
 Route::get('/zhispartcat', [SparepartController::class, 'sendPartsCategory']);
 Route::get('/zhiscolor/{model}', [UnitController::class, 'sendColor']);
 Route::get('/zhisimage/{model}', [UnitController::class, 'sendImage']);
+Route::get('/zhisspecmesin/{model}', [SpecificationController::class, 'sendSpecMesin']);
+Route::get('/zhisspecrangka/{model}', [SpecificationController::class, 'sendSpecRangka']);
+Route::get('/zhisspecdimensi/{model}', [SpecificationController::class, 'sendSpecDimensi']);
+Route::get('/zhisspeckelistrikan/{model}', [SpecificationController::class, 'sendSpecKelistrikan']);
