@@ -89,7 +89,6 @@
                 </div>
 
                 <br>
-                <hr>
                 <br>
                 <h2>Rangka</h2>
                 <div class="wrapperInput2">
@@ -120,7 +119,6 @@
                 </div>
 
                 <br>
-                <hr>
                 <br>
                 <h2>Dimensi</h2>
                 <div class="wrapperInput3">
@@ -151,7 +149,6 @@
                 </div>
 
                 <br>
-                <hr>
                 <br>
                 <h2>Kelistrikan</h2>
                 <div class="wrapperInput4">

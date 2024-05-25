@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('dealer.store') }}" method="post">
+            <form action="{{ route('dealer.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
@@ -62,11 +62,22 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom"
                                 name="address" value="{{ old('address') }}" required>
                             <label for="address" class="placeholder">Address</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-floating-label">
+                            <input id="image" type="file" class="form-control input-border-bottom"
+                                name="image" value="{{ old('image') }}">
+                            <label for="image" class="placeholder">Image (optional)</label>
+
+                            <span class="invalid-feedback">
+                                <strong>format required: jpg|jpeg|png</strong>
+                            </span>
                         </div>
                     </div>
                 </div>

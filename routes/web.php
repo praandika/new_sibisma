@@ -27,6 +27,7 @@ use App\Http\Controllers\SimpleOutController;
 use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
 use App\Http\Controllers\IDCardController;
+use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
 use App\Models\Spk;
@@ -263,3 +264,8 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/sparepart/deleteall', [S
 Route::middleware(['auth:sanctum', 'verified'])->resource('specification', SpecificationController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/specification/delete/{id}', [SpecificationController::class, 'delete'])->name('specification.delete');
 // END SPECIFICATION
+
+// JOB VACANCY
+Route::middleware(['auth:sanctum', 'verified'])->resource('jobvacancy', JobVacancyController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/jobvacancy/delete/{id}', [JobVacancyController::class, 'delete'])->name('jobvacancy.delete');
+// END JOB VACANCY

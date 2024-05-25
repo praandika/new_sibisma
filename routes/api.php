@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\ColorController;
+use App\Http\Controllers\DealerController;
+use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UnitController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,3 +35,6 @@ Route::get('/zhisspecmesin/{model}', [SpecificationController::class, 'sendSpecM
 Route::get('/zhisspecrangka/{model}', [SpecificationController::class, 'sendSpecRangka']);
 Route::get('/zhisspecdimensi/{model}', [SpecificationController::class, 'sendSpecDimensi']);
 Route::get('/zhisspeckelistrikan/{model}', [SpecificationController::class, 'sendSpecKelistrikan']);
+Route::get('/zhiscontact', [DealerController::class, 'sendDealer']);
+Route::get('/zhisjob', [JobVacancyController::class, 'sendJob']);
+Route::get('/zhisjob/{cat}', [JobVacancyController::class, 'sendJobCat']);
