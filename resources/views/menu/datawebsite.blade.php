@@ -21,6 +21,11 @@
                     <span class="sub-item">Data Job Vacancy</span>
                 </a>
             </li>
+            <li class="{{ Route::is('about.index') ? 'active' : '' }}">
+                <a href="{{ route('about.index') }}">
+                    <span class="sub-item">Data About Us</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

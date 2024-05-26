@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\ManpowerController;
@@ -269,3 +270,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/specification/delete/{id}
 Route::middleware(['auth:sanctum', 'verified'])->resource('jobvacancy', JobVacancyController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/jobvacancy/delete/{id}', [JobVacancyController::class, 'delete'])->name('jobvacancy.delete');
 // END JOB VACANCY
+
+// ABOUT US
+Route::middleware(['auth:sanctum', 'verified'])->resource('about', AboutController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/about/delete/{id}', [AboutController::class, 'delete'])->name('about.delete');
+// END ABOUT US

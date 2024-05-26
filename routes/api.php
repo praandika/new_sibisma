@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\SparepartController;
@@ -38,3 +39,4 @@ Route::get('/zhisspeckelistrikan/{model}', [SpecificationController::class, 'sen
 Route::get('/zhiscontact', [DealerController::class, 'sendDealer']);
 Route::get('/zhisjob', [JobVacancyController::class, 'sendJob']);
 Route::get('/zhisjob/{cat}', [JobVacancyController::class, 'sendJobCat']);
+Route::get('/zhisabout', [AboutController::class, 'sendAbout']);

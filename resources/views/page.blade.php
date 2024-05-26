@@ -117,6 +117,17 @@
             @include('component.jobvacancy-data')
         @endif
 
+    <!-- About Us Page -->
+    @elseif(Route::is('about.*'))
+        @if(Route::is('about.edit'))
+            @include('component.about-edit')
+        @elseif(Route::is('about.show'))
+            @include('component.about-show')
+        @else
+            @include('component.about-create')
+            @include('component.about-data')
+        @endif
+
     <!-- Color Page -->
     @elseif(Route::is('color.*'))
         @if(Route::is('color.edit'))
