@@ -1,11 +1,16 @@
-<li class="nav-item {{ Route::is('specification.*') || Route::is('sparepart.*') || Route::is('jobvacancy.*') ? 'show' : '' }}">
+<li class="nav-item {{ Route::is('specification.*') || Route::is('sparepart.*') || Route::is('jobvacancy.*') || Route::is('banner.*') ? 'show' : '' }}">
     <a data-toggle="collapse" href="#dataWebsite">
         <i class="fas fa-globe"></i>
         <p>Data Website</p>
         <span class="caret"></span>
     </a>
-    <div class="collapse {{ Route::is('specification.*') || Route::is('sparepart.*') || Route::is('jobvacancy.*') ? 'show' : '' }}" id="dataWebsite">
+    <div class="collapse {{ Route::is('specification.*') || Route::is('sparepart.*') || Route::is('jobvacancy.*') || Route::is('banner.*') ? 'show' : '' }}" id="dataWebsite">
         <ul class="nav nav-collapse">
+            <li class="{{ Route::is('banner.index') ? 'active' : '' }}">
+                <a href="{{ route('banner.index') }}">
+                    <span class="sub-item">Data Banner</span>
+                </a>
+            </li>
             <li class="{{ Route::is('sparepart.index') ? 'active' : '' }}">
                 <a href="{{ route('sparepart.index') }}">
                     <span class="sub-item">Data Sparepart</span>

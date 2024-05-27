@@ -128,6 +128,17 @@
             @include('component.about-data')
         @endif
 
+    <!-- Banner Page -->
+    @elseif(Route::is('banner.*'))
+        @if(Route::is('banner.edit'))
+            @include('component.banner-edit')
+        @elseif(Route::is('banner.show'))
+            @include('component.banner-show')
+        @else
+            @include('component.banner-create')
+            @include('component.banner-data')
+        @endif
+
     <!-- Color Page -->
     @elseif(Route::is('color.*'))
         @if(Route::is('color.edit'))

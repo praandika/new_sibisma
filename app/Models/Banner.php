@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class Banner extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = ['id'];
      // Relasi to User
     public function createdBy(){

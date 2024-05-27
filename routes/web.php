@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\ManpowerController;
@@ -275,3 +276,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/jobvacancy/delete/{id}', 
 Route::middleware(['auth:sanctum', 'verified'])->resource('about', AboutController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/about/delete/{id}', [AboutController::class, 'delete'])->name('about.delete');
 // END ABOUT US
+
+// BANNER
+Route::middleware(['auth:sanctum', 'verified'])->resource('banner', BannerController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/banner/delete/{id}', [BannerController::class, 'delete'])->name('banner.delete');
+Route::middleware(['auth:sanctum', 'verified'])->get('/banner/change/{id}/{status}', [BannerController::class, 'changeStatusBanner'])->name('banner.update-status');
+// END BANNER
