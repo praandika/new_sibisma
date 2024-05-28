@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,3 +47,5 @@ Route::get('/zhisjob/{cat}', [JobVacancyController::class, 'sendJobCat']);
 Route::post('/zhissearchjob', [JobVacancyController::class, 'sendSearchJob']);
 Route::get('/zhisabout', [AboutController::class, 'sendAbout']);
 Route::get('/zhisbanner', [BannerController::class, 'sendBanner']);
+Route::get('/zhisavailable/{model}', [StockController::class, 'sendAvailable']);
+Route::get('/zhisavailablecolor/{model}', [StockController::class, 'sendAvailableColor']);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StockColorResource;
+use App\Http\Resources\StockResource;
 use Illuminate\Http\Request;
 use App\Models\Dealer;
 use App\Models\Stock;
@@ -202,5 +204,42 @@ class StockController extends Controller
 
     public function ratio(){
         return view('page');
+    }
+
+    public function sendAvailable($model){
+        $year = Carbon::now()->format('Y');
+        $data = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->where([
+            ['units.model_name', str_replace('_', ' ', $model)],
+            ['stocks.qty', '>', 0],
+            ['units.year_mc', $year],
+            ['dealers.dealer_code','!=','AA0104F'],
+            ['dealers.dealer_code','!=','YIMM'],
+        ])
+        ->orderBy('dealers.dealer_code','asc')
+        ->groupBy('dealers.dealer_name')
+        ->select('dealers.dealer_name','dealers.address','dealers.phone2')
+        ->get();
+        
+        return StockResource::collection($data);
+    }
+
+    public function sendAvailableColor($model){
+        $year = Carbon::now()->format('Y');
+        $data = Stock::join('units','stocks.unit_id','units.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->join('colors','units.color_id','colors.id')
+        ->where([
+            ['units.model_name', str_replace('_', ' ', $model)],
+            ['stocks.qty', '>', 0],
+            ['units.year_mc', $year],
+            ['dealers.dealer_code','!=','AA0104F'],
+            ['dealers.dealer_code','!=','YIMM'],
+        ])
+        ->select('dealers.dealer_name','dealers.address','dealers.phone2','colors.color_name','colors.color_code')
+        ->get();
+        
+        return StockColorResource::collection($data);
     }
 }
