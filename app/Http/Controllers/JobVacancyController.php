@@ -135,4 +135,10 @@ class JobVacancyController extends Controller
         $data = JobVacancy::where('category', $cat)->get();
         return JobVacancyResource::collection($data);
     }
+
+    public function sendSearchJob(Request $request) {
+        $data =  JobVacancy::where('title', 'like', '%'.$request->search.'%')
+        ->get();
+        return JobVacancyResource::collection($data);
+    }
 }

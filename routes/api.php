@@ -28,9 +28,11 @@ Route::get('/zhismodel', [UnitController::class, 'sendModel']);
 Route::get('/zhismodel/{cat}', [UnitController::class, 'sendModelCat']);
 Route::get('/zhismodeldetail/{model}', [UnitController::class, 'sendModelDetail']);
 Route::get('/zhiscat', [UnitController::class, 'sendCategory']);
+Route::post('/zhissearch', [UnitController::class, 'sendSearch']);
 Route::get('/zhisparts', [SparepartController::class, 'sendParts']);
 Route::get('/zhisparts/{cat}', [SparepartController::class, 'sendPartsCat']);
 Route::get('/zhispartcat', [SparepartController::class, 'sendPartsCategory']);
+Route::post('/zhissearchspart', [SparepartController::class, 'sendSearchSpart']);
 Route::get('/zhiscolor/{model}', [UnitController::class, 'sendColor']);
 Route::get('/zhisimage/{model}', [UnitController::class, 'sendImage']);
 Route::get('/zhisspecmesin/{model}', [SpecificationController::class, 'sendSpecMesin']);
@@ -40,5 +42,6 @@ Route::get('/zhisspeckelistrikan/{model}', [SpecificationController::class, 'sen
 Route::get('/zhiscontact', [DealerController::class, 'sendDealer']);
 Route::get('/zhisjob', [JobVacancyController::class, 'sendJob']);
 Route::get('/zhisjob/{cat}', [JobVacancyController::class, 'sendJobCat']);
+Route::post('/zhissearchjob', [JobVacancyController::class, 'sendSearchJob']);
 Route::get('/zhisabout', [AboutController::class, 'sendAbout']);
 Route::get('/zhisbanner', [BannerController::class, 'sendBanner']);

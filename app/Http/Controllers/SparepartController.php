@@ -163,4 +163,10 @@ class SparepartController extends Controller
         ->get();
         return SparepartCategoryResource::collection($data);
     }
+
+    public function sendSearchSpart(Request $request) {
+        $data =  Sparepart::where('parts_name', 'like', '%'.$request->search.'%')
+        ->get();
+        return SparepartResource::collection($data);
+    }
 }

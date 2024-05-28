@@ -214,6 +214,17 @@ class UnitController extends Controller
         return UnitResource::collection($data);
     }
 
+    public function sendSearch(Request $request) {
+        $year = Carbon::now()->format('Y');
+        $data =  Unit::where([
+            ['year_mc',$year],
+            ['model_name', 'like', '%'.$request->search.'%']
+        ])
+        ->groupBy('model_name')
+        ->get();
+        return UnitResource::collection($data);
+    }
+
     public function sendModelCat($cat) {
         $year = Carbon::now()->format('Y');
         $data = Unit::where([
