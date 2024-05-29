@@ -207,13 +207,11 @@ class StockController extends Controller
     }
 
     public function sendAvailable($model){
-        $year = Carbon::now()->format('Y');
         $data = Stock::join('units','stocks.unit_id','units.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where([
             ['units.model_name', str_replace('_', ' ', $model)],
             ['stocks.qty', '>', 0],
-            ['units.year_mc', $year],
             ['dealers.dealer_code','!=','AA0104F'],
             ['dealers.dealer_code','!=','YIMM'],
         ])
