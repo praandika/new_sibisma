@@ -29,21 +29,21 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
-                            <textarea name="mesin" id="mesin" class="form-control input-border-bottom" required>{{ $specification->mesin }}
+                            <textarea name="mesin" id="mesin" class="form-control input-border-bottom" required rows="8">{{ $specification->mesin }}
                                 </textarea>
                             <label for="mesin" class="placeholder">Mesin Data</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
-                            <textarea name="rangka" id="rangka" class="form-control input-border-bottom" required>{{ $specification->rangka }}
+                            <textarea name="rangka" id="rangka" class="form-control input-border-bottom" required rows="8">{{ $specification->rangka }}
                                 </textarea>
                             <label for="rangka" class="placeholder">Rangka Data</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
-                            <textarea name="dimensi" id="dimensi" class="form-control input-border-bottom" required>{{ $specification->dimensi }}
+                            <textarea name="dimensi" id="dimensi" class="form-control input-border-bottom" required rows="8">{{ $specification->dimensi }}
                                 </textarea>
                             <label for="dimensi" class="placeholder">Dimensi Data</label>
                         </div>
@@ -51,7 +51,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
                             <textarea name="kelistrikan" id="kelistrikan" class="form-control input-border-bottom"
-                                required>{{ $specification->kelistrikan }}
+                                required rows="8">{{ $specification->kelistrikan }}
                                 </textarea>
                             <label for="kelistrikan" class="placeholder">Kelistrikan Data</label>
                         </div>

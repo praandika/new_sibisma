@@ -57,7 +57,7 @@
                                 <option value="counter">Counter</option>
                                 <option value="mekanik">Mekanik</option>
                                 <option value="admin">Admin</option>
-                                <option value="supir">Supir</option>
+                                <option value="sopir">Sopir</option>
                                 <option value="other">Other</option>
                             </select>
                             <label for="category" class="placeholder">Select Category</label>
