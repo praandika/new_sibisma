@@ -15,7 +15,7 @@ use App\Models\Dealer;
 use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\Storage;
 
 class UnitController extends Controller
 {
@@ -120,7 +120,9 @@ class UnitController extends Controller
         if ($req->hasfile('image')) {
             if ($data->image != '' && $data->image != 'noimage.jpg') {
                 $img_prev = $req->img_prev;
-                unlink('img/motorcycle/'.$img_prev);
+                if (Storage::exists('img/motorcycle/'.$img_prev)) {
+                    unlink('img/motorcycle/'.$img_prev);
+                }
             }
 
             $img = $req->file('image');
