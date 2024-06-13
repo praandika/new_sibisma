@@ -152,6 +152,7 @@ class BannerController extends Controller
 
     public function sendBanner() {
         $data = Banner::where('status', 'active')
+        ->orderBy('id','desc')
         ->get();
         return BannerResource::collection($data);
     }
