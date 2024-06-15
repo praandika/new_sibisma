@@ -53,11 +53,11 @@
                             <select class="form-control input-border-bottom" id="category" name="category"
                             style="text-transform: uppercase;" required>
                                 <option value=""></option>
+                                <option value="Classy">Classy</option>
                                 <option value="Moped">Moped</option>
                                 <option value="Matic">Matic</option>
                                 <option value="Maxi">Maxi</option>
                                 <option value="Sport">Sport</option>
-                                <option value="Naked Bike">Naked Bike</option>
                                 <option value="Off Road">Off Road</option>
                                 <option value="CBU">CBU</option>
                             </select>
