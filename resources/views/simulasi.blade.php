@@ -581,7 +581,7 @@
         }) 
     </script>
 
-    <script src="{{ asset('simulasi/proses3.js') }}"></script>
+    <script src="{{ asset('simulasi/proses4.js') }}"></script>
 </body>
 
 </html>
