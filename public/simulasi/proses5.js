@@ -243,12 +243,12 @@ function kredit_menurun(){
   let bunga = document.getElementById("bunga_menurun").value;
   if (bunga == 0.0240) {
     admin = 1518000;
-    bungaPerTahun = 0.288;
+    bungaPerTahun = 0.288; //bunga * 12
   } else if(bunga == 0.0185) {
-    admin = 1768000;
-    bungaPerTahun = 0.21;
+    admin = 1818000;
+    bungaPerTahun = 0.222;
   } else {
-    admin = 1768000;
+    admin = 1818000;
     bungaPerTahun = 0.21;
   }
   
