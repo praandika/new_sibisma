@@ -284,7 +284,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
-                            <textarea name="description" id="description" cols="30" rows="10" maxlength="80"
+                            <textarea name="description" id="description" cols="30" rows="10" maxlength="100"
                                 class="form-control input-border-bottom" placeholder="Description"
                                 value="{{ old('description') }}"
                                 style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
