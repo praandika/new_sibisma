@@ -122,7 +122,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom" name="address"
-                                value="{{ old('address') }}" style="text-transform: uppercase" required>
+                                value="{{ old('address') }}" style="text-transform: uppercase" required maxlength="100">
                             <label for="address" class="placeholder">Customer's Address</label>
                         </div>
                     </div>
@@ -284,7 +284,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
-                            <textarea name="description" id="description" cols="30" rows="10"
+                            <textarea name="description" id="description" cols="30" rows="10" maxlength="36"
                                 class="form-control input-border-bottom" placeholder="Description"
                                 value="{{ old('description') }}"
                                 style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
