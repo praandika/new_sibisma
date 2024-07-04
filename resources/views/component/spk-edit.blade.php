@@ -265,7 +265,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
-                            <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Description" style="border: 1px dashed #e6e6e6; padding: 10px;" maxlength="36">{{ $spk->description }}</textarea>
+                            <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Description" style="border: 1px dashed #e6e6e6; padding: 10px;" maxlength="80">{{ $spk->description }}</textarea>
                             <label for="description" class="placeholder"></label>
                         </div>
                     </div>
