@@ -158,14 +158,22 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="downpayment" type="number" class="form-control input-border-bottom"
-                                name="downpayment" value="{{ old('downpayment') }}" required>
-                            <label for="downpayment" class="placeholder">Down Payment</label>
+                            <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
+                                value="{{ old('tandajadi') }}" required>
+                            <label for="tandajadi" class="placeholder">Tanda Jadi</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="downpayment" type="number" class="form-control input-border-bottom"
+                                name="downpayment" value="{{ old('downpayment') }}" required>
+                            <label for="downpayment" class="placeholder">Down Payment</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="discount" type="number" class="form-control input-border-bottom" name="discount"
@@ -187,9 +195,19 @@
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}"
                                 required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
-                                data-target=".modalLeasing" required>
+                                name="leasing_code" value="{{ old('leasing_code') }}" required>
                             <label for="leasing_code" class="placeholder">Select Finance *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="col-leasing-cash">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="leasing_id_cash" name="leasing_id_cash" value="{{ old('leasing_id_cash') }}"
+                                required>
+                            <input id="leasing_code_cash" type="text" class="form-control input-border-bottom"
+                                name="leasing_code" value="{{ old('leasing_code') }}" required>
+                            <label for="leasing_code_cash" class="placeholder">Select Micro/Instansi *</label>
+                            <span style="padding: 5px; color: #ffffff; background-color: forestgreen; position: absolute; right: 25px; top: 10px;">new!</span>
                         </div>
                     </div>
                     
@@ -269,6 +287,7 @@
 @include('component.spk-data')
 @include('component.modal-stock')
 @include('component.modal-leasing')
+@include('component.modal-leasing-cash')
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')
 @include('component.modal-order-status')
@@ -314,6 +333,18 @@
         });
     });
 
+    function setAttributes(el, attrs) {
+        for(var key in attrs) {
+            el.setAttribute(key, attrs[key]);
+        }
+    }
+
+    function removeAttributes(el, attrs) {
+        for(var key in attrs) {
+            el.removeAttribute(key, attrs[key]);
+        }
+    }
+
     function disable() {
         let creditStatus = document.getElementById("credit_status");
         creditStatus.value = 'Cash';
@@ -321,14 +352,24 @@
         document.getElementById("place").innerHTML = "Cash";
         document.getElementById("col-credit-status").setAttribute("hidden", true);
 
-        document.getElementById("leasing_id").value = '1';
-        document.getElementById("leasing_code").value = 'Cash';
+        // document.getElementById("leasing_id").value = '1';
+        // document.getElementById("leasing_code").value = 'Cash';
         document.getElementById("col-leasing").setAttribute("hidden", true);
+        document.getElementById("col-leasing-cash").removeAttribute("hidden");
+
+        setAttributes(document.getElementById("leasing_code_cash"), {
+            "data-toggle" : "modal",
+            "data-target" : ".modalLeasingCash"
+        });
+
+        removeAttributes(document.getElementById("leasing_code"),
+            "data-toggle, data-target"
+        );
     }
 
     function enable() {
         let creditStatus = document.getElementById("credit_status");
-        creditStatus.value = '';
+        // creditStatus.value = '';
         creditStatus.removeAttribute("disabled");
         document.getElementById("place").innerHTML = "Choose Credit Status *";
         document.getElementById("col-credit-status").removeAttribute("hidden");
@@ -336,6 +377,16 @@
         document.getElementById("leasing_id").value = '';
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
+        document.getElementById("col-leasing-cash").setAttribute("hidden", true);
+
+        setAttributes(document.getElementById("leasing_code"), {
+            "data-toggle" : "modal",
+            "data-target" : ".modalLeasing"
+        });
+
+        removeAttributes(document.getElementById("leasing_code_cash"),
+            "data-toggle, data-target"
+        );
     }
 
     // Custom Upload File

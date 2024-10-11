@@ -116,7 +116,7 @@ class ManpowerController extends Controller
      */
     public function edit(Manpower $manpower)
     {
-        if (Auth::user()->access == 'master') {
+        if (Auth::user()->access == 'master' || Auth::user()->access == 'admin') {
             $isUserId = $manpower->user_id;
             if ($isUserId == 0 || $isUserId == '' || $isUserId == null) {
                 $manpower = Manpower::where('manpowers.id',$manpower->id)
@@ -127,8 +127,15 @@ class ManpowerController extends Controller
                 ->select('manpowers.*','users.first_name','manpowers.name as manpower_name')->get();
             }
             
-            $dealer = Dealer::all();
-            $user = User::all();
+            if (Auth::user()->access == 'admin') {
+                $dc = Auth::user()->dealer_code;
+                $user = User::where('dealer_code',$dc)->get();
+                $dealer = Dealer::where('dealer_code',$dc)->orderBy('id','asc')->get();
+            } else {
+                $dealer = Dealer::all();
+                $user = User::all();
+            }
+            
             return view('page', compact('manpower','dealer','isUserId','user'));
         } else {
             $dealer = Dealer::all();

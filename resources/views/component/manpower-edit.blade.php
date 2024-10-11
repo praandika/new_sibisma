@@ -26,7 +26,7 @@
 </li>
 @endpush
 
-@if(Auth::user()->access == 'master')
+@if(Auth::user()->access == 'master' || Auth::user()->access == 'admin')
 @foreach($manpower as $o)
 <div class="col-md-12">
     <div class="card">
@@ -186,7 +186,7 @@
 
                     <div class="col-md-2">
                         <div class="form-group form-floating-label">
-                            <input id="user_id" type="text" class="form-control input-border-bottom" name="user_id"
+                            <input id="user_id" type="text" class="form-control input-border-bottom" readonly name="user_id"
                                 @if($isUserId == 0 || $isUserId == '' || $isUserId == null)
                                     value="0"
                                 @else
@@ -381,7 +381,7 @@
 @include('component.modal-position')
 @include('component.modal-education')
 @include('component.modal-gender')
-@if(Auth::user()->access == 'master')
+@if(Auth::user()->access == 'master' || Auth::user()->access == 'admin')
     @include('component.modal-user')
 @endif
 

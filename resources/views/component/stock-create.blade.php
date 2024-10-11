@@ -19,8 +19,10 @@
 @endpush
 
 @push('button')
-    @section('button-title','Add New Stock')
-    @include('component.button-add')
+    @if(Auth::user()-> access != 'salesman')
+        @section('button-title','Add New Stock')
+        @include('component.button-add')
+    @endif
     @include('component.button-print')
 @endpush
 

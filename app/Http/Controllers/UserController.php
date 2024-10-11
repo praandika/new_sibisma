@@ -17,9 +17,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        
-        $data = User::all();
-        $dealer = Dealer::orderBy('id','asc')->get();
+        if (Auth::user()->access == 'admin') {
+            $dc = Auth::user()->dealer_code;
+            $data = User::where('dealer_code',$dc)->get();
+            $dealer = Dealer::where('dealer_code',$dc)->orderBy('id','asc')->get();
+        } else {
+            $data = User::all();
+            $dealer = Dealer::orderBy('id','asc')->get();
+        }
+
         return view('page',compact('data','dealer'));
     }
 
@@ -50,10 +56,22 @@ class UserController extends Controller
         $data->username = $req->username;
         $data->password = bcrypt($req->password);
         $data->access = $req->access;
-        $data->save();
 
-        toast('User berhasil dibuat','success');
-        return redirect()->back()->with('display', true);
+        // cek username
+        $cekUser = User::where('username',$req->username)->count();
+        $cekEmail = User::where('email',$req->email)->count();
+        if ($cekUser > 0) {
+            toast('User sudah ada','warning');
+            return redirect()->back()->with('display', true)->withInput($req->except('username'));
+        } elseif ($cekEmail > 0) {
+            toast('Email sudah ada','warning');
+            return redirect()->back()->with('display', true)->withInput($req->except('email'));
+        } else {
+            $data->save();
+
+            toast('User berhasil dibuat','success');
+            return redirect()->back()->with('display', true);
+        }
     }
 
     /**
@@ -75,7 +93,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $dealer = Dealer::orderBy('id','asc')->get();
+        if (Auth::user()->access == 'admin') {
+            $dc = Auth::user()->dealer_code;
+            $dealer = Dealer::where('dealer_code',$dc)->orderBy('id','asc')->get();
+        } else {
+            $dealer = Dealer::orderBy('id','asc')->get();
+        }
+
         return view('page', compact('user','dealer'));
     }
 

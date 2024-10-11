@@ -70,6 +70,16 @@
 
                 @include('menu.report')
 
+                @if(Auth::user()-> access == 'admin')
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Admin</h4>
+                    </li>
+                    @include('menu.user')
+                @endif
+
                 @if(Auth::user()->access == 'master')
                     <li class="nav-section">
                         <span class="sidebar-mini-icon">
@@ -83,6 +93,10 @@
                     @include('menu.idcard')
                     @include('menu.log')
                 @endif
+            @endif
+
+            @if(Auth::user()->access == 'salesman')
+                @include('menu.stock')
             @endif
             </ul>
         </div>

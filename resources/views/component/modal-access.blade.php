@@ -13,6 +13,7 @@
                 <div class="table-responsive">
                     <table class="display table table-striped table-hover" width="100%" style="text-align: center;">
                         <tbody>
+                        @if(Auth::user()-> access == 'master')
                             <tr class="pilihAccess" data-access="master">
                                 <td>Master</td>
                             </tr>
@@ -31,6 +32,12 @@
                             <tr class="pilihAccess" data-access="salesman">
                                 <td>Salesman</td>
                             </tr>
+                            @endif
+                            @if(Auth::user()-> access == 'admin')
+                                <tr class="pilihAccess" data-access="salesman">
+                                    <td>Salesman</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
