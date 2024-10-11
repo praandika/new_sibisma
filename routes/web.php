@@ -55,6 +55,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardCon
 Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/user/editpass/{id}', [UserController::class, 'editPass'])->name('user.editpass');
+Route::middleware(['auth:sanctum', 'verified'])->post('/user/updatepass', [UserController::class, 'updatePass'])->name('user.updatepass');
 // END USER
 
 // DEALER

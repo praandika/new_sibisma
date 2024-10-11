@@ -109,6 +109,12 @@
                                             class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="{{ route('user.editpass', $o->id) }}"
+                                            class="btnAction"
+                                            data-toggle="tooltip" data-placement="top" title="Change Password"
+                                            style="color:crimson;"><i
+                                            class="fas fa-lock"></i></a>
                                     </div>
 
                                 </td>

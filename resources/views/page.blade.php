@@ -268,6 +268,8 @@
             @include('component.user-edit')
         @elseif(Route::is('user.show'))
             @include('component.user-show')
+        @elseif(Route::is('user.editpass'))
+            @include('component.user-editpass')
         @else
             @include('component.user-create')
             @include('component.user-data')

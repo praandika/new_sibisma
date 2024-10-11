@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Dealer;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -169,5 +170,29 @@ class UserController extends Controller
         
         $data->save();
         return redirect()->back();
+    }
+
+    public function editPass($id) {
+        $data = User::where('id',$id)->get();
+
+        return view('page', compact('data'));
+    }
+
+    public function updatePass(Request $req) {
+        $oldpass = $req->oldpass;
+        $pass = $req->pass;
+
+        if (!Hash::check($oldpass, $pass)) {
+            toast('Password salah','warning');
+            return redirect()->back();
+        } else {
+            $data = User::find($req->id);
+            $data->password = Hash::make($req->newpass);
+            $data->update();
+            toast('Password berhasil diubah','success');
+            return redirect()->back();
+        }
+        
+        
     }
 }
