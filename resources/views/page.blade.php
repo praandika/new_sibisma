@@ -351,6 +351,8 @@
             @include('component.spk-filter')
         @elseif(Route::is('spk.salesman'))
             @include('component.spk-salesman')
+        @elseif(Route::is('spk.historysalesman'))
+            @include('component.spk-historysalesman')
         @else
             @include('component.spk-create')
             @include('component.spk-data')

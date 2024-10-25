@@ -498,6 +498,50 @@ class SpkController extends Controller
         return view('page', compact('data','start','end','unitData','colorData'));
     }
 
+    public function historySalesman(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $yearNow = Carbon::now('GMT+8')->format('Y');
+        $yearBefore = $yearNow - 1;
+
+        $unitData = Unit::where('year_mc',$yearNow)
+        ->orWhere('year_mc',$yearBefore)
+        ->groupBy('model_name')
+        ->get();
+
+        $colorData = Color::all();
+
+        $manpowerID = Manpower::where('user_id',Auth::user()->id)->sum('id');
+        $manpowerName = Manpower::where('user_id',Auth::user()->id)->pluck('name');
+        $manpowerName = $manpowerName[0];
+
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('manpowers','spks.manpower_id','manpowers.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->where('spks.manpower_id',$manpowerID)
+            ->orderBy('spks.id','desc')
+            ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name')->limit(50)->get();
+            
+        } else {
+            $data = Spk::join('stocks','spks.stock_id','stocks.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('manpowers','spks.manpower_id','manpowers.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->where('spks.manpower_id',$manpowerID)
+            ->whereBetween('spk_date',[$req->start, $req->end])
+            ->orderBy('spk_date','desc')
+            ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name')->get();
+        }
+        return view('page', compact('data','start','end','unitData','colorData'));
+    }
+
     public function get($spk_no){
         $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
         ->join('leasings','spks.leasing_id','=','leasings.id')

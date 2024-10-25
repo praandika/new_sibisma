@@ -9,7 +9,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        v3.0
+                        v3.0.1
                     </a>
                 </li>
                 <li class="nav-item">
@@ -20,7 +20,7 @@
             </ul>
         </nav>
         <div class="copyright ml-auto">
-            &copy; CRM Bisma 2022 | <a href="https://www.dikaprana.com/" style="font-weight: bold; text-decoration: none;" target="_blank">dikaprana</a>
+            &copy; CRM Bisma {{ date('Y') }} | <a href="https://www.instagram.com/dikanayoga/" style="font-weight: bold; text-decoration: none;" target="_blank">Andika Pranayoga</a>
         </div>
     </div>
 </footer>

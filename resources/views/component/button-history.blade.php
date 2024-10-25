@@ -14,7 +14,11 @@
     @elseif(Route::is('opname.*'))
         {{ route('opname.history') }}
     @elseif(Route::is('spk.*'))
-        {{ route('spk.history') }}
+        @if(Route::is('spk.salesman'))
+            {{ route('spk.historysalesman') }}
+        @else
+            {{ route('spk.history') }}
+        @endif
     @elseif(Route::is('delivery-order.*'))
         {{ route('delivery-order.history') }}
     @elseif(Route::is('kwitansi.*'))

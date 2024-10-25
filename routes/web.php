@@ -218,6 +218,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-history/{date?}', [Sp
 Route::middleware(['auth:sanctum', 'verified'])->post('/spk-check', [SpkController::class, 'check'])->name('spk.check');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-salesman', [SpkController::class, 'spkSalesman'])->name('spk.salesman');
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historysalesman/{date?}', [SpkController::class, 'historySalesman'])->name('spk.historysalesman');
 
 // Filter SPK
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [SpkController::class, 'filter'])->name('spk.filter');

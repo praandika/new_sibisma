@@ -36,6 +36,11 @@
 </style>
 @endpush
 
+@push('button')
+    @section('button-title','SPK History')
+    @include('component.button-history')
+@endpush
+
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
@@ -48,7 +53,7 @@
             </span>
             <div class="row">
                 <div class="col-12">
-                    <h4 class="card-title">Create SPK | {{ $spk_no }}</h4>
+                    <h4 class="card-title">Create SPK Salesman | {{ $spk_no }}</h4>
                 </div>
             </div>
         </div>
