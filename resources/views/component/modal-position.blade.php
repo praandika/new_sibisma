@@ -67,7 +67,7 @@
                                 <td>Sparepart Admin</td>
                                 <td>SP</td>
                             </tr>
-                            <tr class="pilihPosition" data-pos="Sparepart Admin" data-cat="SP">
+                            <tr class="pilihPosition" data-pos="Sparepart Warehouse" data-cat="SP">
                                 <td>Sparepart Warehouse</td>
                                 <td>SP</td>
                             </tr>
