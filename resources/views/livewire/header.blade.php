@@ -121,6 +121,7 @@
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <a class="dropdown-item" href="{{ route('api-tokens.index') }}">API Tokens</a>
                                 @endif
+                                <a class="dropdown-item" href="{{ route('user.editpass',Auth::user()->id) }}">Password</a>
                                 <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
                                 @csrf
                                     <a class="dropdown-item" style="color: red;" onclick="event.preventDefault();

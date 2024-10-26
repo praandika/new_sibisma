@@ -39,6 +39,11 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="{{ route('user.editpass',Auth::user()->id) }}">
+                                    <span class="link-collapse">Password</span>
+                                </a>
+                            </li>
+                            <li>
                                 <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
                                 @csrf
                                     <a onclick="event.preventDefault();
