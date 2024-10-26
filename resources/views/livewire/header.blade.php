@@ -130,8 +130,8 @@
                                 <div class="dropdown-divider"></div>
                                 <center>
                                     <p style="font-size: 11px; margin-bottom: 0px; color: grey;">
-                                        &copy; CRM Bisma <br>
-                                        Est. 2019 | SiBisma v.3.0
+                                        &copy; CRM Bisma | <a href="https://www.instagram.com/dikanayoga/" style="font-weight: bold; text-decoration: none;" target="_blank">Andika Pranayoga</a><br>
+                                        Est. 2019 | SiBisma v.3.0.1
                                     </p>
                                 </center>
                             </li>
