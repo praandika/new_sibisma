@@ -63,6 +63,14 @@
                                 <td>Sparepart Counter</td>
                                 <td>SP</td>
                             </tr>
+                            <tr class="pilihPosition" data-pos="Sparepart Admin" data-cat="SP">
+                                <td>Sparepart Admin</td>
+                                <td>SP</td>
+                            </tr>
+                            <tr class="pilihPosition" data-pos="Sparepart Admin" data-cat="SP">
+                                <td>Sparepart Warehouse</td>
+                                <td>SP</td>
+                            </tr>
                             <tr class="pilihPosition" data-pos="Cashier" data-cat="ADMIN">
                                 <td>Cashier</td>
                                 <td>ADMIN</td>
@@ -78,10 +86,6 @@
                             <tr class="pilihPosition" data-pos="Tax Admin" data-cat="ADMIN">
                                 <td>Tax Admin</td>
                                 <td>ADMIN</td>
-                            </tr>
-                            <tr class="pilihPosition" data-pos="Sparepart Admin" data-cat="SP">
-                                <td>Sparepart Admin</td>
-                                <td>SP</td>
                             </tr>
                             <tr class="pilihPosition" data-pos="Finance" data-cat="ADMIN">
                                 <td>Finance</td>
