@@ -32,7 +32,7 @@
         footer {
             position: fixed;
             bottom: 0px;
-            left: 0px;
+            left: -150px;
             right: 0px;
             font-size: 9px;
         }
@@ -63,12 +63,12 @@
 
         .left{
             float: left;
-            width: 50%;
+            width: 33%;
         }
 
         .right{
             float: right;
-            width: 50%;
+            width: 33%;
         }
 
         .tandatangan{
@@ -128,10 +128,14 @@
             <tr>
                 <th>Jenis</th>
                 <td>: {{ $o->stock->unit->model_name }}</td>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;Tgl Kirim</th>
+                <td>:</td>
             </tr>
             <tr>
                 <th>Warna</th>
                 <td>: {{ $o->stock->unit->color->color_faktur }}</td>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;Pembayaran</th>
+                <td>: Transfer / COD / Lunas</td>
             </tr>
             <tr>
                 <th>Nomor Rangka</th>
@@ -171,13 +175,20 @@
 
         <div class="tandatangan">
             <div class="left">
-                <p>Denpasar, _________________</p>
+                <p>Denpasar, ____________</p>
                 <p>Diterima Oleh,</p>
                 <br><br><br>
-                <p>(_________________________)</p>
+                <p>(____________________)</p>
+            </div>
+            <div class="left">
+                <p>Denpasar, ____________</p>
+                <p>Dikirim Oleh,</p>
+                <br><br><br>
+                <p>(____________________)</p>
+                <div style="font-size: 8px; margin-top: -10px;">&nbsp;&nbsp;SOPIR PENGIRIMAN&nbsp;&nbsp;</div>
             </div>
             <div class="right">
-                <p>Denpasar, _________________</p>
+                <p>Denpasar, ____________</p>
                 <p>Hormat Kami,</p>
                 <br><br><br>
                 <p>( {{ $o->stock->dealer->dealer_name }} )</p>
@@ -192,11 +203,11 @@
     @endforelse
 
     <footer>
-        <div style="float: right; width: 50%; font-size: 8px;">
-            &copy; Sibisma
-        </div>
         <div style="float: left; width: 50%; text-align: right; font-size: 8px;">
             Printed at {{ $printDate }} WITA
+        </div>
+        <div style="float: right; width: 50%; font-size: 8px;">
+            &copy; Sibisma
         </div>
     </footer>
 </body>
