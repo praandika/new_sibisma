@@ -243,14 +243,14 @@ class ReportExport implements FromView
                 return view('export.manpower',[
                     'data' => Manpower::join('dealers','manpowers.dealer_id','dealers.id')
                     ->orderBy('name','asc')
-                    ->select('*, manpowers.phone as manpower_phone, manpowers.address as manpower_address')->get()
+                    ->select('*', 'manpowers.phone as manpower_phone', 'manpowers.address as manpower_address')->get()
                 ]);
             } else {
                 return view('export.manpower',[
                     'data' => Manpower::join('dealers','manpowers.dealer_id','dealers.id')
                     ->where('dealer_id',$did)
                     ->orderBy('name','asc')
-                    ->select('*, manpowers.phone as manpower_phone, manpowers.address as manpower_address')->get()
+                    ->select('*', 'manpowers.phone as manpower_phone', 'manpowers.address as manpower_address')->get()
                 ]);
             }
         }else{
