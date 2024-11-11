@@ -95,6 +95,10 @@
                                 <td>Accounting</td>
                                 <td>ADMIN</td>
                             </tr>
+                            <tr class="pilihPosition" data-pos="Call Center" data-cat="ADMIN">
+                                <td>Call Center</td>
+                                <td>ADMIN</td>
+                            </tr>
                             <tr class="pilihPosition" data-pos="Driver" data-cat="OPT">
                                 <td>Driver</td>
                                 <td>OPT</td>
