@@ -29,9 +29,9 @@
             <td>{{ $o->join_date }}</td>
             <td>{{ $o->resign_date }}</td>
             <td>{{ $o->education }}</td>
-            <td>{{ $o->phone }}</td>
+            <td>{{ $o->manpower_phone }}</td>
             <td>{{ $o->birthday }}</td>
-            <td>{{ $o->address }}</td>
+            <td>{{ $o->manpower_address }}</td>
             <td>{{ $o->status }}</td>
             <td>{{ $o->user_id == 0 ? "No" : "Yes" }}</td>
         </tr>
