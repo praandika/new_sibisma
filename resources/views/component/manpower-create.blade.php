@@ -27,6 +27,7 @@
 @push('button')
     @section('button-title','Add New Manpower')
     @include('component.button-add')
+    @include('component.button-print')
 @endpush
 
 <div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>

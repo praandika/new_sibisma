@@ -14,6 +14,7 @@ use App\Models\Log;
 use App\Models\Opname;
 use App\Models\Spk;
 use App\Models\Stock;
+use App\Models\Manpower;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -235,6 +236,21 @@ class ReportExport implements FromView
                         ->where('stocks.qty','>',0)
                         ->orderBy('units.year_mc')
                         ->where('stocks.dealer_id',$did)->get()
+                ]);
+            }
+        }elseif($this->param == 'manpower') {
+            if ($dc == 'group') {
+                return view('export.manpower',[
+                    'data' => Manpower::join('dealers','manpowers.dealer_id','dealers.id')
+                    ->orderBy('name','asc')
+                    ->get()
+                ]);
+            } else {
+                return view('export.manpower',[
+                    'data' => Manpower::join('dealers','manpowers.dealer_id','dealers.id')
+                    ->where('dealer_id',$did)
+                    ->orderBy('name','asc')
+                    ->get()
                 ]);
             }
         }else{
