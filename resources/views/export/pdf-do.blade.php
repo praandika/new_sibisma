@@ -162,7 +162,8 @@
                 <td><span class="centang"></span> Kunci Emergency <span style="color: red;">*</span></td>
             </tr>
             <tr>
-                <td colspan="3"> <br>
+                <td><span class="centang"></span> Safety Tools</td>
+                <td colspan="2">
                     Lain-lain :...........................................................</td>
             </tr>
         </table>
