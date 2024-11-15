@@ -32,7 +32,7 @@
     <!-- Print JS
     <link rel="stylesheet" href="{{ asset('printpdfjs/print.min.css') }}"> -->
 
-    <link rel="stylesheet" href="{{ asset('simulasi/main10.css') }}">
+    <link rel="stylesheet" href="{{ asset('simulasi/main11.css') }}">
 </head>
 
 <body>
