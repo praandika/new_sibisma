@@ -349,7 +349,7 @@
                 </div>
                 <!-- END TAB BUNGA MENETAP -->
 
-                <span style="font-size: 12px; color: grey; text-align: center;"><a href="https://www.instagram.com/dikanayoga/" style="color: white;"
+                <span style="font-size: 12px; color: grey;"><a href="https://www.instagram.com/dikanayoga/" style="color: white; text-align: center;"
                     target="_blank">Developed by Andika Pranayoga</a></span>
             </div>
         </div>
