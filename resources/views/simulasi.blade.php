@@ -53,7 +53,7 @@
                             class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://yamahabismagroup.com/model/"
+                    <a class="nav-link" href="https://yamahabismagroup.com/website/public/product/all"
                         style="color: white;">Buy Product</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -62,20 +62,16 @@
                         Type Product
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/maxi/">MAXI</a>
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/matic/">MATIC</a>
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/moped/">MOPED</a>
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/naked-bike/">NAKED BIKE</a>
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/sport/">SPORT</a>
-                        <a class="dropdown-item" href="https://yamahabismagroup.com/brand/off-road/">OFF ROAD</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Maxi">MAXI</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Classy">CLASSY</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Matic">MATIC</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Moped">MOPED</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Sport">SPORT</a>
+                        <a class="dropdown-item" href="https://yamahabismagroup.com/website/public/product/Off%20Road">OFF ROAD</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://www.booking.yamahabismagroup.com/public/booking"
-                        style="color: white;" target="_blank">Booking Service</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://yamahabismagroup.com/pilih-dealer/"
+                    <a class="nav-link" href="https://yamahabismagroup.com/website/public/contact"
                         style="color: white;">Contact</a>
                 </li>
             </ul>
@@ -352,6 +348,9 @@
                     <br>
                 </div>
                 <!-- END TAB BUNGA MENETAP -->
+
+                <span style="font-size: 12px; color: grey;"><a href="https://www.instagram.com/dikanayoga/" style="color: white;"
+                    target="_blank">Developed by Andika Pranayoga</a></span>
             </div>
         </div>
     </div>
