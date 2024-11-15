@@ -361,9 +361,6 @@
     <footer>
         <center>
             Copyright &copy; <a href="https://yamahabismagroup.com">CRM Yamaha Bisma Group</a>
-            <br>
-            <span style="font-size: 9px; color: grey;"><a href="https://github.com/praandika" style="color: white;"
-                    target="_blank">Supported by Andika Pranayoga</a></span>
         </center>
     </footer>
 
