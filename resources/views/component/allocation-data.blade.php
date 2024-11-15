@@ -1,0 +1,67 @@
+@push('after-css')
+<style>
+    a.btnAction {
+        font-size: 20px;
+    }
+
+</style>
+@endpush
+
+@section('title','Stock')
+@section('page-title','Stock')
+
+@push('link-bread')
+<li class="nav-item">
+    <a href="{{ route('stock.index') }}">Data Allocation</a>
+</li>
+@endpush
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <livewire:widget-stock-qty>
+                <h4 class="card-title">Allocation Data</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="basic-datatables" class="display table table-striped table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Total Unit</th>
+                            <th>Dealer Code</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Date</th>
+                            <th>Total Unit</th>
+                            <th>Dealer Code</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @forelse($data as $o)
+                        <tr>
+                            <td>{{ $o->allocation_date }}</td>
+                            <td>{{ $o->total_unit }}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <a href="{{ route('allocation.show', $o->date) }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top" title="Detail" style="color:orange;"><i
+                                            class="fa fa-eye"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" style="text-align: center;">No data available</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

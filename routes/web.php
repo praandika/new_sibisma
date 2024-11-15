@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
@@ -285,3 +286,8 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('banner', BannerContro
 Route::middleware(['auth:sanctum', 'verified'])->get('/banner/delete/{id}', [BannerController::class, 'delete'])->name('banner.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/banner/change/{id}/{status}', [BannerController::class, 'changeStatusBanner'])->name('banner.update-status');
 // END BANNER
+
+// ALLOCATION
+Route::middleware(['auth:sanctum', 'verified'])->resource('allocation', AllocationController::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/allocation/import', [AllocationController::class, 'importExcel'])->name('allocation.import');
+// END ALLOCATION

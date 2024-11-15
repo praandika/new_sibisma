@@ -61,6 +61,7 @@
             <ul class="nav nav-primary">
             @if(Auth::user()-> access != 'salesman')
                     @include('menu.dashboard')
+                    @include('menu.allocation')
 
                 @if(Auth::user()-> access != 'owner')
                     @include('menu.stock')

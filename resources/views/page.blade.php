@@ -166,6 +166,15 @@
             @include('component.stock-data')
         @endif
 
+    <!-- Allocation Page -->
+    @elseif(Route::is('allocation.*'))
+        @if(Route::is('allocation.show'))
+            @include('component.allocation-show')
+        @else
+            @include('component.allocation-create')
+            @include('component.allocation-data')
+        @endif
+
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
         @if(Route::is('sale.history'))
