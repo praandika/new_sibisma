@@ -19,7 +19,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-stock-qty>
+        <livewire:widget-allocation>
                 <h4 class="card-title">Allocation Data</h4>
         </div>
         <div class="card-body">

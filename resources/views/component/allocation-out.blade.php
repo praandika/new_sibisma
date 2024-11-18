@@ -62,13 +62,13 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('allocation.store') }}" method="post">
+            <form action="{{ route('allocation.storeout') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="allocation_date" type="date" class="form-control input-border-bottom"
-                                name="allocation_date" value="{{ old('allocation_date') }}" required>
+                                name="allocation_date" value="{{ old('allocation_date') }}" autofocus required>
                             <label for="allocation_date" class="placeholder">Date *</label>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-stock-qty>
+            <livewire:widget-allocation>
                 <h4 class="card-title">Allocation Out Data</h4>
         </div>
         <div class="card-body">
@@ -170,14 +170,14 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->allocation_date_out }}</td>
+                            <td>{{ $o->allocation_out_date }}</td>
                             <td>{{ $o->model_name }}</td>
                             <td>{{ $o->color }}</td>
                             <td>{{ $o->frame_no }}</td>
                             <td>{{ $o->engine_no }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ url('allocation/'.$o->out_status.'/'.$o->id.'') }}"
+                                    <a href="{{ url('allocation-out/'.$o->out_status.'/'.$o->id.'') }}"
                                         class="btnAction" data-toggle="tooltip" data-placement="top" title="Delete"
                                         style="color:crimson;"><i class="fa fa-trash"></i></a>
                                 </div>

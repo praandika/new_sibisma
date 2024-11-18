@@ -54,7 +54,7 @@ class AllocationController extends Controller
 
         if ($dc == 'group') {
             $data = Allocation::where('out_status','yes')
-            ->where('updated_at',$today)
+            ->where('updated_at','LIKE', '%'.$today.'%')
             ->get();
             $stock = Allocation::where('out_status','no')
             ->orderby('allocation_date','asc')
@@ -63,7 +63,7 @@ class AllocationController extends Controller
 
         } else {
             $data = Allocation::where('out_status','yes')
-            ->where('updated_at',$today)
+            ->where('updated_at','LIKE', '%'.$today.'%')
             ->where('dealer_code', $dc)
             ->get();
             $stock = Allocation::where('out_status','no')
@@ -96,6 +96,24 @@ class AllocationController extends Controller
         toast('Data allocation berhasil di import','success');
         return redirect()->back();
 
+    }
+
+    public function storeOut(Request $req){
+        $data = Allocation::find($req->id);
+        $data->out_status = 'yes';
+        $data->allocation_out_date = $req->allocation_date;
+        $data->update();
+        toast($req->frame_no.' berhasil keluar','success');
+        return redirect()->back()->withInput($req->except('model_name', 'color', 'frame_no', 'engine_no', 'dealer'));
+    }
+
+    public function deleteStoreOut($status, $id) {
+        $data = Allocation::find($id);
+        $data->out_status = 'no';
+        $data->allocation_out_date = '';
+        $data->update();
+        toast('Allocation Out berhasil dihapus','success');
+        return redirect()->back();
     }
 
     public function detail($date, $dealer){
@@ -185,12 +203,22 @@ class AllocationController extends Controller
     }
 
     public function delete($id, $date, $dealer){
-        Allocation::find($id)->delete();
-        toast('Data allocation berhasil dihapus','success');
-        return redirect()->back()->with([
-            'date' => $date,
-            'dealer' => $dealer
-        ]);
+        $cek = Allocation::find($id);
+
+        if ($cek->out_status == 'yes') {
+            toast('Unit sudah terjual','warning');
+            return redirect()->back()->with([
+                'date' => $date,
+                'dealer' => $dealer
+            ]);
+        } else {
+            Allocation::find($id)->delete();
+            toast('Data allocation berhasil dihapus','success');
+            return redirect()->back()->with([
+                'date' => $date,
+                'dealer' => $dealer
+            ]);
+        }
     }
 
     /**

@@ -294,6 +294,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/allocation/{date}/{dealer
 Route::middleware(['auth:sanctum', 'verified'])->get('/allocation/delete/{id}/{date}/{dealer}', [AllocationController::class, 'delete'])->name('allocation.delete');
 Route::middleware(['auth:sanctum', 'verified'])->get('/allocation-search/{param?}', [AllocationController::class, 'search'])->name('allocation.search');
 Route::middleware(['auth:sanctum', 'verified'])->get('/allocation-out', [AllocationController::class, 'out'])->name('allocation.out');
+Route::middleware(['auth:sanctum', 'verified'])->post('/allocation/out', [AllocationController::class, 'storeOut'])->name('allocation.storeout');
+Route::middleware(['auth:sanctum', 'verified'])->get('/allocation-out/{status}/{id}', [AllocationController::class, 'deleteStoreOut'])->name('allocation.deletestoreout');
 // END ALLOCATION
 
 // ALLOCATION MODE

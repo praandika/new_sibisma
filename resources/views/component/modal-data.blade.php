@@ -431,6 +431,7 @@
 @elseif(Route::is('allocation.out'))
 <script>
     $(document).on('click', '.klik', function (e) {
+        $('#id_allocation').val($(this).attr('data-id'));
         $('#model_name').val($(this).attr('data-model'));
         $('#color').val($(this).attr('data-color'));
         $('#dealer').val($(this).attr('data-dealercode'));

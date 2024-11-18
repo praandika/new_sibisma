@@ -25,7 +25,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-stock-qty>
+        <livewire:widget-allocation>
                 <h4 class="card-title">Allocation 
                     @if(Session::has('date')) 
                     {{ \Carbon\Carbon::parse(session('date'))->isoFormat('dddd, D MMMM YYYY') }} | {{ session('dealer') }}
@@ -44,7 +44,7 @@
                             <th>Color</th>
                             <th>Frame No</th>
                             <th>Engine No</th>
-                            <th>Faktur No</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -55,7 +55,7 @@
                             <th>Color</th>
                             <th>Frame No</th>
                             <th>Engine No</th>
-                            <th>Faktur No</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -68,7 +68,9 @@
                             <td>{{ $o->color }}</td>
                             <td>{{ $o->frame_no }}</td>
                             <td>{{ $o->engine_no }}</td>
-                            <td>{{ $o->faktur_no }}</td>
+                            <td style="
+                                {{ $o->out_status == 'yes' ? 'background-color: #B9164650;' : 'background-color: #51925950;' }}
+                            ">{{ $o->out_status == 'yes' ? 'Sold' : 'In Stock' }}</td>
                             <td>
                                 <div class="form-button-action">
                                     @if(Session::has('date'))
