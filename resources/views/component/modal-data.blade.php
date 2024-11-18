@@ -57,7 +57,7 @@
                             @endforelse
                         </tbody>
                         <!-- ELSE IF -->
-                        @elseif(Route::is('sale.*') || Route::is('entry.*') || Route::is('out.*') || Route::is('opname.*'))
+                        @elseif(Route::is('sale.*') || Route::is('entry.*') || Route::is('out.*') || Route::is('opname.*') || Route::is('allocation.*'))
                         
                         <thead>
                             <tr>
@@ -363,6 +363,19 @@
         $('#dealer_code').val($(this).attr('data-dealercode'));
         $('#dealer').val($(this).attr('data-dealername'));
         $('#otr').val($(this).attr('data-otr'));
+        $('.modalData').modal('hide');
+        
+        $('#color_code').css('background', code);
+    });
+</script>
+@elseif(Route::is('allocation.*'))
+<script>
+    $(document).on('click', '.klik', function (e) {
+        let code = $(this).attr('data-colorcode');
+        $('#model_name').val($(this).attr('data-model'));
+        $('#color').val($(this).attr('data-color'));
+        $('#dealer_code').val($(this).attr('data-dealercode'));
+        $('#dealer').val($(this).attr('data-dealername'));
         $('.modalData').modal('hide');
         
         $('#color_code').css('background', code);

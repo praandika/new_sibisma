@@ -7,12 +7,12 @@
 </style>
 @endpush
 
-@section('title','Stock')
-@section('page-title','Stock')
+@section('title','Allocation')
+@section('page-title','Allocation')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('stock.index') }}">Data Allocation</a>
+    <a href="{{ route('allocation.index') }}">Data Allocation</a>
 </li>
 @endpush
 
@@ -46,11 +46,12 @@
                         <tr>
                             <td>{{ $o->allocation_date }}</td>
                             <td>{{ $o->total_unit }}</td>
+                            <td>{{ $o->dealer_code }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('allocation.show', $o->date) }}" class="btnAction" data-toggle="tooltip"
-                                        data-placement="top" title="Detail" style="color:orange;"><i
-                                            class="fa fa-eye"></i></a>
+                                    <a href="{{ url('allocation/'.$o->allocation_date.'/'.$o->dealer_code.'') }}"
+                                        class="btnAction" data-toggle="tooltip" data-placement="top" title="Detail"
+                                        style="color:orange;"><i class="fa fa-eye"></i></a>
                                 </div>
                             </td>
                         </tr>

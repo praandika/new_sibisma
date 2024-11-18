@@ -1,5 +1,11 @@
 @push('after-css')
 <style>
+    input[type=date]:required:invalid::-webkit-datetime-edit {
+        color: transparent;
+    }
+    input[type=date]:focus::-webkit-datetime-edit {
+        color: black !important;
+    }
     ::-webkit-input-placeholder { /* WebKit browsers */
         text-transform: none;
     }
@@ -23,9 +29,10 @@
         @section('button-title','Add Allocation Manual')
         @include('component.button-add')
         <!-- Button IMPORT -->
+        @include('component.button-download')
         @include('component.button-import')
     @endif
-    @include('component.button-print')
+    @include('component.button-search')
 @endpush
 
 <div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
@@ -62,7 +69,6 @@
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="model_name" name="model_name" value="{{ old('model_name') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" value="{{ old('model_name') }}" data-toggle="modal"
                                 data-target=".modalData" style="text-transform: uppercase;" required>
@@ -82,16 +88,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="frame_no" type="number" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}"
-                                placeholder="Frame No" style="text-transform: uppercase;" required>
+                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}"
+                                style="text-transform: uppercase;" required>
                             <label for="frame_no" class="placeholder">Frame No*</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="engine_no" type="number" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}"
-                                placeholder="Engine No" style="text-transform: uppercase;" required>
+                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}"
+                                style="text-transform: uppercase;" required>
                             <label for="engine_no" class="placeholder">Engine No*</label>
                         </div>
                     </div>
@@ -100,10 +106,10 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
-                                <input id="dealer_name" type="text" class="form-control input-border-bottom"
-                                    name="dealer_name" value="{{ old('dealer_name') }}" data-toggle="modal"
+                                <input id="dealer" type="text" class="form-control input-border-bottom"
+                                    name="dealer" value="{{ old('dealer') }}" data-toggle="modal"
                                     data-target=".modalDealer" style="text-transform: uppercase;" required>
-                                <label for="dealer_name" class="placeholder">Select Dealer *</label>
+                                <label for="dealer" class="placeholder">Dealer *</label>
                             </div>
                     </div>
                     @else
@@ -112,7 +118,7 @@
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
                                 <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                     name="dealer_name" value="{{ $dealerName }}" style="text-transform: uppercase;" required>
-                                <label for="dealer_name" class="placeholder">Select Dealer *</label>
+                                <label for="dealer_name" class="placeholder">Dealer *</label>
                             </div>
                     </div>
                     @endif
@@ -127,7 +133,6 @@
 
 @section('modal-title','Data Unit')
 @include('component.modal-data')
-@include('component.modal-dealer')
 @include('component.modal-import')
 
 @push('after-script')

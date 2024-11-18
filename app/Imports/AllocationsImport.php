@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\Allocation;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AllocationsImport implements ToModel
+class AllocationsImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -15,15 +16,17 @@ class AllocationsImport implements ToModel
     public function model(array $row)
     {
         return new Allocation([
-            'model' => $row[0],
-            'model_name' => $row[1],
-            'color' => $row[2],
-            'frame_no' => $row[3],
-            'engine_no' => $row[4],
-            'faktur_no' => $row[5],
-            'nik_no' => $row[6],
-            'yimm_revise_type' => $row[7],
-            'received' => $row[8],
+            'model' => $row['model'],
+            'model_name' => $row['model_name'],
+            'color' => $row['color'],
+            'frame_no' => $row['frame_no'],
+            'engine_no' => $row['engine_no'],
+            'faktur_no' => $row['faktur_no'],
+            'nik_no' => $row['nik_no'],
+            'yimm_revise_type' => $row['yimm_revise_type'],
+            'received' => $row['received'],
+            'allocation_date' => $row['allocation_date'],
+            'dealer_code' => $row['dealer_code'],
         ]);
     }
 }

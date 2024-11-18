@@ -168,8 +168,10 @@
 
     <!-- Allocation Page -->
     @elseif(Route::is('allocation.*'))
-        @if(Route::is('allocation.show'))
+        @if(Route::is('allocation.detail'))
             @include('component.allocation-show')
+        @elseif(Route::is('allocation.search'))
+            @include('component.allocation-search')
         @else
             @include('component.allocation-create')
             @include('component.allocation-data')

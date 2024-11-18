@@ -38,6 +38,12 @@
                 <div class="mt-10 sm:mt-0">
                     @include('component.crud-mode')
                 </div>
+
+                <x-jet-section-border />
+
+                <div class="mt-10 sm:mt-0">
+                    @include('component.allocation-mode')
+                </div>
         </div>
     </div>
 </x-app-layout>

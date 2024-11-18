@@ -172,6 +172,18 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function updateAllocationMode($id, $mode){
+        $data = User::where('id',$id)->first();
+        if ($mode == 'yes') {
+            $data->allocation_tools = 'yes';
+        } else {
+            $data->allocation_tools = 'no';
+        }
+        
+        $data->save();
+        return redirect()->back();
+    }
+
     public function editPass($id) {
         $data = User::where('id',$id)->get();
 

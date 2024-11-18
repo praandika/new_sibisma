@@ -290,4 +290,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/banner/change/{id}/{statu
 // ALLOCATION
 Route::middleware(['auth:sanctum', 'verified'])->resource('allocation', AllocationController::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('/allocation/import', [AllocationController::class, 'importExcel'])->name('allocation.import');
+Route::middleware(['auth:sanctum', 'verified'])->get('/allocation/{date}/{dealer}', [AllocationController::class, 'detail'])->name('allocation.detail');
+Route::middleware(['auth:sanctum', 'verified'])->get('/allocation/delete/{id}/{date}/{dealer}', [AllocationController::class, 'delete'])->name('allocation.delete');
+Route::middleware(['auth:sanctum', 'verified'])->get('/allocation-search/{param?}', [AllocationController::class, 'search'])->name('allocation.search');
 // END ALLOCATION
+
+// ALLOCATION MODE
+Route::middleware(['auth:sanctum', 'verified'])->post('update-allocation-mode/{id}/{mode}', [UserController::class, 'updateAllocationMode']);
+// END ALLOCATION MODE
