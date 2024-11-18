@@ -57,7 +57,7 @@
                             @endforelse
                         </tbody>
                         <!-- ELSE IF -->
-                        @elseif(Route::is('sale.*') || Route::is('entry.*') || Route::is('out.*') || Route::is('opname.*') || Route::is('allocation.*'))
+                        @elseif(Route::is('sale.*') || Route::is('entry.*') || Route::is('out.*') || Route::is('opname.*') || Route::is('allocation.index'))
                         
                         <thead>
                             <tr>
@@ -106,6 +106,53 @@
                             </tr>
                             @endforelse
                         </tbody>
+                        <!-- ELSE IF -->
+                        @elseif(Route::is('allocation.out'))
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Color</th>
+                                <th>Frame No</th>
+                                <th>Engine No</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Color</th>
+                                <th>Frame No</th>
+                                <th>Engine No</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @forelse($stock as $o)
+                            <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
+                                data-color="{{ $o->color }}"
+                                data-dealercode="{{ $o->dealer_code }}"
+                                data-frame="{{ $o->frame_no }}"
+                                data-engine="{{ $o->engine_no }}"
+                                class="klik">
+                                <td>{{ $o->model_name }}</td>
+                                <td>{{ $o->color }}</td>
+                                <td>{{ $o->frame_no }}</td>
+                                <td>{{ $o->engine_no }}</td>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <td>{{ $o->dealer_code }}</td>
+                                @endif
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="{{ Auth::user()->access == 'master' ? '4' : '5' }}" style="text-align: center;">No data available</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
                         <!-- ELSE IF -->
                         @elseif(Route::is('document.*') || Route::is('sale-delivery.*'))
                         <thead>
@@ -368,7 +415,7 @@
         $('#color_code').css('background', code);
     });
 </script>
-@elseif(Route::is('allocation.*'))
+@elseif(Route::is('allocation.index'))
 <script>
     $(document).on('click', '.klik', function (e) {
         let code = $(this).attr('data-colorcode');
@@ -379,6 +426,17 @@
         $('.modalData').modal('hide');
         
         $('#color_code').css('background', code);
+    });
+</script>
+@elseif(Route::is('allocation.out'))
+<script>
+    $(document).on('click', '.klik', function (e) {
+        $('#model_name').val($(this).attr('data-model'));
+        $('#color').val($(this).attr('data-color'));
+        $('#dealer').val($(this).attr('data-dealercode'));
+        $('#frame_no').val($(this).attr('data-frame'));
+        $('#engine_no').val($(this).attr('data-engine'));
+        $('.modalData').modal('hide');
     });
 </script>
 @endif

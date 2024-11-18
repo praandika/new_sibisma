@@ -1,6 +1,21 @@
 <li class="nav-item {{ Route::is('allocation.*') ? 'active' : '' }}">
-    <a href="{{ route('allocation.index') }}">
+    <a data-toggle="collapse" href="#allocation">
         <i class="fas fa-truck-loading"></i>
         <p>Allocation</p>
+        <span class="caret"></span>
     </a>
+    <div class="collapse {{ Route::is('allocation.*') ? 'show' : '' }}" id="allocation">
+        <ul class="nav nav-collapse">
+            <li class="{{ Route::is('allocation.index') ? 'active' : '' }}">
+                <a href="{{ route('allocation.index') }}">
+                    <span class="sub-item">In Allocation</span>
+                </a>
+            </li>
+            <li class="{{ Route::is('allocation.out') ? 'active' : '' }}">
+                <a href="{{ route('allocation.out') }}">
+                    <span class="sub-item">Out Allocation</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </li>

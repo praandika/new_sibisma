@@ -1,4 +1,4 @@
-\<div class="modal fade modalImport" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modalImport" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{{ route('allocation.import') }}" method="post" enctype="multipart/form-data">
             <div class="modal-content">

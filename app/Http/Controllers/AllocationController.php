@@ -10,6 +10,7 @@ use App\Models\Stock;
 use Auth;
 use Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AllocationController extends Controller
 {
@@ -36,6 +37,40 @@ class AllocationController extends Controller
             ->groupBy('allocation_date')
             ->get();
             $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            
+            $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+            $dealerName = $dealerName[0];
+            $dealerCode = $dc;
+
+            return view('page', compact('data','dealerName', 'dealerCode', 'stock'));
+        }
+    }
+
+    public function out()
+    {
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        if ($dc == 'group') {
+            $data = Allocation::where('out_status','yes')
+            ->where('updated_at',$today)
+            ->get();
+            $stock = Allocation::where('out_status','no')
+            ->orderby('allocation_date','asc')
+            ->get();
+            return view('page', compact('data', 'stock'));
+
+        } else {
+            $data = Allocation::where('out_status','yes')
+            ->where('updated_at',$today)
+            ->where('dealer_code', $dc)
+            ->get();
+            $stock = Allocation::where('out_status','no')
+            ->where('dealer_code', $dc)
+            ->orderby('allocation_date','asc')
+            ->get();
+            return view('page', compact('data', 'stock'));
             
             $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             $dealerName = $dealerName[0];
