@@ -19,9 +19,9 @@
         right: 0;
         z-index: 9;
 
-        background-color: var(--bg-latte);
+        background-color: var(--bg-blue);
         color: #fff;
-        padding: 5px 12px;
+        padding: 1px 12px;
         text-align: center;
         border-radius: 0 3px 0 40px;
 
@@ -31,7 +31,7 @@
     }
 </style>
 @endpush
-<span class="widget-stock" id="widgetStock" data-toggle="modal" data-target=".modalWidget"><p style="font-size: 10px; cursor:pointer;">Allocations <br> <strong style="font-size: 22px;">{{ number_format($stock,0) }}</strong></p></span>
+<span class="widget-stock" id="widgetStock" data-toggle="modal" data-target=".modalWidget"><p style="font-size: 10px; cursor:pointer;">&nbsp;&nbsp;Unit&nbsp;&nbsp; <span style="display: block; margin-top: -5px;">In Stock</span> <strong style="font-size: 22px;">{{ number_format($stock,0) }}</strong></p></span>
 
 <!-- Modal -->
 <div class="modal fade modalWidget" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

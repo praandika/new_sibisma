@@ -176,6 +176,7 @@
             @include('component.allocation-out')
         @else
             @include('component.allocation-create')
+            @include('component.search-box')
             @include('component.allocation-data')
         @endif
 

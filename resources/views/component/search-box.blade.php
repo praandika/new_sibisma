@@ -30,6 +30,8 @@
                                 {{ route('log') }}
                             @elseif(Route::is('opname.*'))
                                 {{ route('opname.history') }}
+                            @elseif(Route::is('allocation.index'))
+                                {{ route('allocation.index') }}
                             @elseif(Route::is('do-kwitansi.leasing'))
                                 {{ route('do-kwitansi.leasing') }}
                             @else
@@ -75,6 +77,8 @@
                                     {{ url('report/opname/'.$start.'/'.$end) }}
                                 @elseif(Route::is('spk.*'))
                                     {{ url('report/spk/'.$start.'/'.$end) }}
+                                @elseif(Route::is('allocation.*'))
+                                    {{ url('report/allocation/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif

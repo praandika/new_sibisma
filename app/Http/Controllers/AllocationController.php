@@ -19,30 +19,68 @@ class AllocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $start = $req->start;
+        $end = $req->end;
 
-        if ($dc == 'group') {
-            $data = Allocation::selectRaw('allocation_date, COUNT(frame_no) as total_unit, dealer_code')
-            ->groupBy('allocation_date')
-            ->get();
-            $stock = Stock::orderBy('qty','desc')->get();
-            return view('page', compact('data', 'stock'));
+        if ($start == null || $end == null) {
+            if ($dc == 'group') {
+                $data = Allocation::selectRaw(
+                    'allocation_date, COUNT(frame_no) as entry,
+                    dealer_code')
+                ->where('allocation_date',$today)
+                ->groupBy('allocation_date','dealer_code')
+                ->get();
+                $stock = Stock::orderBy('qty','desc')->get();
+                return view('page', compact('data', 'stock','start','end'));
+    
+            } else {
+                $data = Allocation::selectRaw(
+                    'allocation_date, COUNT(frame_no) as entry,
+                    dealer_code')
+                ->where('allocation_date',$today)
+                ->where('dealer_code',$dc)
+                ->groupBy('allocation_date')
+                ->get();
+                $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+                
+                $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+                $dealerName = $dealerName[0];
+                $dealerCode = $dc;
 
+                return view('page', compact('data','dealerName', 'dealerCode', 'stock','start','end'));
+            }
         } else {
-            $data = Allocation::selectRaw('allocation_date, COUNT(frame_no) as total_unit, dealer_code')
-            ->where('dealer_code',$dc)
-            ->groupBy('allocation_date')
-            ->get();
-            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
-            
-            $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
-            $dealerName = $dealerName[0];
-            $dealerCode = $dc;
+            if ($dc == 'group') {
+                $data = Allocation::selectRaw(
+                    'allocation_date, COUNT(frame_no) as entry,
+                    dealer_code')
+                ->whereBetween('allocation_date',[$req->start, $req->end])
+                ->groupBy('allocation_date')
+                ->get();
+                $stock = Stock::orderBy('qty','desc')->get();
+                return view('page', compact('data', 'stock','start','end'));
+    
+            } else {
+                $data = Allocation::selectRaw(
+                    'allocation_date, COUNT(frame_no) as entry,
+                    dealer_code')
+                ->whereBetween('allocation_date',[$req->start, $req->end])
+                ->where('dealer_code',$dc)
+                ->groupBy('allocation_date')
+                ->get();
+                $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+                
+                $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+                $dealerName = $dealerName[0];
+                $dealerCode = $dc;
 
-            return view('page', compact('data','dealerName', 'dealerCode', 'stock'));
+                return view('page', compact('data','dealerName', 'dealerCode', 'stock','start','end'));
+            }
         }
     }
 

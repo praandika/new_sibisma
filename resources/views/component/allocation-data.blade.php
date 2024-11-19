@@ -19,8 +19,11 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+        
         <livewire:widget-allocation>
-                <h4 class="card-title">Allocation Data</h4>
+        <livewire:info-allocation-in>
+        <livewire:info-allocation-out>
+                <h4 class="card-title">Allocation Today</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -45,7 +48,7 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $o->allocation_date }}</td>
-                            <td>{{ $o->total_unit }}</td>
+                            <td style="background-color: #51925930; font-weight: bold;">&Darr;&nbsp;&nbsp;{{ $o->entry }}</td>
                             <td>{{ $o->dealer_code }}</td>
                             <td>
                                 <div class="form-button-action">
@@ -57,7 +60,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" style="text-align: center;">No data available</td>
+                            <td colspan="4" style="text-align: center;">No allocation today</td>
                         </tr>
                         @endforelse
                     </tbody>

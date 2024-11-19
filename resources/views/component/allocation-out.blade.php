@@ -141,7 +141,10 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-allocation>
+
+        <livewire:widget-allocation>
+        <livewire:info-allocation-in>
+        <livewire:info-allocation-out>
                 <h4 class="card-title">Allocation Out Data</h4>
         </div>
         <div class="card-body">

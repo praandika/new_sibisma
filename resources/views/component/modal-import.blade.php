@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     @csrf()
                     <div class="form-group form-floating-label">
-                        <input id="excel" type="file" class="form-control input-border-bottom" name="excel" accept=".xls,.xlsx,.csv" required>
+                        <input id="excel" type="file" class="form-control input-border-bottom" name="excel" accept=".xls,.xlsx,.csv">
                         <label for="excel" class="placeholder" style="
                                 background-color: forestgreen; 
                                 color: #ffffff !important; 
