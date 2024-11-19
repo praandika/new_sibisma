@@ -209,6 +209,10 @@ class AllocationController extends Controller
         return view('page', compact('data', 'start', 'end', 'frame'));
     }
 
+    public function report(){
+        return view('page');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

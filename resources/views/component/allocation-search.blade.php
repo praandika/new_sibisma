@@ -12,7 +12,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('allocation.index') }}">Data Search Allocation</a>
+    <a href="{{ route('allocation.search') }}">Data Search Allocation</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
@@ -66,7 +66,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-stock-qty>
+            <livewire:widget-allocation>
                 <h4 class="card-title">Search Allocation {{ $start }} to {{ $end }} | {{ $frame }}</h4>
         </div>
         <div class="card-body">

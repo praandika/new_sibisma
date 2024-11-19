@@ -174,6 +174,8 @@
             @include('component.allocation-search')
         @elseif(Route::is('allocation.out'))
             @include('component.allocation-out')
+        @elseif(Route::is('allocation.report'))
+            @include('component.allocation-report')
         @else
             @include('component.allocation-create')
             @include('component.search-box')
