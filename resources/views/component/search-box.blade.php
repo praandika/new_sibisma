@@ -32,6 +32,8 @@
                                 {{ route('opname.history') }}
                             @elseif(Route::is('allocation.index'))
                                 {{ route('allocation.index') }}
+                            @elseif(Route::is('allocation.report'))
+                                {{ route('allocation.report') }}
                             @elseif(Route::is('do-kwitansi.leasing'))
                                 {{ route('do-kwitansi.leasing') }}
                             @else
