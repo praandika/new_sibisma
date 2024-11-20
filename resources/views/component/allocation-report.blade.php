@@ -36,7 +36,12 @@
                         <p class="card-category" style="color: white;">Entry</p>
                         <h4 class="card-title" style="color: white;">{{ number_format($entry,0) }} Units</h4>
                         <p class="card-category" style="color: white; font-size: 12px;">
-                            {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}</p>
+                            @if($start == null )
+                                {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($start)->format('d M Y') }} - {{ \Carbon\Carbon::parse($end)->format('d M Y') }}
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>
@@ -57,7 +62,12 @@
                         <p class="card-category" style="color: white;">Sold</p>
                         <h4 class="card-title" style="color: white;">{{ number_format($sold,0) }} Units</h4>
                         <p class="card-category" style="color: white; font-size: 12px;">
-                            {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}</p>
+                            @if($start == null )
+                                {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($start)->format('d M Y') }} - {{ \Carbon\Carbon::parse($end)->format('d M Y') }}
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>
@@ -78,7 +88,12 @@
                         <p class="card-category" style="color: white;">In Stock</p>
                         <h4 class="card-title" style="color: white;">{{ number_format($stock,0) }} Units</h4>
                         <p class="card-category" style="color: white; font-size: 12px;">
-                            {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}</p>
+                            @if($start == null )
+                                {{ \Carbon\Carbon::parse($today)->isoFormat('MMMM YYYY') }}
+                            @else
+                                {{ \Carbon\Carbon::parse($start)->format('d M Y') }} - {{ \Carbon\Carbon::parse($end)->format('d M Y') }}
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>
