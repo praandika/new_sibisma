@@ -26,6 +26,8 @@
     <div class="card">
         <div class="card-header">
         <livewire:widget-allocation>
+        <livewire:info-allocation-in>
+        <livewire:info-allocation-out>
                 <h4 class="card-title">Allocation 
                     @if(Session::has('date')) 
                     {{ \Carbon\Carbon::parse(session('date'))->isoFormat('dddd, D MMMM YYYY') }} | {{ session('dealer') }}

@@ -547,25 +547,7 @@ class SaleController extends Controller
         $end = $req->end;
         if ($mode == 'normal') {
             if ($start == null && $end == null) {
-                if ($dc == 'group') {
-                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                    ->join('spks','sales.spk','spks.spk_no')
-                    ->join('manpowers','spks.manpower_id','manpowers.id')
-                    ->orderBy('sale_date','desc')
-                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
-                    ->limit(20)->get();
-                    // dd($data);
-                }else{
-                    $data = Sale::join('stocks','sales.stock_id','stocks.id')
-                    ->join('spks','sales.spk','spks.spk_no')
-                    ->join('manpowers','spks.manpower_id','manpowers.id')
-                    ->where('stocks.dealer_id',$did)
-                    ->orderBy('sale_date','desc')
-                    ->select('*','sales.id as id_sale','manpowers.name as salesman','sales.phone as salesphone')
-                    ->limit(20)->get();
-                    // dd($data);
-                }
-                
+                $data = 'null';
             } else {
                 if ($dc == 'group') {
                     $data = Sale::join('stocks','sales.stock_id','stocks.id')
@@ -588,14 +570,14 @@ class SaleController extends Controller
                     $data = Sale::join('stocks','sales.stock_id','stocks.id')
                     ->orderBy('sale_date','desc')
                     ->select('*','sales.id as id_sale')
-                    ->limit(20)->get();
+                    ->limit(1)->get();
                     // dd($data);
                 }else{
                     $data = Sale::join('stocks','sales.stock_id','stocks.id')
                     ->where('stocks.dealer_id',$did)
                     ->orderBy('sale_date','desc')
                     ->select('*','sales.id as id_sale')
-                    ->limit(20)->get();
+                    ->limit(1)->get();
                     // dd($data);
                 }
                 

@@ -115,7 +115,7 @@
                     @else
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
+                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required> 
                                 <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                     name="dealer_name" value="{{ $dealerName }}" style="text-transform: uppercase;" required>
                                 <label for="dealer_name" class="placeholder">Dealer *</label>

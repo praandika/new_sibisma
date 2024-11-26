@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReportExportMultiSheet;
 use App\Http\Controllers\Controller;
+use Excel;
 use Illuminate\Http\Request;
 use App\Models\StockHistory;
 use App\Exports\ReportExport;
@@ -83,6 +85,10 @@ class ReportController extends Controller
         }else{
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Error_report_'.$start.'-'.$end.'.xlsx');
         }
+    }
+
+    public function reportMultipleSheet($start = null, $end = null){
+        return Excel::download(new ReportExportMultiSheet($start, $end), 'Allocation_'.$start.'-'.$end.'.xlsx');
     }
 
     public function sendReport(Request $req){

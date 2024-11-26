@@ -104,11 +104,11 @@ class AllocationController extends Controller
             ->where('updated_at','LIKE', '%'.$today.'%')
             ->where('dealer_code', $dc)
             ->get();
+            
             $stock = Allocation::where('out_status','no')
             ->where('dealer_code', $dc)
             ->orderby('allocation_date','asc')
             ->get();
-            return view('page', compact('data', 'stock'));
             
             $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             $dealerName = $dealerName[0];

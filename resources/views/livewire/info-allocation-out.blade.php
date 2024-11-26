@@ -31,4 +31,4 @@
     }
 </style>
 @endpush
-<span class="widget-sold" id="widgetStock" data-toggle="modal" data-target=".modalWidget"><p style="font-size: 10px; cursor:pointer;">&nbsp;&nbsp; Sold &nbsp;&nbsp; <span style="display: block; margin-top: -5px;">{{ \Carbon\Carbon::parse($thisMonth)->format('M Y') }}</span> <strong style="font-size: 22px;">{{ number_format($data,0) }}</strong></p></span>
+<span class="widget-sold"><p style="font-size: 10px; cursor:pointer;">&nbsp;&nbsp; Sold &nbsp;&nbsp; <span style="display: block; margin-top: -5px;">{{ \Carbon\Carbon::parse($thisMonth)->format('M Y') }}</span> <strong style="font-size: 22px;">{{ number_format($data,0) }}</strong></p></span>

@@ -55,6 +55,7 @@
                             </div>
                             </form>
                         <!-- END FORM -->
+                        @if (!Route::is('allocation.index'))
                             <div class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'd-none' : 'd-block' }}">
                                 <a href="
                                 @if(Route::is('sale.*'))
@@ -79,13 +80,14 @@
                                     {{ url('report/opname/'.$start.'/'.$end) }}
                                 @elseif(Route::is('spk.*'))
                                     {{ url('report/spk/'.$start.'/'.$end) }}
-                                @elseif(Route::is('allocation.*'))
-                                    {{ url('report/allocation/'.$start.'/'.$end) }}
+                                @elseif(Route::is('allocation.report'))
+                                    {{ url('allocation/report/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif
                                 " class="btn btn-success" type="button" style="color: #fff;" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print"></i></a>
                             </div>
+                        @endif
                         </div>
                     </div>
                 </div>
