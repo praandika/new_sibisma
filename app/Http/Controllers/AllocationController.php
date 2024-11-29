@@ -1272,10 +1272,10 @@ class AllocationController extends Controller
     {
         $data = new Allocation;
         $data->allocation_date = $req->allocation_date;
-        $data->model_name = $req->model_name;
+        $data->model_name = strtoupper($req->model_name);
         $data->color = $req->color;
-        $data->frame_no = $req->frame_no;
-        $data->engine_no = $req->engine_no;
+        $data->frame_no = strtoupper($req->frame_no);
+        $data->engine_no = strtoupper($req->engine_no);
         $data->dealer_code = $req->dealer_code;
         $data->save();
 

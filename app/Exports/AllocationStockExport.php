@@ -25,16 +25,14 @@ class AllocationStockExport implements FromView, WithTitle, WithEvents
 
         if ($dc == 'group') {
             return view('export.allocation-stock',[
-                'data' => Allocation::whereBetween('allocation_date', [$this->start, $this->end])
-                ->where('out_status','no')
+                'data' => Allocation::where('out_status','no')
                 ->orderBy('allocation_date','asc')->get()
             ]);
         } else {
             $dc = Auth::user()->dealer_code;
             $did = Dealer::where('dealer_code',$dc)->sum('id');
             return view('export.allocation-stock',[
-                'data' => Allocation::whereBetween('allocation_date', [$this->start, $this->end])
-                ->where('out_status','no')
+                'data' => Allocation::where('out_status','no')
                 ->where('dealer_code',$dc)
                 ->get()
             ]);

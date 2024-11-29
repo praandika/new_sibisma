@@ -25,7 +25,7 @@ class AllocationOutExport implements FromView, WithTitle, WithEvents
 
         if ($dc == 'group') {
             return view('export.allocation-out',[
-                'data' => Allocation::whereBetween('allocation_date', [$this->start, $this->end])
+                'data' => Allocation::whereBetween('allocation_out_date', [$this->start, $this->end])
                 ->where('out_status','yes')
                 ->orderBy('allocation_date','asc')->get()
             ]);
@@ -33,7 +33,7 @@ class AllocationOutExport implements FromView, WithTitle, WithEvents
             $dc = Auth::user()->dealer_code;
             $did = Dealer::where('dealer_code',$dc)->sum('id');
             return view('export.allocation-out',[
-                'data' => Allocation::whereBetween('allocation_date', [$this->start, $this->end])
+                'data' => Allocation::whereBetween('allocation_out_date', [$this->start, $this->end])
                 ->where('out_status','yes')
                 ->where('dealer_code',$dc)
                 ->get()
