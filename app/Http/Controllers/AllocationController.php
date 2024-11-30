@@ -35,7 +35,12 @@ class AllocationController extends Controller
                 ->where('allocation_date',$today)
                 ->groupBy('allocation_date','dealer_code')
                 ->get();
-                $stock = Stock::orderBy('qty','desc')->get();
+                $stock = Stock::join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('dealers','stocks.dealer_id','dealers.id')
+                ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name')
+                ->orderBy('stocks.qty','desc')
+                ->get();
                 return view('page', compact('data', 'stock','start','end'));
     
             } else {
@@ -46,7 +51,13 @@ class AllocationController extends Controller
                 ->where('dealer_code',$dc)
                 ->groupBy('allocation_date')
                 ->get();
-                $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+                $stock = Stock::join('units','stocks.unit_id','units.id')
+                ->join('colors','units.color_id','colors.id')
+                ->join('dealers','stocks.dealer_id','dealers.id')
+                ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('stocks.qty','desc')
+                ->get();
                 
                 $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
                 $dealerName = $dealerName[0];
