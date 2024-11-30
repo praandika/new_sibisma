@@ -22,8 +22,6 @@
                                 <th>Category</th>
                                 <th>Color</th>
                                 <th>Year</th>
-                                <th>Created By</th>
-                                <th>Updated By</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -32,27 +30,23 @@
                                 <th>Category</th>
                                 <th>Color</th>
                                 <th>Year</th>
-                                <th>Created By</th>
-                                <th>Updated By</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @forelse($unit as $o)
                             <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
-                                data-color="{{ $o->color->color_name }}" data-colorcode="{{ $o->color->color_code }}"
+                                data-color="{{ $o->color_name }}" data-colorcode="{{ $o->color_code }}"
                                 data-yearmc="{{ $o->year_mc }}" class="klik">
                                 <td>{{ $o->model_name }}</td>
                                 <td>{{ $o->category }}</td>
-                                <td style="background-color: <?php echo $o->color->color_code ?>50 ;">
-                                    {{ $o->color->color_name }}
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                    {{ $o->color_name }}
                                 </td>
                                 <td>{{ $o->year_mc }}</td>
-                                <td>{{ $o->createdBy->first_name }}</td>
-                                <td>{{ $o->updatedBy->first_name }}</td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" style="text-align: center;">No data available</td>
+                                <td colspan="4" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -83,21 +77,21 @@
                         </tfoot>
                         <tbody>
                             @forelse($stock as $o)
-                            <tr data-id="{{ $o->id }}" data-model="{{ $o->unit->model_name }}"
-                                data-color="{{ $o->unit->color->color_name }}"
-                                data-colorcode="{{ $o->unit->color->color_code }}" data-yearmc="{{ $o->unit->year_mc }}"
+                            <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
+                                data-color="{{ $o->color_name }}"
+                                data-colorcode="{{ $o->color_code }}" data-yearmc="{{ $o->year_mc }}"
                                 data-onhand="{{ $o->qty }}"
-                                data-dealercode="{{ $o->dealer->dealer_code }}"
-                                data-dealername="{{ $o->dealer->dealer_name }}"
+                                data-dealercode="{{ $o->dealer_code }}"
+                                data-dealername="{{ $o->dealer_name }}"
                                 class="klik">
-                                <td>{{ $o->unit->model_name }}</td>
-                                <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                                    {{ $o->unit->color->color_name }}
+                                <td>{{ $o->model_name }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                    {{ $o->color_name }}
                                 </td>
                                 <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
-                                <td>{{ $o->unit->year_mc }}</td>
+                                <td>{{ $o->year_mc }}</td>
                                 @if(Auth::user()->dealer_code == 'group')
-                                <td>{{ $o->dealer->dealer_code }}</td>
+                                <td>{{ $o->dealer_code }}</td>
                                 @endif
                             </tr>
                             @empty
@@ -286,23 +280,23 @@
                         </tfoot>
                         <tbody>
                             @forelse($stock as $o)
-                            <tr data-id="{{ $o->id }}" data-model="{{ $o->unit->model_name }}"
-                                data-color="{{ $o->unit->color->color_name }}"
-                                data-colorcode="{{ $o->unit->color->color_code }}" data-yearmc="{{ $o->unit->year_mc }}"
+                            <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
+                                data-color="{{ $o->color_name }}"
+                                data-colorcode="{{ $o->color_code }}" data-yearmc="{{ $o->year_mc }}"
                                 data-onhand="{{ $o->qty }}"
-                                data-dealercode="{{ $o->dealer->dealer_code }}"
-                                data-dealername="{{ $o->dealer->dealer_name }}"
-                                data-otr="{{ number_format($o->unit->price, 0, ',','.') }}"
+                                data-dealercode="{{ $o->dealer_code }}"
+                                data-dealername="{{ $o->dealer_name }}"
+                                data-otr="{{ number_format($o->price, 0, ',','.') }}"
                                 class="klik">
-                                <td>{{ $o->unit->model_name }}</td>
-                                <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                                    {{ $o->unit->color->color_name }}
+                                <td>{{ $o->model_name }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                    {{ $o->color_name }}
                                 </td>
                                 <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
-                                <td>{{ $o->unit->year_mc }}</td>
-                                <td>{{ number_format($o->unit->price, 0, ',','.') }}</td>
+                                <td>{{ $o->year_mc }}</td>
+                                <td>{{ number_format($o->price, 0, ',','.') }}</td>
                                 @if(Auth::user()->dealer_code == 'group')
-                                <td>{{ $o->dealer->dealer_code }}</td>
+                                <td>{{ $o->dealer_code }}</td>
                                 @endif
                             </tr>
                             @empty

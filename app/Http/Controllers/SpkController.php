@@ -48,7 +48,13 @@ class SpkController extends Controller
         $colorData = Color::all();
 
         if ($dc == 'group') {
-            $stock = Stock::orderBy('qty','desc')->get();
+            $stock = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price')
+            ->orderBy('stocks.qty','desc')
+            ->get();
+
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
             ->where([
                 ['manpowers.category','SAL'],
@@ -75,7 +81,13 @@ class SpkController extends Controller
             
         }else{
             $dealerCode = $dc;
-            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $stock = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('stocks.qty','desc')
+            ->get();
             
             $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
             ->where([

@@ -81,29 +81,24 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input checkData" type="checkbox" name="pilih[]"
                                                 value="{{ $o->id }}">
-                                            <span class="form-check-sign">{{ $o->unit->model_name }}</span>
+                                            <span class="form-check-sign">{{ $o->model_name }}</span>
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{ $o->unit->category }}</td>
-                                <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                                    {{ $o->unit->color->color_name }}
+                                <td>{{ $o->category }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                    {{ $o->color_name }}
                                 </td>
-                                <td>{{ $o->unit->year_mc }}</td>
+                                <td>{{ $o->year_mc }}</td>
                                 <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
-                                <td>{{ $o->dealer->dealer_name }}</td>
-                                <td>{{ $o->createdBy->first_name }}</td>
-                                <td>{{ $o->updatedBy->first_name }}</td>
+                                <td>{{ $o->dealer_name }}</td>
+                                <td>{{ $o->first_name }}</td>
+                                <td>{{ $o->first_name }}</td>
                                 <td>
                                     <div class="form-button-action">
                                         <a href="{{ route('stock.show', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Detail"
                                             style="color:orange;"><i class="fa fa-eye"></i></a>
-                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="{{ route('stock.delete', $o->id) }}" class="btnAction"
-                                            data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                            onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }} {{ $o->unit->color->color_name }}?')"><i
-                                                class="fas fa-trash-alt"></i></a> -->
                                     </div>
                                 </td>
                             </tr>

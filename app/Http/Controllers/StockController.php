@@ -27,8 +27,20 @@ class StockController extends Controller
         $dealer = Dealer::where('dealer_code','!=','YIMM')->get();
 
         if ($dc == 'group') {
-            $unit = Unit::orderBy('model_name', 'desc')->get();
-            $data = Stock::orderBy('qty','desc')->get(); 
+            $unit = Unit::join('colors','units.color_id','colors.id')
+            ->orderBy('units.year_mc','desc')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','units.category')
+            ->orderBy('units.year_mc','desc')
+            ->get();
+
+            $data = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->join('users','stocks.created_by','users.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.category','users.first_name','stocks.id as id')
+            ->orderBy('stocks.qty','desc')
+            ->get();
+
             return view('page', compact('data','dealer','unit'));
 
         } else {
@@ -41,10 +53,21 @@ class StockController extends Controller
             foreach($stock as $o){
                 array_push($unit_id,$o->unit_id);
             }
-            $unit = Unit::whereNotIn('id',$unit_id)->orderBy('model_name', 'desc')->get();
+            $unit = Unit::join('colors','units.color_id','colors.id')
+            ->orderBy('units.year_mc','desc')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','units.category')
+            ->whereNotIn('units.id',$unit_id)
+            ->get();
             // --------------------------------------------
-            
-            $data = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get();
+            $data = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->join('users','stocks.created_by','users.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.category','users.first_name','stocks.id as id')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('stocks.qty','desc')
+            ->get();
+
             $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             $dealerName = $dealerName[0];
             $dealerId = Dealer::where('dealer_code',$dc)->pluck('id');
