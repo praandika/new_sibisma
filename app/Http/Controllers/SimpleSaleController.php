@@ -27,11 +27,22 @@ class SimpleSaleController extends Controller
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         if ($dc == 'group') {
-            $stock = Stock::orderBy('qty','desc')->get();
+            $stock = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','stocks.id as id')
+            ->orderBy('stocks.qty','desc')
+            ->get();
             $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
             return view('page', compact('stock','leasing','today','data','dealer'));
         }else{
-            $stock = Stock::where('dealer_id',$did)->orderBy('qty','desc')->get('stocks.*');
+            $stock = Stock::join('units','stocks.unit_id','units.id')
+            ->join('colors','units.color_id','colors.id')
+            ->join('dealers','stocks.dealer_id','dealers.id')
+            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','stocks.id as id')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('stocks.qty','desc')
+            ->get();
             $dealerCode = $dc;
             $data = Sale::join('stocks','sales.stock_id','stocks.id')
             ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
