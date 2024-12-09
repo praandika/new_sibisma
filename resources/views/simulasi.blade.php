@@ -579,7 +579,7 @@
         }) 
     </script>
 
-    <script src="{{ asset('simulasi/proses6.js') }}"></script>
+    <script src="{{ asset('simulasi/proses8.js') }}"></script>
 </body>
 
 </html>
