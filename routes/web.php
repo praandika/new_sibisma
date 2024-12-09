@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ContactListHelperController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\ManpowerController;
@@ -304,3 +305,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/allocation-report/{param?
 // ALLOCATION MODE
 Route::middleware(['auth:sanctum', 'verified'])->post('update-allocation-mode/{id}/{mode}', [UserController::class, 'updateAllocationMode']);
 // END ALLOCATION MODE
+
+// CRM
+Route::middleware(['auth:sanctum', 'verified'])->resource('contactlist', ContactListHelperController::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/contactlist/import', [ContactListHelperController::class, 'importExcel'])->name('contactlist.import');
+Route::middleware(['auth:sanctum', 'verified'])->get('/contactlist-search/{param?}', [ContactListHelperController::class, 'search'])->name('contactlist.search');
+Route::middleware(['auth:sanctum', 'verified'])->get('/contactlist-report/{param?}', [ContactListHelperController::class, 'report'])->name('contactlist.report');
+// END CRM

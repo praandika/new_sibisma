@@ -44,7 +44,7 @@
                                 <th>Whatsapp</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
-                                @if(Auth::user()->dealer_code == 'group')
+                                @if(Auth::user()->dealer_code == 'group' && Auth::user()->access != 'user')
                                 <th width="70">Action</th>
                                 @endif
                             </tr>
@@ -64,7 +64,7 @@
                                 <th>Whatsapp</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
-                                @if(Auth::user()->dealer_code == 'group')
+                                @if(Auth::user()->dealer_code == 'group' && Auth::user()->access != 'user')
                                 <th width="70">Action</th>
                                 @endif
                             </tr>
@@ -87,7 +87,7 @@
                                 <td>{{ $o->phone2 }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
-                                @if(Auth::user()->dealer_code == 'group')
+                                @if(Auth::user()->dealer_code == 'group' && Auth::user()->access != 'user')
                                 <td>
                                     <div class="form-button-action">
                                         <a href="{{ route('dealer.edit', $o->id) }}" class="btnAction"
