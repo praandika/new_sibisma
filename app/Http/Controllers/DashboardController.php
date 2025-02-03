@@ -18,6 +18,7 @@ class DashboardController extends Controller
         $data = Unit::join('colors','colors.id','=','units.color_id')
         ->where('units.year_mc',$year)
         ->orWhere('units.model_name','Fazzio Neo Hybrid')
+        ->orWhere('Fazzio Hybrid Lux')
         ->groupBy('units.model_name')
         ->orderBy('units.model_name', 'asc')
         ->get();
