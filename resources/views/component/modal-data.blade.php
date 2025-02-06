@@ -15,7 +15,7 @@
                 <div class="table-responsive">
                     <table id="tb-basic-table-position" class="display table table-striped table-hover" width="100%">
                         <!-- IF -->
-                        @if(Route::is('stock.*'))
+                        @if(Route::is('stock.*') || Route::is('warehouse.*'))
                         <thead>
                             <tr>
                                 <th>Model Name</th>

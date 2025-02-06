@@ -59,59 +59,67 @@
             <!-- END Account Info -->
 
             <ul class="nav nav-primary">
-            @if(Auth::user()->access != 'user')
-                @if(Auth::user()-> access != 'salesman')
-                        @include('menu.dashboard')
-                    @if(Auth::user()->allocation_tools == 'yes')
-                        @include('menu.allocation')
+            @if(Auth::user()->access != 'warehouse')
+            
+                @if(Auth::user()->access != 'user')
+                    @if(Auth::user()-> access != 'salesman')
+                            @include('menu.dashboard')
+                        @if(Auth::user()->allocation_tools == 'yes')
+                            @include('menu.allocation')
+                        @endif
+                        @if(Auth::user()-> access != 'owner')
+                            @include('menu.stock')
+                            @include('menu.spk')
+                            @include('menu.manage-stock')
+                            @include('menu.delivery')
+                            @include('menu.opname')
+                            @include('menu.dealer')
+                            @include('menu.manpower')
+                            @include('menu.dokumen')
+                        @endif
+
+                        @include('menu.report')
+
+                        @if(Auth::user()-> access == 'admin')
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <h4 class="text-section">Admin</h4>
+                            </li>
+                            @include('menu.user')
+                        @endif
+
+                        @if(Auth::user()->access == 'master')
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <h4 class="text-section">Admin</h4>
+                            </li>
+                            @include('menu.datamaster')
+                            @include('menu.datawebsite')
+                            @include('menu.user')
+                            @include('menu.idcard')
+                            @include('menu.log')
+                        @endif
                     @endif
-                    @if(Auth::user()-> access != 'owner')
+
+                    @if(Auth::user()->access == 'salesman')
                         @include('menu.stock')
-                        @include('menu.spk')
-                        @include('menu.manage-stock')
-                        @include('menu.delivery')
-                        @include('menu.opname')
-                        @include('menu.dealer')
-                        @include('menu.manpower')
-                        @include('menu.dokumen')
-                    @endif
-
-                    @include('menu.report')
-
-                    @if(Auth::user()-> access == 'admin')
-                        <li class="nav-section">
-                            <span class="sidebar-mini-icon">
-                                <i class="fa fa-ellipsis-h"></i>
-                            </span>
-                            <h4 class="text-section">Admin</h4>
-                        </li>
-                        @include('menu.user')
-                    @endif
-
-                    @if(Auth::user()->access == 'master')
-                        <li class="nav-section">
-                            <span class="sidebar-mini-icon">
-                                <i class="fa fa-ellipsis-h"></i>
-                            </span>
-                            <h4 class="text-section">Admin</h4>
-                        </li>
-                        @include('menu.datamaster')
-                        @include('menu.datawebsite')
-                        @include('menu.user')
-                        @include('menu.idcard')
-                        @include('menu.log')
                     @endif
                 @endif
 
-                @if(Auth::user()->access == 'salesman')
-                    @include('menu.stock')
+                @if(Auth::user()->access == 'user')
+                    @include('menu.dashboard')
+                    @include('menu.crm')
+                    @include('menu.dealer')
                 @endif
+                
             @endif
 
-            @if(Auth::user()->access == 'user')
-                @include('menu.dashboard')
-                @include('menu.crm')
-                @include('menu.dealer')
+            @if(Auth::user()->access == 'warehouse')
+                @include('menu.warehouse')
             @endif
             </ul>
         </div>

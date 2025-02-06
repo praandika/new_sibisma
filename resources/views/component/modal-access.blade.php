@@ -32,6 +32,9 @@
                             <tr class="pilihAccess" data-access="salesman">
                                 <td>Salesman</td>
                             </tr>
+                            <tr class="pilihAccess" data-access="warehouse">
+                                <td>Warehouse</td>
+                            </tr>
                             @endif
                             @if(Auth::user()-> access == 'admin')
                                 <tr class="pilihAccess" data-access="salesman">

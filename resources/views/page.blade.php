@@ -4,6 +4,8 @@
     @if(Route::is('dashboard'))
         @if(Auth::user()->access == 'salesman')
             @include('component.salesman-home')
+        @elseif(Auth::user()->access == 'warehouse')
+            @include('component.warehouse-home')
         @else
             @section('title','Dashboard')
             @section('page-title','Dashboard')
@@ -372,6 +374,15 @@
         @else
             @include('component.spk-create')
             @include('component.spk-data')
+        @endif
+
+    <!-- Warehouse Page -->
+    @elseif(Route::is('warehouse.*'))
+        @if(Route::is('warehouse.entry'))
+            @include('component.warehouse-entry')
+        @else
+            @include('component.search-box')
+            @include('component.warehouse-data')
         @endif
 
     <!-- Data DO -->

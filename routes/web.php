@@ -34,6 +34,7 @@ use App\Http\Controllers\IDCardController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\WarehouseController;
 use App\Models\Spk;
 
 /*
@@ -312,3 +313,9 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/contactlist/import', [Co
 Route::middleware(['auth:sanctum', 'verified'])->get('/contactlist-search/{param?}', [ContactListHelperController::class, 'search'])->name('contactlist.search');
 Route::middleware(['auth:sanctum', 'verified'])->get('/contactlist-report/{param?}', [ContactListHelperController::class, 'report'])->name('contactlist.report');
 // END CRM
+
+// WAREHOUSE
+Route::middleware(['auth:sanctum', 'verified'])->resource('warehouse', WarehouseController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/entry/{code}/{wId}', [WarehouseController::class, 'entry'])->name('warehouse.entry');
+Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/out/{code}/{wId}', [WarehouseController::class, 'out'])->name('warehouse.out');
+// END WAREHOUSE
