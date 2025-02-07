@@ -26,17 +26,17 @@
                 <table id="basic-datatables" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Total Unit</th>
-                            <th>Dealer Code</th>
+                            <th>Entry Date</th>
+                            <th>Model Name</th>
+                            <th>Gudang</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Date</th>
-                            <th>Total Unit</th>
-                            <th>Dealer Code</th>
+                            <th>Entry Date</th>
+                            <th>Model Name</th>
+                            <th>Gudang</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>

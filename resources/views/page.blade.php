@@ -380,9 +380,20 @@
     @elseif(Route::is('warehouse.*'))
         @if(Route::is('warehouse.entry'))
             @include('component.warehouse-entry')
+        @elseif(Route::is('warehouse.show'))
+            @include('component.warehouse-show')
         @else
             @include('component.search-box')
             @include('component.warehouse-data')
+        @endif
+
+    <!-- Warehouse Name Page -->
+    @elseif(Route::is('warehousename.*'))
+        @if(Route::is('warehousename.edit'))
+            @include('component.warehousename-edit')
+        @else
+            @include('component.warehousename-create')
+            @include('component.warehousename-data')
         @endif
 
     <!-- Data DO -->

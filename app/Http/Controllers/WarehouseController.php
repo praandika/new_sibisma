@@ -8,6 +8,8 @@ use App\Models\Unit;
 use App\Models\WarehouseName;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Dealer;
 
 class WarehouseController extends Controller
 {
@@ -34,22 +36,28 @@ class WarehouseController extends Controller
     }
 
     public function entry($code, $wId){
-        $gudang = WarehouseName::where('id', $wId)->pluck('name');
-        $gudang = $gudang[0];
-        $dc = Auth::user()->dealer_code;
-        $firstName = Auth::user()->first_name;
-        $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
-        $dealerName = $dealerName[0];
-        $thisYear = Carbon::now('GMT+8')->format('Y');
-        $lastYear = $thisYear - 1;
-        $unit = Unit::where([
-            ['year_mc', $thisYear],
-            ['year_mc', $lastYear]
-        ])
-        ->orderBy('model_name', 'asc')
-        ->orderBy('year_mc','desc')
-        ->get();
-        return view('page', compact('code','dealerName','firstName','wId','gudang','unit'));
+        $cek = Warehouse::where('code', $code)->count();
+        if ($cek > 0) {
+            return redirect()->route('warehouse.show');
+        } else {
+            $today = Carbon::now('GMT+8')->format('Y-m-d');
+            $gudang = WarehouseName::where('id', $wId)->pluck('name');
+            $gudang = $gudang[0];
+            $dc = Auth::user()->dealer_code;
+            $firstName = Auth::user()->first_name;
+            $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+            $dealerName = $dealerName[0];
+            $thisYear = Carbon::now('GMT+8')->format('Y');
+            $lastYear = $thisYear - 1;
+            $unit = Unit::where('year_mc',$thisYear)
+            ->join('colors','units.color_id','colors.id')
+            ->orWhere('year_mc',$lastYear)
+            ->orderBy('model_name', 'asc')
+            ->orderBy('year_mc','desc')
+            ->select('units.id','units.model_name','colors.color_name','colors.color_code','units.year_mc')
+            ->get();
+            return view('page', compact('code','dealerName','firstName','wId','gudang','unit','dc','lastYear','today'));
+        }
     }
 
     /**
@@ -71,7 +79,7 @@ class WarehouseController extends Controller
      */
     public function show(Warehouse $warehouse)
     {
-        //
+        return view('page',compact('warehouse'));
     }
 
     /**
@@ -106,5 +114,39 @@ class WarehouseController extends Controller
     public function destroy(Warehouse $warehouse)
     {
         //
+    }
+
+    public function name(){
+        $data = WarehouseName::all();
+        return view('page',compact('data'));
+    }
+
+    public function wStore(Request $req){
+        $data = new WarehouseName;
+        $data->name = $req->name;
+        $data->address = $req->address;
+        $data->save();
+        toast('Data Warehouse Name berhasil disimpan','success');
+        return redirect()->route('warehousename.index')->with('display', true);
+    }
+
+    public function wEdit($id){
+        $data = WarehouseName::where('id',$id)->first();
+        return view('page',compact('data'));
+    }
+
+    public function wUpdate(Request $req){
+        $data = WarehouseName::find($req->id);
+        $data->name = $req->name;
+        $data->address = $req->address;
+        $data->update();
+        toast('Data Warehouse Name berhasil diubah','success');
+        return redirect()->back();
+    }
+
+    public function wDelete($id){
+        WarehouseName::where('id',$id)->delete();
+        toast('Data Warehouse Name berhasil dihapus','success');
+        return redirect()->back();
     }
 }

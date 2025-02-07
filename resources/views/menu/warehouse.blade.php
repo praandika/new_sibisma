@@ -11,8 +11,8 @@
                     <span class="sub-item">Warehouse Data</span>
                 </a>
             </li>
-            <li class="{{ Route::is('warehouse.name') ? 'active' : '' }}">
-                <a href="{{ route('warehouse.name') }}">
+            <li class="{{ Route::is('warehousename.index') ? 'active' : '' }}">
+                <a href="{{ route('warehousename.index') }}">
                     <span class="sub-item">Warehouse Name</span>
                 </a>
             </li>

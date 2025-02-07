@@ -15,7 +15,7 @@
                 <div class="table-responsive">
                     <table id="tb-basic-table-position" class="display table table-striped table-hover" width="100%">
                         <!-- IF -->
-                        @if(Route::is('stock.*') || Route::is('warehouse.*'))
+                        @if(Route::is('stock.*'))
                         <thead>
                             <tr>
                                 <th>Model Name</th>
@@ -51,6 +51,49 @@
                             @endforelse
                         </tbody>
                         <!-- ELSE IF -->
+                        
+                        @elseif(Route::is('warehouse.entry'))
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Color</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Color</th>
+                                <th>Year</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @forelse($unit as $o)
+                            <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
+                                data-color="{{ $o->color_name }}" data-colorcode="{{ $o->color_code }}"
+                                data-yearmc="{{ $o->year_mc }}" class="klik">
+                                <td>{{ $o->model_name }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50;">{{ $o->color_name }}</td>
+                                <td>
+                                    @if($o->year_mc == $lastYear)
+                                        <span style="font-style: italic; font-size: 11px; color: crimson;">
+                                            {{ $o->year_mc }}
+                                        </span>
+                                    @else
+                                        <span style="font-weight: bold;">
+                                            {{ $o->year_mc }}
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="3" style="text-align: center;">No data available</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                        <!-- ELSE IF -->
+                        
                         @elseif(Route::is('sale.*') || Route::is('entry.*') || Route::is('out.*') || Route::is('opname.*') || Route::is('allocation.index'))
                         
                         <thead>
@@ -336,6 +379,19 @@
         $('#model_name').val($(this).attr('data-model'));
         $('#color').val($(this).attr('data-color'));
         $('#year_mc').val($(this).attr('data-yearmc'));
+        $('.modalData').modal('hide');
+        
+        $('#color_code').css('background', code);
+    });
+</script>
+@elseif(Route::is('warehouse.entry'))
+<script>
+    $(document).on('click', '.klik', function (e) {
+        let code = $(this).attr('data-colorcode');
+        $('#unit_id').val($(this).attr('data-id'));
+        $('#model_name').val($(this).attr('data-model'));
+        $('#color').text($(this).attr('data-color'));
+        $('#year_mc').text($(this).attr('data-yearmc'));
         $('.modalData').modal('hide');
         
         $('#color_code').css('background', code);
