@@ -318,6 +318,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/contactlist-report/{param
 Route::middleware(['auth:sanctum', 'verified'])->resource('warehouse', WarehouseController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/entry/{code}/{wId}', [WarehouseController::class, 'entry'])->name('warehouse.entry');
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/out/{code}/{wId}', [WarehouseController::class, 'out'])->name('warehouse.out');
+Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/detail/{code}/{wId}', [WarehouseController::class, 'out'])->name('warehouse.detail');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehousename', [WarehouseController::class, 'name'])->name('warehousename.index');
 Route::middleware(['auth:sanctum', 'verified'])->post('/warehousename/store', [WarehouseController::class, 'wStore'])->name('warehousename.store');

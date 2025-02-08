@@ -38,7 +38,7 @@ class WarehouseController extends Controller
     public function entry($code, $wId){
         $cek = Warehouse::where('code', $code)->count();
         if ($cek > 0) {
-            return redirect()->route('warehouse.show');
+            return redirect()->route('warehouse.detail');
         } else {
             $today = Carbon::now('GMT+8')->format('Y-m-d');
             $gudang = WarehouseName::where('id', $wId)->pluck('name');

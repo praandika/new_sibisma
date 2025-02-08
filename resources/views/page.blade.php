@@ -380,8 +380,8 @@
     @elseif(Route::is('warehouse.*'))
         @if(Route::is('warehouse.entry'))
             @include('component.warehouse-entry')
-        @elseif(Route::is('warehouse.show'))
-            @include('component.warehouse-show')
+        @elseif(Route::is('warehouse.detail'))
+            @include('component.warehouse-detail')
         @else
             @include('component.search-box')
             @include('component.warehouse-data')
