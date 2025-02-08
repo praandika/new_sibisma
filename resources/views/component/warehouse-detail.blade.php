@@ -14,6 +14,11 @@
 </li>
 @endpush
 
+<div class="col-md-12">
+    <a href="{{ route('warehouse.sell') }}">Jual</a>
+    <a href="{{ route('warehouse.move') }}">Pindahkan</a>
+</div>
+
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
@@ -46,7 +51,7 @@
                                         <div class="col-9 col-stats">
                                             <div class="numbers">
                                                 <p class="card-category">Color</p>
-                                                <p style="font-size: 11px; font-weight: bold;" class="card-title">{{ $o->color }}</p>
+                                                <p style="font-size: 11px; font-weight: bold;" class="card-title">{{ $o->color_name }}</p>
                                             </div>
                                         </div>
                                     </div>

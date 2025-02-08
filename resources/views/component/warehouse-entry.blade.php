@@ -4,7 +4,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('warehouse.index') }}">Warehouse Entry</a>
+    <a href="{{ route('warehouse.index') }}">{{ $dealerName }}</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
@@ -40,10 +40,6 @@
 </style>
 @endpush
 
-@push('button')
-    @include('component.button-search')
-@endpush
-
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
@@ -74,7 +70,7 @@
                         <div class="form-group form-floating-label">
                             <input id="allocation_date" type="date" class="form-control input-border-bottom"
                                 name="allocation_date" value="{{ $today }}" required>
-                            <label for="allocation_date" class="placeholder">Date *</label>
+                            <label for="allocation_date" class="placeholder">Date * (m/d/Y)</label>
                         </div>
                     </div>
                 </div>
@@ -112,7 +108,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dc }}" required> 
-                                <input id="dealer_name" type="text" class="form-control input-border-bottom"
+                                <input id="dealer_name" type="hidden" class="form-control input-border-bottom"
                                     name="dealer_name" value="{{ $dealerName }}" style="text-transform: uppercase;" readonly required>
                             </div>
                     </div>

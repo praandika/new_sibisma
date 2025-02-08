@@ -60,6 +60,18 @@ class WarehouseController extends Controller
         }
     }
 
+    public function out(){
+        // 
+    }
+
+    public function detail($code, $wId){
+        $data = Warehouse::join('colors','warehouses.color_name','colors.color_name')
+        ->where('warehouses.code', $code)
+        ->select('warehouses.id','warehouses.code','warehouses.model_name','warehouses.color_name','warehouses.gudang','warehouses.year_mc','warehouses.in_date','warehouses.engine_no','warehouses.frame_no','warehouses.pic','warehouses.status','colors.color_code')
+        ->get();
+        return view('page', compact('data'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
