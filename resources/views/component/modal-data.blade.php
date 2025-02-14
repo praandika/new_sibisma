@@ -391,7 +391,9 @@
         $('#unit_id').val($(this).attr('data-id'));
         $('#model_name').val($(this).attr('data-model'));
         $('#color').text($(this).attr('data-color'));
-        $('#year_mc').text($(this).attr('data-yearmc'));
+        $('#yearmc').text($(this).attr('data-yearmc'));
+        $('#color_name').val($(this).attr('data-color'));
+        $('#year_mc').val($(this).attr('data-yearmc'));
         $('.modalData').modal('hide');
         
         $('#color_code').css('background', code);

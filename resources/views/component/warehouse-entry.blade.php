@@ -65,6 +65,8 @@
                 <input type="hidden" name="code" value="{{ $code }}">
                 <input type="hidden" name="pic" value="{{ $firstName }}">
                 <input type="hidden" name="gudang" value="{{ $gudang }}">
+                <input type="hidden" name="color_name" id="color_name" value="{{ old('color_name') }}">
+                <input type="hidden" name="year_mc" id="year_mc" value="{{ old('year_mc') }}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
@@ -85,7 +87,7 @@
                     </div>
                 </div>
                 <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; "></span>
-                <span id="year_mc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; "></span>
+                <span id="yearmc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; "></span>
                 <hr>
 
                 <div class="row">

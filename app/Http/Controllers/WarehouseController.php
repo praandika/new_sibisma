@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Dealer;
+use App\Models\WarehouseSale;
 
 class WarehouseController extends Controller
 {
@@ -39,7 +40,7 @@ class WarehouseController extends Controller
     public function entry($code, $wId){
         $cek = Warehouse::where('code', $code)->count();
         if ($cek > 0) {
-            return redirect()->route('warehouse.detail');
+            return redirect()->route('warehouse.detail', ['code' => $code, 'wId' => $wId]);
         } else {
             $today = Carbon::now('GMT+8')->format('Y-m-d');
             $gudang = WarehouseName::where('id', $wId)->pluck('name');
@@ -68,9 +69,56 @@ class WarehouseController extends Controller
     public function detail($code, $wId){
         $data = Warehouse::join('colors','warehouses.color_name','colors.color_name')
         ->where('warehouses.code', $code)
-        ->select('warehouses.id','warehouses.code','warehouses.model_name','warehouses.color_name','warehouses.gudang','warehouses.year_mc','warehouses.in_date','warehouses.engine_no','warehouses.frame_no','warehouses.pic','warehouses.status','colors.color_code')
+        ->select('warehouses.id','warehouses.code','warehouses.model_name','warehouses.color_name','warehouses.gudang','warehouses.year_mc','warehouses.in_date','warehouses.engine_no','warehouses.frame_no','warehouses.pic','warehouses.status','colors.color_code', 'warehouses.note')
         ->get();
-        return view('page', compact('data'));
+
+        $id = Warehouse::where('warehouses.code', $code)->sum('id');
+        $gudang = Warehouse::where('warehouses.code', $code)->pluck('gudang');
+        $gudang = $gudang[0];
+
+        $dataGudang = WarehouseName::all();
+
+        return view('page', compact('data', 'code', 'wId', 'id','gudang','dataGudang'));
+    }
+
+    public function sell($id){
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        $sale = new WarehouseSale;
+        $sale->warehouse_id = $id;
+        $sale->sale_date = $today;
+        $sale->status = "Idle";
+        
+        $data = Warehouse::find($id);
+        $data->status = "Sold";
+        $data->out_date = $today;
+        $data->note = "Terjual";
+
+        $sale->save();
+        $data->update();
+
+        toast('Sold!','success');
+        return redirect()->back();
+    }
+
+    public function move(Request $req, $id){
+        if ($req->new == $req->old) {
+            toast('Pilih Gudang Lain, Unit sudah di '.$req->new,'warning');
+            return redirect()->back();
+        } else {
+            $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+            $data = Warehouse::find($id);
+            $data->status = "Move";
+            $data->out_date = $today;
+            $data->gudang = $req->new;
+            $data->note = "Pindah dari ".$req->old." ke ".$req->new;
+
+            $data->update();
+
+            toast('Move to '.$req->new,'success');
+            return redirect()->back();
+        }
     }
 
     public function generate($dealer){
@@ -100,9 +148,24 @@ class WarehouseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $data = new Warehouse;
+        $data->code = $req->code;
+        $data->dealer_code = $req->dealer_code;
+        $data->model_name = $req->model_name;
+        $data->color_name = $req->color_name;
+        $data->year_mc = $req->year_mc;
+        $data->frame_no = $req->frame_no;
+        $data->engine_no = $req->engine_no;
+        $data->in_date = $req->allocation_date;
+        $data->gudang = $req->gudang;
+        $data->pic = $req->pic;
+        $data->status = "In Stock";
+        $data->note = "Sampai di Gudang ".$req->gudang;
+        $data->save();
+        toast('Unit '.$req->model_name.' '.$req->color_name.'-'.$req->engine_no.' In Stock','success');
+        return redirect()->back();
     }
 
     /**
