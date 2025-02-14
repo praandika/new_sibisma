@@ -100,7 +100,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}"
-                                style="text-transform: uppercase;" required>
+                                style="text-transform: uppercase;">
                             <label for="frame_no" class="placeholder">Frame No (opsional)</label>
                         </div>
                     </div>
