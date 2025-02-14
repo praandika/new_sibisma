@@ -162,7 +162,7 @@ class WarehouseController extends Controller
         $data->gudang = $req->gudang;
         $data->pic = $req->pic;
         $data->status = "In Stock";
-        $data->note = "Sampai di Gudang ".$req->gudang;
+        $data->note = "Sampai di ".$req->gudang;
         $data->save();
         toast('Unit '.$req->model_name.' '.$req->color_name.'-'.$req->engine_no.' In Stock','success');
         return redirect()->back();
