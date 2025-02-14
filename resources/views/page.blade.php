@@ -382,6 +382,8 @@
             @include('component.warehouse-entry')
         @elseif(Route::is('warehouse.detail'))
             @include('component.warehouse-detail')
+        @elseif(Route::is('warehouse.generate'))
+            @include('component.warehouse-generate')
         @else
             @include('component.search-box')
             @include('component.warehouse-data')

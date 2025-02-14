@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GenerateQR;
 use App\Models\Warehouse;
 use App\Http\Controllers\Controller;
 use App\Models\Unit;
@@ -70,6 +71,27 @@ class WarehouseController extends Controller
         ->select('warehouses.id','warehouses.code','warehouses.model_name','warehouses.color_name','warehouses.gudang','warehouses.year_mc','warehouses.in_date','warehouses.engine_no','warehouses.frame_no','warehouses.pic','warehouses.status','colors.color_code')
         ->get();
         return view('page', compact('data'));
+    }
+
+    public function generate($dealer){
+        $dealerName = Dealer::where('dealer_code',$dealer)->pluck('dealer_name');
+        $dealerName = $dealerName[0];
+        $lastCode = Warehouse::where('dealer_code', $dealer)
+        ->orderBy('code','desc')->first();
+
+        $gudang = WarehouseName::all();
+        return view('page', compact('dealer','lastCode','dealerName','gudang'));
+    }
+
+    public function generating(Request $req){
+        
+        $date = Carbon::now('GMT+8')->format('YmdHis');
+        $dealer = Auth::user()->dealer_code;
+        $baris = $req->baris;
+        $gudang = $req->gudang_id;
+        // dd($gudang);
+        
+        return (new GenerateQR)->dealer($dealer)->date($date)->baris($baris)->gudang($gudang)->download('Generate_QR_'.$dealer.'-'.$date.'.xlsx');
     }
 
     /**

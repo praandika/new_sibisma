@@ -322,6 +322,8 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/warehouse/sellprocess/{c
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/detail/{code}/{wId}', [WarehouseController::class, 'detail'])->name('warehouse.detail');
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/move/{code}/{wId}', [WarehouseController::class, 'move'])->name('warehouse.move');
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/sell/{code}/{wId}', [WarehouseController::class, 'sell'])->name('warehouse.sell');
+Route::middleware(['auth:sanctum', 'verified'])->get('/warehouse/generate/{dealer}', [WarehouseController::class, 'generate'])->name('warehouse.generate');
+Route::middleware(['auth:sanctum', 'verified'])->post('/warehouse/generating', [WarehouseController::class, 'generating'])->name('warehouse.generating');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/warehousename', [WarehouseController::class, 'name'])->name('warehousename.index');
 Route::middleware(['auth:sanctum', 'verified'])->post('/warehousename/store', [WarehouseController::class, 'wStore'])->name('warehousename.store');

@@ -16,6 +16,11 @@
                     <span class="sub-item">Warehouse Name</span>
                 </a>
             </li>
+            <li class="{{ Route::is('warehouse.generate') ? 'active' : '' }}">
+                <a href="{{ route('warehouse.generate', auth()->user()->dealer_code) }}">
+                    <span class="sub-item">Generate Code</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>
