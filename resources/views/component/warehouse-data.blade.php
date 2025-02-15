@@ -27,21 +27,32 @@
                     <thead>
                         <tr>
                             <th>Entry Date</th>
+                            <th>Engine No.</th>
                             <th>Model Name</th>
                             <th>Gudang</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Entry Date</th>
+                            <th>Engine No.</th>
                             <th>Model Name</th>
                             <th>Gudang</th>
-                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        
+                        @forelse($data as $o)
+                        <tr>
+                            <td>{{ {{ \Carbon\Carbon::parse($o->in_date)->isoFormat('D-M-Y') }} }}</td>
+                            <td>{{ $o->model_name }}</td>
+                            <td>{{ $o->gudang }}</td>
+                            <td>{{ $o->engine_no }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" style="text-align: center;">No data available</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

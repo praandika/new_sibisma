@@ -24,6 +24,7 @@ class WarehouseController extends Controller
     {
         $start = $req->start;
         $end = $req->end;
+        $data = Warehouse::orderBy('in_date', 'desc')->get();
         return view('page', compact('start','end'));
     }
 
@@ -156,8 +157,8 @@ class WarehouseController extends Controller
         $data->model_name = $req->model_name;
         $data->color_name = $req->color_name;
         $data->year_mc = $req->year_mc;
-        $data->frame_no = $req->frame_no;
-        $data->engine_no = $req->engine_no;
+        $data->frame_no = strtoupper($req->frame_no);
+        $data->engine_no = strtoupper($req->engine_no);
         $data->in_date = $req->allocation_date;
         $data->gudang = $req->gudang;
         $data->pic = $req->pic;
