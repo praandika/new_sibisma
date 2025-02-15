@@ -125,11 +125,9 @@ class WarehouseController extends Controller
     public function generate($dealer){
         $dealerName = Dealer::where('dealer_code',$dealer)->pluck('dealer_name');
         $dealerName = $dealerName[0];
-        $lastCode = Warehouse::where('dealer_code', $dealer)
-        ->orderBy('code','desc')->first();
 
         $gudang = WarehouseName::all();
-        return view('page', compact('dealer','lastCode','dealerName','gudang'));
+        return view('page', compact('dealer','dealerName','gudang'));
     }
 
     public function generating(Request $req){
