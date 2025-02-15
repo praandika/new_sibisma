@@ -5,12 +5,6 @@
 <li class="nav-item">
     <a href="{{ route('warehouse.index') }}">{{ $dealerName }}</a>
 </li>
-<li class="separator">
-    <i class="flaticon-right-arrow"></i>
-</li>
-<li class="nav-item">
-    <a href="#">{{ $lastCode }}</a>
-</li>
 @endpush
 
 @push('after-css')
