@@ -43,7 +43,7 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ {{ \Carbon\Carbon::parse($o->in_date)->isoFormat('D-M-Y') }} }}</td>
+                            <td>{{ \Carbon\Carbon::parse($o->in_date)->isoFormat('D-M-Y') }}</td>
                             <td>{{ $o->model_name }}</td>
                             <td>{{ $o->gudang }}</td>
                             <td>{{ $o->engine_no }}</td>

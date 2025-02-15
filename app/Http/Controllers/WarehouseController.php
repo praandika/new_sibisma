@@ -25,7 +25,7 @@ class WarehouseController extends Controller
         $start = $req->start;
         $end = $req->end;
         $data = Warehouse::orderBy('in_date', 'desc')->get();
-        return view('page', compact('start','end'));
+        return view('page', compact('start','end','data'));
     }
 
     /**
