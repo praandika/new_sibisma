@@ -48,7 +48,8 @@
                 display: inline-block;
                 position: absolute;
                 left: 0px;
-                top: 0px;">
+                top: 0px;
+                background-color: {{ $colorCode }};">
             </span>
             <div class="row">
                 <div class="col-10">
@@ -65,8 +66,8 @@
                 <input type="hidden" name="code" value="{{ $code }}">
                 <input type="hidden" name="pic" value="{{ $firstName }}">
                 <input type="hidden" name="gudang" value="{{ $gudang }}">
-                <input type="hidden" name="color_name" id="color_name" value="{{ old('color_name') }}">
-                <input type="hidden" name="year_mc" id="year_mc" value="{{ old('year_mc') }}">
+                <input type="hidden" name="color_name" id="color_name" value="{{ $color }}">
+                <input type="hidden" name="year_mc" id="year_mc" value="{{ $year }}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
@@ -80,14 +81,17 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label" style="background-color: #3c91fa50 ;">
                             <input id="model_name" type="text" class="form-control input-border-bottom"
-                                name="model_name" value="{{ old('model_name') }}" data-toggle="modal"
-                                data-target=".modalData" style="text-transform: uppercase;" required>
-                            <label for="model_name" class="placeholder">Select Unit</label>
+                                name="model_name" value="{{ $model }}" style="text-transform: uppercase;" required>
+                            <label for="model_name" class="placeholder">Unit</label>
                         </div>
                     </div>
                 </div>
-                <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; "></span>
-                <span id="yearmc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; "></span>
+                <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; ">
+                    {{ $color }}
+                </span>
+                <span id="yearmc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; ">
+                    {{ $year }}
+                </span>
                 <hr>
 
                 <div class="row">
@@ -121,6 +125,3 @@
         </div>
     </div>
 </div>
-
-@section('modal-title','Data Unit')
-@include('component.modal-data')

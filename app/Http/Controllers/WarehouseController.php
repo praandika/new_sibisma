@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\GenerateQR;
 use App\Models\Warehouse;
 use App\Http\Controllers\Controller;
+use App\Models\Color;
 use App\Models\Unit;
 use App\Models\WarehouseName;
 use Carbon\Carbon;
@@ -38,7 +39,7 @@ class WarehouseController extends Controller
         //
     }
 
-    public function entry($code, $wId){
+    public function entry($code, $wId, $model, $color, $year){
         $cek = Warehouse::where('code', $code)->count();
         if ($cek > 0) {
             return redirect()->route('warehouse.detail', ['code' => $code, 'wId' => $wId]);
@@ -50,16 +51,9 @@ class WarehouseController extends Controller
             $firstName = Auth::user()->first_name;
             $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             $dealerName = $dealerName[0];
-            $thisYear = Carbon::now('GMT+8')->format('Y');
-            $lastYear = $thisYear - 1;
-            $unit = Unit::where('year_mc',$thisYear)
-            ->join('colors','units.color_id','colors.id')
-            ->orWhere('year_mc',$lastYear)
-            ->orderBy('model_name', 'asc')
-            ->orderBy('year_mc','desc')
-            ->select('units.id','units.model_name','colors.color_name','colors.color_code','units.year_mc')
-            ->get();
-            return view('page', compact('code','dealerName','firstName','wId','gudang','unit','dc','lastYear','today'));
+            $colorCode = Color::where('color_name',$color)->pluck('color_code');
+            $colorCode = $colorCode[0];
+            return view('page', compact('code','dealerName','firstName','wId','gudang','model','dc','color','year','today','colorCode'));
         }
     }
 
