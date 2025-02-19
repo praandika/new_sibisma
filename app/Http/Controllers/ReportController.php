@@ -82,6 +82,8 @@ class ReportController extends Controller
             return (new ReportExport)->param($param)->download('Stock_report.xlsx');
         }elseif($param == 'manpower') {
             return (new ReportExport)->param($param)->download('Manpower_report.xlsx');
+        }elseif($param == 'warehouse') {
+            return (new ReportExport)->param($param)->start($start)->end($end)->download('Warehouse_report.xlsx');
         }else{
             return (new ReportExport)->param($param)->start($start)->end($end)->download('Error_report_'.$start.'-'.$end.'.xlsx');
         }

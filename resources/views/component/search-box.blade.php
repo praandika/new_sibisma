@@ -1,6 +1,11 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+            @if(Route::is('warehouse.*'))
+            <h4 class="card-title">Search</h4>
+            @endif
+        </div>
+        <div class="card-body">
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-6">
@@ -41,22 +46,25 @@
                             @endif
                             " method="get">
                             @csrf
-                        <div class="input-group">
+                            <div class="input-group">
                                 <input type="date" class="form-control" placeholder="" aria-label=""
-                                    aria-describedby="basic-addon1" name="start" value="{{ $start != null ? $start : null }}">
-                        </div>
+                                    aria-describedby="basic-addon1" name="start"
+                                    value="{{ $start != null ? $start : null }}">
+                            </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
                             <input type="date" class="form-control" placeholder="" aria-label=""
                                 aria-describedby="basic-addon1" name="end" value="{{ $end != null ? $end : null }}">
                             <div class="input-group-prepend">
-                                <button class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Search"><i class="fas fa-search"></i></button>
+                                <button class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top"
+                                    title="Search"><i class="fas fa-search"></i></button>
                             </div>
                             </form>
-                        <!-- END FORM -->
-                        @if (!Route::is('allocation.index'))
-                            <div class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'd-none' : 'd-block' }}">
+                            <!-- END FORM -->
+                            @if (!Route::is('allocation.index'))
+                            <div
+                                class="input-group-prepend {{ $start == null || $end == null || Route::is('delivery-order.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'd-none' : 'd-block' }}">
                                 <a href="
                                 @if(Route::is('sale.*'))
                                     {{ url('report/sale/'.$start.'/'.$end) }}
@@ -82,12 +90,15 @@
                                     {{ url('report/spk/'.$start.'/'.$end) }}
                                 @elseif(Route::is('allocation.report'))
                                     {{ url('allocation/report/'.$start.'/'.$end) }}
+                                @elseif(Route::is('warehouse.*'))
+                                    {{ url('report/warehouse/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif
-                                " class="btn btn-success" type="button" style="color: #fff;" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print"></i></a>
+                                " class="btn btn-success" type="button" style="color: #fff;" data-toggle="tooltip"
+                                    data-placement="top" title="Print"><i class="fas fa-print"></i></a>
                             </div>
-                        @endif
+                            @endif
                         </div>
                     </div>
                 </div>

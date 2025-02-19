@@ -15,6 +15,7 @@ use App\Models\Opname;
 use App\Models\Spk;
 use App\Models\Stock;
 use App\Models\Manpower;
+use App\Models\Warehouse;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -251,6 +252,19 @@ class ReportExport implements FromView
                     ->where('dealer_id',$did)
                     ->orderBy('name','asc')
                     ->select('*', 'manpowers.phone as manpower_phone', 'manpowers.address as manpower_address')->get()
+                ]);
+            }
+        }elseif($this->param == 'warehouse') {
+            if ($dc == 'group') {
+                return view('export.warehouse',[
+                    'data' => Warehouse::whereBetween('in_date', [$this->start, $this->end])
+                    ->orderBy('in_date','asc')->get()
+                ]);
+            } else {
+                return view('export.warehouse',[
+                    'data' => Warehouse::where('dealer_code', $dc)
+                    ->whereBetween('in_date', [$this->start, $this->end])
+                    ->orderBy('in_date','asc')->get()
                 ]);
             }
         }else{
