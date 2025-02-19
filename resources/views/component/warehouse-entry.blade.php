@@ -54,8 +54,8 @@
             <div class="row">
                 <div class="col-10">
                     <h4 class="card-title">
-                        <span style="font-weight: bold;">{{ $gudang }}</span>
-                        <div style="font-size: 14px;"> {{ $firstName }} - {{ $code }}</div>
+                        <span style="font-weight: bold; font-size: 13px;">{{ $model }}</span>
+                        <div style="font-size: 12px;"> {{ $firstName }} - {{ $code }}</div>
                     </h4>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 @csrf
                 <input type="hidden" name="code" value="{{ $code }}">
                 <input type="hidden" name="pic" value="{{ $firstName }}">
-                <input type="hidden" name="gudang" value="{{ $gudang }}">
+                <input type="hidden" name="model_name" value="{{ $model }}">
                 <input type="hidden" name="color_name" id="color_name" value="{{ $color }}">
                 <input type="hidden" name="year_mc" id="year_mc" value="{{ $year }}">
                 <div class="row">
@@ -80,16 +80,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label" style="background-color: #3c91fa50 ;">
-                            <input id="model_name" type="text" class="form-control input-border-bottom"
-                                name="model_name" value="{{ $model }}" style="text-transform: uppercase;" required>
-                            <label for="model_name" class="placeholder">Unit</label>
+                            <input id="gudang" type="text" class="form-control input-border-bottom"
+                                name="gudang" value="{{ old('gudang') }}" data-toggle="modal"
+                                data-target=".modalGudang"style="text-transform: uppercase;" required>
+                            <label for="gudang" class="placeholder">Pilih Gudang</label>
                         </div>
                     </div>
                 </div>
-                <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; ">
+                <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: {{ $colorCode }}50; padding: 0px 10px; color: #000000; ">
+                    {{ $model }}
+                </span>
+                <span id="color" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: {{ $colorCode }}50; padding: 0px 10px; color: #000000; ">
                     {{ $color }}
                 </span>
-                <span id="yearmc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: grey; padding: 0px 10px; color: white; ">
+                <span id="yearmc" style="display: inline-block; margin-left: 10px; margin-top: -5px; font-size: 11px; background-color: {{ $colorCode }}50; padding: 0px 10px; color: #000000; ">
                     {{ $year }}
                 </span>
                 <hr>
@@ -100,14 +104,6 @@
                             <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}"
                                 style="text-transform: uppercase;" required>
                             <label for="engine_no" class="placeholder">Engine No <span style="color: red;">*</span></label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group form-floating-label">
-                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}"
-                                style="text-transform: uppercase;">
-                            <label for="frame_no" class="placeholder">Frame No (opsional)</label>
                         </div>
                     </div>
 
@@ -125,3 +121,5 @@
         </div>
     </div>
 </div>
+
+@include('component.modal-gudang-entry')

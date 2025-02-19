@@ -39,21 +39,22 @@ class WarehouseController extends Controller
         //
     }
 
-    public function entry($code, $wId, $model, $color, $year){
+    public function entry($code, $model, $color, $year){
         $cek = Warehouse::where('code', $code)->count();
         if ($cek > 0) {
-            return redirect()->route('warehouse.detail', ['code' => $code, 'wId' => $wId]);
+            return redirect()->route('warehouse.detail', ['code' => $code]);
         } else {
+            $model = str_replace('_', ' ', $model);
+            $color = str_replace('_', ' ', $color);
             $today = Carbon::now('GMT+8')->format('Y-m-d');
-            $gudang = WarehouseName::where('id', $wId)->pluck('name');
-            $gudang = $gudang[0];
+            $gudang = WarehouseName::all();
             $dc = Auth::user()->dealer_code;
             $firstName = Auth::user()->first_name;
             $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             $dealerName = $dealerName[0];
             $colorCode = Color::where('color_name',$color)->pluck('color_code');
             $colorCode = $colorCode[0];
-            return view('page', compact('code','dealerName','firstName','wId','gudang','model','dc','color','year','today','colorCode'));
+            return view('page', compact('code','dealerName','firstName','gudang','model','dc','color','year','today','colorCode'));
         }
     }
 
@@ -61,7 +62,7 @@ class WarehouseController extends Controller
         // 
     }
 
-    public function detail($code, $wId){
+    public function detail($code){
         $data = Warehouse::join('colors','warehouses.color_name','colors.color_name')
         ->where('warehouses.code', $code)
         ->select('warehouses.id','warehouses.code','warehouses.model_name','warehouses.color_name','warehouses.gudang','warehouses.year_mc','warehouses.in_date','warehouses.engine_no','warehouses.frame_no','warehouses.pic','warehouses.status','colors.color_code', 'warehouses.note')
@@ -73,7 +74,7 @@ class WarehouseController extends Controller
 
         $dataGudang = WarehouseName::all();
 
-        return view('page', compact('data', 'code', 'wId', 'id','gudang','dataGudang'));
+        return view('page', compact('data', 'code', 'id','gudang','dataGudang'));
     }
 
     public function sell($id){
@@ -119,9 +120,16 @@ class WarehouseController extends Controller
     public function generate($dealer){
         $dealerName = Dealer::where('dealer_code',$dealer)->pluck('dealer_name');
         $dealerName = $dealerName[0];
+        $yearNow = Carbon::now('GMT+8')->format('Y');
+        $yearLast = $yearNow - 1;
+        $unit = Unit::join('colors','units.color_id','colors.id')
+        ->where('units.year_mc',$yearNow)
+        ->orWhere('units.year_mc',$yearLast)
+        ->orderBy('units.model_name','asc')
+        ->select('units.model_name','units.year_mc','colors.color_name','colors.color_code')
+        ->get();
 
-        $gudang = WarehouseName::all();
-        return view('page', compact('dealer','dealerName','gudang'));
+        return view('page', compact('dealer','dealerName','unit','yearLast'));
     }
 
     public function generating(Request $req){
@@ -129,10 +137,12 @@ class WarehouseController extends Controller
         $date = Carbon::now('GMT+8')->format('YmdHis');
         $dealer = Auth::user()->dealer_code;
         $baris = $req->baris;
-        $gudang = $req->gudang_id;
+        $year = $req->year;
+        $model = str_replace(' ', '_', $req->model_name);
+        $color = str_replace(' ', '_', $req->color);
         // dd($gudang);
         
-        return (new GenerateQR)->dealer($dealer)->date($date)->baris($baris)->gudang($gudang)->download('Generate_QR_'.$dealer.'-'.$date.'.xlsx');
+        return (new GenerateQR)->dealer($dealer)->date($date)->baris($baris)->model($model)->color($color)->year($year)->download('Generate_QR_'.$dealer.'-'.$date.'.xlsx');
     }
 
     /**
@@ -149,7 +159,6 @@ class WarehouseController extends Controller
         $data->model_name = $req->model_name;
         $data->color_name = $req->color_name;
         $data->year_mc = $req->year_mc;
-        $data->frame_no = strtoupper($req->frame_no);
         $data->engine_no = strtoupper($req->engine_no);
         $data->in_date = $req->allocation_date;
         $data->gudang = $req->gudang;

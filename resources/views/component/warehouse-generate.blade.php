@@ -30,6 +30,13 @@
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
+            <span id="color_code" style="
+                width: 10px; height: 50%; 
+                display: inline-block;
+                position: absolute;
+                left: 0px;
+                top: 0px;">
+            </span>
             <div class="row">
                 <div class="col-10">
                     <h4 class="card-title">Generate Code</h4>
@@ -48,11 +55,13 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="gudang_id" name="gudang_id" value="{{ old('gudang_id') }}" required>
-                            <input id="gudang_name" type="text" class="form-control input-border-bottom"
-                                name="gudang_name" data-toggle="modal"
-                                data-target=".modalGudang" value="{{ old('gudang_name') }}" style="text-transform: uppercase;" required>
-                            <label for="baris" class="placeholder">Pilih Gudang *</label>
+                            <input type="hidden" id="model_name" name="model_name" value="{{ old('model_name') }}" required>
+                            <input type="hidden" id="color" name="color" value="{{ old('color') }}" required>
+                            <input type="hidden" id="year" name="year" value="{{ old('year') }}" required>
+                            <input id="unit" type="text" class="form-control input-border-bottom"
+                                name="unit" data-toggle="modal"
+                                data-target=".modalGudang" value="{{ old('unit') }}" style="text-transform: uppercase;" required>
+                            <label for="baris" class="placeholder">Pilih Unit *</label>
                         </div>
                     </div>
                     <div class="col-md-4">

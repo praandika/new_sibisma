@@ -84,7 +84,7 @@
         top: 0px;"></span>
             <div class="row">
                 <div class="col-12">
-                    <h4 class="card-title">{{ $o->model_name }}</h4>
+                    <h4 class="card-title" style="font-weight: bold;">{{ $o->model_name }}</h4>
                 </div>
             </div>
         </div>

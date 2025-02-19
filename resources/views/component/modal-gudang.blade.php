@@ -3,7 +3,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Data Gudang</h5>
+                <h5 class="modal-title">Data Unit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">
                         <i style="color: red;" class="fas fa-times"></i>
@@ -16,31 +16,44 @@
                     <table id="tb-basic-table-position" class="display table table-striped table-hover" width="100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Gudang</th>
-                                <th>Alamat</th>
+                                <th>Model</th>
+                                <th>Color</th>
+                                <th>Year</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>Gudang</th>
-                                <th>Alamat</th>
+                                <th>Model</th>
+                                <th>Color</th>
+                                <th>Year</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse($gudang as $o)
-                            <tr data-gudang_name="{{ $o->name }}"
-                                data-gudang_id="{{ $o->id }}"
-                                data-address="{{ $o->address }}"
+                            @forelse($unit as $o)
+                            <tr data-model_name="{{ $o->model_name }}"
+                                data-color="{{ $o->color_name }}"
+                                data-year="{{ $o->year_mc }}"
+                                data-colorcode="{{ $o->color_code }}"
                                 class="klik">
-                                <td>{{ $o->id }}</td>
-                                <td>{{ $o->name }}</td>
-                                <td>{{ $o->address }}</td>
+                                <td>{{ $o->model_name }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50;">
+                                    {{ $o->color_name }}
+                                </td>
+                                <td>
+                                    @if($o->year_mc == $yearLast)
+                                        <span style="font-style: italic; font-size: 11px; color: crimson;">
+                                            {{ $o->year_mc }}
+                                        </span>
+                                    @else
+                                        <span style="font-weight: bold;">
+                                            {{ $o->year_mc }}
+                                        </span>
+                                    @endif
+                                </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="2" style="text-align: center;">No data available</td>
+                                <td colspan="3" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -59,10 +72,13 @@
 <script>
     $(document).on('click', '.klik', function (e) {
         let code = $(this).attr('data-colorcode');
-        $('#gudang_name').val($(this).attr('data-gudang_name'));
-        $('#address').val($(this).attr('data-address'));
-        $('#gudang_id').val($(this).attr('data-gudang_id'));
+        $('#model_name').val($(this).attr('data-model_name'));
+        $('#color').val($(this).attr('data-color'));
+        $('#year').val($(this).attr('data-year'));
+        $('#unit').val($(this).attr('data-model_name'));
         $('.modalGudang').modal('hide');
+
+        $('#color_code').css('background', code);
     });
 </script>
 
