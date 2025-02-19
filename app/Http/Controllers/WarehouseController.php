@@ -25,7 +25,12 @@ class WarehouseController extends Controller
     {
         $start = $req->start;
         $end = $req->end;
-        $data = Warehouse::orderBy('in_date', 'desc')->get();
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $data = Warehouse::join('colors','warehouses.color_name','colors.color_name')
+        ->where('in_date',$today)
+        ->orderBy('in_date', 'desc')
+        ->select('warehouses.*','colors.color_code')
+        ->get();
         return view('page', compact('start','end','data'));
     }
 
