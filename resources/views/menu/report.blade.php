@@ -17,6 +17,12 @@
     @endif" id="report">
         <ul class="nav nav-collapse">
             @if(Auth::user()->access == 'owner')
+            <li class="{{ Route::is('stock.*') ? 'active' : '' }}">
+                <a href="{{ route('stock.index') }}">
+                    <span class="sub-item">Stock Unit</span>
+                </a>
+            </li>
+
             <li class="{{ Route::is('sale.history') ? 'active' : '' }}">
                 <a href="{{ route('sale.history') }}">
                     <span class="sub-item">Sales Report</span>
