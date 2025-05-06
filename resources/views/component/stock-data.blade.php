@@ -10,6 +10,12 @@
 @section('title','Stock')
 @section('page-title','Stock')
 
+@if(Auth::user()-> access == 'owner')
+    @push('button')
+        @include('component.button-print')
+    @endpush
+@endif
+
 @push('link-bread')
 <li class="nav-item">
     <a href="{{ route('stock.index') }}">Data Stock</a>

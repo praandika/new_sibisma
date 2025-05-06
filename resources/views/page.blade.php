@@ -164,8 +164,12 @@
         @if(Route::is('stock.show'))
             @include('component.stock-show')
         @else
-            @include('component.stock-create')
-            @include('component.stock-data')
+            @if(Auth::user()-> access == 'owner')
+                @include('component.stock-data')
+            @else
+                @include('component.stock-create')
+                @include('component.stock-data')
+            @endif
         @endif
 
     <!-- Allocation Page -->

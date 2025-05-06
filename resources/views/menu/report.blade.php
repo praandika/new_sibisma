@@ -2,7 +2,7 @@
     @if(Auth::user()->access != 'owner') 
         {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('stu.*') || Route::is('kwitansi.*') || Route::is('do-kwitansi.leasing') ? 'active' : '' }}
     @else
-        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') ? 'active' : '' }}
+        {{ Route::is('report.*') || Route::is('stock-history.edit') || Route::is('sale.history') || Route::is('entry.history') || Route::is('out.history') || Route::is('stock.index') ? 'active' : '' }}
     @endif">
     <a data-toggle="collapse" href="#report">
         <i class="fas fa-file-alt"></i>
@@ -17,7 +17,7 @@
     @endif" id="report">
         <ul class="nav nav-collapse">
             @if(Auth::user()->access == 'owner')
-            <li class="{{ Route::is('stock.*') ? 'active' : '' }}">
+            <li class="{{ Route::is('stock.index') ? 'active' : '' }}">
                 <a href="{{ route('stock.index') }}">
                     <span class="sub-item">Stock Unit</span>
                 </a>
