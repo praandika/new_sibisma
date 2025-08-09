@@ -223,13 +223,13 @@
 
                 <!-- TAB BUNGA MENETAP -->
                 <!-- <div class="tab-pane fade" id="bunga-menetap" role="tabpanel" aria-labelledby="bunga-menetap-tab"> -->
-                    <div class="judul">
+                    <!-- <div class="judul">
                         <center>
                             <h3>Simulasi Kredit Bunga Menetap</h3>
                         </center>
 
-                    </div>
-                    <div class="isian">
+                    </div> -->
+                    <!-- <div class="isian">
                         <form action="proses.php" method="post">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -256,7 +256,7 @@
                                     <h3><span id="dp_motor" class="dp"></span>%</h3>
                                     <span id="angka_dp" hidden></span>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -281,23 +281,23 @@
                                     </select>
                                 </div>
                             </div> -->
-                            <input type="text" id="unit_img" hidden>
+                            <!-- <input type="text" id="unit_img" hidden>
                             <br>
                         </form>
-                    </div>
+                    </div> -->
 
-                    <center>
+                    <!-- <center>
                         <div class="row justify-content-md-center">
                             <div class="col-md-auto">
                                 <button type="button" class="btn tombol" onclick="kredit_menetap();"
                                     id="hitung">Hitung</button>
                             </div>
                         </div>
-                    </center>
-                    <br>
+                    </center> -->
+                    <!-- <br>
                     <div class="divider"></div>
-                    <br>
-                    <center>
+                    <br> -->
+                    <!-- <center>
                         <h5>Angsuran Bunga Menetap</h5>
                         <br>
                         <a href="{{ route('printtppdf') }}" target="_blank" style="padding: 10px; color: #003c8b; background-color: #ffffff; text-decoration: none;" id="printButtonMenetap" hidden><i class="fa fa-print"></i> Print</a>
@@ -308,10 +308,10 @@
                             *perhitungan angsuran adalah estimasi <br>
                             **harga dan angsuran dapat berubah sewaktu-waktu
                         </p>
-                    </center>
+                    </center> -->
 
 
-                    <div class="container">
+                    <!-- <div class="container">
                         <div class="row data_tenor d-flex justify-content-center" style="text-align: center;">
                             <div class="col-lg-3 col-md-6 col-sm-12 box-tenor">
                                 <p>
@@ -346,7 +346,7 @@
                         </div>
                     </div>
                     <br>
-                </div>
+                </div> -->
                 <!-- END TAB BUNGA MENETAP -->
 
                 <center>
