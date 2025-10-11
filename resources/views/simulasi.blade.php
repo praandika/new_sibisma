@@ -84,8 +84,8 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="bunga-menurun-tab" data-toggle="tab" href="#bunga-menurun"
                         role="tab" aria-controls="bunga-menurun" aria-selected="true">Bunga Menurun</a>
-                    <!-- <a class="nav-item nav-link" id="bunga-menetap-tab" data-toggle="tab" href="#bunga-menetap"
-                        role="tab" aria-controls="bunga-menetap" aria-selected="false">Bunga Menetap</a> -->
+                    <a class="nav-item nav-link" id="bunga-menetap-tab" data-toggle="tab" href="#bunga-menetap"
+                        role="tab" aria-controls="bunga-menetap" aria-selected="false">Bunga Menetap</a>
                 </div>
             </nav>
 

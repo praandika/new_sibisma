@@ -175,18 +175,17 @@
 
             <div class="cekbox-input" style="position: relative;">
                 <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Valid Data
-                    (KTP,KK,Domisili)</label>
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Kelengkapan Data</label>
             </div>
 
             <div class="cekbox-input" style="position: relative;">
                 <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                    for="konfirmasiPembelian" style="position: absolute; top: -1px">DPACK</label>
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Closing DPACK</label>
             </div>
 
             <div class="cekbox-input" style="position: relative;">
                 <input disabled type="checkbox" class="form-input" id="konfirmasiPembelian"> &nbsp;<label
-                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Kepemilikan Motor</label>
+                    for="konfirmasiPembelian" style="position: absolute; top: -1px">Berkas Samsat</label>
             </div>
 
             <div class="cekbox-input" style="position: relative;">
