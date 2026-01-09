@@ -22,6 +22,9 @@
                             <tr data-credit-status="reject" class="pilihCreditStatus">
                                 <td>Reject</td>
                             </tr>
+                            <tr data-credit-status="cancel" class="pilihCreditStatus">
+                                <td>Cancel</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
