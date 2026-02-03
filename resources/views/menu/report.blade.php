@@ -42,6 +42,7 @@
             </li>
             @endif
 
+            @if(Auth::user()->access != 'owner')
             <li class="{{ Route::is('report.stock-history') ? 'active' : '' }}">
                 <a href="{{ route('report.stock-history') }}">
                     <span class="sub-item">Stock History</span>
@@ -54,6 +55,7 @@
                     <span class="sub-item">Send Report</span>
                 </a>
             </li>
+            @endif
             
             @if(Auth::user()->dealer_code == 'group')
             <li class="{{ Route::is('report.search-id') ? 'active' : '' }}">
@@ -63,6 +65,7 @@
             </li>
             @endif
 
+            @if(Auth::user()->access != 'owner')
             <li class="{{ Route::is('report.adjust') ? 'active' : '' }}">
                 <a href="{{ route('report.adjust') }}">
                     <span class="sub-item">Adjust Report</span>
@@ -86,13 +89,16 @@
                     <span class="sub-item">Leasing</span>
                 </a>
             </li>
+            @endif
 
-            @if(Auth::user()->dealer_code == 'group')
-            <li class="{{ Route::is('stu.index') ? 'active' : '' }}">
-                <a href="{{ route('stu.index') }}">
-                    <span class="sub-item">Input STU</span>
-                </a>
-            </li>
+            @if(Auth::user()->access != 'owner')
+                @if(Auth::user()->dealer_code == 'group')
+                <li class="{{ Route::is('stu.index') ? 'active' : '' }}">
+                    <a href="{{ route('stu.index') }}">
+                        <span class="sub-item">Input STU</span>
+                    </a>
+                </li>
+                @endif
             @endif
         </ul>
     </div>
