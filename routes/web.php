@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ContactListHelperController;
@@ -32,6 +33,8 @@ use App\Http\Controllers\SpkController;
 use App\Http\Controllers\STUController;
 use App\Http\Controllers\IDCardController;
 use App\Http\Controllers\JobVacancyController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\WarehouseController;
@@ -329,3 +332,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/warehousename/edit/{id}',
 Route::middleware(['auth:sanctum', 'verified'])->post('/warehousename/update/{id}', [WarehouseController::class, 'wUpdate'])->name('warehousename.update');
 Route::middleware(['auth:sanctum', 'verified'])->post('/warehousename/delete/{id}', [WarehouseController::class, 'wDelete'])->name('warehousename.delete');
 // END WAREHOUSE
+
+// PROMOTION - ACTIVITIES & PROPOSAL
+Route::middleware(['auth:sanctum', 'verified'])->resource('promotion', PromotionController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('activities', ActivitiesController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('proposal', ProposalController::class);
+// END PROMOTION

@@ -6,6 +6,8 @@
             @include('component.salesman-home')
         @elseif(Auth::user()->access == 'warehouse')
             @include('component.warehouse-home')
+        @elseif(Auth::user()->access == 'promotion')
+            @include('component.promotion-home')
         @else
             @section('title','Dashboard')
             @section('page-title','Dashboard')
@@ -418,6 +420,15 @@
             @include('component.kwitansi-history')
         @else
             @include('component.kwitansi-data')
+        @endif
+
+    <!-- Data Promotion -->
+    @elseif(Route::is('activities.*'))
+        @if(Route::is('activities.history'))
+            @include('component.search-box')
+            @include('component.activities-history')
+        @else
+            @include('component.activities-data')
         @endif
 
     <!-- DO & Kwitansi for Leasing -->

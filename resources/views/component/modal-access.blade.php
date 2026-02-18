@@ -26,6 +26,9 @@
                             <tr class="pilihAccess" data-access="user">
                                 <td>User</td>
                             </tr>
+                            <tr class="pilihAccess" data-access="promotion">
+                                <td>Promotion</td>
+                            </tr>
                             <tr class="pilihAccess" data-access="owner">
                                 <td>Owner</td>
                             </tr>
@@ -46,9 +49,7 @@
                 </div>
             </div>
             <!-- Modal Footer -->
-            <div class="modal-footer">
-                <p><strong>SiBisma</strong> v3.0 &copy; CRM Bisma | Est 2019</p>
-            </div>
+            @include('component.modal-footer')
         </div>
     </div>
 </div>

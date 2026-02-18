@@ -28,9 +28,7 @@
                 </form>
             </div>
             <!-- Modal Footer -->
-            <div class="modal-footer">
-                <p><strong>SiBisma</strong> v3.0 &copy; CRM Bisma | Est 2019</p>
-            </div>
+            @include('component.modal-footer')
         </div>
     </div>
 </div>

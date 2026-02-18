@@ -2,6 +2,8 @@
     <thead>
         <tr>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">No</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Dealer Code</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Dealer Name</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Date</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Payment Method</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Credit Status</th>
@@ -27,6 +29,8 @@
         @forelse($data as $o)
         <tr>
             <td>{{ $no++ }}</td>
+            <td>{{ $o->stock->dealer->dealer_code }}</td>
+            <td>{{ $o->stock->dealer->dealer_name }}</td>
             <td>{{ $o->spk_date }}</td>
             <td>{{ $o->payment_method }}</td>
             <td>{{ $o->credit_status }}</td>
@@ -48,7 +52,7 @@
         </tr>
         @empty
         <tr>
-            <td colspan="7" style="text-align: center;">No data available</td>
+            <td colspan="21" style="text-align: center;">No data available</td>
         </tr>
         @endforelse
     </tbody>

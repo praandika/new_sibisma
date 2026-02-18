@@ -17,7 +17,7 @@
 <div class="col-md-12">
     <div style="text-align: center;">
         <p>Need any help? or found any bugs?</p>
-        <a href="https://wa.me/6281246571421?text=`Pesan%20dari%20sibisma`%0AHi,%20saya%20ingin%20bantuan%20mengenai%20sistem%20SPK%20Warehouse" target="_blank">
+        <a href="https://wa.me/6281246571421?text=`Pesan%20dari%20sibisma`%0AHi,%20saya%20ingin%20bantuan%20mengenai%20sistem%20Warehouse" target="_blank">
             <button class="btn btn-danger"><i class="fab fa-whatsapp"></i>
                 &nbsp;&nbsp;Contact Developer
             </button>

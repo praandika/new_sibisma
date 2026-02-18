@@ -63,46 +63,54 @@
             
                 @if(Auth::user()->access != 'user')
                     @if(Auth::user()-> access != 'salesman')
-                            @include('menu.dashboard')
-                        @if(Auth::user()->allocation_tools == 'yes')
-                            @include('menu.allocation')
-                        @endif
-                        @if(Auth::user()-> access != 'owner')
-                            @include('menu.stock')
-                            @include('menu.spk')
-                            @include('menu.manage-stock')
-                            @include('menu.delivery')
-                            @include('menu.opname')
-                            @include('menu.dealer')
-                            @include('menu.manpower')
-                            @include('menu.dokumen')
+                        @if(Auth::user()-> access != 'promotion')
+                                @include('menu.dashboard')
+                            @if(Auth::user()->allocation_tools == 'yes')
+                                @include('menu.allocation')
+                            @endif
+                            @if(Auth::user()-> access != 'owner')
+                                @include('menu.stock')
+                                @include('menu.spk')
+                                @include('menu.manage-stock')
+                                @include('menu.delivery')
+                                @include('menu.opname')
+                                @include('menu.dealer')
+                                @include('menu.manpower')
+                                @include('menu.dokumen')
+                            @endif
+
+                            @include('menu.report')
+
+                            @if(Auth::user()-> access == 'admin')
+                                <li class="nav-section">
+                                    <span class="sidebar-mini-icon">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </span>
+                                    <h4 class="text-section">Admin</h4>
+                                </li>
+                                @include('menu.user')
+                            @endif
+
+                            @if(Auth::user()->access == 'master')
+                                @include('menu.promotion')
+                                <li class="nav-section">
+                                    <span class="sidebar-mini-icon">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </span>
+                                    <h4 class="text-section">Admin</h4>
+                                </li>
+                                @include('menu.datamaster')
+                                @include('menu.datawebsite')
+                                @include('menu.user')
+                                @include('menu.idcard')
+                                @include('menu.log')
+                            @endif
                         @endif
 
-                        @include('menu.report')
-
-                        @if(Auth::user()-> access == 'admin')
-                            <li class="nav-section">
-                                <span class="sidebar-mini-icon">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </span>
-                                <h4 class="text-section">Admin</h4>
-                            </li>
-                            @include('menu.user')
+                        @if(Auth::user()->access == 'promotion')
+                            @include('menu.promotion')
                         @endif
-
-                        @if(Auth::user()->access == 'master')
-                            <li class="nav-section">
-                                <span class="sidebar-mini-icon">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </span>
-                                <h4 class="text-section">Admin</h4>
-                            </li>
-                            @include('menu.datamaster')
-                            @include('menu.datawebsite')
-                            @include('menu.user')
-                            @include('menu.idcard')
-                            @include('menu.log')
-                        @endif
+                        
                     @endif
 
                     @if(Auth::user()->access == 'salesman')
@@ -115,7 +123,6 @@
                     @include('menu.crm')
                     @include('menu.dealer')
                 @endif
-                
             @endif
 
             @if(Auth::user()->access == 'warehouse')
