@@ -17,7 +17,7 @@
 
 <div class="col-md-6">
     <a href="{{ route('proposal.index') }}">
-        <div class="card card-dark bg-success-gradient curves-shadow">
+        <div class="card card-dark bg-success-gradient curves-shadow"> 
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right"><img src="{{ asset('img/enter.png') }}" alt="enter"></div>
                 <h1 class="mb-2">Go to Proposal</h1>

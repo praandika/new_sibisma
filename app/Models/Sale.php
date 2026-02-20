@@ -21,7 +21,7 @@ class Sale extends Model
         return $this->hasOne(SaleDelivery::class);
     }
 
-    // Relasi to Documents
+    // Relasi to Documents 
     public function document(){
         return $this->hasOne(Document::class);
     }

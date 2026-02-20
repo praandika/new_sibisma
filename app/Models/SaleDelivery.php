@@ -16,7 +16,7 @@ class SaleDelivery extends Model
 
     // Relasi to Sales
     public function sale(){
-        return $this->belongsTo(Sale::class);
+        return $this->belongsTo(Sale::class); 
     }
 
     // Relasi to User

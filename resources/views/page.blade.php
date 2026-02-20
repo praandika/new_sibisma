@@ -428,7 +428,17 @@
             @include('component.search-box')
             @include('component.activities-history')
         @else
+            @include('component.activities-create')
             @include('component.activities-data')
+        @endif
+
+    <!-- Data Type Activitiy -->
+    @elseif(Route::is('acttype.*'))
+        @if(Route::is('acttype.edit'))
+            @include('component.acttype-edit')
+        @else
+            @include('component.acttype-create')
+            @include('component.acttype-data')
         @endif
 
     <!-- DO & Kwitansi for Leasing -->

@@ -37,6 +37,11 @@ class Dealer extends Model
         return $this->hasMany(StockHistory::class, 'dealer_code', 'dealer_code');
     }
 
+    // Relasi to Activities
+    public function activities(){
+        return $this->hasMany(Activities::class);
+    }
+
     // Relasi to User
     public function createdBy(){
         return $this->belongsTo(User::class, 'created_by');

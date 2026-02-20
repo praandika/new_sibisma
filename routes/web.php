@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\ActtypeController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ContactListHelperController;
@@ -335,6 +336,16 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/warehousename/delete/{id
 
 // PROMOTION - ACTIVITIES & PROPOSAL
 Route::middleware(['auth:sanctum', 'verified'])->resource('promotion', PromotionController::class);
+
 Route::middleware(['auth:sanctum', 'verified'])->resource('activities', ActivitiesController::class);
-Route::middleware(['auth:sanctum', 'verified'])->resource('proposal', ProposalController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/activities/delete/{id}', [ActivitiesController::class, 'delete'])->name('activities.delete');
+Route::middleware(['auth:sanctum', 'verified'])->get('/activities/detail-add/{id}', [ActivitiesController::class, 'detailAdd'])->name('activities.detail-add');
+Route::middleware(['auth:sanctum', 'verified'])->post('/activities/detail-store/{id}', [ActivitiesController::class, 'detailStore'])->name('activities.detail-store');
+
+Route::middleware(['auth:sanctum', 'verified'])->resource('proposal', ProposalController::class); 
 // END PROMOTION
+
+// ACT TYPE
+Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
+// END ACT TYPE

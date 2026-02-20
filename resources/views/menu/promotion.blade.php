@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li class="{{ Route::is('proposal.*') ? 'active' : '' }}">
-                <a href="{{ route('proposal.index') }}">
+                <a href="{{ route('proposal.index') }}"> 
                     <span class="sub-item">Proposal</span>
                 </a>
             </li>

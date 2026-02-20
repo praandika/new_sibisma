@@ -19,11 +19,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-        
-        <livewire:widget-allocation>
-        <livewire:info-allocation-in>
-        <livewire:info-allocation-out>
-                <h4 class="card-title">Activities This Month</h4>
+            <h4 class="card-title">Activities This Month</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -33,12 +29,8 @@
                             <th>Activity</th>
                             <th>Date</th>
                             <th>Dealer</th>
-                            <th>SPV</th>
-                            <th>Display</th>
                             <th>Prospect</th>
                             <th>Target Sales</th>
-                            <th>Salesman Deal</th>
-                            <th>Unit Deal</th>
                             <th>Note Event</th>
                             <th>Kendala</th>
                         </tr>
@@ -48,33 +40,38 @@
                             <th>Activity</th>
                             <th>Date</th>
                             <th>Dealer</th>
-                            <th>SPV</th>
-                            <th>Display</th>
                             <th>Prospect</th>
                             <th>Target Sales</th>
-                            <th>Salesman Deal</th>
-                            <th>Unit Deal</th>
                             <th>Note Event</th>
                             <th>Kendala</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> 
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->allocation_date }}</td>
-                            <td style="background-color: #51925930; font-weight: bold;">&Darr;&nbsp;&nbsp;{{ $o->entry }}</td>
-                            <td>{{ $o->dealer_code }}</td>
+                            <td>{{ $o->act_code }}</td>
+                            <td>{{ $o->start_date }}</td>
+                            <td>{{ $o->dealer->dealer_code }}</td>
+                            <td>{{ $o->prospect_cold }}</td>
+                            <td>{{ $o->target_sales }}</td>
+                            <td>{{ $o->note_event }}</td>
+                            <td>{{ $o->kendala }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ url('allocation/'.$o->allocation_date.'/'.$o->dealer_code.'') }}"
-                                        class="btnAction" data-toggle="tooltip" data-placement="top" title="Detail"
-                                        style="color:orange;"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('activities.edit', $o->id) }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('activities.delete', $o->id) }}" class="btnAction"
+                                            data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
+                                            onclick="return tanya('Yakin hapus activity {{ $o->act_code }}?')"><i
+                                                class="fas fa-trash-alt"></i></a>
                                 </div>
+
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" style="text-align: center;">No allocation today</td>
+                            <td colspan="7" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

@@ -18,7 +18,7 @@ class Stock extends Model
 
     // Relasi to Dealer
     public function dealer(){
-        return $this->belongsTo(Dealer::class);
+        return $this->belongsTo(Dealer::class); 
     }
 
     // Relasi to Unit

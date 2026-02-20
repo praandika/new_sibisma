@@ -349,6 +349,32 @@
                             @endforelse
                         </tbody>
 
+                        <!-- ELSE IF -->
+                        @elseif(Route::is('activities.*'))
+                        
+                        <thead>
+                            <tr>
+                                <th>Type of Activity</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Type of Activity</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @forelse($acttypes as $o)
+                            <tr data-id="{{ $o->id }}" data-acttype="{{ $o->type_activity }}"
+                                class="klik">
+                                <td>{{ $o->type_activity }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="1" style="text-align: center;">No data available</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
                         <!-- ELSE -->
                         @else
                         <tbody>
@@ -487,6 +513,14 @@
         $('#dealer').val($(this).attr('data-dealercode'));
         $('#frame_no').val($(this).attr('data-frame'));
         $('#engine_no').val($(this).attr('data-engine'));
+        $('.modalData').modal('hide');
+    });
+</script>
+@elseif(Route::is('activities.*'))
+<script>
+    $(document).on('click', '.klik', function (e) {
+        $('#acttype_id').val($(this).attr('data-id'));
+        $('#type_activity').val($(this).attr('data-acttype'));
         $('.modalData').modal('hide');
     });
 </script>

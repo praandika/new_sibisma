@@ -74,6 +74,15 @@
             $('.modalDealer').modal('hide');
         });
     </script>
+    @elseif(Route::is('activities.*'))
+    <script>
+        $(document).on('click', '.pilihDealer', function (e) {
+            $('#dealer_id').val($(this).attr('data-id'));
+            $('#dealer_code').val($(this).attr('data-code'));
+            $('#dealer_name').val($(this).attr('data-name'));
+            $('.modalDealer').modal('hide');
+        });
+    </script>
     @else
     <script>
         $(document).on('click', '.pilihDealer', function (e) {
