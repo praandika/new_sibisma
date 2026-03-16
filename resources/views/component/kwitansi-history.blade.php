@@ -70,10 +70,10 @@
                             <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('kwitansi.print', $o->id_sale) }}" class="btnAction"
+                                    <a href="{{ route('kwitansi.print', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Print" style="color:forestgreen;"><i class="fa fa-print"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('kwitansi.download', $o->id_sale) }}" class="btnAction"
+                                    <a href="{{ route('kwitansi.download', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Download" style="color:crimson;"><i class="fa fa-file-pdf"></i></a>
                                 </div>
                             </td>
