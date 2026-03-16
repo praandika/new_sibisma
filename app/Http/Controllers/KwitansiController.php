@@ -65,6 +65,7 @@ class KwitansiController extends Controller
                 ->join('users','sales.created_by','users.id')
                 ->whereBetween('sale_date',[$req->start, $req->end])
                 ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')
                 ->get();
             }else{
                 $data = Sale::join('stocks','sales.stock_id','stocks.id')
@@ -72,6 +73,7 @@ class KwitansiController extends Controller
                 ->where('stocks.dealer_id',$did)
                 ->whereBetween('sale_date',[$req->start, $req->end])
                 ->orderBy('sales.id','desc')
+                ->select('*','sales.id as id_sale','users.first_name')
                 ->get();
             }
         }
