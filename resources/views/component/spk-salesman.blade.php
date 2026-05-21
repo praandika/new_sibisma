@@ -212,7 +212,22 @@
                             <input id="leasing_code_cash" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ old('leasing_code') }}" required>
                             <label for="leasing_code_cash" class="placeholder">Select Micro/Instansi *</label>
-                            <span style="padding: 5px; color: #ffffff; background-color: forestgreen; position: absolute; right: 25px; top: 10px;">new!</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="col-leasing-tenor">
+                        <div class="form-group form-floating-label">
+                            <input id="tenor" type="text" class="form-control input-border-bottom"
+                                name="tenor" value="{{ old('tenor') }}" required>
+                            <label for="tenor" class="placeholder">Select Tenor *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="col-leasing-bunga">
+                        <div class="form-group form-floating-label">
+                            <input id="bunga" type="text" class="form-control input-border-bottom"
+                                name="bunga" value="{{ old('bunga') }}" required>
+                            <label for="bunga" class="placeholder">Select Bunga *</label>
                         </div>
                     </div>
                     
@@ -296,6 +311,8 @@
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')
 @include('component.modal-order-status')
+@include('component.modal-tenor')
+@include('component.modal-bunga')
 
 @push('after-script')
 <script>
@@ -362,6 +379,9 @@
         document.getElementById("col-leasing").setAttribute("hidden", true);
         document.getElementById("col-leasing-cash").removeAttribute("hidden");
 
+        document.getElementById("col-leasing-tenor").setAttribute("hidden", true);
+        document.getElementById("col-leasing-bunga").setAttribute("hidden", true);
+
         setAttributes(document.getElementById("leasing_code_cash"), {
             "data-toggle" : "modal",
             "data-target" : ".modalLeasingCash"
@@ -383,6 +403,9 @@
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
         document.getElementById("col-leasing-cash").setAttribute("hidden", true);
+
+        document.getElementById("col-leasing-tenor").removeAttribute("hidden");
+        document.getElementById("col-leasing-bunga").removeAttribute("hidden");
 
         setAttributes(document.getElementById("leasing_code"), {
             "data-toggle" : "modal",
