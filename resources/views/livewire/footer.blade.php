@@ -20,7 +20,7 @@
             </ul>
         </nav>
         <div class="copyright ml-auto">
-            &copy; CRM Bisma {{ date('Y') }} | <a href="https://www.instagram.com/dikanayoga/" style="font-weight: bold; text-decoration: none;" target="_blank">Andika Pranayoga</a>
+            &copy; CRM Bisma {{ date('Y') }} | <a href="https://www.linkedin.com/in/iwayanandika" style="font-weight: bold; text-decoration: none;" target="_blank">Andika Pranayoga</a>
         </div>
     </div>
 </footer>
