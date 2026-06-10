@@ -72,6 +72,7 @@
                                 @include('menu.stock')
                                 @include('menu.spk')
                                 @include('menu.manage-stock')
+                                @include('menu.surat-jalan-mutasi')
                                 @include('menu.delivery')
                                 @include('menu.opname')
                                 @include('menu.dealer')
@@ -92,7 +93,7 @@
                             @endif
 
                             @if(Auth::user()->access == 'master')
-                                @include('menu.promotion')
+                                <!-- @include('menu.promotion') -->
                                 <li class="nav-section">
                                     <span class="sidebar-mini-icon">
                                         <i class="fa fa-ellipsis-h"></i>
@@ -107,9 +108,9 @@
                             @endif
                         @endif
 
-                        @if(Auth::user()->access == 'promotion')
+                        <!-- @if(Auth::user()->access == 'promotion')
                             @include('menu.promotion')
-                        @endif
+                        @endif -->
                         
                     @endif
 
@@ -120,7 +121,7 @@
 
                 @if(Auth::user()->access == 'user')
                     @include('menu.dashboard')
-                    @include('menu.crm')
+                    <!-- @include('menu.crm') -->
                     @include('menu.dealer')
                 @endif
             @endif

@@ -38,6 +38,7 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\SuratJalanMutasiController;
 use App\Http\Controllers\WarehouseController;
 use App\Models\Spk;
 
@@ -349,3 +350,8 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('proposal', ProposalCo
 Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
 // END ACT TYPE
+
+// SURAT JALAN MUTASI
+Route::middleware(['auth:sanctum', 'verified'])->resource('surat-jalan-mutasi', SuratJalanMutasiController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/surat-jalan-mutasi/delete/{id}', [SuratJalanMutasiController::class, 'delete'])->name('surat-jalan-mutasi.delete');
+// END SURAT JALAN MUTASI
