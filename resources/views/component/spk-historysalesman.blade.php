@@ -19,7 +19,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK Salesman</a>
+    <a href="{{ route('spk.salesman') }}">Data SPK Salesman</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
