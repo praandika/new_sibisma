@@ -41,7 +41,7 @@
                     <thead>
                         <tr>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Waktu</th>
                             <th>SPK No</th>
                             <th>Name</th>
                             <th>Phone</th>
@@ -56,7 +56,7 @@
                     <tfoot>
                         <tr>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Waktu</th>
                             <th>SPK No</th>
                             <th>Name</th>
                             <th>Phone</th>
@@ -80,7 +80,7 @@
                                     </span>
                                 </div>
                             </td>
-                            <td>{{ $o->spk_date }}</td>
+                            <td>{{ $o->created_at }}</td>
                             <td>
                                 @if($o->sale_status == 'pending')
                                 <span style="position: relative;">

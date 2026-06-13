@@ -94,8 +94,8 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="spk_date" type="date" class="form-control input-border-bottom"
-                                name="spk_date" value="{{ $spk->spk_date }}" required>
-                            <label for="spk_date" class="placeholder">Date *</label>
+                                name="spk_date" value="{{ $spk->spk_date }}" required readonly>
+                            <!-- <label for="spk_date" class="placeholder">Date *</label> -->
                         </div>
                     </div>
 
