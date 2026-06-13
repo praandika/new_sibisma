@@ -88,6 +88,7 @@
                                     </span>
                                 </div>
                             </td>
+                            <td>
                                 @if($o->sale_status == 'pending')
                                 <span style="position: relative;">
                                     <span style="
