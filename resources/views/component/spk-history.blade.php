@@ -86,7 +86,14 @@
                                     </span>
                                 </div>
                             </td>
-                            <td>{{ $o->created_at }}</td>
+                            <td>
+                                <div class="td-group">
+                                    <span class="main-data">{{ $o->spk_date }}</span>
+                                    <span class="secondary-data">
+                                        <span class="status-1">{{ ucwords($o->created_at->format('H:i:s')) }}</span>
+                                    </span>
+                                </div>
+                            </td>
                             <td>
                                 @if($o->sale_status == 'pending')
                                 <span style="position: relative;">
