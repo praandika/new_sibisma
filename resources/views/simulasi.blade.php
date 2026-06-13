@@ -23,8 +23,8 @@
       HAHA.. AYO BELAJAR BERSAMA, KAMU PASTI BISA!
 
       Author           : I Wayan Andika Pranayoga
-      Author website   : https://dikaprana.com
-      Author instagram : @dikanayoga
+      Author linkedIn  : https://www.linkedin.com/in/iwayanandika
+      Author Email     : praandikayoga@gmail.com
 
       Copyright 2020
       ============================================= -->
@@ -38,7 +38,7 @@
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navcustom">
         <a class="navbar-brand" href="https://yamahabismagroup.com/">
-            <img src="{{ asset('simulasi/Logobisma.png') }}" width="100" alt="YAMAHA BISMA">
+            <img src="{{ asset('simulasi/Logobismanew.png') }}" width="200" alt="YAMAHA BISMA">
         </a>
         <button class="navbar-toggler togglercustom" type="button" data-toggle="collapse"
             data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
@@ -350,7 +350,7 @@
                 <!-- END TAB BUNGA MENETAP -->
 
                 <center>
-                    <span style="font-size: 12px; color: grey;"><a href="https://www.instagram.com/dikanayoga/" style="color: white;"
+                    <span style="font-size: 12px; color: grey;"><a href="https://www.linkedin.com/in/iwayanandika" style="color: white;"
                     target="_blank">Developed by Andika Pranayoga</a></span>
                 </center>
             </div>
@@ -360,7 +360,7 @@
 
     <footer>
         <center>
-            Copyright &copy; <a href="https://yamahabismagroup.com">CRM Yamaha Bisma Group</a>
+            Copyright &copy; <a href="https://yamahabismagroup.com">CRM Bisma Group</a>
         </center>
     </footer>
 
