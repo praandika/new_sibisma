@@ -45,12 +45,5 @@
                 </x-jet-button>
             </div>
         </form>
-
-        <center>
-            <strong>
-                <p>&copy;CRM Bisma | Andika</p>
-            </strong>
-        </center>
     </x-jet-authentication-card>
-    
 </x-guest-layout>
