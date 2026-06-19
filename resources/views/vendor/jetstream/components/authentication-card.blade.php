@@ -9,6 +9,13 @@
 
     <div>
         <center>
+            
+                <p style="font-size: 11px; margin-top: 20px; text-decoration: underline;">
+                    <a href="{{ route('simulasi') }}" style="color: grey; text-decoration: none;" target="_blank">Go to Simulasi Kredit</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <a href="https://yamahabismagroup.com/games" style="color: grey; text-decoration: none;" target="_blank">Play Games!</a>
+                </p>
+
             <a href="https://www.linkedin.com/in/iwayanandika" style="color: grey; text-decoration: none;" target="_blank">
                 <p style="font-size: 11px; margin-top: 20px;">
                     &copy;CRM Bisma Group
