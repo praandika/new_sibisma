@@ -380,6 +380,8 @@
         document.getElementById("col-leasing-bunga").setAttribute("hidden", true);
         document.getElementById("col-leasing-tenor").setAttribute("hidden", true)
         document.getElementById("col-leasing-cash").removeAttribute("hidden");
+        document.getElementById("bunga").removeAttribute("required");
+        document.getElementById("tenor").removeAttribute("required");
 
         setAttributes(document.getElementById("leasing_code_cash"), {
             "data-toggle" : "modal",
@@ -404,6 +406,8 @@
         document.getElementById("col-leasing-bunga").removeAttribute("hidden");
         document.getElementById("col-leasing-tenor").removeAttribute("hidden");
         document.getElementById("col-leasing-cash").setAttribute("hidden", true);
+        document.getElementById("bunga").setAttribute("required", true);
+        document.getElementById("tenor").setAttribute("required", true);
 
         setAttributes(document.getElementById("leasing_code"), {
             "data-toggle" : "modal",

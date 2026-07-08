@@ -196,16 +196,16 @@
                     <div class="col-md-3" id="col-leasing-bunga">
                         <div class="form-group form-floating-label">
                             <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
-                                value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga" required>
-                            <label for="bunga" class="placeholder">Bunga *</label>
+                                value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga">
+                            <label for="bunga" class="placeholder">Bunga</label>
                         </div>
                     </div>
 
                     <div class="col-md-3" id="col-leasing-tenor">
                         <div class="form-group form-floating-label">
                             <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
-                                value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor" required>
-                            <label for="tenor" class="placeholder">Tenor *</label>
+                                value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor">
+                            <label for="tenor" class="placeholder">Tenor</label>
                         </div>
                     </div>
 

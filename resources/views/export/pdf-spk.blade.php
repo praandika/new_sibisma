@@ -140,7 +140,7 @@
             </tr>
             <tr>
                 <th>Finance</th>
-                <td>: {{ $o->leasing_code }} {{ $o->bunga }} {{ $o->tenor }} Bulan</td>
+                <td>: {{ $o->leasing_code }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
             </tr>
             <tr>
                 <th>Salesman</th>
