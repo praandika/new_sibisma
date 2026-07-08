@@ -25,8 +25,8 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <tr data-bunga="Menurun Reguler" class="pilihBunga">
-                                <td>Bunga Menurun Reguler</td>
+                            <tr data-bunga="Menurun 2.4%ass="pilihBunga">
+                                <td>Bunga Menurun 2.4%</td>
                             </tr>
                             <tr data-bunga="Menurun 1.85%" class="pilihBunga">
                                 <td>Bunga Menurun 1.85%</td>
