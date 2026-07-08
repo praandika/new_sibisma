@@ -205,6 +205,22 @@
                         </div>
                     </div>
 
+                    <div class="col-md-3" id="col-leasing-bunga">
+                        <div class="form-group form-floating-label">
+                            <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
+                                value="{{ old('bunga') }}" data-toggle="modal" data-target=".modalBunga" required>
+                            <label for="bunga" class="placeholder">Bunga *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="col-leasing-tenor">
+                        <div class="form-group form-floating-label">
+                            <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
+                                value="{{ old('tenor') }}" data-toggle="modal" data-target=".modalTenor" required>
+                            <label for="tenor" class="placeholder">Tenor *</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3" id="col-leasing-cash">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id_cash" name="leasing_id_cash" value="{{ old('leasing_id_cash') }}"
@@ -212,7 +228,6 @@
                             <input id="leasing_code_cash" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ old('leasing_code') }}" required>
                             <label for="leasing_code_cash" class="placeholder">Select Micro/Instansi *</label>
-                            <span style="padding: 5px; color: #ffffff; background-color: forestgreen; position: absolute; right: 25px; top: 10px;">new!</span>
                         </div>
                     </div>
                     
@@ -296,6 +311,8 @@
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')
 @include('component.modal-order-status')
+@include('component.modal-tenor')
+@include('component.modal-bunga')
 
 @push('after-script')
 <script>
@@ -360,6 +377,8 @@
         // document.getElementById("leasing_id").value = '1';
         // document.getElementById("leasing_code").value = 'Cash';
         document.getElementById("col-leasing").setAttribute("hidden", true);
+        document.getElementById("col-leasing-bunga").setAttribute("hidden", true);
+        document.getElementById("col-leasing-tenor").setAttribute("hidden", true)
         document.getElementById("col-leasing-cash").removeAttribute("hidden");
 
         setAttributes(document.getElementById("leasing_code_cash"), {
@@ -382,6 +401,8 @@
         document.getElementById("leasing_id").value = '';
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
+        document.getElementById("col-leasing-bunga").removeAttribute("hidden");
+        document.getElementById("col-leasing-tenor").removeAttribute("hidden");
         document.getElementById("col-leasing-cash").setAttribute("hidden", true);
 
         setAttributes(document.getElementById("leasing_code"), {

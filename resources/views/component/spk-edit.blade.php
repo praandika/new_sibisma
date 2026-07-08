@@ -193,6 +193,22 @@
                         </div>
                     </div>
 
+                    <div class="col-md-3" id="col-leasing-bunga">
+                        <div class="form-group form-floating-label">
+                            <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
+                                value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga" required>
+                            <label for="bunga" class="placeholder">Bunga *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3" id="col-leasing-tenor">
+                        <div class="form-group form-floating-label">
+                            <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
+                                value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor" required>
+                            <label for="tenor" class="placeholder">Tenor *</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="manpower_id" name="manpower_id" value="{{ $spk->manpower_id }}" required>
@@ -301,6 +317,8 @@
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')
 @include('component.modal-order-status')
+@include('component.modal-bunga')
+@include('component.modal-tenor')
 
 @push('after-script')
 <script>
