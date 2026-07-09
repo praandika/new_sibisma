@@ -185,10 +185,10 @@
 
                     <div class="col-md-3" id="col-leasing">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ $spk->leasing_id }}" required>
+                            <input type="text" id="leasing_id" name="leasing_id" value="{{ $spk->leasing_id }}" required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ $spk->leasing->leasing_code }}" data-toggle="modal"
-                                data-target=".modalLeasing" required>
+                                data-target="{{ $spk->payment_method == 'cash' ? '.modalLeasingCash' : '.modalLeasing' }}" required>
                             <label for="leasing_code" class="placeholder">Select Finance *</label>
                         </div>
                     </div>
@@ -313,6 +313,7 @@
 @section('modal-title','Data Stock')
 @include('component.modal-data')
 @include('component.modal-leasing')
+@include('component.modal-leasing-cash')
 @include('component.modal-manpower')
 @include('component.modal-payment-method')
 @include('component.modal-credit-status')

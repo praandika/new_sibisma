@@ -284,6 +284,7 @@ class SpkController extends Controller
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         $leasing = Leasing::where('leasing_code','!=','CASH')->get();
+        $microfinance = Leasing::where('leasing_category','!=','credit')->get();
 
         if ($dc == 'group') {
             $stock = Stock::join('units','stocks.unit_id','units.id')
@@ -316,7 +317,7 @@ class SpkController extends Controller
             ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
             ->get();
         }
-        return view('page', compact('spk','stock','manpower','leasing'));
+        return view('page', compact('spk','stock','manpower','leasing','microfinance'));
     }
 
     /**
@@ -340,7 +341,7 @@ class SpkController extends Controller
             $tandajadi = $request->tandajadi;
         }
 
-        if ($request->payment_method == 'cash') {
+        if ($request->payment == 'cash') {
             $credit_status = 'cash';
             $leasing = 1;
         } else {
