@@ -243,13 +243,13 @@ function kredit_menurun(){
   let bunga = document.getElementById("bunga_menurun").value;
   if (bunga == 0.0244) { //update bunga 2.44
     admin = 1518000;
-    bungaPerTahun = 0.2928; //bunga * 12
+    bungaPerTahun = parseFloat(bunga) * 12; //bunga * 12
   } else if(bunga == 0.0187) {
     admin = 1818000;
-    bungaPerTahun = 0.2244;
+    bungaPerTahun = parseFloat(bunga) * 12;
   } else {
     admin = 1818000;
-    bungaPerTahun = 0.21;
+    bungaPerTahun = parseFloat(bunga) * 12;
   }
   
   let tenor12 = 12;
