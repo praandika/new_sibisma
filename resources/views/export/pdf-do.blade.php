@@ -114,7 +114,7 @@
         <div class="title">DELIVERY ORDER (DO)</div>
         Kepada Yth. <br>
         {{ $o->customer_name }} <br>
-        {{ $o->address }} <br>
+        {{ $o->address_shipment > 0 ? $o->address_shipment : $o->address }} <br>
         {{ $o->phone }} <br>
         di- <br>
         <p style="text-indent: 30px;">Tempat</p>

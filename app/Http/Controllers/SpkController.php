@@ -240,6 +240,7 @@ class SpkController extends Controller
         $data->spk_date = $today;
         $data->order_name = strtoupper($request->order_name);
         $data->address = strtoupper($request->address);
+        $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
         $data->stnk_name = strtoupper($request->stnk_name);
         $data->stock_id = $request->stock_id;
@@ -353,6 +354,7 @@ class SpkController extends Controller
         $data->spk_no = $request->spk_no;
         $data->order_name = strtoupper($request->order_name);
         $data->address = strtoupper($request->address);
+        $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
         $data->stnk_name = strtoupper($request->stnk_name);
         $data->stock_id = $request->stock_id;
@@ -583,7 +585,7 @@ class SpkController extends Controller
         ->join('colors','units.color_id','colors.id')
         ->join('manpowers','spks.manpower_id','manpowers.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment')
         ->where('spks.spk_no',$spk_no)
         ->get();
 

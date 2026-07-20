@@ -120,14 +120,22 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone"
-                                value="{{ old('phone') }}" required>
-                            <label for="phone" class="placeholder">Customer's Phone</label>
+                            <input id="address_shipment" type="text" class="form-control input-border-bottom" name="address_shipment"
+                                value="{{ old('address_shipment') }}" style="text-transform: uppercase" required maxlength="100">
+                            <label for="address_shipment" class="placeholder">Pengiriman Address</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone"
+                                value="{{ old('phone') }}" required>
+                            <label for="phone" class="placeholder">Customer's Phone</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name"
@@ -160,7 +168,9 @@
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
@@ -168,9 +178,7 @@
                             <label for="tandajadi" class="placeholder">Tanda Jadi</label>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
+                    
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="downpayment" type="number" class="form-control input-border-bottom"

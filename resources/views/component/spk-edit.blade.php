@@ -109,19 +109,26 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ $spk->address }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="address" class="placeholder">Customer's Address</label>
+                            <label for="address" class="placeholder">KTP Address</label>
                         </div>
                     </div>
 
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="address_shipment" type="text" class="form-control input-border-bottom" name="address_shipment" value="{{ $spk->address_shipment }}" style="text-transform: uppercase;" required maxlength="100">
+                            <label for="address_shipment" class="placeholder">Pengiriman Address</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ $spk->spk_phone }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ $spk->stnk_name }}" style="text-transform: uppercase;" required>
@@ -151,7 +158,9 @@
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
@@ -159,9 +168,7 @@
                             <label for="tandajadi" class="placeholder">Tanda Jadi</label>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
+                    
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ $spk->downpayment }}" required>

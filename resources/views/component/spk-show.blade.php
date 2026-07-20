@@ -114,8 +114,12 @@
                             <td>: {{ $o->order_name }}</td>
                         </tr>
                         <tr>
-                            <th width="200">Alamat</th>
+                            <th width="200">Alamat KTP</th>
                             <td>: {{ $o->customer_address }}</td>
+                        </tr>
+                        <tr>
+                            <th width="200">Alamat Pengiriman</th>
+                            <td>: {{ $o->address_shipment }}</td>
                         </tr>
                         <tr>
                             <th width="200">No. Telp</th>
@@ -152,10 +156,6 @@
                         <tr>
                             <th width="200">Salesman</th>
                             <td>: {{ $o->salesman }}</td>
-                        </tr>
-                        <tr>
-                            <th width="200">Keterangan</th>
-                            <td>: {{ $o->description }}</td>
                         </tr>
                     </table>
                 </div>
@@ -212,8 +212,10 @@
                         </div>
 
                         <textarea name="description" id="description" cols="30" rows="10"
-                            class="form-control input-border-bottom" placeholder="{{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : 'Keterangan' }}"
-                            style="border: 1px dashed grey; padding: 10px;"></textarea>
+                            class="form-control input-border-bottom" readonly
+                            style="border: 1px dashed grey; padding: 10px;">
+                            {{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }}{{ $o->description }}
+                        </textarea>
                         
                             <div class="card" style="margin-top: 10px;">
                                 <div class="card-body">

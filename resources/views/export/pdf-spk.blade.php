@@ -107,8 +107,12 @@
                 <td>: {{ $o->order_name }}</td>
             </tr>
             <tr>
-                <th>Alamat</th>
+                <th>Alamat KTP</th>
                 <td>: {{ $o->customer_address }}</td>
+            </tr>
+            <tr>
+                <th>Alamat Pengiriman</th>
+                <td>: {{ $o->address_shipment }}</td>
             </tr>
             <tr>
                 <th>No. Telp</th>
@@ -145,10 +149,6 @@
             <tr>
                 <th>Salesman</th>
                 <td>: {{ $o->manpower->name }}</td>
-            </tr>
-            <tr>
-                <th>Keterangan</th>
-                <td>: {{ $o->description }}</td>
             </tr>
         </table>
     </div>
@@ -202,7 +202,9 @@
             <br>
             <label for="description">Keterangan:</label>
 
-            <div style="width: 300px; height: 120px; border: 1px solid grey;">&nbsp;{{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }}</div>
+            <div style="width: 300px; height: 120px; border: 1px solid grey; padding-left: 5px;">&nbsp;{{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }} <br>
+            <span style="font-size: 8px !important;">{{ $o->description }}</span>
+            </div>
         </div>
         @empty
         <div class="col-md-12">
