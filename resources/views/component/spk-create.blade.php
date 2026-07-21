@@ -33,6 +33,10 @@
         text-transform: none;
     }
 
+    .leasing-group {
+        background-color: #c6ebf5;
+    }
+
 </style>
 @endpush
 
@@ -139,6 +143,22 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
+                            <input id="ktp_number" type="text" class="form-control input-border-bottom" name="ktp_number"
+                                value="{{ old('ktp_number') }}" style="text-transform: uppercase" required maxlength="100">
+                            <label for="ktp_number" class="placeholder">KTP Number</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="kk_number" type="text" class="form-control input-border-bottom" name="kk_number"
+                                value="{{ old('kk_number') }}" style="text-transform: uppercase" required maxlength="100">
+                            <label for="kk_number" class="placeholder">KK Number</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
                             <input id="phone" type="number" class="form-control input-border-bottom" name="phone"
                                 value="{{ old('phone') }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
@@ -152,7 +172,9 @@
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
@@ -177,9 +199,7 @@
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
+                    
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
@@ -212,7 +232,7 @@
                         </div>
                     </div> -->
 
-                    <div class="col-md-3" id="col-leasing">
+                    <div class="col-md-3 leasing-group" id="col-leasing">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}"
                                 required>
@@ -222,7 +242,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-bunga">
+                    <div class="col-md-3 leasing-group" id="col-leasing-bunga">
                         <div class="form-group form-floating-label">
                             <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
                                 value="{{ old('bunga') }}" data-toggle="modal" data-target=".modalBunga" required>
@@ -230,11 +250,19 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-tenor">
+                    <div class="col-md-3 leasing-group" id="col-leasing-tenor">
                         <div class="form-group form-floating-label">
                             <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
                                 value="{{ old('tenor') }}" data-toggle="modal" data-target=".modalTenor" required>
                             <label for="tenor" class="placeholder">Tenor *</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 leasing-group" id="col-leasing-namapemohon">
+                        <div class="form-group form-floating-label">
+                            <input id="nama_pemohon" type="text" class="form-control input-border-bottom" name="nama_pemohon"
+                                value="{{ old('nama_pemohon') }}" style="text-transform: uppercase" required>
+                            <label for="nama_pemohon" class="placeholder">Nama Pemohon</label>
                         </div>
                     </div>
 
@@ -416,9 +444,13 @@
         document.getElementById("col-leasing").setAttribute("hidden", true);
         document.getElementById("col-leasing-bunga").setAttribute("hidden", true);
         document.getElementById("col-leasing-tenor").setAttribute("hidden", true);
+        document.getElementById("col-leasing-namapemohon").setAttribute("hidden", true);
+        document.getElementById("col-leasing-reason").setAttribute("hidden", true);
         document.getElementById("col-leasing-cash").removeAttribute("hidden");
         document.getElementById("bunga").removeAttribute("required");
         document.getElementById("tenor").removeAttribute("required");
+        document.getElementById("nama_pemohon").removeAttribute("required");
+        document.getElementById("reason").removeAttribute("required");
 
         setAttributes(document.getElementById("leasing_code_cash"), {
             "data-toggle" : "modal",
@@ -442,9 +474,13 @@
         document.getElementById("col-leasing").removeAttribute("hidden");
         document.getElementById("col-leasing-bunga").removeAttribute("hidden");
         document.getElementById("col-leasing-tenor").removeAttribute("hidden");
+        document.getElementById("col-leasing-namapemohon").removeAttribute("hidden");
+        document.getElementById("col-leasing-reason").removeAttribute("hidden");
         document.getElementById("col-leasing-cash").setAttribute("hidden", true);
         document.getElementById("bunga").setAttribute("required", true);
         document.getElementById("tenor").setAttribute("required", true);
+        document.getElementById("nama_pemohon").setAttribute("required", true);
+        document.getElementById("reason").setAttribute("required", true);
 
         setAttributes(document.getElementById("leasing_code"), {
             "data-toggle" : "modal",

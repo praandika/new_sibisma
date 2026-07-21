@@ -13,11 +13,17 @@
                 <div class="table-responsive">
                     <table class="display table table-striped table-hover" width="100%" style="text-align: center;">
                         <tbody>
-                            <tr data-credit-status="survey" class="pilihCreditStatus">
+                            <tr data-credit-status="survey" data-label-reason="Survey" class="pilihCreditStatus">
                                 <td>Survey</td>
                             </tr>
-                            <tr data-credit-status="acc" class="pilihCreditStatus">
+                            <tr data-credit-status="acc" data-label-reason="Acc" class="pilihCreditStatus">
                                 <td>Acc</td>
+                            </tr>
+                            <tr data-credit-status="reject" data-label-reason="Reject" class="pilihCreditStatus">
+                                <td>Reject</td>
+                            </tr>
+                            <tr data-credit-status="cancel" data-label-reason="Cancel" class="pilihCreditStatus">
+                                <td>Cancel</td>
                             </tr>
                         </tbody>
                     </table>
@@ -33,6 +39,8 @@
     <script>
         $(document).on('click', '.pilihCreditStatus', function (e) {
             $('#credit_status').val($(this).attr('data-credit-status'));
+            $('#reason-label').text($(this).attr('data-label-reason'));
+            showReason();
             $('.modalCreditStatus').modal('hide');
         });
     </script>

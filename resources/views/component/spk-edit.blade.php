@@ -58,7 +58,7 @@
                 @csrf
                 @method('PUT')
                 <div class="row" style="background-color: #fff1cf; padding-top: 10px; border-radius: 10px;">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="payment_method" type="text" class="form-control input-border-bottom"
                                 name="payment_method" value="{{ $spk->payment_method }}" data-toggle="modal"
@@ -66,7 +66,7 @@
                             <label for="payment_method" class="placeholder">Choose Payment Method *</label>
                         </div>
                     </div>
-                    <div class="col-md-4" id="col-credit-status">
+                    <div class="col-md-3" id="col-credit-status" @if($spk->payment_method == 'cash') hidden @endif>
                         <div class="form-group form-floating-label">
                             <input id="credit_status" type="text" class="form-control input-border-bottom"
                                 name="credit_status" value="{{ $spk->credit_status }}" data-toggle="modal"
@@ -74,7 +74,14 @@
                             <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status *</span></label>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3" id="col-leasing-reason" hidden>
+                        <div class="form-group form-floating-label">
+                            <input id="reason" type="text" class="form-control input-border-bottom" name="reason"
+                                value="{{ old('reason') }}" style="text-transform: uppercase" required>
+                            <label for="reason" class="placeholder">Alasan <span id="reason-label"></span></label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="order_status" type="text" class="form-control input-border-bottom"
                                 name="order_status" value="{{ $spk->order_status }}" data-toggle="modal"
@@ -200,7 +207,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-bunga">
+                    <div class="col-md-3" id="col-leasing-bunga" hidden>
                         <div class="form-group form-floating-label">
                             <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
                                 value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga">
@@ -208,11 +215,19 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-tenor">
+                    <div class="col-md-3" id="col-leasing-tenor" hidden>
                         <div class="form-group form-floating-label">
                             <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
                                 value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor">
                             <label for="tenor" class="placeholder">Tenor</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 leasing-group" id="col-leasing-namapemohon" hidden>
+                        <div class="form-group form-floating-label">
+                            <input id="nama_pemohon" type="text" class="form-control input-border-bottom" name="nama_pemohon"
+                                value="{{ old('nama_pemohon') }}" style="text-transform: uppercase">
+                            <label for="nama_pemohon" class="placeholder">Nama Pemohon</label>
                         </div>
                     </div>
 
@@ -323,7 +338,7 @@
 @include('component.modal-leasing-cash')
 @include('component.modal-manpower')
 @include('component.modal-payment-method')
-@include('component.modal-credit-status')
+@include('component.modal-credit-status-edit')
 @include('component.modal-order-status')
 @include('component.modal-bunga')
 @include('component.modal-tenor')
@@ -380,6 +395,40 @@
         document.getElementById("leasing_id").value = '';
         document.getElementById("leasing_code").value = '';
         document.getElementById("col-leasing").removeAttribute("hidden");
+    }
+
+    function showReason() {
+
+        let status = $('#credit_status').val().toLowerCase();
+
+        if (status === 'reject' || status === 'cancel') {
+            $('#col-leasing-reason').removeAttr('hidden');
+        } else {
+            $('#col-leasing-reason').attr('hidden', true);
+        }
+
+    }
+
+    function showLeasingGroup() {
+
+        let payment_method = $('#payment_method').val().toLowerCase();
+
+        if (payment_method === 'credit') {
+            $('#col-leasing-bunga').removeAttr('hidden');
+            $('#col-leasing-tenor').removeAttr('hidden');
+            $('#col-leasing-namapemohon').removeAttr('hidden');
+            $('#col-credit-status').removeAttr('hidden');
+            $('#leasing_code').attr('data-target', '.modalLeasing');
+            $('#leasing_code').val('');
+        } else {
+            $('#col-leasing-bunga').attr('hidden', true);
+            $('#col-leasing-tenor').attr('hidden', true);
+            $('#col-leasing-namapemohon').attr('hidden', true);
+            $('#col-credit-status').attr('hidden', true);
+            $('#leasing_code').attr('data-target', '.modalLeasingCash');
+            $('#leasing_code').val('CASH');
+        }
+
     }
 
     // Custom Upload File
