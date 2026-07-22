@@ -141,12 +141,11 @@
                                     <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
-                                    @if($o->sale_status == 'pending')
+                                    @if($o->payment_method == 'credit')
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="{{ route('spk.delete', $o->id_spk) }}" class="btnAction"
-                                            data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                            onclick="return tanya('Yakin hapus SPK {{ $o->spk_no }} {{ $o->order_name }}?')"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ route('spk.historycredit', $o->spk_no) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="History Credit"><i
+                                            class="fas fa-history" style="color: green;"></i></a>
                                     @endif
                                 </div>
                             </td>

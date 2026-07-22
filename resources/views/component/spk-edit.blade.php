@@ -77,7 +77,7 @@
                     <div class="col-md-3" id="col-leasing-reason" hidden>
                         <div class="form-group form-floating-label">
                             <input id="reason" type="text" class="form-control input-border-bottom" name="reason"
-                                value="{{ old('reason') }}" style="text-transform: uppercase" required>
+                                value="{{ old('reason') }}" style="text-transform: uppercase">
                             <label for="reason" class="placeholder">Alasan <span id="reason-label"></span></label>
                         </div>
                     </div>
@@ -131,6 +131,22 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
+                            <input id="ktp_number" type="number" class="form-control input-border-bottom" name="ktp_number"
+                                value="{{ $spk->ktp_number }}" style="text-transform: uppercase" required maxlength="16">
+                            <label for="ktp_number" class="placeholder">KTP Number</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input id="kk_number" type="number" class="form-control input-border-bottom" name="kk_number"
+                                value="{{ $spk->kk_number }}" style="text-transform: uppercase" maxlength="16">
+                            <label for="kk_number" class="placeholder">KK Number</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
                             <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ $spk->spk_phone }}" required>
                             <label for="phone" class="placeholder">Customer's Phone</label>
                         </div>
@@ -142,7 +158,9 @@
                             <label for="stnk_name" class="placeholder">STNK Name</label>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="stock_id" name="stock_id" value="{{ $spk->stock_id }}" required>
@@ -165,9 +183,7 @@
                             <label for="otr" class="placeholder">OTR Price</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
@@ -203,11 +219,11 @@
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
                                 name="leasing_code" value="{{ $spk->leasing->leasing_code }}" data-toggle="modal"
                                 data-target="{{ $spk->payment_method == 'cash' ? '.modalLeasingCash' : '.modalLeasing' }}" required>
-                            <label for="leasing_code" class="placeholder">Select Finance *</label>
+                            <label for="leasing_code" class="placeholder"><span id="leasing-label">{{ $spk->payment_method == 'credit' ? 'Select Finance *' : 'Select Micro/Instansi *' }}</span></label>
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-bunga" hidden>
+                    <div class="col-md-3" id="col-leasing-bunga" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
                         <div class="form-group form-floating-label">
                             <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
                                 value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga">
@@ -215,7 +231,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-tenor" hidden>
+                    <div class="col-md-3" id="col-leasing-tenor" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
                         <div class="form-group form-floating-label">
                             <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
                                 value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor">
@@ -223,11 +239,11 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 leasing-group" id="col-leasing-namapemohon" hidden>
+                    <div class="col-md-3 leasing-group" id="col-leasing-namapemohon" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
                         <div class="form-group form-floating-label">
-                            <input id="nama_pemohon" type="text" class="form-control input-border-bottom" name="nama_pemohon"
-                                value="{{ old('nama_pemohon') }}" style="text-transform: uppercase">
-                            <label for="nama_pemohon" class="placeholder">Nama Pemohon</label>
+                            <input id="pemohon_name" type="text" class="form-control input-border-bottom" name="pemohon_name"
+                                value="{{ $spk->pemohon_name }}" style="text-transform: uppercase">
+                            <label for="pemohon_name" class="placeholder">Nama Pemohon</label>
                         </div>
                     </div>
 
@@ -373,38 +389,16 @@
     //     e.preventDefault();
     // });
 
-    function disable(){
-        let creditStatus = document.getElementById("credit_status");
-        creditStatus.value = 'Cash';
-        creditStatus.setAttribute("disabled",true);
-        document.getElementById("place").innerHTML = "Cash";
-        document.getElementById("col-credit-status").setAttribute("hidden",true);
-
-        document.getElementById("leasing_id").value = '1';
-        document.getElementById("leasing_code").value = 'Cash';
-        document.getElementById("col-leasing").setAttribute("hidden",true);
-    }
-
-    function enable(){
-        let creditStatus = document.getElementById("credit_status");
-        creditStatus.value = '';
-        creditStatus.removeAttribute("disabled");
-        document.getElementById("place").innerHTML = "Choose Credit Status *";
-        document.getElementById("col-credit-status").removeAttribute("hidden");
-
-        document.getElementById("leasing_id").value = '';
-        document.getElementById("leasing_code").value = '';
-        document.getElementById("col-leasing").removeAttribute("hidden");
-    }
-
     function showReason() {
 
         let status = $('#credit_status').val().toLowerCase();
 
         if (status === 'reject' || status === 'cancel') {
             $('#col-leasing-reason').removeAttr('hidden');
+            $('#col-leasing-reason').attr('required', true);
         } else {
             $('#col-leasing-reason').attr('hidden', true);
+            $('#col-leasing-reason').removeAttr('required');
         }
 
     }
@@ -418,6 +412,15 @@
             $('#col-leasing-tenor').removeAttr('hidden');
             $('#col-leasing-namapemohon').removeAttr('hidden');
             $('#col-credit-status').removeAttr('hidden');
+            $('#leasing-label').text('Select Finance *');
+            $('#credit_status').attr('required', true);
+            $('#leasing_code').attr('required', true);
+            $('#leasing_code_cash').removeAttr('required');
+            $('#bunga').attr('required', true);
+            $('#tenor').attr('required', true);
+            $('#nama_pemohon').attr('required', true);
+            $('#leasing_id').attr('required', true);
+            $('#leasing_id_cash').removeAttr('required');
             $('#leasing_code').attr('data-target', '.modalLeasing');
             $('#leasing_code').val('');
         } else {
@@ -425,8 +428,19 @@
             $('#col-leasing-tenor').attr('hidden', true);
             $('#col-leasing-namapemohon').attr('hidden', true);
             $('#col-credit-status').attr('hidden', true);
+            $('#credit_status').removeAttr('required');
+            $('#leasing_code').removeAttr('required');
+            $('#leasing_code_cash').attr('required', true);
+            $('#bunga').removeAttr('required');
+            $('#tenor').removeAttr('required');
+            $('#nama_pemohon').removeAttr('required');
+            $('#leasing_id').removeAttr('required');
+            $('#leasing_id_cash').attr('required', true);
+            $('#leasing-label').text('Select Micro/Instansi *');
             $('#leasing_code').attr('data-target', '.modalLeasingCash');
-            $('#leasing_code').val('CASH');
+            $('#leasing_code').val('');
+            $('#bunga').val('');
+            $('#tenor').val('');
         }
 
     }

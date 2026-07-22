@@ -233,6 +233,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historysalesman/{date
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [SpkController::class, 'filter'])->name('spk.filter');
 // END SPK
 
+// History SPK Credit
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historycredit/{param?}', [SpkController::class, 'historyCredit'])->name('spk.historycredit');
+// END History SPK Credit
+
 // DO
 Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', DeliveryOrderController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order/get/{id}', [DeliveryOrderController::class, 'get'])->name('delivery-order.get');

@@ -86,7 +86,7 @@
                         <div class="form-group form-floating-label">
                             <input id="credit_status" type="text" class="form-control input-border-bottom"
                                 name="credit_status" value="{{ old('credit_status') }}" data-toggle="modal"
-                                data-target=".modalCreditStatus" style="text-transform: capitalize;" required>
+                                data-target=".modalCreditStatus" style="text-transform: capitalize;">
                             <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status
                                     *</span></label>
                         </div>
@@ -143,16 +143,16 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="ktp_number" type="text" class="form-control input-border-bottom" name="ktp_number"
-                                value="{{ old('ktp_number') }}" style="text-transform: uppercase" required maxlength="100">
+                            <input id="ktp_number" type="number" class="form-control input-border-bottom" name="ktp_number"
+                                value="{{ old('ktp_number') }}" style="text-transform: uppercase" required maxlength="16">
                             <label for="ktp_number" class="placeholder">KTP Number</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="kk_number" type="text" class="form-control input-border-bottom" name="kk_number"
-                                value="{{ old('kk_number') }}" style="text-transform: uppercase" required maxlength="100">
+                            <input id="kk_number" type="number" class="form-control input-border-bottom" name="kk_number"
+                                value="{{ old('kk_number') }}" style="text-transform: uppercase" maxlength="16">
                             <label for="kk_number" class="placeholder">KK Number</label>
                         </div>
                     </div>
@@ -232,12 +232,12 @@
                         </div>
                     </div> -->
 
-                    <div class="col-md-3 leasing-group" id="col-leasing">
+                    <div class="col-md-3 leasing-group" id="col-leasing" hidden>
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}"
-                                required>
+                                >
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ old('leasing_code') }}" required>
+                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal">
                             <label for="leasing_code" class="placeholder">Select Finance *</label>
                         </div>
                     </div>
@@ -245,7 +245,7 @@
                     <div class="col-md-3 leasing-group" id="col-leasing-bunga">
                         <div class="form-group form-floating-label">
                             <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
-                                value="{{ old('bunga') }}" data-toggle="modal" data-target=".modalBunga" required>
+                                value="{{ old('bunga') }}" data-toggle="modal" data-target=".modalBunga">
                             <label for="bunga" class="placeholder">Bunga *</label>
                         </div>
                     </div>
@@ -253,25 +253,25 @@
                     <div class="col-md-3 leasing-group" id="col-leasing-tenor">
                         <div class="form-group form-floating-label">
                             <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
-                                value="{{ old('tenor') }}" data-toggle="modal" data-target=".modalTenor" required>
+                                value="{{ old('tenor') }}" data-toggle="modal" data-target=".modalTenor">
                             <label for="tenor" class="placeholder">Tenor *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3 leasing-group" id="col-leasing-namapemohon">
                         <div class="form-group form-floating-label">
-                            <input id="nama_pemohon" type="text" class="form-control input-border-bottom" name="nama_pemohon"
-                                value="{{ old('nama_pemohon') }}" style="text-transform: uppercase" required>
-                            <label for="nama_pemohon" class="placeholder">Nama Pemohon</label>
+                            <input id="pemohon_name" type="text" class="form-control input-border-bottom" name="pemohon_name"
+                                value="{{ old('pemohon_name') }}" style="text-transform: uppercase">
+                            <label for="pemohon_name" class="placeholder">Nama Pemohon</label>
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="col-leasing-cash">
+                    <div class="col-md-3" id="col-leasing-cash" hidden>
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id_cash" name="leasing_id_cash" value="{{ old('leasing_id_cash') }}"
-                                required>
+                                >
                             <input id="leasing_code_cash" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ old('leasing_code') }}" required>
+                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal">
                             <label for="leasing_code_cash" class="placeholder">Select Micro/Instansi *</label>
                         </div>
                     </div>
@@ -432,64 +432,46 @@
         }
     }
 
-    function disable() {
-        let creditStatus = document.getElementById("credit_status");
-        creditStatus.value = 'Cash';
-        creditStatus.setAttribute("disabled", true);
-        document.getElementById("place").innerHTML = "Cash";
-        document.getElementById("col-credit-status").setAttribute("hidden", true);
+    function showLeasingGroup() {
 
-        // document.getElementById("leasing_id").value = '1';
-        // document.getElementById("leasing_code").value = 'Cash';
-        document.getElementById("col-leasing").setAttribute("hidden", true);
-        document.getElementById("col-leasing-bunga").setAttribute("hidden", true);
-        document.getElementById("col-leasing-tenor").setAttribute("hidden", true);
-        document.getElementById("col-leasing-namapemohon").setAttribute("hidden", true);
-        document.getElementById("col-leasing-reason").setAttribute("hidden", true);
-        document.getElementById("col-leasing-cash").removeAttribute("hidden");
-        document.getElementById("bunga").removeAttribute("required");
-        document.getElementById("tenor").removeAttribute("required");
-        document.getElementById("nama_pemohon").removeAttribute("required");
-        document.getElementById("reason").removeAttribute("required");
+        let payment_method = $('#payment_method').val().toLowerCase();
 
-        setAttributes(document.getElementById("leasing_code_cash"), {
-            "data-toggle" : "modal",
-            "data-target" : ".modalLeasingCash"
-        });
+        if (payment_method === 'credit') {
+            $('#col-leasing-bunga').removeAttr('hidden');
+            $('#col-leasing-tenor').removeAttr('hidden');
+            $('#col-leasing-namapemohon').removeAttr('hidden');
+            $('#col-credit-status').removeAttr('hidden');
+            $('#col-leasing').removeAttr('hidden');
+            $('#col-leasing-cash').attr('hidden', true);
+            $('#credit_status').attr('required', true);
+            $('#leasing_code').attr('required', true);
+            $('#leasing_code_cash').removeAttr('required');
+            $('#bunga').attr('required', true);
+            $('#tenor').attr('required', true);
+            $('#pemohon_name').attr('required', true);
+            $('#leasing_id').attr('required', true);
+            $('#leasing_id_cash').removeAttr('required');
+            $('#leasing_code').attr('data-target', '.modalLeasing');
+            $('#leasing_code').val('');
+        } else {
+            $('#col-leasing-bunga').attr('hidden', true);
+            $('#col-leasing-tenor').attr('hidden', true);
+            $('#col-leasing-namapemohon').attr('hidden', true);
+            $('#col-credit-status').attr('hidden', true);
+            $('#col-leasing-cash').removeAttr('hidden');
+            $('#col-leasing').attr('hidden', true);
+            $('#credit_status').removeAttr('required');
+            $('#leasing_code').removeAttr('required');
+            $('#leasing_code_cash').attr('required', true);
+            $('#bunga').removeAttr('required');
+            $('#tenor').removeAttr('required');
+            $('#pemohon_name').removeAttr('required');
+            $('#leasing_id').removeAttr('required');
+            $('#leasing_id_cash').attr('required', true);
+            $('#leasing_code_cash').attr('data-target', '.modalLeasingCash');
+            $('#leasing_code_cash').val('');
+        }
 
-        removeAttributes(document.getElementById("leasing_code"),
-            "data-toggle, data-target"
-        );
-    }
-
-    function enable() {
-        let creditStatus = document.getElementById("credit_status");
-        // creditStatus.value = '';
-        creditStatus.removeAttribute("disabled");
-        document.getElementById("place").innerHTML = "Choose Credit Status *";
-        document.getElementById("col-credit-status").removeAttribute("hidden");
-
-        document.getElementById("leasing_id").value = '';
-        document.getElementById("leasing_code").value = '';
-        document.getElementById("col-leasing").removeAttribute("hidden");
-        document.getElementById("col-leasing-bunga").removeAttribute("hidden");
-        document.getElementById("col-leasing-tenor").removeAttribute("hidden");
-        document.getElementById("col-leasing-namapemohon").removeAttribute("hidden");
-        document.getElementById("col-leasing-reason").removeAttribute("hidden");
-        document.getElementById("col-leasing-cash").setAttribute("hidden", true);
-        document.getElementById("bunga").setAttribute("required", true);
-        document.getElementById("tenor").setAttribute("required", true);
-        document.getElementById("nama_pemohon").setAttribute("required", true);
-        document.getElementById("reason").setAttribute("required", true);
-
-        setAttributes(document.getElementById("leasing_code"), {
-            "data-toggle" : "modal",
-            "data-target" : ".modalLeasing"
-        });
-
-        removeAttributes(document.getElementById("leasing_code_cash"),
-            "data-toggle, data-target"
-        );
     }
 
     // Custom Upload File

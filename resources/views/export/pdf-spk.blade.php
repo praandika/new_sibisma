@@ -107,6 +107,10 @@
                 <td>: {{ $o->order_name }}</td>
             </tr>
             <tr>
+                <th>KTP</th>
+                <td>: {{ $o->ktp_number }}</td>
+            </tr>
+            <tr>
                 <th>Alamat KTP</th>
                 <td>: {{ $o->customer_address }}</td>
             </tr>

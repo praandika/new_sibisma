@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Sale;
 use App\Models\User;
 use App\Models\Spk;
+use App\Models\HistoryCredit;
 
 class Leasing extends Model
 {
@@ -32,5 +33,10 @@ class Leasing extends Model
     // Relasi to SPK
     public function spk(){
         return $this->hasMany(Spk::class);
+    }
+
+    // Relasi to HistoryCredit
+    public function historyCredit(){
+        return $this->hasMany(HistoryCredit::class);
     }
 }

@@ -57,6 +57,7 @@
                                 data-onhand="{{ $o->qty }}"
                                 data-dealercode="{{ $o->dealer_code }}"
                                 data-dealername="{{ $o->dealer_name }}"
+                                data-ktpnumber="{{ $o->ktp_number }}"
                                 class="klik">
                                 <td>
                                     @if($o->payment_method == 'credit')
@@ -170,6 +171,7 @@
         $('#leasing_id').val($(this).attr('data-leasing_id'));
         $('#leasing_code').val($(this).attr('data-leasing'));
         $('#address').val($(this).attr('data-address'));
+        $('#nik').val($(this).attr('data-ktpnumber'));
         $('.modalSPK').modal('hide');
         
         $('#color_code').css('background', code);

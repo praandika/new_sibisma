@@ -10,6 +10,7 @@ use App\Models\Leasing;
 use App\Models\Manpower;
 use App\Models\Stock;
 use App\Models\Unit;
+use App\Models\HistoryCredit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -242,7 +243,10 @@ class SpkController extends Controller
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
+        $data->ktp_number = $request->ktp_number;
+        $data->kk_number = $request->kk_number;
         $data->stnk_name = strtoupper($request->stnk_name);
+        $data->pemohon_name = strtoupper($request->pemohon_name);
         $data->stock_id = $request->stock_id;
         $data->tandajadi = $tandajadi;
         $data->downpayment = $request->downpayment;
@@ -260,6 +264,28 @@ class SpkController extends Controller
         $data->created_by = Auth::user()->id;
         $data->save();
         toast('SPK berhasil dibuat','success');
+
+        if ($request->payment_method == 'credit') {
+            // Cek status kredit
+            if($request->credit_status == 'acc'){
+                $reason = 'ACC';
+            } else if($request->payment_method == 'survey'){
+                $reason = 'Mulai Survey';
+            } else {
+                $reason = $request->reason;
+            }
+
+            $history = new HistoryCredit;
+            $history->leasing_id = $request->leasing_id;
+            $history->spk = $request->spk_no;
+            $history->update_date = $today;
+            $history->credit_status = $credit_status;
+            $history->reason = $reason;
+            $history->pemohon_name = strtoupper($request->pemohon_name);
+            $history->save();
+            toast('History Credit berhasil disimpan','success');
+        }
+
         return redirect()->route('spk.get',$request->spk_no);
     }
 
@@ -330,6 +356,8 @@ class SpkController extends Controller
      */
     public function update(Request $request, Spk $spk)
     {
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
         if ($request->discount == '') {
             $discount = 0;
         } else {
@@ -353,10 +381,14 @@ class SpkController extends Controller
         $data = Spk::find($spk->id);
         $data->spk_no = $request->spk_no;
         $data->order_name = strtoupper($request->order_name);
+        $data->reason = strtoupper($request->reason);
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
+        $data->ktp_number = $request->ktp_number;
+        $data->kk_number = $request->kk_number;
         $data->stnk_name = strtoupper($request->stnk_name);
+        $data->pemohon_name = strtoupper($request->pemohon_name);
         $data->stock_id = $request->stock_id;
         $data->tandajadi = $tandajadi;
         $data->downpayment = $request->downpayment;
@@ -372,6 +404,20 @@ class SpkController extends Controller
         $data->order_status = $request->order_status;
         $data->sale_status = $request->sale_status;
         $data->created_by = Auth::user()->id;
+
+        // Save Record to History Credit
+
+        if ($request->payment_method == 'credit') {
+            $history = new HistoryCredit;
+            $history->leasing_id = $request->leasing_id;
+            $history->spk = $request->spk_no;
+            $history->update_date = $today;
+            $history->credit_status = $credit_status;
+            $history->pemohon_name = strtoupper($request->pemohon_name);
+            $history->reason = strtoupper($request->reason);
+            $history->save();
+            toast('History Credit berhasil disimpan','success');
+        }
 
         if ($request->ktp_file_prev == '' || $request->ktp_file_prev == null) {
             // Get KTP image and Store
@@ -585,8 +631,25 @@ class SpkController extends Controller
         ->join('colors','units.color_id','colors.id')
         ->join('manpowers','spks.manpower_id','manpowers.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.ktp_number')
         ->where('spks.spk_no',$spk_no)
+        ->get();
+
+        return view('page', compact('data','spk_no'));
+    }
+
+    // History Credit
+    public function historyCredit($spk_no){
+        $data = HistoryCredit::join('spks','history_credits.spk','=','spks.spk_no')
+        ->join('stocks','spks.stock_id','=','stocks.id')
+        ->join('leasings','history_credits.leasing_id','=','leasings.id')
+        ->join('units','stocks.unit_id','units.id')
+        ->join('colors','units.color_id','colors.id')
+        ->join('manpowers','spks.manpower_id','manpowers.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->select('history_credits.spk','spks.order_name','history_credits.credit_status','history_credits.reason','spks.spk_date','history_credits.update_date','history_credits.pemohon_name','manpowers.name as salesman','leasings.leasing_code')
+        ->where('history_credits.spk',$spk_no)
+        ->orderBy('history_credits.update_date','asc')
         ->get();
 
         return view('page', compact('data','spk_no'));
@@ -1526,4 +1589,5 @@ class SpkController extends Controller
         }
         return view('page', compact('data','unitName','colorName','paymentMethod','creditStatus','paymentMethod','nameCustomer','unit','color','unitData','colorData'));
     }
+
 }
