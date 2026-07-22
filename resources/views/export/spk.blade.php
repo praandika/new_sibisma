@@ -16,6 +16,7 @@
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Customer Address</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Unit</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Color</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">OTR</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Leasing</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Down Payment</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Discount</th>
@@ -43,6 +44,7 @@
             <td>{{ $o->customer_address }}</td>
             <td>{{ $o->stock->unit->model_name }}</td>
             <td>{{ $o->stock->unit->color->color_name }}</td>
+            <td>Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
             <td>{{ $o->leasing->leasing_name }}</td>
             <td>Rp {{ number_format($o->downpayment, 0, ',','.') }}</td>
             <td>Rp {{ number_format($o->discount, 0, ',','.') }}</td>
@@ -52,7 +54,7 @@
         </tr>
         @empty
         <tr>
-            <td colspan="21" style="text-align: center;">No data available</td>
+            <td colspan="22" style="text-align: center;">No data available</td>
         </tr>
         @endforelse
     </tbody>
