@@ -28,8 +28,8 @@
                             <tr data-bunga="Menurun 2.4%" class="pilihBunga">
                                 <td>Bunga Menurun 2.4%</td>
                             </tr>
-                            <tr data-bunga="Menurun 1.85%" class="pilihBunga">
-                                <td>Bunga Menurun 1.85%</td>
+                            <tr data-bunga="Menurun 1.87%" class="pilihBunga">
+                                <td>Bunga Menurun 1.87%</td>
                             </tr>
                             <tr data-bunga="Menetap Reguler" class="pilihBunga">
                                 <td>Bunga Menetap Reguler</td>
