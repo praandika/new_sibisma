@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\DealerApi;
 use App\Models\UnitOnhand;
+use App\Models\MasterPrice;
+use App\Helpers\FrameHelper;
+use Carbon\Carbon;
 
 class SyncManifest extends Command
 {
@@ -37,6 +40,7 @@ class SyncManifest extends Command
      *
      * @return int
      */
+
     public function handle()
     {
         $dealerApi = DealerApi::where('status',1)->get();
@@ -65,41 +69,37 @@ class SyncManifest extends Command
 
             $insert = [];
 
+            $masterPrices = MasterPrice::pluck('price', 'model_name');
+
             foreach ($data as $header) {
                 foreach ($header['detail-datas'] as $detail) {
                     foreach ($detail['subdetail-datas'] as $sub) {
+                        // Get Year MC
+                        $frameNo = $sub['s.frame_no_'];
+                        $yearMc = FrameHelper::getYearMc($frameNo);
+
+                        // Get Price
+                        $modelName = strtoupper(trim($detail['d.model_name_']));
+
+                        $price = $masterPrices[$modelName] ?? 0;
 
                         $insert[] = [
-
-                            // Dealer
-                            'point_code' => $header['h.site_id_'],
-                            // LANJUT DISINI, CEK DATA API DI POSTMAN DULU
                             // Header
-                            'site_id' => $header['h.site_id'],
-                            'truck_no' => $header['h.truck_no'],
-                            'expedition' => $header['h.expedition'],
-                            'point_code' => $header['h.point_code'],
-                            'slip_no' => $header['h.slip_no'],
-                            'supplier_code' => $header['h.supplier_code'],
-                            'receive_date' => $header['h.receive_date'],
+                            'point_code' => $header['h.point_code_'],
+                            'receive_time' => $header['h.receive_date_'],
+                            
 
                             // Detail
-                            'sj_no' => $detail['d.sj_no'],
-                            'sj_date' => $detail['d.sj_date'],
-                            'model_code' => $detail['d.model_code'],
-                            'model_name' => $detail['d.model_name'],
-                            'color' => $detail['d.color'],
-                            'receipt_qty' => $detail['d.receipt_qty'],
+                            'model_name' => $detail['d.model_name_'],
+                            'faktur_color' => $detail['d.color_'],
+                            'price' => $price,
 
                             // Sub Detail
-                            'do_no' => $sub['s.do_no'],
-                            'do_date' => $sub['s.do_date'],
-                            'frame_no' => $sub['s.frame_no'],
-                            'engine_no' => $sub['s.engineine_no'] ?? null, // cek lagi nama key API
-                            'frame_key' => $sub['s.frame_key'],
-                            'faktur_no' => $sub['s.faktur_no'],
-                            'nik_no' => $sub['s.nik_no'],
-                            'assembly_date' => $sub['s.assembly_date'],
+                            'frame_no' => $sub['s.frame_no_'],
+                            'engine_no' => $sub['s.engine_no_'],
+                            'assembly_date' => Carbon::createFromFormat('Ymd', $sub['s.assembly_date'])->format('Y-m-d'),
+                            'year_mc' => $yearMc,
+                            
 
                             'created_at'=>now(),
                             'updated_at'=>now()
