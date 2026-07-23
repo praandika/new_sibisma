@@ -219,9 +219,9 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'ZipStream\\' => 
         array (
@@ -681,6 +681,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Charts\\SaleChart' => __DIR__ . '/../..' . '/app/Charts/SaleChart.php',
         'App\\Charts\\TopProductChart' => __DIR__ . '/../..' . '/app/Charts/TopProductChart.php',
         'App\\Charts\\TopStockChart' => __DIR__ . '/../..' . '/app/Charts/TopStockChart.php',
+        'App\\Console\\Commands\\BaseSyncCommand' => __DIR__ . '/../..' . '/app/Console/Commands/BaseSyncCommand.php',
         'App\\Console\\Commands\\SyncManifest' => __DIR__ . '/../..' . '/app/Console/Commands/SyncManifest.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -816,6 +817,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Models\\Leasing' => __DIR__ . '/../..' . '/app/Models/Leasing.php',
         'App\\Models\\Log' => __DIR__ . '/../..' . '/app/Models/Log.php',
         'App\\Models\\Manpower' => __DIR__ . '/../..' . '/app/Models/Manpower.php',
+        'App\\Models\\MasterUnit' => __DIR__ . '/../..' . '/app/Models/MasterUnit.php',
         'App\\Models\\Membership' => __DIR__ . '/../..' . '/app/Models/Membership.php',
         'App\\Models\\Opname' => __DIR__ . '/../..' . '/app/Models/Opname.php',
         'App\\Models\\Out' => __DIR__ . '/../..' . '/app/Models/Out.php',
