@@ -3,27 +3,26 @@
 namespace App\Console\Commands;
 
 use Symfony\Component\Console\Command\Command as CommandStatus;
-use App\Models\UnitOnhand;
-use App\Helpers\FrameHelper;
+use App\Models\Prospect;
 use Illuminate\Support\Facades\DB;
 use Carbon\CarbonInterval;
 use Carbon\Carbon;
 
-class SyncManifest extends BaseSyncCommand
+class SyncProspect extends BaseSyncCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sync:manifest';
+    protected $signature = 'sync:prospect';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sync manifest data from API to local database';
+    protected $description = 'Sync prospect data from API to local database';
 
     /**
      * Create a new command instance.
@@ -31,7 +30,7 @@ class SyncManifest extends BaseSyncCommand
      * @return void
      */
 
-    protected $endpoint = 'https://yimmdpackwebapi.ymcapps.net/dpackweb/api/v1/manifestdata';
+    protected $endpoint = 'https://yimmdpackwebapi.ymcapps.net/dpackweb/api/v1/prospectdata';
 
     public function __construct()
     {
@@ -48,7 +47,6 @@ class SyncManifest extends BaseSyncCommand
     {
         // Ambil semua data api dalam database dealer_api
         $dealers = $this->getDealers();
-        $masterPrices = $this->getMasterPrices();
 
         $insert = [];
 
@@ -58,7 +56,7 @@ class SyncManifest extends BaseSyncCommand
 
         $date = $now->subDays(4);
 
-         // Request API untuk mengambil data manifest dari dealer dan menyimpannya ke database lokal
+         // Request API untuk mengambil data prospect dari dealer dan menyimpannya ke database lokal
         foreach($dealers as $dealer){
 
             $dealerStart = now();
@@ -77,7 +75,7 @@ class SyncManifest extends BaseSyncCommand
 
                     // Save log untuk dealer yang gagal melakukan request API
                     $this->saveLog(
-                        'sync:manifest',
+                        'sync:prospect',
                         $dealer->dealer_code,
                         'FAILED',
                         0,
@@ -91,11 +89,11 @@ class SyncManifest extends BaseSyncCommand
                 $data = $response->json('data', []);
 
                 if(empty($data)){
-                    $this->logWarning($dealer->dealer_code, "Tidak ada data manifest untuk tanggal ".$now->format('Y-m-d'));
+                    $this->logWarning($dealer->dealer_code, "Tidak ada data prospect untuk tanggal ".$now->format('Y-m-d'));
 
-                    // Save log untuk dealer yang tidak memiliki data manifest
+                    // Save log untuk dealer yang tidak memiliki data prospect
                     $this->saveLog(
-                        'sync:manifest',
+                        'sync:prospect',
                         $dealer->dealer_code,
                         'WARNING',
                         0,
@@ -110,68 +108,42 @@ class SyncManifest extends BaseSyncCommand
                 $dealerTotal = 0;
 
                 foreach ($data as $header) {
+                    $row = [
+                        'dealer_code' => $dealer->dealer_code,
+                        // Header
+                        'point_code' => $header['h.point_code_'],
+                        'customer_name' => $header['h.customer_name_'],
+                        'ktp_no' => $header['h.ktp_no_'],
+                        'prospect_date' => $header['h.prospect_date_'],
+                        'data_type' => $header['h.data_type_'],
+                        'prospect_type' => $header['h.prospect_type_'],
+                        'company_name' => $header['h.company_name_'],
+                        'interest_type' => $header['h.interest_motor_type_'],
+                        'interest_color' => $header['h.interest_motor_color_'],
+                        'gender' => $header['h.gender_'],
+                        'occupation' => $header['h.occupation_'],
+                        'city' => $header['h.city_'],
+                        'district' => $header['h.district_'],
+                        'subdistrict' => $header['h.subdistrict_'],
+                        'address' => $header['h.address_'],
+                        'phone' => $header['h.mobile_phone_'],
+                        'salesman' => $header['h.salesman_'],
 
-                    $receiveDate = !empty($header['h.receive_date_'])
-                    ? Carbon::createFromFormat('Ymd', $header['h.receive_date_'])->format('Y-m-d')
-                    : null;
-                    
-                    foreach ($header['detail-datas'] as $detail) {
-                        foreach ($detail['subdetail-datas'] as $sub) {
-                            // Get Year MC
-                            $frameNo = $sub['s.frame_no_'];
-                            $yearMc = FrameHelper::getYearMc($frameNo);
+                        'shipment_address' => $header['h.address_'],
+                        'created_at'=>$now,
+                        'updated_at'=>$now
+                    ];
 
-                            // Get Price
-                            $modelName = strtoupper(trim($detail['d.model_name_']));
+                    $insert[] = $row;
 
-                            $price = $masterPrices[$modelName] ?? 0;
-
-                            $assemblyDate = null;
-
-                            if(!empty($sub['s.assembly_date_'])){
-
-                                $assemblyDate = Carbon::createFromFormat(
-                                    'Ymd',
-                                    $sub['s.assembly_date_']
-                                )->format('Y-m-d');
-
-                            }
-
-                            $row = [
-                                'dealer_code' => $dealer->dealer_code,
-                                // Header
-                                'point_code' => $header['h.point_code_'],
-                                'receive_time' => $receiveDate,
-
-                                // Detail
-                                'model_name' => $modelName,
-                                'faktur_color' => $detail['d.color_'],
-                                'price' => $price,
-
-                                // Sub Detail
-                                'frame_no' => $sub['s.frame_no_'],
-                                'engine_no' => $sub['s.engine_no_'],
-                                'assembly_date' => $assemblyDate,
-                                'year_mc' => $yearMc,
-
-                                'status' => 'ready',
-                                'info' => 'onhand',
-                                'created_at'=>$now,
-                                'updated_at'=>$now
-                            ];
-
-                            $insert[] = $row;
-
-                            $dealerTotal++;
-                        }
-                    }
+                    $dealerTotal++;
                 }
 
                 $this->logSuccess($dealer->dealer_code, $dealerTotal);
 
-                // Save log untuk dealer yang berhasil melakukan sync manifest
+                // Save log untuk dealer yang berhasil melakukan sync prospect
                 $this->saveLog(
-                    'sync:manifest',
+                    'sync:prospect',
                     $dealer->dealer_code,
                     'SUCCESS',
                     $dealerTotal,
@@ -183,9 +155,9 @@ class SyncManifest extends BaseSyncCommand
             } catch (\Throwable $e) {
                 $this->logError($dealer->dealer_code, "Gagal API: data tanggal ".$date->format('Y-m-d')." - ".$e->getMessage());
 
-                // Save log untuk dealer yang gagal melakukan sync manifest
+                // Save log untuk dealer yang gagal melakukan sync prospect
                 $this->saveLog(
-                    'sync:manifest',
+                    'sync:prospect',
                     $dealer->dealer_code,
                     'FAILED',
                     0,
@@ -198,26 +170,33 @@ class SyncManifest extends BaseSyncCommand
                 
         }
 
-        // Insert or Update data to UnitOnhand table
+        // Insert or Update data to Prospect table
         if (!empty($insert)) {
             try {
 
                 DB::transaction(function () use ($insert) {
 
-                    UnitOnhand::upsert(
+                    Prospect::upsert(
                         $insert,
-                        ['frame_no'], // Unique key for upsert
+                        ['dealer_code', 'point_code', 'prospect_date'], // Unique key for upsert
                         
                         [
-                            'dealer_code',
-                            'point_code',
-                            'receive_time',
-                            'model_name',
-                            'faktur_color',
-                            'price',
-                            'engine_no',
-                            'assembly_date',
-                            'year_mc',
+                            'customer_name',
+                            'ktp_no',
+                            'data_type',
+                            'prospect_type',
+                            'company_name',
+                            'interest_type',
+                            'interest_color',
+                            'gender',
+                            'occupation',
+                            'city',
+                            'district',
+                            'subdistrict',
+                            'address',
+                            'phone',
+                            'salesman',
+                            'shipment_address',
                             'updated_at'
                         ]
                     );
@@ -229,7 +208,7 @@ class SyncManifest extends BaseSyncCommand
 
                 // Save log untuk error tidak berhasil menyimpan data ke database
                 $this->saveLog(
-                    'sync:manifest',
+                    'sync:prospect',
                     null,
                     'FAILED',
                     0,
@@ -240,7 +219,7 @@ class SyncManifest extends BaseSyncCommand
                 return CommandStatus::FAILURE;
             }
 
-            $this->info("Sync manifest selesai. Total data : ".count($insert));
+            $this->info("Sync prospect selesai. Total data : ".count($insert));
             $duration = CarbonInterval::seconds($start->diffInSeconds(now()))->cascade();
 
             $this->info(

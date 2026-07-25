@@ -219,9 +219,9 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
         ),
         'ZipStream\\' => 
         array (
@@ -683,6 +683,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Charts\\TopStockChart' => __DIR__ . '/../..' . '/app/Charts/TopStockChart.php',
         'App\\Console\\Commands\\BaseSyncCommand' => __DIR__ . '/../..' . '/app/Console/Commands/BaseSyncCommand.php',
         'App\\Console\\Commands\\SyncManifest' => __DIR__ . '/../..' . '/app/Console/Commands/SyncManifest.php',
+        'App\\Console\\Commands\\SyncProspect' => __DIR__ . '/../..' . '/app/Console/Commands/SyncProspect.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\AllocationInExport' => __DIR__ . '/../..' . '/app/Exports/AllocationInExport.php',
@@ -824,6 +825,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Models\\PhotoActivity' => __DIR__ . '/../..' . '/app/Models/PhotoActivity.php',
         'App\\Models\\Promotion' => __DIR__ . '/../..' . '/app/Models/Promotion.php',
         'App\\Models\\Proposal' => __DIR__ . '/../..' . '/app/Models/Proposal.php',
+        'App\\Models\\Prospect' => __DIR__ . '/../..' . '/app/Models/Prospect.php',
         'App\\Models\\STU' => __DIR__ . '/../..' . '/app/Models/STU.php',
         'App\\Models\\Sale' => __DIR__ . '/../..' . '/app/Models/Sale.php',
         'App\\Models\\SaleDelivery' => __DIR__ . '/../..' . '/app/Models/SaleDelivery.php',
@@ -832,6 +834,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Models\\Spk' => __DIR__ . '/../..' . '/app/Models/Spk.php',
         'App\\Models\\Stock' => __DIR__ . '/../..' . '/app/Models/Stock.php',
         'App\\Models\\StockHistory' => __DIR__ . '/../..' . '/app/Models/StockHistory.php',
+        'App\\Models\\SyncLog' => __DIR__ . '/../..' . '/app/Models/SyncLog.php',
         'App\\Models\\Team' => __DIR__ . '/../..' . '/app/Models/Team.php',
         'App\\Models\\TeamInvitation' => __DIR__ . '/../..' . '/app/Models/TeamInvitation.php',
         'App\\Models\\Unit' => __DIR__ . '/../..' . '/app/Models/Unit.php',
