@@ -174,6 +174,7 @@ return array(
     'App\\Models\\Sparepart' => $baseDir . '/app/Models/Sparepart.php',
     'App\\Models\\Specification' => $baseDir . '/app/Models/Specification.php',
     'App\\Models\\Spk' => $baseDir . '/app/Models/Spk.php',
+    'App\\Models\\SpkEntry' => $baseDir . '/app/Models/SpkEntry.php',
     'App\\Models\\Stock' => $baseDir . '/app/Models/Stock.php',
     'App\\Models\\StockHistory' => $baseDir . '/app/Models/StockHistory.php',
     'App\\Models\\SyncLog' => $baseDir . '/app/Models/SyncLog.php',

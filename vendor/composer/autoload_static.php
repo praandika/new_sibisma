@@ -832,6 +832,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Models\\Sparepart' => __DIR__ . '/../..' . '/app/Models/Sparepart.php',
         'App\\Models\\Specification' => __DIR__ . '/../..' . '/app/Models/Specification.php',
         'App\\Models\\Spk' => __DIR__ . '/../..' . '/app/Models/Spk.php',
+        'App\\Models\\SpkEntry' => __DIR__ . '/../..' . '/app/Models/SpkEntry.php',
         'App\\Models\\Stock' => __DIR__ . '/../..' . '/app/Models/Stock.php',
         'App\\Models\\StockHistory' => __DIR__ . '/../..' . '/app/Models/StockHistory.php',
         'App\\Models\\SyncLog' => __DIR__ . '/../..' . '/app/Models/SyncLog.php',

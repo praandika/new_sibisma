@@ -38,8 +38,9 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\SpkEntryController;
 use App\Http\Controllers\WarehouseController;
-use App\Models\Spk;
+use App\Models\SpkEntry;
 
 /*
 |--------------------------------------------------------------------------
@@ -353,3 +354,7 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('proposal', ProposalCo
 Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
 // END ACT TYPE
+
+// NEW SPK ENTRY
+Route::middleware(['auth:sanctum', 'verified'])->resource('spkentry', SpkEntryController::class);
+// END NEW SPK ENTRY
