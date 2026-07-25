@@ -54,7 +54,7 @@ class SyncProspect extends BaseSyncCommand
 
         $start = $now->copy();
 
-        $date = $now->subDays(4);
+        $date = $now->subDays(1);
 
          // Request API untuk mengambil data prospect dari dealer dan menyimpannya ke database lokal
         foreach($dealers as $dealer){
@@ -108,14 +108,31 @@ class SyncProspect extends BaseSyncCommand
                 $dealerTotal = 0;
 
                 foreach ($data as $header) {
+                    $prospectKey = md5(
+                        $dealer->dealer_code.'|'.
+                        ($header['h.mobile_phone_'] ?: strtoupper(trim($header['h.customer_name_']))).'|'.
+                        $header['h.prospect_date_'].'|'.
+                        strtoupper(trim($header['h.interest_motor_type_'])).'|'.$header['h.salesman_']
+                    );
+
+                    $prospectDate = Carbon::createFromFormat('Ymd', $header['h.prospect_date_'])->format('Y-m-d');
+
+                    $paymentType = !empty($header['h.payment_type_'])
+                    ? substr($header['h.payment_type_'], 4)
+                    : null;
+
+                    $leasingName = !empty($header['h.leasing_id_'])
+                    ? substr($header['h.leasing_id_'], 4)
+                    : null;
+
                     $row = [
+                        'prospect_key' => $prospectKey,
                         'dealer_code' => $dealer->dealer_code,
                         // Header
                         'point_code' => $header['h.point_code_'],
                         'customer_name' => $header['h.customer_name_'],
                         'ktp_no' => $header['h.ktp_no_'],
-                        'prospect_date' => $header['h.prospect_date_'],
-                        'data_type' => $header['h.data_type_'],
+                        'prospect_date' => $prospectDate,
                         'prospect_type' => $header['h.prospect_type_'],
                         'company_name' => $header['h.company_name_'],
                         'interest_type' => $header['h.interest_motor_type_'],
@@ -124,10 +141,16 @@ class SyncProspect extends BaseSyncCommand
                         'occupation' => $header['h.occupation_'],
                         'city' => $header['h.city_'],
                         'district' => $header['h.district_'],
-                        'subdistrict' => $header['h.subdistrict_'],
+                        'subdistrict' => $header['h.sub_district_'],
                         'address' => $header['h.address_'],
                         'phone' => $header['h.mobile_phone_'],
                         'salesman' => $header['h.salesman_'],
+                        'payment_type' => $paymentType,
+                        'deposit' => $header['h.deposit_'],
+                        'discount' => $header['h.discount_'],
+                        'leasing_name' => $leasingName,
+                        'down_payment' => $header['h.down_payment_'],
+                        'tenor' => $header['h.tenor_'],
 
                         'shipment_address' => $header['h.address_'],
                         'created_at'=>$now,
@@ -171,6 +194,17 @@ class SyncProspect extends BaseSyncCommand
         }
 
         // Insert or Update data to Prospect table
+        $this->info("Total insert : " . count($insert));
+
+        $keys = array_column($insert, 'prospect_key');
+
+        $this->info("Total key : " . count($keys));
+        $this->info("Unique key : " . count(array_unique($keys)));
+
+        $duplicates = array_diff_assoc($keys, array_unique($keys));
+
+        $this->info("Duplicate key : " . count($duplicates));
+
         if (!empty($insert)) {
             try {
 
@@ -178,18 +212,26 @@ class SyncProspect extends BaseSyncCommand
 
                     Prospect::upsert(
                         $insert,
-                        ['dealer_code', 'point_code', 'prospect_date'], // Unique key for upsert
+                        ['prospect_key'], // Unique key for upsert
                         
                         [
+                            'dealer_code',
+                            'point_code',
                             'customer_name',
                             'ktp_no',
-                            'data_type',
+                            'prospect_date',
                             'prospect_type',
                             'company_name',
                             'interest_type',
                             'interest_color',
                             'gender',
                             'occupation',
+                            'payment_type',
+                            'deposit',
+                            'discount',
+                            'leasing_name',
+                            'down_payment',
+                            'tenor',
                             'city',
                             'district',
                             'subdistrict',
