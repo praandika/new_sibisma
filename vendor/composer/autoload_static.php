@@ -219,9 +219,9 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
         ),
         'ZipStream\\' => 
         array (
@@ -731,6 +731,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Http\\Controllers\\SparepartController' => __DIR__ . '/../..' . '/app/Http/Controllers/SparepartController.php',
         'App\\Http\\Controllers\\SpecificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecificationController.php',
         'App\\Http\\Controllers\\SpkController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpkController.php',
+        'App\\Http\\Controllers\\SpkEntryController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpkEntryController.php',
         'App\\Http\\Controllers\\StockController' => __DIR__ . '/../..' . '/app/Http/Controllers/StockController.php',
         'App\\Http\\Controllers\\StockHistoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/StockHistoryController.php',
         'App\\Http\\Controllers\\UnitController' => __DIR__ . '/../..' . '/app/Http/Controllers/UnitController.php',

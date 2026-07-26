@@ -15,7 +15,7 @@ class SpkEntryController extends Controller
      */
     public function index()
     {
-        //
+        return view('page');
     }
 
     /**
@@ -25,7 +25,7 @@ class SpkEntryController extends Controller
      */
     public function create()
     {
-        //
+        return view('page');
     }
 
     /**

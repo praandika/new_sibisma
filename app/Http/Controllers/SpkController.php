@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Prospect;
+use App\Models\UnitOnHand;
 
 class SpkController extends Controller
 {
@@ -182,7 +184,76 @@ class SpkController extends Controller
      */
     public function create()
     {
-        //
+        $dc = Auth::user()->dealer_code;
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        return view('page', compact('today', 'dc'));
+    }
+
+    // MODAL PROSPECT AJAX
+    public function prospectSearch(Request $request)
+    {
+        $search = $request->search;
+
+        $data = Prospect::query()
+            ->where('dealer_code', Auth::user()->dealer_code)
+            ->when($search, function ($q) use ($search) {
+                $q->where('customer_name', 'like', "%{$search}%")
+                ->orWhere('ktp_no', 'like', "%{$search}%");
+            })
+            ->paginate(10);
+
+        return response()->json($data);
+    }
+
+    // CEK STOCK AJAX
+    public function checkStock(Request $request)
+    {
+        try {
+
+            $data = UnitOnhand::where('model_name', $request->model)
+                ->where('status', 'ready')
+                ->where('faktur_color', $request->color)
+                ->where('dealer_code', Auth::user()->dealer_code)
+                ->get();
+
+            return response()->json([
+                'ready' => $data->count() > 0,
+                'count' => $data->count(),
+                'data'  => $data
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
+    }
+
+    // REQUEST STOCK AJAX
+    public function requestStock(Request $request)
+    {
+        try {
+
+            $search = $request->search;
+            
+            $data = UnitOnhand::query()
+            ->when($search, function ($q) use ($search) {
+                $q->where('model_name', 'like', "%{$search}%")
+                ->orWhere('color', 'like', "%{$search}%");
+            })
+            ->paginate(10);
+
+            return response()->json($data);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
     }
 
     /**

@@ -54,7 +54,7 @@ class SyncProspect extends BaseSyncCommand
 
         $start = $now->copy();
 
-        $date = $now->subDays(1);
+        $date = $now->subDays(2);
 
          // Request API untuk mengambil data prospect dari dealer dan menyimpannya ke database lokal
         foreach($dealers as $dealer){

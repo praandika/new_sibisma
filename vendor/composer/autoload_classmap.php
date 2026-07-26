@@ -73,6 +73,7 @@ return array(
     'App\\Http\\Controllers\\SparepartController' => $baseDir . '/app/Http/Controllers/SparepartController.php',
     'App\\Http\\Controllers\\SpecificationController' => $baseDir . '/app/Http/Controllers/SpecificationController.php',
     'App\\Http\\Controllers\\SpkController' => $baseDir . '/app/Http/Controllers/SpkController.php',
+    'App\\Http\\Controllers\\SpkEntryController' => $baseDir . '/app/Http/Controllers/SpkEntryController.php',
     'App\\Http\\Controllers\\StockController' => $baseDir . '/app/Http/Controllers/StockController.php',
     'App\\Http\\Controllers\\StockHistoryController' => $baseDir . '/app/Http/Controllers/StockHistoryController.php',
     'App\\Http\\Controllers\\UnitController' => $baseDir . '/app/Http/Controllers/UnitController.php',

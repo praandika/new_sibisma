@@ -56,7 +56,7 @@ class SyncManifest extends BaseSyncCommand
 
         $start = $now->copy();
 
-        $date = $now->subDays(4);
+        $date = $now->subDays(3);
 
          // Request API untuk mengambil data manifest dari dealer dan menyimpannya ke database lokal
         foreach($dealers as $dealer){

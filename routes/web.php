@@ -40,6 +40,7 @@ use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\SpkEntryController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\DpackController;
 use App\Models\SpkEntry;
 
 /*
@@ -230,6 +231,15 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/spk-check', [SpkControll
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-salesman', [SpkController::class, 'spkSalesman'])->name('spk.salesman');
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historysalesman/{date?}', [SpkController::class, 'historySalesman'])->name('spk.historysalesman');
 
+// MODAL PROSPECT AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/prospect-search', [SpkController::class, 'prospectSearch'])->name('spk.prospect-search');
+
+// CEK STOCK
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkstock', [SpkController::class, 'checkStock'])->name('spk.checkstock');
+
+// REQUEST STOCK
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-requeststock', [SpkController::class, 'requestStock'])->name('spk.requeststock');
+
 // Filter SPK
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [SpkController::class, 'filter'])->name('spk.filter');
 // END SPK
@@ -355,6 +365,6 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeCont
 Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
 // END ACT TYPE
 
-// NEW SPK ENTRY
-Route::middleware(['auth:sanctum', 'verified'])->resource('spkentry', SpkEntryController::class);
-// END NEW SPK ENTRY
+// DPACK CONNECTION
+Route::middleware(['auth:sanctum', 'verified'])->get('/dpack', [DpackController::class, 'index'])->name('dpack.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sync-log', [DpackController::class, 'log'])->name('dpack.log');

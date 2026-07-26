@@ -169,8 +169,7 @@
             @if(Auth::user()-> access == 'owner')
                 @include('component.stock-data')
             @else
-                @include('component.stock-create')
-                @include('component.stock-data')
+                @include('component.stock-onhand')
             @endif
         @endif
 
@@ -365,6 +364,8 @@
     @elseif(Route::is('spk.*'))
         @if(Route::is('spk.edit'))
             @include('component.spk-edit')
+        @elseif(Route::is('spk.create'))
+            @include('component.spk-create')
         @elseif(Route::is('spk.get'))
             @include('component.spk-show')
         @elseif(Route::is('spk.history'))
@@ -441,6 +442,12 @@
         @else
             @include('component.acttype-create')
             @include('component.acttype-data')
+        @endif
+    
+     <!-- Dpack Connection -->
+    @elseif(Route::is('dpack.*'))
+        @if(Route::is('dpack.index'))
+            @include('component.dpack-dashboard')
         @endif
 
     <!-- DO & Kwitansi for Leasing -->

@@ -1,19 +1,42 @@
 @section('title','Salesman SPK')
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('spk.salesman') }}">Home SPK</a>
+    <a href="{{ route('dashboard') }}">Menu</a>
 </li>
 @endpush
-<div class="col-md-12">
-    <a href="{{ route('spk.salesman') }}">
-        <div class="card card-dark bg-primary-gradient curves-shadow">
+<div class="col-md-6">
+    <a href="{{ route('spk.create') }}" style="text-decoration: none;">
+        <div class="card card-dark bg-success-gradient curves-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right"><img src="{{ asset('img/enter.png') }}" alt="enter"></div>
-                <h1 class="mb-2">Go to SPK</h1>
+                <h1 class="mb-2">Create SPK</h1>
             </div>
         </div>
     </a>
 </div>
+
+<div class="col-md-6">
+    <a href="{{ route('spk.index') }}">
+        <div class="card card-dark bg-primary-gradient curves-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right"><img src="{{ asset('img/enter.png') }}" alt="enter"></div>
+                <h1 class="mb-2">Data SPK</h1>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div class="col-md-12">
+    <a href="{{ route('dpack.index') }}" style="text-decoration: none;">
+        <div class="card card-dark bg-dark-gradient curves-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right"><img src="{{ asset('img/enter.png') }}" alt="enter"></div>
+                <h1 class="mb-2">Test DPACK Connection</h1>
+            </div>
+        </div>
+    </a>
+</div>
+
 <div class="col-md-12">
     <div style="text-align: center;">
         <p>Need any help? or found any bugs?</p>

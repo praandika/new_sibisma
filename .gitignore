@@ -4,7 +4,7 @@
 # /storage/*.key
 # /vendor
 .env
-/database/migrations
+# /database/migrations
 /database/seeders
 # .env.backup
 # .phpunit.result.cache
