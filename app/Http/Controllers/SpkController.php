@@ -196,10 +196,14 @@ class SpkController extends Controller
 
         $data = Prospect::query()
             ->where('dealer_code', Auth::user()->dealer_code)
+            ->where('salesman', Auth::user()->name)
             ->when($search, function ($q) use ($search) {
                 $q->where('customer_name', 'like', "%{$search}%")
-                ->orWhere('ktp_no', 'like', "%{$search}%");
+                ->orWhere('ktp_no', 'like', "%{$search}%")
+                ->where('dealer_code', Auth::user()->dealer_code)
+                ->where('salesman', Auth::user()->name);
             })
+            ->orderby('prospect_date', 'desc')
             ->paginate(10);
 
         return response()->json($data);
@@ -214,6 +218,7 @@ class SpkController extends Controller
                 ->where('status', 'ready')
                 ->where('faktur_color', $request->color)
                 ->where('dealer_code', Auth::user()->dealer_code)
+                ->orderBy('receive_time', 'asc')
                 ->get();
 
             return response()->json([

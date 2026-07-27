@@ -368,3 +368,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [Ac
 // DPACK CONNECTION
 Route::middleware(['auth:sanctum', 'verified'])->get('/dpack', [DpackController::class, 'index'])->name('dpack.index');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sync-log', [DpackController::class, 'log'])->name('dpack.log');
+
+// MANUAL SYNC DPACK
+Route::middleware(['auth:sanctum', 'verified'])->post('/manual-sync/prospect', [DpackController::class, 'manualSyncProspect'])->name('dpack.manual-prospect');

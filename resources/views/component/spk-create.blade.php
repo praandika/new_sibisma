@@ -58,62 +58,73 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="spk_date" type="date" class="form-control input-border-bottom"
+                        <div class="form-group">
+                            <label for="spk_date">Date *</label>
+                            <input id="spk_date" type="date" class="form-control form-control-sm"
                                 name="spk_date" value="{{ $today }}" required readonly>
-                            <!-- <label for="spk_date" class="placeholder">Date *</label> -->
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name" value="{{ old('customer_name') }}" style="text-transform: uppercase;"
+                        <div class="form-group">
+                            <label for="customer_name">Customer Name</label>
+                            <input id="customer_name" type="text" class="form-control form-control-sm" name="customer_name" value="{{ old('customer_name') }}" style="text-transform: uppercase;"
                                 data-toggle="modal"
                                 data-target=".modalProspect" required>
-                            <label for="customer_name" class="placeholder">Customer Name</label>
+                            <button id="btnSyncProspect"
+                                style="
+                                    border: none;
+                                    cursor: pointer;
+                                    background-color: #65eb89;
+                                    border-radius: 0 0 10px 10px;
+                                ">
+                                <i class="fas fa-sync"></i> Update
+                            </button>
+
+                            <span id="syncInfo" class="ml-3 text-success font-weight-bold"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="model_name" type="text" class="form-control input-border-bottom" name="model_name" value="{{ old('model_name') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="model_name" class="placeholder">Motor</label>
+                        <div class="form-group">
+                            <label for="model_name">Motor</label>
+                            <input id="model_name" type="text" class="form-control form-control-sm" name="model_name" value="{{ old('model_name') }}" style="text-transform: uppercase;" required maxlength="100">
                             <span id="stockStatus"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" value="{{ old('frame_no') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="frame_no" class="placeholder">Frame No</label>
+                        <div class="form-group">
+                            <label for="frame_no">Frame No</label>
+                            <input id="frame_no" type="text" class="form-control form-control-sm" name="frame_no" value="{{ old('frame_no') }}" style="text-transform: uppercase;" required maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="engine_no" class="placeholder">Engine No</label>
+                        <div class="form-group">
+                            <label for="engine_no">Engine No</label>
+                            <input id="engine_no" type="text" class="form-control form-control-sm" name="engine_no" value="{{ old('engine_no') }}" style="text-transform: uppercase;" required maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="color" type="text" class="form-control input-border-bottom" name="color" value="{{ old('color') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="color" class="placeholder">Faktur Color</label>
+                        <div class="form-group">
+                            <label for="color">Faktur Color</label>
+                            <input id="color" type="text" class="form-control form-control-sm" name="color" value="{{ old('color') }}" style="text-transform: uppercase;" required maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="year" type="text" class="form-control input-border-bottom" name="year" value="{{ old('year') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="year" class="placeholder">Year MC</label>
+                        <div class="form-group">
+                            <label for="year">Year MC</label>
+                            <input id="year" type="text" class="form-control form-control-sm" name="year" value="{{ old('year') }}" style="text-transform: uppercase;" required maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="address_shipment" type="text" class="form-control input-border-bottom" name="address_shipment" value="{{ old('address_shipment') }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="address_shipment" class="placeholder">Pengiriman Address</label>
+                        <div class="form-group">
+                            <label for="address_shipment">Pengiriman Address</label>
+                            <input id="address_shipment" type="text" class="form-control form-control-sm" name="address_shipment" value="{{ old('address_shipment') }}" style="text-transform: uppercase;" required maxlength="100">
                         </div>
                     </div>
 
@@ -127,17 +138,17 @@
                                     <input id="picture" type="file" class="form-control input-border-bottom" name="picture"
                                         value="{{ old('picture') }}">
                                     <label for="picture" class="placeholder" style="
-                                background-color: forestgreen; 
-                                color: #ffffff !important; 
-                                font-weight: bold;
-                                width: 200px; 
-                                padding-left: 20px; 
-                                padding-right: 20px;
-                                padding-top: 10px; 
-                                border-radius: 5px;
-                                position: absolute;
-                                top: 20px;
-                                cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
+                                    background-color: forestgreen; 
+                                    color: #ffffff !important; 
+                                    font-weight: bold;
+                                    width: 200px; 
+                                    padding-left: 20px; 
+                                    padding-right: 20px;
+                                    padding-top: 10px; 
+                                    border-radius: 5px;
+                                    position: absolute;
+                                    top: 20px;
+                                    cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
                                 </div>
 
                                 <div class="form-group form-floating-label" style="position: relative;">
@@ -182,62 +193,6 @@
     $('#on_hand').keydown(function(e){
         e.preventDefault();
     });
-
-    function showReason() {
-
-        let status = $('#credit_status').val().toLowerCase();
-
-        if (status === 'reject' || status === 'cancel') {
-            $('#col-leasing-reason').removeAttr('hidden');
-            $('#col-leasing-reason').attr('required', true);
-        } else {
-            $('#col-leasing-reason').attr('hidden', true);
-            $('#col-leasing-reason').removeAttr('required');
-        }
-
-    }
-
-    function showLeasingGroup() {
-
-        let payment_method = $('#payment_method').val().toLowerCase();
-
-        if (payment_method === 'credit') {
-            $('#col-leasing-bunga').removeAttr('hidden');
-            $('#col-leasing-tenor').removeAttr('hidden');
-            $('#col-leasing-namapemohon').removeAttr('hidden');
-            $('#col-credit-status').removeAttr('hidden');
-            $('#leasing-label').text('Select Finance *');
-            $('#credit_status').attr('required', true);
-            $('#leasing_code').attr('required', true);
-            $('#leasing_code_cash').removeAttr('required');
-            $('#bunga').attr('required', true);
-            $('#tenor').attr('required', true);
-            $('#nama_pemohon').attr('required', true);
-            $('#leasing_id').attr('required', true);
-            $('#leasing_id_cash').removeAttr('required');
-            $('#leasing_code').attr('data-target', '.modalLeasing');
-            $('#leasing_code').val('');
-        } else {
-            $('#col-leasing-bunga').attr('hidden', true);
-            $('#col-leasing-tenor').attr('hidden', true);
-            $('#col-leasing-namapemohon').attr('hidden', true);
-            $('#col-credit-status').attr('hidden', true);
-            $('#credit_status').removeAttr('required');
-            $('#leasing_code').removeAttr('required');
-            $('#leasing_code_cash').attr('required', true);
-            $('#bunga').removeAttr('required');
-            $('#tenor').removeAttr('required');
-            $('#nama_pemohon').removeAttr('required');
-            $('#leasing_id').removeAttr('required');
-            $('#leasing_id_cash').attr('required', true);
-            $('#leasing-label').text('Select Micro/Instansi *');
-            $('#leasing_code').attr('data-target', '.modalLeasingCash');
-            $('#leasing_code').val('');
-            $('#bunga').val('');
-            $('#tenor').val('');
-        }
-
-    }
 
     // Custom Upload File
     $(document).ready(function () {
@@ -288,6 +243,9 @@
 
                 $('#engine_no').val('');
                 $('#engine_no').prop('disabled',true);
+
+                $('#color').val('');
+                $('#color').prop('disabled',true);
                 
 
                 $('#stockStatus')
@@ -296,5 +254,53 @@
 
         });
     }
+</script>
+
+<script>
+    $('#btnSyncProspect').click(function(){
+
+        $('#btnSyncProspect').prop('disabled', true);
+
+        $('#syncInfo').html(
+            '<i class="fas fa-spinner fa-spin"></i> Synchronizing...'
+        );
+
+        $.ajax({
+
+            url: "{{ route('dpack.manual-prospect') }}",
+
+            type: "POST",
+
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+
+            success: function(res){
+
+                $('#btnSyncProspect').prop('disabled', false);
+
+                $('#syncInfo').html(
+                    '<span class="badge badge-success">' +
+                    res.new_data +
+                    ' Prospect baru</span>'
+                );
+
+                loadLogs();
+
+            },
+
+            error:function(){
+
+                $('#btnSyncProspect').prop('disabled', false);
+
+                $('#syncInfo').html(
+                    '<span class="badge badge-danger">Sync gagal</span>'
+                );
+
+            }
+
+        });
+
+    }); 
 </script>
 @endpush

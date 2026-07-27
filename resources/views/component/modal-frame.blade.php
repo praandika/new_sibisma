@@ -65,8 +65,8 @@
                 data-year="${row.year_mc}">
                 <td>${row.model_name}</td>
                 <td>${row.frame_no}</td>
-                <td>${row.engine_no}</td>
                 <td>${row.faktur_color}</td>
+                <td>${row.engine_no}</td>
                 <td>${row.year_mc}</td>
             </tr>`;
         });
@@ -109,6 +109,7 @@
         $('#frame_no').prop('disabled',false);
         $('#engine_no').prop('disabled',false);
         $('#year').prop('disabled',false);
+        $('#color').prop('disabled',false);
 
         $('#stockStatus').html(
             '<span class="badge badge-success">READY</span>'

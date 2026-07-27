@@ -1,3 +1,10 @@
+@push('after-css')
+<style>
+    .tbModal tr:nth-child(even) {
+        background-color: #ededed !important;
+    }
+</style>
+@endpush
 <div class="modal fade modalProspect" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -22,23 +29,21 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table" width="100%">
+                    <table class="table tbModal" width="100%">
                         <thead>
                             <tr>
                                 <th>Customer Name</th>
-                                <th>KTP</th>
-                                <th>Phone</th>
                                 <th>Motor</th>
-                                <th>Address</th>
+                                <th>Info</th>
+                                <th>Dealer</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>Customer Name</th>
-                                <th>KTP</th>
-                                <th>Phone</th>
                                 <th>Motor</th>
-                                <th>Address</th>
+                                <th>Info</th>
+                                <th>Dealer</th>
                             </tr>
                         </tfoot>
                         <tbody id="tbodyProspect" style="cursor:pointer;">
@@ -56,6 +61,12 @@
 </div>
 
 @push('after-script')
+<script>
+    function ucwords(str) {
+        return str.toLowerCase().replace(/\b[a-z]/g, letter => letter.toUpperCase());
+    }
+</script>
+
 <script>
     $('.modalProspect').on('shown.bs.modal', function () {
         loadProspect();
@@ -82,11 +93,45 @@
                     data-color="${row.interest_color}"
                     data-address="${row.address}"
                     data-dealer="${row.dealer_code}">
-                    <td>${row.customer_name}</td>
-                    <td>${row.ktp_no}</td>
-                    <td>${row.phone}</td>
-                    <td>${row.interest_type}</td>
-                    <td>${row.address}</td>
+                    <td>
+                        <div class="td-group">
+                            <span class="main-data">${ucwords(row.customer_name)}</span>
+                            <span class="secondary-data">
+                                <div style="font-size: 11px; dislay:inline-block;">${row.prospect_date}</div>
+                                <div style="font-size: 11px; font-weight: bold;" class="mb-1">
+                                ${
+                                    row.ktp_no 
+                                    ? `<span class="badge badge-primary"> ${row.ktp_no}`
+                                    : `<span class="badge badge-danger"> no KTP`
+                                }
+                                </div>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-group">
+                            <span class="main-data">${ucwords(row.interest_color)}</span>
+                            <span class="secondary-data">
+                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold; font-style: italic;" class="mt-2">${ucwords(row.interest_type)}</div>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-group">
+                            <span class="main-data">${row.phone}</span>
+                            <span class="secondary-data">
+                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.address)}</div>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="td-group">
+                            <span class="main-data">${row.point_code}</span>
+                            <span class="secondary-data">
+                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.salesman)}</div>
+                            </span>
+                        </div>
+                    </td>
                 </tr>`;
             });
 

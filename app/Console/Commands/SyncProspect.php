@@ -7,6 +7,7 @@ use App\Models\Prospect;
 use Illuminate\Support\Facades\DB;
 use Carbon\CarbonInterval;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SyncProspect extends BaseSyncCommand
 {
@@ -15,7 +16,9 @@ class SyncProspect extends BaseSyncCommand
      *
      * @var string
      */
-    protected $signature = 'sync:prospect';
+    protected $signature = 'sync:prospect
+                            {dealer_code?}
+                            {salesman?}';
 
     /**
      * The console command description.
@@ -32,6 +35,8 @@ class SyncProspect extends BaseSyncCommand
 
     protected $endpoint = 'https://yimmdpackwebapi.ymcapps.net/dpackweb/api/v1/prospectdata';
 
+    protected $newProspect = 0;
+
     public function __construct()
     {
         parent::__construct();
@@ -46,18 +51,23 @@ class SyncProspect extends BaseSyncCommand
     public function handle()
     {
         // Ambil semua data api dalam database dealer_api
-        $dealers = $this->getDealers();
-
+        $dealerApi = $this->getDealers();
+        $dealerCode = $this->argument('dealer_code');
+        $salesman   = $this->argument('salesman');
+        if ($dealerCode) {
+            $dealerApi = $dealerApi->where('dealer_code', $dealerCode);
+        }
+        // BARU SAMPE SINI
         $insert = [];
 
         $now = now();
 
         $start = $now->copy();
 
-        $date = $now->subDays(2);
+        $date = $now->subDays(0);
 
          // Request API untuk mengambil data prospect dari dealer dan menyimpannya ke database lokal
-        foreach($dealers as $dealer){
+        foreach($dealerApi as $dealer){
 
             $dealerStart = now();
 
@@ -196,6 +206,7 @@ class SyncProspect extends BaseSyncCommand
         // Insert or Update data to Prospect table
         $this->info("Total insert : " . count($insert));
 
+        // Semua key yang akan diproses
         $keys = array_column($insert, 'prospect_key');
 
         $this->info("Total key : " . count($keys));
@@ -204,6 +215,27 @@ class SyncProspect extends BaseSyncCommand
         $duplicates = array_diff_assoc($keys, array_unique($keys));
 
         $this->info("Duplicate key : " . count($duplicates));
+
+        // Ambil key yang sudah ada di database
+        $existingKeys = Prospect::whereIn('prospect_key', $keys)
+            ->pluck('prospect_key')
+            ->toArray();
+        
+        // Hitung prospect baru
+        $newProspect = collect($insert)
+            ->whereNotIn('prospect_key', $existingKeys)
+            ->count();
+
+        // Hitung prospect yang akan di-update
+        $updateProspect = count($insert) - $newProspect;
+
+        $this->newProspect = $newProspect;
+
+        $this->info(json_encode([
+            'new' => $newProspect,
+            'update' => $updateProspect,
+            'total' => count($insert)
+        ]));
 
         if (!empty($insert)) {
             try {

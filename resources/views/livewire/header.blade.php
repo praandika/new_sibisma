@@ -1,6 +1,6 @@
 <div class="main-header">
     <!-- Logo Header -->
-    <div class="logo-header" data-background-color="dark">
+    <div class="logo-header" data-background-color="blue">
 
         <a href="{{ route('dashboard') }}" class="logo">
             <img src="{{ asset('img/New-Sibisma-White.png') }}" alt="navbar brand" class="navbar-brand">
@@ -21,7 +21,7 @@
     <!-- End Logo Header -->
 
     <!-- Navbar Header -->
-    <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark2">
+    <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
         <div class="container-fluid">
             <div class="collapse" id="search-nav">
                 <form class="navbar-left navbar-form nav-search mr-md-3" action="{{ route('search') }}" method="get">
