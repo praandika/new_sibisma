@@ -92,6 +92,9 @@
                     data-model="${row.interest_type}"
                     data-color="${row.interest_color}"
                     data-address="${row.address}"
+                    data-ktp="${row.ktp_no}"
+                    data-payment="${row.payment_type}"
+                    data-leasing="${row.leasing_name}"
                     data-dealer="${row.dealer_code}">
                     <td>
                         <div class="td-group">
@@ -185,12 +188,40 @@
         $('#customer_name').val($(this).attr('data-name'));
         $('#model_name').val($(this).attr('data-model'));
         $('#color').val($(this).attr('data-color'));
-        $('#address_shipment').val($(this).attr('data-address'));
+        $('#address').val($(this).attr('data-address'));
+        $('#payment').val($(this).attr('data-payment'));
+
+        // CONDITION KTP
+        let ktp = $(this).attr('data-ktp');
+
+        $('#ktp').val(
+            (ktp && ktp !== 'null') ? ktp : ''
+        );
+
+        // CONDITION LEASING NAME
+        let leasingName = $(this).attr('data-ktp');
+        $('#leasing').val(
+            (leasingName && leasingName == 'creditcard') ? leasingName : 'cash'
+        );
+
+        (leasingName && leasingName == 'creditcard') 
+        ?  $('#leasing').val(leasingName)
+
         $('.modalProspect').modal('hide');
 
         // CEK STOCK
         let model  = $(this).attr('data-model');
         let color  = $(this).attr('data-color');
+
+        // CEK HARGA
+        getPrice(model);    
+
+        // SHOW FIELD INPUT
+        $('#fieldForm').prop('hidden', false);
+
+        // SHOW BUTTON SUBMIT
+        $('#fieldBtn').prop('hidden', false);
+
         console.log(model);
         console.log(color);
 

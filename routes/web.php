@@ -372,3 +372,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/sync-log', [DpackControll
 
 // MANUAL SYNC DPACK
 Route::middleware(['auth:sanctum', 'verified'])->post('/manual-sync/prospect', [DpackController::class, 'manualSyncProspect'])->name('dpack.manual-prospect');
+
+// CEK PRICE
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkprice', [SpkController::class, 'checkPrice'])->name('spk.checkprice');

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Prospect;
 use App\Models\UnitOnHand;
+use App\Models\MasterUnit;
 
 class SpkController extends Controller
 {
@@ -184,9 +185,11 @@ class SpkController extends Controller
      */
     public function create()
     {
+        $random = Carbon::now('GMT+8')->format('YmdHisv');
         $dc = Auth::user()->dealer_code;
+        $spk_no = 'SPK'.$random.$dc;
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        return view('page', compact('today', 'dc'));
+        return view('page', compact('today', 'dc', 'spk_no'));
     }
 
     // MODAL PROSPECT AJAX
@@ -213,17 +216,21 @@ class SpkController extends Controller
     public function checkStock(Request $request)
     {
         try {
+            $search = $request->search;
 
-            $data = UnitOnhand::where('model_name', $request->model)
+            $data = UnitOnhand::query()
+                ->where('model_name', $request->model)
                 ->where('status', 'ready')
                 ->where('faktur_color', $request->color)
                 ->where('dealer_code', Auth::user()->dealer_code)
+                ->when($search, function ($q) use ($search) {
+                    $q->where('frame_no', 'like', "%{$search}%");
+                })
                 ->orderBy('receive_time', 'asc')
-                ->get();
+                ->paginate(10);
 
             return response()->json([
-                'ready' => $data->count() > 0,
-                'count' => $data->count(),
+                'ready' => $data->total() > 0,
                 'data'  => $data
             ]);
 
@@ -234,6 +241,16 @@ class SpkController extends Controller
             ],500);
 
         }
+    }
+
+    // CEK HARGA MOTOR AJAX
+    public function checkPrice(Request $request)
+    {
+        $unit = MasterUnit::where('model_name', $request->model)->first();
+
+        return response()->json([
+            'price' => $unit ? $unit->price : 0
+        ]);
     }
 
     // REQUEST STOCK AJAX
