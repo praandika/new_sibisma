@@ -285,11 +285,13 @@
                     ' Prospect baru</span>'
                 );
 
-                loadLogs();
+                loadProspect();
 
             },
 
-            error:function(){
+            error:function(xhr){
+                console.log(xhr.status);
+                console.log(xhr.responseText);
 
                 $('#btnSyncProspect').prop('disabled', false);
 
