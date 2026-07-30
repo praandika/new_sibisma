@@ -207,7 +207,7 @@
         (leasingName && leasingName == 'creditcard') 
         ?  $('#leasing').val(leasingName)
 
-        $('.modalProspect').modal('hide');
+        $('.modalProspect').modal('hide')
 
         // CEK STOCK
         let model  = $(this).attr('data-model');
