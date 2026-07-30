@@ -64,6 +64,7 @@
                                     <option value="cash">Cash</option>
                                     <option value="credit">Credit</option>
                                     <option value="instansi">Instansi</option>
+                                    <option value="rental">Rental</option>
                                     <option value="microfinance">Microfinance</option>
                                     <option value="other">Other</option>
                                 </select>

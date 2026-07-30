@@ -188,8 +188,9 @@ class SpkController extends Controller
         $random = Carbon::now('GMT+8')->format('YmdHisv');
         $dc = Auth::user()->dealer_code;
         $spk_no = 'SPK'.$random.$dc;
+        $microfinance = Leasing::where('leasing_category','!=','credit')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        return view('page', compact('today', 'dc', 'spk_no'));
+        return view('page', compact('today', 'dc', 'spk_no','microfinance'));
     }
 
     // MODAL PROSPECT AJAX

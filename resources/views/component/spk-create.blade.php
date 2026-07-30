@@ -84,6 +84,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="customer_name">Customer Name <span class="star">*</span></label>
+                            <span id="gender"></span>
                             <input id="customer_name" type="text" class="form-control form-control-sm" name="customer_name" value="{{ old('customer_name') }}" style="text-transform: uppercase;"
                                 data-toggle="modal"
                                 data-target=".modalProspect" required>
@@ -138,7 +139,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="price">Price OTR <span class="star">*</span></label>
-                                <input id="price" type="text" class="form-control form-control-sm" name="price" value="{{ old('price') }}" style="text-transform: uppercase;" required>
+                                <input id="price" type="text" class="form-control form-control-sm rupiah" name="price" value="{{ old('price') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -191,11 +192,67 @@
                             </div>
                         </div>
 
-                        <!-- LEASING NAME -->
-                        <div class="col-md-3" id="leasingName" hidden>
+                        <!-- MICROFINANCE -->
+                        <div class="col-md-3" id="microfinanceInstansi" hidden>
                             <div class="form-group">
-                                <label for="leasing">Leasing Name <span class="star">*</span></label>
-                                <input id="leasing" type="text" class="form-control form-control-sm" name="leasing" value="{{ old('leasing') }}" style="text-transform: uppercase;" required readonly>
+                                <label for="microfinance">Microfinance / Instansi <span class="star">*</span></label>
+                                <input id="microfinance" type="text" class="form-control form-control-sm" name="microfinance" value="{{ old('microfinance') }}" style="text-transform: uppercase;"
+                                data-toggle="modal"
+                                data-target=".modalMicrofinance" required>
+                            </div>
+                        </div>
+
+                        <div id="leasingName" hidden>
+                            <!-- LEASING NAME -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="leasing">Leasing Name <span class="star">*</span></label>
+                                    <input id="leasing" type="text" class="form-control form-control-sm" name="leasing" value="{{ old('leasing') }}" style="text-transform: uppercase;" required readonly>
+                                </div>
+                            </div>
+
+                            <!-- Downpayment -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="downpayment">Downpayment <span class="star">*</span></label>
+                                    <input id="downpayment" type="text" class="form-control form-control-sm rupiah" name="downpayment" value="{{ old('downpayment') }}" style="text-transform: uppercase;" required>
+                                </div>
+                            </div>
+
+                            <!-- Tenor Pilih di Pop Up Modal -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tenor">Tenor <span class="star">*</span></label>
+                                    <input id="tenor" type="text" class="form-control form-control-sm" name="tenor" value="{{ old('tenor') }}" style="text-transform: uppercase;"
+                                    data-toggle="modal"
+                                    data-target=".modalTenor" required>
+                                </div>
+                            </div>
+
+                            <!-- Bunga Pilih di Pop Up Modal -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="bunga">Bunga <span class="star">*</span></label>
+                                    <input id="bunga" type="text" class="form-control form-control-sm" name="bunga" value="{{ old('bunga') }}" style="text-transform: uppercase;"
+                                    data-toggle="modal"
+                                    data-target=".modalBunga" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discount -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="discount">Discount <span class="star">*</span></label>
+                                <input id="discount" type="text" class="form-control form-control-sm rupiah" name="discount" value="{{ old('discount') }}" style="text-transform: uppercase;" required>
+                            </div>
+                        </div>
+
+                        <!-- Deposit -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="deposit">Deposit <span class="star">*</span></label>
+                                <input id="deposit" type="text" class="form-control form-control-sm rupiah" name="deposit" value="{{ old('deposit') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -254,18 +311,39 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Preview Foto -->
+                        <div class="preview" style="padding: 20px;">
+                            <img id="previewImage"
+                                src="{{ asset('img/noimage.jpg') }}"
+                                class="img-thumbnail"
+                                style="width:200px;height:150px;object-fit:contain;">
+                        </div>
+
+                        <!-- NOTE -->
+                        <div class="col-md-12">
+                            <div class="form-group form-floating-label">
+                                <textarea name="description" id="description" cols="30" rows="10"
+                                    class="form-control input-border-bottom" placeholder="NOTE:"
+                                    value="{{ old('description') }}"
+                                    style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
+                                <label for="description" class="placeholder"></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div id="fieldBtn" hidden>
-                    <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
-                    <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
+                    <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+@include('component.modal-tenor')
+@include('component.modal-bunga')
+@include('component.modal-microfinance')
 @include('component.modal-prospect')
 @include('component.modal-frame')
 
@@ -414,19 +492,18 @@
     }
 
     // Hapus format saat mulai mengetik
-    $('#price').on('focus', function(){
+    $(document).on('focus', '.rupiah', function () {
 
         let value = $(this).val()
-            .replace('Rp','')
-            .replace(/\./g,'')
+            .replace('Rp', '')
+            .replace(/\./g, '')
             .trim();
 
         $(this).val(value);
 
     });
 
-    // Format kembali saat selesai mengetik
-    $('#price').on('blur', function(){
+    $(document).on('blur', '.rupiah', function () {
 
         $(this).val(
             formatRupiah($(this).val())
@@ -447,5 +524,39 @@
 
         });
     }
+</script>
+
+<script>
+    // Preview foto
+    $('#photo').change(function () {
+
+        let photos = this.photoss[0];
+
+        if(photos){
+
+            let reader = new FileReader();
+            reader.onload = function(e){
+                $('#previewImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(photos);
+        }
+    });
+
+    // Preview file
+    $('#picture').change(function () {
+
+        let file = this.files[0];
+
+        if(file){
+
+            let reader = new FileReader();
+            reader.onload = function(e){
+                $('#previewImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 @endpush

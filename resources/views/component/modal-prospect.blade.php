@@ -95,6 +95,11 @@
                     data-ktp="${row.ktp_no}"
                     data-payment="${row.payment_type}"
                     data-leasing="${row.leasing_name}"
+                    data-downpayment="${row.down_payment}"
+                    data-tenor="${row.tenor}"
+                    data-discount="${row.discount}"
+                    data-deposit="${row.deposit}"
+                    data-gender="${row.gender}"
                     data-dealer="${row.dealer_code}">
                     <td>
                         <div class="td-group">
@@ -124,6 +129,7 @@
                             <span class="main-data">${row.phone}</span>
                             <span class="secondary-data">
                                 <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.address)}</div>
+                                <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_type} - ${row.leasing_name ? row.leasing_name : ''}</div>
                             </span>
                         </div>
                     </td>
@@ -198,16 +204,46 @@
             (ktp && ktp !== 'null') ? ktp : ''
         );
 
-        // CONDITION LEASING NAME
-        let leasingName = $(this).attr('data-ktp');
-        $('#leasing').val(
-            (leasingName && leasingName == 'creditcard') ? leasingName : 'cash'
+        // CONDITION PAYMENT TYPE
+        let payment = $(this).attr('data-payment');
+
+        payment == 'CREDITCARD' ? $('#leasingName').prop('hidden', false) : $('#leasingName').prop('hidden', true);
+        payment == 'CREDITCARD' ? $('#leasing').val($(this).attr('data-leasing')) : $('#leasing').val('CASH');
+
+        payment == 'CASH' ? $('#microfinanceInstansi').prop('hidden', false) : $('#microfinanceInstansi').prop('hidden', true);
+
+        // CONDITION DOWNPAYMENT
+        let downpayment = $(this).attr('data-downpayment');
+
+        $('#downpayment').val(
+            (downpayment && downpayment !== 'null') ? downpayment : '0'
         );
 
-        (leasingName && leasingName == 'creditcard') 
-        ?  $('#leasing').val(leasingName)
+        // CONDITION TENOR
+        let tenor = $(this).attr('data-tenor');
+
+        $('#tenor').val(
+            (tenor && tenor !== 'null') ? tenor : '0'
+        );
+
+        // CONDITION DISCOUNT
+        let discount = $(this).attr('data-discount');
+
+        $('#discount').val(
+            (discount && discount !== 'null') ? discount : '0'
+        );
+
+        // CONDITION DEPOSIT
+        let deposit = $(this).attr('data-deposit');
+
+        $('#deposit').val(
+            (deposit && deposit !== 'null') ? deposit : '0'
+        );
 
         $('.modalProspect').modal('hide');
+        
+
+        // ---------------------------------------------
 
         // CEK STOCK
         let model  = $(this).attr('data-model');
@@ -221,6 +257,13 @@
 
         // SHOW BUTTON SUBMIT
         $('#fieldBtn').prop('hidden', false);
+
+        let gender = $(this).attr('data-gender');
+        $('#gender').html(
+            gender == 'Male'
+            ? `<span class="badge badge-info">Laki-Laki</span>`
+            : `<span class="badge badge-danger">Perempuan</span>`
+        );
 
         console.log(model);
         console.log(color);

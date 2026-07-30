@@ -9,7 +9,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        v3.1
+                        v4.0
                     </a>
                 </li>
                 <li class="nav-item">
