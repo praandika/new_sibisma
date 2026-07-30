@@ -240,10 +240,7 @@
             (deposit && deposit !== 'null') ? deposit : '0'
         );
 
-        $('.modalProspect').modal('hide');
-        
-
-        // ---------------------------------------------
+        $('.modalProspect').modal('hide')
 
         // CEK STOCK
         let model  = $(this).attr('data-model');
