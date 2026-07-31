@@ -57,7 +57,7 @@ class SyncProspect extends BaseSyncCommand
         if ($dealerCode) {
             $dealerApi = $dealerApi->where('dealer_code', $dealerCode);
         }
-        // BARU SAMPE SINI
+        
         $insert = [];
 
         $now = now();
