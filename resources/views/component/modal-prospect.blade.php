@@ -100,6 +100,7 @@
                     data-discount="${row.discount}"
                     data-deposit="${row.deposit}"
                     data-gender="${row.gender}"
+                    data-prospect_key="${row.prospect_key}"
                     data-dealer="${row.dealer_code}">
                     <td>
                         <div class="td-group">
@@ -196,6 +197,8 @@
         $('#color').val($(this).attr('data-color'));
         $('#address').val($(this).attr('data-address'));
         $('#payment').val($(this).attr('data-payment'));
+        $('#phone').val($(this).attr('data-phone'));
+        $('#prospect_key').val($(this).attr('data-prospect_key'));
 
         // CONDITION KTP
         let ktp = $(this).attr('data-ktp');
@@ -261,6 +264,9 @@
             ? `<span class="badge badge-info">Laki-Laki</span>`
             : `<span class="badge badge-danger">Perempuan</span>`
         );
+
+        // SHOW PHONE
+        $('#phoneText').text($(this).attr('data-phone'));
 
         console.log(model);
         console.log(color);

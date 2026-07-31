@@ -198,6 +198,7 @@
         $('#stockStatus').html(
             '<span class="badge badge-success">READY</span>'
         );
+        $('#order_status').val('READY');
 
         $('.modalFrame').modal('hide');
 

@@ -3,32 +3,44 @@
     input[type=date]:required:invalid::-webkit-datetime-edit {
         color: transparent;
     }
+
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
-    ::-webkit-input-placeholder { /* WebKit browsers */
-        text-transform: none;
-    }
-    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        text-transform: none;
-    }
-    ::-moz-placeholder { /* Mozilla Firefox 19+ */
-        text-transform: none;
-    }
-    :-ms-input-placeholder { /* Internet Explorer 10+ */
-        text-transform: none;
-    }
-    ::placeholder { /* Recent browsers */
+
+    ::-webkit-input-placeholder {
+        /* WebKit browsers */
         text-transform: none;
     }
 
-    input{
+    :-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        text-transform: none;
+    }
+
+    ::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        text-transform: none;
+    }
+
+    :-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        text-transform: none;
+    }
+
+    ::placeholder {
+        /* Recent browsers */
+        text-transform: none;
+    }
+
+    input {
         background-color: #fffbeb !important;
     }
 
-    .star{
+    .star {
         color: red;
     }
+
 </style>
 @endpush
 
@@ -75,8 +87,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="spk_date">Date <span class="star">*</span></label>
-                            <input id="spk_date" type="date" class="form-control form-control-sm"
-                                name="spk_date" value="{{ $today }}" required readonly>
+                            <input id="spk_date" type="date" class="form-control form-control-sm" name="spk_date"
+                                value="{{ $today }}" required readonly>
                         </div>
                     </div>
 
@@ -85,11 +97,12 @@
                         <div class="form-group">
                             <label for="customer_name">Customer Name <span class="star">*</span></label>
                             <span id="gender"></span>
-                            <input id="customer_name" type="text" class="form-control form-control-sm" name="customer_name" value="{{ old('customer_name') }}" style="text-transform: uppercase;"
-                                data-toggle="modal"
+                            <span id="phoneText" style="font-size: 12px; font-weight: bold;"></span>
+                            <input id="customer_name" type="text" class="form-control form-control-sm"
+                                name="customer_name" value="{{ old('customer_name') }}"
+                                style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
                                 data-target=".modalProspect" required>
-                            <button id="btnSyncProspect"
-                                style="
+                            <button id="btnSyncProspect" style="
                                     border: none;
                                     cursor: pointer;
                                     background-color: #65eb89;
@@ -101,20 +114,22 @@
                             <span id="syncInfo" class="ml-3 text-success font-weight-bold"></span>
                         </div>
                     </div>
-
-                    <!-- HIDE CARD -->
-                    <div id="fieldForm" hidden>
+                </div>
+                <!-- HIDE CARD -->
+                <div id="fieldForm" hidden>
+                    <div class="row">
                         <!-- NAMA STNK -->
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="stnk_name">STNK Name <span class="star">*</span></label>
-                                <input id="stnk_name" type="text" class="form-control form-control-sm" name="stnk_name" value="{{ old('stnk_name') }}" style="text-transform: uppercase;" required>
+                                <input id="stnk_name" type="text" class="form-control form-control-sm" name="stnk_name"
+                                    value="{{ old('stnk_name') }}" style="text-transform: uppercase;" required>
 
                                 <!-- Checkbox -->
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" id="sameName" type="checkbox" value="">
-                                            <span class="form-check-sign">Nama sama dengan KTP</span>
+                                        <span class="form-check-sign">Nama sama dengan KTP</span>
                                     </label>
                                 </div>
                             </div>
@@ -124,12 +139,15 @@
                             <div class="form-group">
                                 <label for="model_name">Motor <span class="star">*</span></label>
                                 <span id="stockStatus"></span>
-                                <input id="model_name" type="text" class="form-control form-control-sm" name="model_name" value="{{ old('model_name') }}" style="text-transform: uppercase;" required readonly>
-                                
+                                <input id="model_name" type="text" class="form-control form-control-sm"
+                                    name="model_name" value="{{ old('model_name') }}" style="text-transform: uppercase;"
+                                    required readonly>
+
                                 <span id="frameStatus" style="color: grey; font-size: 12px; font-weight: bold;"></span>
                                 <div>
                                     <span id="engineStatus" style="color: grey; font-size: 12px;"></span>
-                                    <span id="colorStatus" style="color: grey; font-size: 12px; font-weight: bold;"></span>
+                                    <span id="colorStatus"
+                                        style="color: grey; font-size: 12px; font-weight: bold;"></span>
                                     <span id="yearStatus" style="color: grey; font-size: 12px;"></span>
                                 </div>
                             </div>
@@ -139,7 +157,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="price">Price OTR <span class="star">*</span></label>
-                                <input id="price" type="text" class="form-control form-control-sm rupiah" name="price" value="{{ old('price') }}" style="text-transform: uppercase;" required>
+                                <input id="price" type="text" class="form-control form-control-sm rupiah" name="price"
+                                    value="{{ old('price') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -147,7 +166,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="ktp">KTP No. <span class="star">*</span></label>
-                                <input id="ktp" type="text" class="form-control form-control-sm" name="ktp" value="{{ old('ktp') }}" style="text-transform: uppercase;" required>
+                                <input id="ktp" type="text" class="form-control form-control-sm" name="ktp"
+                                    value="{{ old('ktp') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -155,8 +175,10 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="kk">KK No.</label>
-                                <input id="kk" type="text" class="form-control form-control-sm" name="kk" value="{{ old('kk') }}" style="text-transform: uppercase;">
-                                <small id="kk" class="form-text text-muted">Disarankan mendapatkan nomor KK untuk keperluan analisa data (opsional)</small>
+                                <input id="kk" type="text" class="form-control form-control-sm" name="kk"
+                                    value="{{ old('kk') }}" style="text-transform: uppercase;">
+                                <small id="kk" class="form-text text-muted">Disarankan mendapatkan nomor KK untuk
+                                    keperluan analisa data (opsional)</small>
                             </div>
                         </div>
 
@@ -164,7 +186,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="address">KTP Address <span class="star">*</span></label>
-                                <input id="address" type="text" class="form-control form-control-sm" name="address" value="{{ old('address') }}" style="text-transform: uppercase;" required>
+                                <input id="address" type="text" class="form-control form-control-sm" name="address"
+                                    value="{{ old('address') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -172,13 +195,15 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="address_shipment">Pengiriman Address <span class="star">*</span></label>
-                                <input id="address_shipment" type="text" class="form-control form-control-sm" name="address_shipment" value="{{ old('address_shipment') }}" style="text-transform: uppercase;" required>
+                                <input id="address_shipment" type="text" class="form-control form-control-sm"
+                                    name="address_shipment" value="{{ old('address_shipment') }}"
+                                    style="text-transform: uppercase;" required>
 
                                 <!-- Checkbox -->
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" id="sameAddress" type="checkbox" value="">
-                                            <span class="form-check-sign">Alamat sama dengan KTP</span>
+                                        <span class="form-check-sign">Alamat sama dengan KTP</span>
                                     </label>
                                 </div>
                             </div>
@@ -188,7 +213,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="payment">Payment Type <span class="star">*</span></label>
-                                <input id="payment" type="text" class="form-control form-control-sm" name="payment" value="{{ old('payment') }}" style="text-transform: uppercase;" required readonly>
+                                <input id="payment" type="text" class="form-control form-control-sm" name="payment"
+                                    value="{{ old('payment') }}" style="text-transform: uppercase;" required readonly>
                             </div>
                         </div>
 
@@ -196,9 +222,10 @@
                         <div class="col-md-3" id="microfinanceInstansi" hidden>
                             <div class="form-group">
                                 <label for="microfinance">Microfinance / Instansi <span class="star">*</span></label>
-                                <input id="microfinance" type="text" class="form-control form-control-sm" name="microfinance" value="{{ old('microfinance') }}" style="text-transform: uppercase;"
-                                data-toggle="modal"
-                                data-target=".modalMicrofinance" required>
+                                <input id="microfinance" type="text" class="form-control form-control-sm"
+                                    name="microfinance" value="{{ old('microfinance') }}"
+                                    style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
+                                    data-target=".modalMicrofinance" required>
                             </div>
                         </div>
 
@@ -207,7 +234,30 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="leasing">Leasing Name <span class="star">*</span></label>
-                                    <input id="leasing" type="text" class="form-control form-control-sm" name="leasing" value="{{ old('leasing') }}" style="text-transform: uppercase;" required readonly>
+                                    <input id="leasing" type="text" class="form-control form-control-sm" name="leasing"
+                                        value="{{ old('leasing') }}" style="text-transform: uppercase;" required
+                                        readonly>
+                                </div>
+                            </div>
+
+                            <!-- NAMA PEMOHON -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="pemohon_name">Nama Pemohon <span class="star">*</span></label>
+                                    <input id="pemohon_name" type="text" class="form-control form-control-sm"
+                                        name="pemohon_name" value="{{ old('pemohon_name') }}"
+                                        style="text-transform: uppercase;" required>
+                                </div>
+                            </div>
+
+                            <!-- STATUS KREDIT -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="credit_status">Kredit Status <span class="star">*</span></label>
+                                    <input id="credit_status" type="text" class="form-control form-control-sm"
+                                        name="credit_status" value="{{ old('credit_status') }}"
+                                        style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
+                                        data-target=".modalCreditStatus" required>
                                 </div>
                             </div>
 
@@ -215,7 +265,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="downpayment">Downpayment <span class="star">*</span></label>
-                                    <input id="downpayment" type="text" class="form-control form-control-sm rupiah" name="downpayment" value="{{ old('downpayment') }}" style="text-transform: uppercase;" required>
+                                    <input id="downpayment" type="text" class="form-control form-control-sm rupiah"
+                                        name="downpayment" value="{{ old('downpayment') }}"
+                                        style="text-transform: uppercase;" required>
                                 </div>
                             </div>
 
@@ -223,9 +275,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="tenor">Tenor <span class="star">*</span></label>
-                                    <input id="tenor" type="text" class="form-control form-control-sm" name="tenor" value="{{ old('tenor') }}" style="text-transform: uppercase;"
-                                    data-toggle="modal"
-                                    data-target=".modalTenor" required>
+                                    <input id="tenor" type="text" class="form-control form-control-sm" name="tenor"
+                                        value="{{ old('tenor') }}" style="text-transform: uppercase; cursor:pointer;"
+                                        data-toggle="modal" data-target=".modalTenor" required>
                                 </div>
                             </div>
 
@@ -233,9 +285,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="bunga">Bunga <span class="star">*</span></label>
-                                    <input id="bunga" type="text" class="form-control form-control-sm" name="bunga" value="{{ old('bunga') }}" style="text-transform: uppercase;"
-                                    data-toggle="modal"
-                                    data-target=".modalBunga" required>
+                                    <input id="bunga" type="text" class="form-control form-control-sm" name="bunga"
+                                        value="{{ old('bunga') }}" style="text-transform: uppercase; cursor:pointer;"
+                                        data-toggle="modal" data-target=".modalBunga" required>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +296,9 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="discount">Discount <span class="star">*</span></label>
-                                <input id="discount" type="text" class="form-control form-control-sm rupiah" name="discount" value="{{ old('discount') }}" style="text-transform: uppercase;" required>
+                                <input id="discount" type="text" class="form-control form-control-sm rupiah"
+                                    name="discount" value="{{ old('discount') }}" style="text-transform: uppercase;"
+                                    required>
                             </div>
                         </div>
 
@@ -252,31 +306,59 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="deposit">Deposit <span class="star">*</span></label>
-                                <input id="deposit" type="text" class="form-control form-control-sm rupiah" name="deposit" value="{{ old('deposit') }}" style="text-transform: uppercase;" required>
+                                <input id="deposit" type="text" class="form-control form-control-sm rupiah"
+                                    name="deposit" value="{{ old('deposit') }}" style="text-transform: uppercase;"
+                                    required>
                             </div>
                         </div>
 
                         <!-- Frame No -->
-                        <input id="frame_no" type="hidden" class="form-control form-control-sm" name="frame_no" value="{{ old('frame_no') }}" style="text-transform: uppercase;" required>
+                        <input id="frame_no" type="hidden" class="form-control form-control-sm" name="frame_no"
+                            value="{{ old('frame_no') }}" style="text-transform: uppercase;" required>
 
                         <!-- Engine No -->
-                        <input id="engine_no" type="hidden" class="form-control form-control-sm" name="engine_no" value="{{ old('engine_no') }}" style="text-transform: uppercase;" required readonly>
+                        <input id="engine_no" type="hidden" class="form-control form-control-sm" name="engine_no"
+                            value="{{ old('engine_no') }}" style="text-transform: uppercase;" required readonly>
 
                         <!-- Faktur Color -->
-                        <input id="color" type="hidden" class="form-control form-control-sm" name="color" value="{{ old('color') }}" style="text-transform: uppercase;" required readonly>
+                        <input id="color" type="hidden" class="form-control form-control-sm" name="color"
+                            value="{{ old('color') }}" style="text-transform: uppercase;" required readonly>
 
                         <!-- Year MC -->
-                        <input id="year" type="hidden" class="form-control form-control-sm" name="year" value="{{ old('year') }}" style="text-transform: uppercase;" required readonly>
+                        <input id="year" type="hidden" class="form-control form-control-sm" name="year"
+                            value="{{ old('year') }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Order Status -->
+                        <input id="order_status" type="hidden" class="form-control form-control-sm" name="order_status"
+                            value="{{ old('order_status') }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Phone -->
+                        <input id="phone" type="hidden" class="form-control form-control-sm" name="phone"
+                            value="{{ old('phone') }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- SPK No -->
+                        <input id="spk_no" type="hidden" class="form-control form-control-sm" name="spk_no"
+                            value="{{ $spk_no }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Prospect Key -->
+                        <input id="prospect_key" type="hidden" class="form-control form-control-sm" name="prospect_key"
+                            value="{{ old('prospect_key') }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Salesman -->
+                        <input id="manpower" type="hidden" class="form-control form-control-sm" name="manpower"
+                            value="{{ Auth::user()->name }}" style="text-transform: uppercase;" required readonly>
 
                         <div class="col-md-3" style="margin-top: 12px;">
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp" style="font-weight: bold;">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp"
+                                style="font-weight: bold;">
                                 Upload / Take an ID-KTP photo
                             </button>
                             <div class="collapse" id="uploadKtp">
                                 <div class="card card-body">
                                     <div class="form-group form-floating-label">
-                                        <input id="picture" type="file" class="form-control input-border-bottom" name="picture"
-                                            value="{{ old('picture') }}">
+                                        <input id="picture" type="file" class="form-control input-border-bottom"
+                                            name="picture" value="{{ old('picture') }}">
                                         <label for="picture" class="placeholder" style="
                                         background-color: forestgreen; 
                                         color: #ffffff !important; 
@@ -314,9 +396,7 @@
 
                         <!-- Preview Foto -->
                         <div class="preview" style="padding: 20px;">
-                            <img id="previewImage"
-                                src="{{ asset('img/noimage.jpg') }}"
-                                class="img-thumbnail"
+                            <img id="previewImage" src="{{ asset('img/noimage.jpg') }}" class="img-thumbnail"
                                 style="width:200px;height:150px;object-fit:contain;">
                         </div>
 
@@ -333,6 +413,7 @@
                     </div>
                 </div>
 
+
                 <div id="fieldBtn" hidden>
                     <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 </div>
@@ -343,6 +424,7 @@
 
 @include('component.modal-tenor')
 @include('component.modal-bunga')
+@include('component.modal-credit-status')
 @include('component.modal-microfinance')
 @include('component.modal-prospect')
 @include('component.modal-frame')
@@ -364,6 +446,7 @@
             console.log(filename);
         });
     });
+
 </script>
 
 <script>
@@ -371,35 +454,35 @@
     let currentModel = '';
     let currentColor = '';
 
-    function checkStock(model, color)
-    {
+    function checkStock(model, color) {
         currentModel = model;
         currentColor = color;
 
         console.log("Model dikirim:", model)
         console.log("Warna dikirim:", color)
 
-        $.get('/spk-checkstock',{
-            model:model,
-            color:color
-        },function(res){
+        $.get('/spk-checkstock', {
+            model: model,
+            color: color
+        }, function (res) {
 
             console.log(res);
             console.log("ready =", res.ready);
 
-            if(res.ready){
+            if (res.ready) {
                 console.log("READY")
 
                 loadFrameModal();
 
                 $('.modalFrame').modal('show');
 
-            }else{
+            } else {
 
                 $('#frame_no').val('');
                 $('#year').val('');
                 $('#engine_no').val('');
                 $('#color').val('');
+                $('#order_status').val('INDENT');
 
                 $('#stockStatus')
                     .html('<span class="badge badge-warning">INDENT</span>');
@@ -407,11 +490,12 @@
 
         });
     }
+
 </script>
 
 <script>
     // Button Manual Sync Prospect
-    $('#btnSyncProspect').click(function(){
+    $('#btnSyncProspect').click(function () {
 
         $('#btnSyncProspect').prop('disabled', true);
 
@@ -429,7 +513,7 @@
                 _token: "{{ csrf_token() }}"
             },
 
-            success: function(res){
+            success: function (res) {
 
                 $('#btnSyncProspect').prop('disabled', false);
 
@@ -443,7 +527,7 @@
 
             },
 
-            error:function(xhr){
+            error: function (xhr) {
                 console.log(xhr.status);
                 console.log(xhr.responseText);
 
@@ -457,36 +541,37 @@
 
         });
 
-    }); 
+    });
+
 </script>
 
 <script>
     // Checkbox data yang sama
-    $('#sameAddress').change(function(){
-        if($(this).is(':checked')){
+    $('#sameAddress').change(function () {
+        if ($(this).is(':checked')) {
             $('#address_shipment').val($('#address').val());
-        }else{
+        } else {
             $('#address_shipment').val('');
         }
     });
 
     // Checkbox data yang sama
-    $('#sameName').change(function(){
-        if($(this).is(':checked')){
+    $('#sameName').change(function () {
+        if ($(this).is(':checked')) {
             $('#stnk_name').val($('#customer_name').val());
-        }else{
+        } else {
             $('#stnk_name').val('');
         }
     });
+
 </script>
 
 <script>
     // Format Rupiah
-    function formatRupiah(angka)
-    {
-        angka = angka.toString().replace(/\D/g,'');
+    function formatRupiah(angka) {
+        angka = angka.toString().replace(/\D/g, '');
 
-        if(angka == '') return '';
+        if (angka == '') return '';
 
         return 'Rp ' + Number(angka).toLocaleString('id-ID');
     }
@@ -512,11 +597,10 @@
     });
 
     // Check Price
-    function getPrice(model)
-    {
+    function getPrice(model) {
         $.get('/spk-checkprice', {
             model: model
-        }, function(res){
+        }, function (res) {
 
             $('#price').val(
                 formatRupiah(res.price)
@@ -524,6 +608,7 @@
 
         });
     }
+
 </script>
 
 <script>
@@ -532,10 +617,10 @@
 
         let photos = this.photoss[0];
 
-        if(photos){
+        if (photos) {
 
             let reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function (e) {
                 $('#previewImage').attr('src', e.target.result);
             }
 
@@ -548,15 +633,16 @@
 
         let file = this.files[0];
 
-        if(file){
+        if (file) {
 
             let reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function (e) {
                 $('#previewImage').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(file);
         }
     });
+
 </script>
 @endpush

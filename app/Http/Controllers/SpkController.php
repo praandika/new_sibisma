@@ -295,20 +295,11 @@ class SpkController extends Controller
             $discount = $request->discount;
         }
 
-        if ($request->tandajadi == '') {
-            $tandajadi = 0;
+        if ($request->deposit == '') {
+            $deposit = 0;
         } else {
-            $tandajadi = $request->tandajadi;
+            $deposit = $request->deposit;
         }
-
-        if ($request->payment_method == 'cash') {
-            $credit_status = 'cash';
-            $leasing = $request->leasing_id_cash;
-        } else {
-            $credit_status = $request->credit_status;
-            $leasing = $request->leasing_id;
-        }
-        
         
         // Get KTP image
         if ($request->picture != '') {
@@ -332,26 +323,31 @@ class SpkController extends Controller
 
         $data = new Spk;
         $data->spk_no = $request->spk_no;
+        $data->prospect_key = $request->prospect_key;
         $data->spk_date = $today;
-        $data->order_name = strtoupper($request->order_name);
+        $data->order_name = strtoupper($request->customer_name);
+        $data->stnk_name = strtoupper($request->stnk_name);
+        $data->model_name = strtoupper($request->model_name);
+        $data->frame_no = strtoupper($request->frame_no);
+        $data->engine_no = strtoupper($request->engine_no);
+        $data->year_mc = $request->year_mc;
+        $data->faktur_color = strtoupper($request->faktur_color);
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
         $data->ktp_number = $request->ktp_number;
         $data->kk_number = $request->kk_number;
-        $data->stnk_name = strtoupper($request->stnk_name);
         $data->pemohon_name = strtoupper($request->pemohon_name);
-        $data->stock_id = $request->stock_id;
-        $data->tandajadi = $tandajadi;
+        $data->deposit = $deposit;
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
-        $data->leasing_id = $leasing;
-        $data->manpower_id = $request->manpower_id;
+        $data->leasing = strtoupper($request->leasing);
+        $data->manpower = $request->manpower;
         $data->description = strtoupper($request->description);
         $data->payment_method = $request->payment_method;
         $data->bunga = $request->bunga;
         $data->tenor = $request->tenor;
-        $data->credit_status = $credit_status;
+        $data->credit_status = $request->credit_status;
         $data->order_status = $request->order_status;
         $data->sale_status = 'pending';
         $data->ktp = $ktp_file;
@@ -359,21 +355,20 @@ class SpkController extends Controller
         $data->save();
         toast('SPK berhasil dibuat','success');
 
-        if ($request->payment_method == 'credit') {
+        if ($request->payment_method == 'CREDITCARD') {
             // Cek status kredit
             if($request->credit_status == 'acc'){
                 $reason = 'ACC';
-            } else if($request->payment_method == 'survey'){
+            } else if($request->credit_status == 'survey'){
                 $reason = 'Mulai Survey';
             } else {
                 $reason = $request->reason;
             }
 
             $history = new HistoryCredit;
-            $history->leasing_id = $request->leasing_id;
             $history->spk = $request->spk_no;
             $history->update_date = $today;
-            $history->credit_status = $credit_status;
+            $history->credit_status = $request->credit_status;
             $history->reason = $reason;
             $history->pemohon_name = strtoupper($request->pemohon_name);
             $history->save();

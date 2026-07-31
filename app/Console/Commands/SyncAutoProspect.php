@@ -49,6 +49,11 @@ class SyncAutoProspect extends BaseSyncCommand
 
     public function handle()
     {
+        $totalDealer = 0;
+        $totalApi = 0;
+        $totalNew = 0;
+        $totalUpdate = 0;
+
         // Ambil semua data api dalam database dealer_api
         $dealerApi = $this->getDealers();
 
@@ -65,12 +70,21 @@ class SyncAutoProspect extends BaseSyncCommand
 
             $dealerTotal = 0;
 
+            $this->newLine();
+
+            $this->line(str_repeat('=', 70));
+            $this->info("Dealer : {$dealer->dealer_code}");
+            $this->line(str_repeat('=', 70));
+            // Loop 7 Hari
             for ($i = $this->syncDays; $i >= 0; $i--) {
 
-                $date = now()->subDays($i);
+                $date = $start->copy()->subDays($i);
 
                 try {
-
+                    $this->line(
+                        "Request ".$date->format('Y-m-d')."..."
+                    );
+                    // REQUEST API
                     $response = $this->callApi(
                         $dealer,
                         $this->endpoint,
@@ -93,7 +107,13 @@ class SyncAutoProspect extends BaseSyncCommand
                             $dealerStart,
                             now()
                         );
+
+                        $this->error(
+                            "✖ ".$date->format('Y-m-d')
+                        );
+
                         continue;
+                        
                     }
 
                     $data = $response->json('data', []);
@@ -112,8 +132,18 @@ class SyncAutoProspect extends BaseSyncCommand
                             now()
                         );
 
+                        $this->warn(
+                            "• ".$date->format('Y-m-d').
+                            " Tidak ada data"
+                        );
+
                         continue;
                     }
+
+                    $this->info(
+                        "✔ ".$date->format('Y-m-d').
+                        " (".count($data)." prospect)"
+                    );
 
                     foreach ($data as $header) {
 
@@ -167,23 +197,11 @@ class SyncAutoProspect extends BaseSyncCommand
                             'updated_at'=>$now
                         ];
 
+                        // APPEND KE INSERT
                         $insert[] = $row;
 
                         $dealerTotal++;
                     }
-
-                    $this->logSuccess($dealer->dealer_code, $dealerTotal);
-
-                    // Save log untuk dealer yang berhasil melakukan sync prospect
-                    $this->saveLog(
-                        'sync:autoprospect',
-                        $dealer->dealer_code,
-                        'SUCCESS',
-                        $dealerTotal,
-                        'Sync berhasil',
-                        $dealerStart,
-                        now()
-                    );
                 
                 } catch (\Throwable $e) {
                     $this->logError($dealer->dealer_code, "Gagal API: data tanggal ".$date->format('Y-m-d')." - ".$e->getMessage());
@@ -202,108 +220,171 @@ class SyncAutoProspect extends BaseSyncCommand
                 }
 
             }
-                
-        }
+            
+            // HITUNG NEW PROSPECT
 
-        // Insert or Update data to Prospect table
-        $this->info("Total insert : " . count($insert));
+            // Semua key yang akan diproses
+            $keys = array_column($insert, 'prospect_key');
 
-        // Semua key yang akan diproses
-        $keys = array_column($insert, 'prospect_key');
+            $duplicates = array_diff_assoc($keys, array_unique($keys));
 
-        $this->info("Total key : " . count($keys));
-        $this->info("Unique key : " . count(array_unique($keys)));
+            // Ambil key yang sudah ada di database
+            $existingKeys = Prospect::whereIn('prospect_key', $keys)
+                ->pluck('prospect_key')
+                ->toArray();
+            
+            // Hitung prospect baru
+            $newProspect = collect($insert)
+                ->whereNotIn('prospect_key', $existingKeys)
+                ->count();
 
-        $duplicates = array_diff_assoc($keys, array_unique($keys));
+            // Hitung prospect yang akan di-update
+            $updateProspect = count($insert) - $newProspect;
 
-        $this->info("Duplicate key : " . count($duplicates));
+            $this->newProspect += $newProspect;
 
-        // Ambil key yang sudah ada di database
-        $existingKeys = Prospect::whereIn('prospect_key', $keys)
-            ->pluck('prospect_key')
-            ->toArray();
-        
-        // Hitung prospect baru
-        $newProspect = collect($insert)
-            ->whereNotIn('prospect_key', $existingKeys)
-            ->count();
+            $this->table(
 
-        // Hitung prospect yang akan di-update
-        $updateProspect = count($insert) - $newProspect;
+                ['Metric','Value'],
 
-        $this->newProspect = $newProspect;
+                [
 
-        $this->info(json_encode([
-            'new' => $newProspect,
-            'update' => $updateProspect,
-            'total' => count($insert)
-        ]));
+                    ['Total API',$dealerTotal],
+                    ['Unique Key',count(array_unique($keys))],
+                    ['Duplicate API',count($duplicates)],
+                    ['New Prospect',$newProspect],
+                    ['Update Prospect',$updateProspect],
 
-        if (!empty($insert)) {
-            try {
+                ]
 
-                DB::transaction(function () use ($insert) {
+            );
 
-                    Prospect::upsert(
-                        $insert,
-                        ['prospect_key'], // Unique key for upsert
+            // UPSERT DATA DEALER
+            if (!empty($insert)) {
+                try {
+
+                    DB::transaction(function () use ($insert) {
+                        $totalBatch = ceil(count($insert) / 1000);
+
+                        $currentBatch = 1;
+
+                        foreach (array_chunk($insert, 1000) as $chunk) {
+
+                            $this->line(
+                                "Saving batch {$currentBatch}/{$totalBatch} (".
+                                count($chunk)." rows)"
+                            );
+
+                            // SAVE OR UPDATE DATA
+                            Prospect::upsert(
+                                $chunk,
+                                $insert,
+                                ['prospect_key'], // Unique key for upsert
+                                
+                                [
+                                    'dealer_code',
+                                    'point_code',
+                                    'customer_name',
+                                    'ktp_no',
+                                    'prospect_date',
+                                    'prospect_type',
+                                    'company_name',
+                                    'interest_type',
+                                    'interest_color',
+                                    'gender',
+                                    'occupation',
+                                    'payment_type',
+                                    'deposit',
+                                    'discount',
+                                    'leasing_name',
+                                    'down_payment',
+                                    'tenor',
+                                    'city',
+                                    'district',
+                                    'subdistrict',
+                                    'address',
+                                    'phone',
+                                    'salesman',
+                                    'shipment_address',
+                                    'updated_at'
+                                ]
+                            );
+
+                            $currentBatch++;
+                        }
+
                         
-                        [
-                            'dealer_code',
-                            'point_code',
-                            'customer_name',
-                            'ktp_no',
-                            'prospect_date',
-                            'prospect_type',
-                            'company_name',
-                            'interest_type',
-                            'interest_color',
-                            'gender',
-                            'occupation',
-                            'payment_type',
-                            'deposit',
-                            'discount',
-                            'leasing_name',
-                            'down_payment',
-                            'tenor',
-                            'city',
-                            'district',
-                            'subdistrict',
-                            'address',
-                            'phone',
-                            'salesman',
-                            'shipment_address',
-                            'updated_at'
-                        ]
+
+                    });
+                    
+                } catch (\Throwable $e) {
+                    $this->info("Gagal menyimpan data ke database: ".$e->getMessage());
+
+                    // Save log untuk error tidak berhasil menyimpan data ke database
+                    $this->saveLog(
+                        'sync:autoprospect',
+                        null,
+                        'FAILED',
+                        0,
+                        'Database Error : '.$e->getMessage(),
+                        $start,
+                        now()
                     );
+                    return CommandStatus::FAILURE;
+                }
+            
+                $this->logSuccess($dealer->dealer_code, $dealerTotal);
 
-                });
-                
-            } catch (\Throwable $e) {
-                $this->info("Gagal menyimpan data ke database: ".$e->getMessage());
-
-                // Save log untuk error tidak berhasil menyimpan data ke database
+                // Save log untuk dealer yang berhasil melakukan sync prospect
                 $this->saveLog(
                     'sync:autoprospect',
-                    null,
-                    'FAILED',
-                    0,
-                    'Database Error : '.$e->getMessage(),
-                    $start,
+                    $dealer->dealer_code,
+                    'SUCCESS',
+                    $dealerTotal,
+                    'Sync berhasil',
+                    $dealerStart,
                     now()
                 );
-                return CommandStatus::FAILURE;
+
+            }else{
+                $this->info("Tidak ada data yang perlu di-sync.");
             }
 
-            $this->info("Sync prospect selesai. Total data : ".count($insert));
-            $duration = CarbonInterval::seconds($start->diffInSeconds(now()))->cascade();
+            $totalDealer++;
 
-            $this->info(
-                "Selesai dalam {$duration->forHumans()}"
-            );
-        }else{
-            $this->info("Tidak ada data yang perlu di-sync.");
+            $totalApi += $dealerTotal;
+
+            $totalNew += $newProspect;
+
+            $totalUpdate += $updateProspect;
         }
+
+        // SUMMARY
+        $this->newLine();
+
+        $this->line(str_repeat('=',70));
+
+        $this->info("AUTO SYNC PROSPECT SELESAI");
+
+        $this->line(str_repeat('=',70));
+
+        $this->table(
+
+            ['Summary','Value'],
+
+            [
+
+                ['Dealer',$totalDealer],
+                ['Total API',$totalApi],
+                ['Prospect Baru',$totalNew],
+                ['Prospect Update',$totalUpdate],
+                ['Durasi',CarbonInterval::seconds(
+                    $start->diffInSeconds(now())
+                )->cascade()->forHumans()]
+
+            ]
+
+        );
 
         return CommandStatus::SUCCESS;
     }
