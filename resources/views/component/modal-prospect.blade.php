@@ -211,6 +211,19 @@
         let payment = $(this).attr('data-payment');
 
         payment == 'CREDITCARD' ? $('#leasingName').prop('hidden', false) : $('#leasingName').prop('hidden', true);
+
+        if (payment == 'CREDITCARD') {
+            $('#pemohon_name').prop('required', true);
+            $('#credit_status').prop('required', true);
+            $('#bunga').prop('required', true);
+            $('#microfinance').prop('required', false);
+        } else {
+            $('#pemohon_name').prop('required', false);
+            $('#credit_status').prop('required', false);
+            $('#bunga').prop('required', false);
+            $('#microfinance').prop('required', true);
+        }
+
         payment == 'CREDITCARD' ? $('#leasing').val($(this).attr('data-leasing')) : $('#leasing').val('CASH');
 
         payment == 'CASH' ? $('#microfinanceInstansi').prop('hidden', false) : $('#microfinanceInstansi').prop('hidden', true);

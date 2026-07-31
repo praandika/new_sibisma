@@ -342,11 +342,13 @@ class SpkController extends Controller
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
         $data->leasing = strtoupper($request->leasing);
+        $data->microfinance = strtoupper($request->microfinance);
         $data->manpower = $request->manpower;
         $data->description = strtoupper($request->description);
-        $data->payment_method = $request->payment_method;
+        $data->payment_method = $request->payment;
         $data->bunga = $request->bunga;
         $data->tenor = $request->tenor;
+        $data->reason = strtoupper($request->reason);
         $data->credit_status = $request->credit_status;
         $data->order_status = $request->order_status;
         $data->sale_status = 'pending';
@@ -367,6 +369,7 @@ class SpkController extends Controller
 
             $history = new HistoryCredit;
             $history->spk = $request->spk_no;
+            $history->leasing = $request->leasing;
             $history->update_date = $today;
             $history->credit_status = $request->credit_status;
             $history->reason = $reason;
