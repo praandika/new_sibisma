@@ -356,22 +356,27 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeCont
 Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
 // END ACT TYPE
 
+// ============= AJAX ============= //
+
 // MODAL PROSPECT AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/prospect-search', [SpkController::class, 'prospectSearch'])->name('spk.prospect-search');
 
-// CEK STOCK
+// CEK STOCK AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkstock', [SpkController::class, 'checkStock'])->name('spk.checkstock');
 
-// REQUEST STOCK
+// REQUEST STOCK AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-requeststock', [SpkController::class, 'requestStock'])->name('spk.requeststock');
 
 
-// DPACK CONNECTION
+// DPACK CONNECTION AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/dpack', [DpackController::class, 'index'])->name('dpack.index');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sync-log', [DpackController::class, 'log'])->name('dpack.log');
 
-// MANUAL SYNC DPACK
+// MANUAL SYNC DPACK AJAX
 Route::middleware(['auth:sanctum', 'verified'])->post('/manual-sync/prospect', [DpackController::class, 'manualSyncProspect'])->name('dpack.manual-prospect');
 
-// CEK PRICE
+// CEK PRICE AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkprice', [SpkController::class, 'checkPrice'])->name('spk.checkprice');
+
+// SPK DATA AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-data', [SpkController::class, 'spkData'])->name('spk.data');

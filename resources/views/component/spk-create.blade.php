@@ -166,7 +166,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="ktp">KTP No. <span class="star">*</span></label>
-                                <input id="ktp" type="text" class="form-control form-control-sm" name="ktp"
+                                <input id="ktp" type="number" class="form-control form-control-sm" name="ktp"
                                     value="{{ old('ktp') }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="kk">KK No.</label>
-                                <input id="kk" type="text" class="form-control form-control-sm" name="kk"
+                                <input id="kk" type="number" class="form-control form-control-sm" name="kk"
                                     value="{{ old('kk') }}" style="text-transform: uppercase;">
                                 <small id="kk" class="form-text text-muted">Disarankan mendapatkan nomor KK untuk
                                     keperluan analisa data (opsional)</small>

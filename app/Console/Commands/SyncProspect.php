@@ -52,6 +52,7 @@ class SyncProspect extends BaseSyncCommand
     {
         // Ambil semua data api dalam database dealer_api
         $dealerApi = $this->getDealers();
+        $masterPrices = $this->getMasterPrices();
         $dealerCode = $this->argument('dealer_code');
         $salesman   = $this->argument('salesman');
         if ($dealerCode) {
@@ -135,6 +136,11 @@ class SyncProspect extends BaseSyncCommand
                     ? substr($header['h.leasing_id_'], 4)
                     : null;
 
+                    // Get Price
+                    $modelName = strtoupper(trim($header['h.interest_motor_type_']));
+
+                    $price = $masterPrices[$modelName] ?? 0;
+
                     $row = [
                         'prospect_key' => $prospectKey,
                         'dealer_code' => $dealer->dealer_code,
@@ -161,7 +167,7 @@ class SyncProspect extends BaseSyncCommand
                         'leasing_name' => $leasingName,
                         'down_payment' => $header['h.down_payment_'],
                         'tenor' => $header['h.tenor_'],
-
+                        'price' => $price,
                         'shipment_address' => $header['h.address_'],
                         'created_at'=>$now,
                         'updated_at'=>$now

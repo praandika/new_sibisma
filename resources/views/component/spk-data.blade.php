@@ -18,17 +18,9 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ Auth::user()->access == 'salesman' ? route('spk.salesman') : route('spk.index') }}">Data SPK</a>
+    <a href="{{ route('spk.index') }}">Data SPK</a>
 </li>
 @endpush
-
-@if(Auth::user()->access != 'salesman')
-    @push('button')
-        @include('component.button-filter')
-    @endpush
-@endif
-
-@include('component.filter-box')
 
 <div class="col-md-12">
     <div class="card">
@@ -44,13 +36,10 @@
                             <th>Status</th>
                             <th>Waktu</th>
                             <th>SPK No</th>
-                            <th>Name</th>
+                            <th>Customer Info</th>
                             <th>Phone</th>
                             <th>Unit</th>
                             <th>Salesman</th>
-                            @if(Auth::user()->dealer_code == 'group')
-                                <th>Dealer</th>
-                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,104 +48,15 @@
                             <th>Status</th>
                             <th>Waktu</th>
                             <th>SPK No</th>
-                            <th>Name</th>
+                            <th>Customer Info</th>
                             <th>Phone</th>
                             <th>Unit</th>
                             <th>Salesman</th>
-                            @if(Auth::user()->dealer_code == 'group')
-                                <th>Dealer</th>
-                            @endif
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <tbody>
-                        @php($no = 1)
-                        @forelse($data as $o)
-                        <tr>
-                            <td @if($o->order_status == 'indent') style="color:crimson;" @else style="color:green;" @endif>
-                                <div class="td-group">
-                                    <span class="main-data">{{ ucwords($o->order_status) }}</span>
-                                    <span class="secondary-data">
-                                        <span class="status-1">{{ ucwords($o->credit_status) }}</span>
-                                        <span class="status-2">{{ ucwords($o->payment_method) }}</span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="td-group">
-                                    <span class="main-data">{{ $o->spk_date }}</span>
-                                    <span class="secondary-data">
-                                        <span class="status-1">{{ ucwords($o->created_at->format('H:i:s')) }}</span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                @if($o->sale_status == 'pending')
-                                <span style="position: relative;">
-                                    <span style="
-                                    width: 50px; 
-                                    height: 12px; 
-                                    background-color: pink; 
-                                    display: inline-block; 
-                                    position: absolute; 
-                                    top: -20px; 
-                                    left: -25px; 
-                                    border-radius: 0 0 15px 0;">
-                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: crimson; top: -7px; left: 5px;">
-                                        pending
-                                    </span>
-                                </span>
-                                @else
-                                <span style="position: relative;">
-                                    <span style="
-                                    width: 50px; 
-                                    height: 12px; 
-                                    background-color: #cfffd5; 
-                                    display: inline-block; 
-                                    position: absolute; 
-                                    top: -20px; 
-                                    left: -25px; 
-                                    border-radius: 0 0 15px 0;">
-                                    <span style="font-size: 10px; font-weight: bold; position: relative; color: seagreen; top: -7px; left: 5px;">
-                                        sold 
-                                    </span>
-                                </span>
-                                @endif
-                                    <span>
-                                        {{ $o->spk_no }}
-                                    </span>
-                                </span>
-                            </td>
-                            <td>{{ $o->order_name }}</td>
-                            <td>{{ $o->spk_phone }}</td>
-                            <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->model_name }}</td>
-                            <td>{{ $o->salesman }}</td>
-                            @if(Auth::user()->dealer_code == 'group')
-                                <td>{{ $o->dealer_code }}</td>
-                            @endif
-                            <td>
-                                <div class="form-button-action">
-                                    <a href="{{ route('spk.get', $o->spk_no) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Show" style="color:orange;"><i
-                                            class="fas fa-eye"></i></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('spk.edit', $o->id_spk) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                            class="fas fa-edit"></i></a>
-                                    @if($o->payment_method == 'credit')
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('spk.historycredit', $o->spk_no) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="History Credit"><i
-                                            class="fas fa-history" style="color: green;"></i></a>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="{{ Auth::user()->dealer_code == 'group' ? '9' : '8' }}" style="text-align: center;">No data available</td>
-                        </tr>
-                        @endforelse
+                    <tbody id="tbodySpk">
+
                     </tbody>
                 </table>
             </div>
@@ -166,11 +66,63 @@
 
 @push('after-script')
 <script>
-    $(document).ready(function () {
-        $('#basic-datatables-spk').DataTable({
-            "pageLength": 20,
-            "ordering": false
+    // Format Tanggal JS
+    function formatTanggal(tanggal) {
+        return new Date(tanggal).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
         });
+    }
+</script>
+
+<script>
+    function loadSpkData() {
+        $.ajax({
+            url: "{{ route('spk.data') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                let html = '';
+
+                $.each(data, function (i, row) {
+                    html += `
+                        <tr>
+                            <td>
+                                <div class="td-group">
+                                    <span class="main-data">${row.order_status}</span>
+                                    <span class="secondary-data">
+                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.payment_method)}</div>
+                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_method == 'CASH' ? row.microfinance : row.leasing}</div>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-group">
+                                    <span class="main-data">${formatTanggal(row.spk_date)}</span>
+                                    <span class="secondary-data">
+                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${row.created_at.toTimeString().split(' ')[0]}</div>
+                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.sales_status == 'sold' ? 'DO: ' + formatTanggal(row.do_date) : ''}</div>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>${row.spk_no}</td>
+                            <td class="text-center">${status}</td>
+                            <td class="text-center">${row.total_data}</td>
+                            <td>${row.message}</td>
+                        </tr>
+                    `;
+                })
+                $('#tbodySpk').html(html);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading SPK data:", error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        loadSpkData();
     });
 </script>
 @endpush

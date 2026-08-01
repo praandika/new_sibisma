@@ -28,102 +28,7 @@ class SpkController extends Controller
      */
     public function index()
     {
-        $count = SPK::count();
-        $random = Carbon::now('GMT+8')->format('HmsYmd');
-        
-        $dc = Auth::user()->dealer_code;
-        
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
-
-        $spk_no = 'SPK'.$count.$random.$dc;
-
-        $leasing = Leasing::all();
-        $microfinance = Leasing::where('leasing_category','!=','credit')->get();
-        $today = Carbon::now('GMT+8')->format('Y-m-d');
-
-        $yearNow = Carbon::now('GMT+8')->format('Y');
-        $yearBefore = $yearNow - 1;
-
-        $unitData = Unit::where('year_mc',$yearNow)
-        ->orWhere('year_mc',$yearBefore)
-        ->groupBy('model_name')
-        ->get();
-
-        $colorData = Color::all();
-
-        if ($dc == 'group') {
-            $stock = Stock::join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price','stocks.id as id')
-            ->orderBy('stocks.qty','desc')
-            ->get();
-
-            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where([
-                ['manpowers.category','SAL'],
-                ['manpowers.status','active']
-            ])
-            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
-            ->get();
-            $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('manpowers','spks.manpower_id','manpowers.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->where('credit_status','survey')
-            ->orWhere('order_status','indent')
-            ->orderBy('spks.created_at','desc')
-            ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','dealers.dealer_code', 'spks.created_at')->get();
-            $countManpower = Manpower::count();
-            if ($countManpower <= 0) {
-                alert()->warning('Add Manpower','Manpower data is not available!');
-                return redirect()->route('manpower.index');
-            } else {
-                return view('page', compact('stock','leasing','today','data','manpower','spk_no','unitData','colorData','microfinance'));
-            }
-            
-        }else{
-            $dealerCode = $dc;
-            $stock = Stock::join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price','stocks.id as id')
-            ->where('stocks.dealer_id',$did)
-            ->orderBy('stocks.qty','desc')
-            ->get();
-            
-            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where([
-                ['manpowers.dealer_id',$did],
-                ['manpowers.category','SAL'],
-                ['manpowers.status','active']
-            ])
-            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
-            ->get();
-
-            $data = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('manpowers','spks.manpower_id','manpowers.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->where('dealers.dealer_code',$dc)
-            ->where(function($query){
-                $query->where('credit_status','survey')
-                ->orWhere('order_status','indent');
-            })
-            ->orderBy('spks.created_at','desc')
-            ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name', 'spks.created_at')->get();
-
-            $countManpower = Manpower::where('dealer_id',$did)
-            ->count();
-            if ($countManpower <= 0) {
-                alert()->warning('Add Manpower','Manpower data is not available!');
-                return redirect()->route('manpower.index');
-            } else {
-                return view('page', compact('stock','leasing','today','data','manpower','dealerCode','spk_no','unitData','colorData','microfinance'));
-            }
-        }
+        return view('page');
     }
 
     public function spkSalesman(){
@@ -208,6 +113,28 @@ class SpkController extends Controller
                 ->where('salesman', Auth::user()->name);
             })
             ->orderby('prospect_date', 'desc')
+            ->paginate(10);
+
+        return response()->json($data);
+    }
+
+    // DATA SPK AJAX
+    public function spkData(Request $request)
+    {
+        $search = $request->search;
+
+        $data = Spk::query()
+            ->where('dealer_code', Auth::user()->dealer_code)
+            ->where('manpower', Auth::user()->name)
+            ->when($search, function ($q) use ($search) {
+                $q->where('customer_name', 'like', "%{$search}%")
+                ->orWhere('ktp_number', 'like', "%{$search}%")
+                ->orWhere('payment_method', 'like', "%{$search}%")
+                ->orWhere('order_status', 'like', "%{$search}%")
+                ->orWhere('spk_no', 'like', "%{$search}%")
+                ->orWhere('spk_no', 'like', "%{$search}%");
+            })
+            ->orderby('spk_date', 'asc')
             ->paginate(10);
 
         return response()->json($data);
@@ -321,7 +248,21 @@ class SpkController extends Controller
             $ktp_file = 'noimage.jpg';
         }
 
+        $reason = "";
+        if ($request->payment == 'CREDITCARD') {
+            // Cek status kredit
+            if($request->credit_status == 'acc'){
+                $reason = 'ACC';
+            } else if($request->credit_status == 'survey'){
+                $reason = 'Mulai Survey';
+            } else {
+                $reason = "";
+            }
+        }
+
         $data = new Spk;
+        $data->dealer_code = Auth::user()->dealer_code;
+        $data->point_code = Auth::user()->dealer_code;
         $data->spk_no = $request->spk_no;
         $data->prospect_key = $request->prospect_key;
         $data->spk_date = $today;
@@ -331,12 +272,13 @@ class SpkController extends Controller
         $data->frame_no = strtoupper($request->frame_no);
         $data->engine_no = strtoupper($request->engine_no);
         $data->year_mc = $request->year_mc;
+        $data->price = preg_replace('/[^0-9]/', '', $request->price);
         $data->faktur_color = strtoupper($request->faktur_color);
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
-        $data->ktp_number = $request->ktp_number;
-        $data->kk_number = $request->kk_number;
+        $data->ktp_number = $request->ktp;
+        $data->kk_number = $request->kk;
         $data->pemohon_name = strtoupper($request->pemohon_name);
         $data->deposit = $deposit;
         $data->downpayment = $request->downpayment;
@@ -348,7 +290,7 @@ class SpkController extends Controller
         $data->payment_method = $request->payment;
         $data->bunga = $request->bunga;
         $data->tenor = $request->tenor;
-        $data->reason = strtoupper($request->reason);
+        $data->reason = strtoupper($reason);
         $data->credit_status = $request->credit_status;
         $data->order_status = $request->order_status;
         $data->sale_status = 'pending';
@@ -357,16 +299,7 @@ class SpkController extends Controller
         $data->save();
         toast('SPK berhasil dibuat','success');
 
-        if ($request->payment_method == 'CREDITCARD') {
-            // Cek status kredit
-            if($request->credit_status == 'acc'){
-                $reason = 'ACC';
-            } else if($request->credit_status == 'survey'){
-                $reason = 'Mulai Survey';
-            } else {
-                $reason = $request->reason;
-            }
-
+        if ($request->payment == 'CREDITCARD') {
             $history = new HistoryCredit;
             $history->spk = $request->spk_no;
             $history->leasing = $request->leasing;
@@ -717,12 +650,7 @@ class SpkController extends Controller
     }
 
     public function get($spk_no){
-        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
-        ->join('leasings','spks.leasing_id','=','leasings.id')
-        ->join('units','stocks.unit_id','units.id')
-        ->join('colors','units.color_id','colors.id')
-        ->join('manpowers','spks.manpower_id','manpowers.id')
-        ->join('dealers','stocks.dealer_id','dealers.id')
+        $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
         ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.ktp_number')
         ->where('spks.spk_no',$spk_no)
         ->get();
