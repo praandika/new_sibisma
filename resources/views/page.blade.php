@@ -381,7 +381,6 @@
         @elseif(Route::is('spk.historycredit'))
             @include('component.spk-history-credit-salesman')
         @else
-            @include('component.spk-create')
             @include('component.spk-data')
         @endif
 

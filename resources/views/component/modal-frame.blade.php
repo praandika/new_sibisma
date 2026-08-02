@@ -162,7 +162,7 @@
         if(res.prev_page_url){
             htmlFrame += `<button class="btn btn-sm btn-secondary page-frame"
                         data-page="${res.current_page-1}">
-                        Previous
+                       ← Previous
                     </button>`;
         }
 
@@ -171,7 +171,7 @@
         if(res.next_page_url){
             htmlFrame += `<button class="btn btn-sm btn-secondary page-frame"
                         data-page="${res.current_page+1}">
-                        Next
+                        Next →
                     </button>`;
         }
 

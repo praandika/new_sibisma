@@ -101,6 +101,7 @@
                     data-deposit="${row.deposit}"
                     data-gender="${row.gender}"
                     data-prospect_key="${row.prospect_key}"
+                    data-prospect_date="${row.prospect_date}"
                     data-dealer="${row.dealer_code}">
                     <td>
                         <div class="td-group">
@@ -169,7 +170,7 @@
         if(res.prev_page_url){
             html += `<button class="btn btn-sm btn-secondary page-btn"
                         data-page="${res.current_page-1}">
-                        Previous
+                        ← Previous
                     </button>`;
         }
 
@@ -178,7 +179,7 @@
         if(res.next_page_url){
             html += `<button class="btn btn-sm btn-secondary page-btn"
                         data-page="${res.current_page+1}">
-                        Next
+                        Next →
                     </button>`;
         }
 
@@ -199,6 +200,8 @@
         $('#payment').val($(this).attr('data-payment'));
         $('#phone').val($(this).attr('data-phone'));
         $('#prospect_key').val($(this).attr('data-prospect_key'));
+        $('#prospect_date').val($(this).attr('data-prospect_date'));
+        $('#gender').val($(this).attr('data-gender'));
 
         // CONDITION KTP
         let ktp = $(this).attr('data-ktp');
@@ -272,7 +275,7 @@
         $('#fieldBtn').prop('hidden', false);
 
         let gender = $(this).attr('data-gender');
-        $('#gender').html(
+        $('#genderText').html(
             gender == 'Male'
             ? `<span class="badge badge-info">Laki-Laki</span>`
             : `<span class="badge badge-danger">Perempuan</span>`

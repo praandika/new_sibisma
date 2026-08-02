@@ -127,12 +127,12 @@ class SpkController extends Controller
             ->where('dealer_code', Auth::user()->dealer_code)
             ->where('manpower', Auth::user()->name)
             ->when($search, function ($q) use ($search) {
-                $q->where('customer_name', 'like', "%{$search}%")
+                $q->where('order_name', 'like', "%{$search}%")
                 ->orWhere('ktp_number', 'like', "%{$search}%")
                 ->orWhere('payment_method', 'like', "%{$search}%")
                 ->orWhere('order_status', 'like', "%{$search}%")
                 ->orWhere('spk_no', 'like', "%{$search}%")
-                ->orWhere('spk_no', 'like', "%{$search}%");
+                ->orWhere('model_name', 'like', "%{$search}%");
             })
             ->orderby('spk_date', 'asc')
             ->paginate(10);
@@ -266,14 +266,16 @@ class SpkController extends Controller
         $data->spk_no = $request->spk_no;
         $data->prospect_key = $request->prospect_key;
         $data->spk_date = $today;
+        $data->prospect_date = $request->prospect_date;
         $data->order_name = strtoupper($request->customer_name);
+        $data->gender = strtoupper($request->gender);
         $data->stnk_name = strtoupper($request->stnk_name);
         $data->model_name = strtoupper($request->model_name);
         $data->frame_no = strtoupper($request->frame_no);
         $data->engine_no = strtoupper($request->engine_no);
-        $data->year_mc = $request->year_mc;
+        $data->year_mc = $request->year;
         $data->price = preg_replace('/[^0-9]/', '', $request->price);
-        $data->faktur_color = strtoupper($request->faktur_color);
+        $data->faktur_color = strtoupper($request->color);
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
@@ -292,7 +294,7 @@ class SpkController extends Controller
         $data->tenor = $request->tenor;
         $data->reason = strtoupper($reason);
         $data->credit_status = $request->credit_status;
-        $data->order_status = $request->order_status;
+        $data->order_status = strtoupper($request->order_status);
         $data->sale_status = 'pending';
         $data->ktp = $ktp_file;
         $data->created_by = Auth::user()->id;
@@ -651,7 +653,7 @@ class SpkController extends Controller
 
     public function get($spk_no){
         $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','manpowers.name as salesman','spks.spk_phone','colors.color_code','units.model_name','colors.color_faktur','units.price','spks.address as customer_address','spks.stnk_name','leasings.leasing_code','spks.description','spks.ktp','spks.tandajadi','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.ktp_number')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.ktp_number')
         ->where('spks.spk_no',$spk_no)
         ->get();
 

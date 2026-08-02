@@ -115,6 +115,7 @@
 
                     @if(Auth::user()->access == 'salesman')
                         @include('menu.stock')
+                        @include('menu.spk')
                     @endif
                 @endif
 
