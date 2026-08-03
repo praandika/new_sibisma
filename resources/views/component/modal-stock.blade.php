@@ -91,7 +91,7 @@
 
                 let html = '';
 
-                $.each(res.data, function(i,row){
+                $.each(res.data.data, function(i,row){
                     html+=`
                     <tr class="pilihStock"
                         data-model="${row.model_name}"
@@ -129,6 +129,13 @@
                                 <span class="main-data">${formatTanggal(row.receive_time)}</span>
                                 <span class="secondary-data">
                                     <div style="font-size: 11px; font-weight: bold;" class="mb-1">${row.dealer_code}</div>
+                                    <div style="font-size: 11px; font-weight: bold;" class="mb-1">
+                                    ${
+                                        row.dealer_code == res.dealer
+                                        ? `<span class="badge badge-success">On-Hand</span>`
+                                        : `<span class="badge badge-warning">Request Stock</span>`
+                                    }
+                                    </div>
                                 </span>
                             </div>
                         </td>
@@ -146,11 +153,11 @@
     }
 
     // SEARCH
-    let timerFrame;
+    let timerStock;
 
     $('#searchStock').keyup(function(){
-        clearTimeout(timerFrame);
-        timerFrame = setTimeout(function(){
+        clearTimeout(timerStock);
+        timerStock = setTimeout(function(){
             loadStockModal();
         },300);
     });
@@ -160,18 +167,18 @@
     {
         let htmlStock = '';
 
-        if(res.prev_page_url){
+        if(res.data.prev_page_url){
             htmlStock += `<button class="btn btn-sm btn-secondary page-stock"
-                        data-page="${res.current_page-1}">
+                        data-page="${res.data.current_page-1}">
                        ← Previous
                     </button>`;
         }
 
-        htmlStock += ` Page ${res.current_page} of ${res.last_page} `;
+        htmlStock += ` Page ${res.data.current_page} of ${res.data.last_page} `;
 
-        if(res.next_page_url){
+        if(res.data.next_page_url){
             htmlStock += `<button class="btn btn-sm btn-secondary page-stock"
-                        data-page="${res.current_page+1}">
+                        data-page="${res.data.current_page+1}">
                         Next →
                     </button>`;
         }
@@ -180,7 +187,12 @@
     }
 
     $('.modalStock').on('shown.bs.modal', function () {
-        loadStockModal();
+        loadStockModal(1);
+    });
+
+    $(document).on('click', '.page-stock', function () {
+        let page = $(this).data('page');
+        loadStockModal(page);
     });
 </script>
 

@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-md-4">
-        @if($a->payment_method == 'CASH')
+        @if($a->payment_method == 'CASH' || $a->payment_method == 'cash')
         <div class="card card-dark bg-dark-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
@@ -171,8 +171,13 @@
                             <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
                         </tr>
                         <tr>
-                            <th width="200">Finance</th>
-                            <td>: {{ $o->leasing_code }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                            @if($o->payment_method == 'CASH' || $o->payment_method == 'cash')
+                                <th width="200">Microfinance</th>
+                                <td>: {{ $o->microfinance }}</td>
+                            @else
+                                <th width="200">Finance</th>
+                                <td>: {{ $o->leasing }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                            @endif
                         </tr>
                         <tr>
                             <th width="200">Salesman</th>

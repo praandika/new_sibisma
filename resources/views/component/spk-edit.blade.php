@@ -159,7 +159,8 @@
                         <!-- ALAMAT KTP -->
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="address" style="color: #fff !important;">KTP Address <span class="star">*</span></label>
+                                <label for="address" style="color: #fff !important;">KTP Address <span
+                                        class="star">*</span></label>
                                 <input id="address" type="text" class="form-control form-control-sm" name="address"
                                     value="{{ $spk->address }}" style="text-transform: uppercase;" required>
                             </div>
@@ -168,7 +169,8 @@
                         <!-- ALAMAT KIRIM -->
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="address_shipment" style="color: #fff !important;">Pengiriman Address <span class="star">*</span></label>
+                                <label for="address_shipment" style="color: #fff !important;">Pengiriman Address <span
+                                        class="star">*</span></label>
                                 <input id="address_shipment" type="text" class="form-control form-control-sm"
                                     name="address_shipment" value="{{ $spk->address_shipment }}"
                                     style="text-transform: uppercase;" required>
@@ -177,7 +179,8 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" id="sameAddress" type="checkbox" value="">
-                                        <span class="form-check-sign" style="color: orange !important;">Alamat sama dengan KTP</span>
+                                        <span class="form-check-sign" style="color: orange !important;">Alamat sama
+                                            dengan KTP</span>
                                     </label>
                                 </div>
                             </div>
@@ -219,9 +222,9 @@
                                     @endif
                                 </span>
                                 <input id="model_name" type="text" class="form-control form-control-sm"
-                                    name="model_name" value="{{ $spk->model_name }}" style="text-transform: uppercase; cursor: pointer;"
-                                    data-toggle="modal" data-target=".modalStock"
-                                    required readonly>
+                                    name="model_name" value="{{ $spk->model_name }}"
+                                    style="text-transform: uppercase; cursor: pointer;" data-toggle="modal"
+                                    data-target=".modalStock" required readonly>
                                 <button id="btnSyncStock" style="
                                         border: none;
                                         cursor: pointer;
@@ -249,8 +252,6 @@
                                     value="{{ $spk->price }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
-
-                        <!--  -->
                     </div>
 
                     <div class="row">
@@ -399,18 +400,19 @@
                         <input id="manpower" type="hidden" class="form-control form-control-sm" name="manpower"
                             value="{{ Auth::user()->name }}" style="text-transform: uppercase;" required readonly>
 
-                        <div class="col-md-3" style="margin-top: 12px;">
-                            <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp"
-                                style="font-weight: bold;">
-                                Upload / Take an ID-KTP photo
-                            </button>
-                            <div class="collapse" id="uploadKtp">
-                                <div class="card card-body">
-                                    <div class="form-group form-floating-label">
-                                        <input id="picture" type="file" class="form-control input-border-bottom"
-                                            name="picture" value="{{ old('picture') }}">
-                                        <label for="picture" class="placeholder" style="
+                        <div class="col-md-3">
+                            <div class="col-md-3" style="margin-top: 12px;">
+                                <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                    data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp"
+                                    style="font-weight: bold;">
+                                    Upload / Take an ID-KTP photo
+                                </button>
+                                <div class="collapse" id="uploadKtp">
+                                    <div class="card card-body">
+                                        <div class="form-group form-floating-label">
+                                            <input id="picture" type="file" class="form-control input-border-bottom"
+                                                name="picture" value="{{ old('picture') }}">
+                                            <label for="picture" class="placeholder" style="
                                         background-color: forestgreen; 
                                         color: #ffffff !important; 
                                         font-weight: bold;
@@ -422,13 +424,13 @@
                                         position: absolute;
                                         top: 20px;
                                         cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
-                                    </div>
+                                        </div>
 
-                                    <div class="form-group form-floating-label" style="position: relative;">
-                                        <input id="photo" type="file" accept="image/*" capture="user"
-                                            class="form-control input-border-bottom" name="photo"
-                                            value="{{ old('photo') }}">
-                                        <label for="photo" class="placeholder" style="
+                                        <div class="form-group form-floating-label" style="position: relative;">
+                                            <input id="photo" type="file" accept="image/*" capture="user"
+                                                class="form-control input-border-bottom" name="photo"
+                                                value="{{ old('photo') }}">
+                                            <label for="photo" class="placeholder" style="
                                     background-color: teal; 
                                     color: #ffffff !important; 
                                     font-weight: bold;
@@ -440,6 +442,7 @@
                                     position: absolute;
                                     top: 20px;
                                     cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -465,9 +468,12 @@
                 </div>
 
                 <!-- BUTTON -->
-                <div id="fieldBtn">
-                    <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
+                <div class="col-md-12">
+                    <div id="fieldBtn">
+                        <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
+                    </div>
                 </div>
+                
             </form>
             <!-- END FORM -->
         </div>

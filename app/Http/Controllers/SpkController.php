@@ -175,22 +175,32 @@ class SpkController extends Controller
     public function dataStock(Request $request)
     {
         try {
-            $search = $request->search;
+            $keywords = preg_split('/\s+/', trim($request->search));
 
             $data = UnitOnhand::query()
-                ->where('status', 'ready')
-                ->where('dealer_code', Auth::user()->dealer_code)
-                ->when($search, function ($q) use ($search) {
-                    $q->where('frame_no', 'like', "%{$search}%")
-                    ->orWhere('model_name', 'like', "%{$search}%")
-                    ->orWhere('year_mc', 'like', "%{$search}%")
-                    ->orWhere('engine_no', 'like', "%{$search}%")
-                    ->orWhere('faktur_color', 'like', "%{$search}%");
-                })
-                ->orderBy('receive_time', 'asc')
-                ->paginate(10);
+            ->where('status', 'ready');
 
-            return response()->json($data);
+            foreach ($keywords as $keyword) {
+
+                $data->where(function ($q) use ($keyword) {
+
+                    $q->where('model_name', 'like', "%{$keyword}%")
+                    ->orWhere('faktur_color', 'like', "%{$keyword}%")
+                    ->orWhere('year_mc', 'like', "%{$keyword}%")
+                    ->orWhere('dealer_code', 'like', "%{$keyword}%")
+                    ->orWhere('frame_no', 'like', "%{$keyword}%")
+                    ->orWhere('engine_no', 'like', "%{$keyword}%");
+
+                });
+
+            }
+
+            $data = $data->paginate(10);
+
+            return response()->json([
+                'dealer' => Auth::user()->dealer_code,
+                'data'    => $data,
+            ]);
 
         } catch (\Exception $e) {
 
