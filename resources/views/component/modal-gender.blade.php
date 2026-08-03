@@ -13,10 +13,10 @@
                 <div class="table-responsive">
                     <table class="display table table-striped table-hover" width="100%" style="text-align: center;">
                         <tbody>
-                            <tr class="pilihGender" data-gender="L" data-gendername="Male">
+                            <tr class="pilihGender" data-gender="L" data-gendername="MALE">
                                 <td>Male</td>
                             </tr>
-                            <tr class="pilihGender" data-gender="P" data-gendername="Female">
+                            <tr class="pilihGender" data-gender="P" data-gendername="FEMALE">
                                 <td>Female</td>
                             </tr>
                         </tbody>

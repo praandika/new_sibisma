@@ -3,29 +3,54 @@
     input[type=date]:required:invalid::-webkit-datetime-edit {
         color: transparent;
     }
+
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
-    ::-webkit-input-placeholder { /* WebKit browsers */
+
+    ::-webkit-input-placeholder {
+        /* WebKit browsers */
         text-transform: none;
     }
-    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+
+    :-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
         text-transform: none;
     }
-    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+
+    ::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
         text-transform: none;
     }
-    :-ms-input-placeholder { /* Internet Explorer 10+ */
+
+    :-ms-input-placeholder {
+        /* Internet Explorer 10+ */
         text-transform: none;
     }
-    ::placeholder { /* Recent browsers */
+
+    ::placeholder {
+        /* Recent browsers */
         text-transform: none;
     }
+
+    input {
+        background-color: #fffbeb !important;
+    }
+
+    .star {
+        color: red;
+    }
+
 </style>
 @endpush
 
 @section('title','Edit SPK')
 @section('page-title','SPK')
+
+@push('button')
+@section('button-title','Create SPK')
+@include('component.button-create-spk')
+@endpush
 
 @push('link-bread')
 <li class="nav-item">
@@ -49,416 +74,530 @@
                 left: 0px;
                 top: 0px;">
             </span>
-            <div class="row">
-                <h4 class="card-title">Edit SPK | {{ $spk->spk_no }}</h4>
+            <div class="row" style="padding-left: 20px;">
+                <h4 class="card-title">Edit SPK</h4>
+            </div>
+            <div class="row" style="padding-left: 20px;">
+                <div style="font-size: 12px; font-weight: bold;">{{ $spk->spk_no }}</div>
+            </div>
+            <div class="row" style="padding-left: 20px;">
+                <div style="font-size: 12px;">{{ ucwords(strtolower(Auth::user()->name)) }}</div>
             </div>
         </div>
+
+        <!-- START FORM -->
         <div class="card-body">
             <form action="{{ route('spk.update', $spk->id) }}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="row" style="background-color: #fff1cf; padding-top: 10px; border-radius: 10px;">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="payment_method" type="text" class="form-control input-border-bottom"
-                                name="payment_method" value="{{ $spk->payment_method }}" data-toggle="modal"
-                                data-target=".modalPaymentMethod" style="text-transform: capitalize;" required>
-                            <label for="payment_method" class="placeholder">Choose Payment Method *</label>
+                <!-- MANDATORY INPUT -->
+                <div class="card card-dark bg-dark-gradient curves-shadow">
+                    <div class="row">
+                        <!-- TANGGAL -->
+                        <div class="col-md-3">
+                            <div class=" form-group">
+                                <label for="spk_date" style="color: #fff !important;">Date <span
+                                        class="star">*</span></label>
+                                <input id="spk_date" type="date" class="form-control form-control-sm" name="spk_date"
+                                    value="{{ $spk->spk_date }}" required readonly>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3" id="col-credit-status" @if($spk->payment_method == 'cash') hidden @endif>
-                        <div class="form-group form-floating-label">
-                            <input id="credit_status" type="text" class="form-control input-border-bottom"
-                                name="credit_status" value="{{ $spk->credit_status }}" data-toggle="modal"
-                                data-target=".modalCreditStatus" style="text-transform: capitalize;" required>
-                            <label for="credit_status" class="placeholder"><span id="place">Choose Credit Status *</span></label>
+
+                        <!-- NAMA KONSUMEN -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="customer_name" style="color: #fff !important;">Customer Name <span
+                                        class="star">*</span></label>
+                                <input id="customer_name" type="text" class="form-control form-control-sm"
+                                    name="customer_name" value="{{ $spk->order_name }}"
+                                    style="text-transform: uppercase;" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3" id="col-leasing-reason" hidden>
-                        <div class="form-group form-floating-label">
-                            <input id="reason" type="text" class="form-control input-border-bottom" name="reason"
-                                value="{{ old('reason') }}" style="text-transform: uppercase">
-                            <label for="reason" class="placeholder">Alasan <span id="reason-label"></span></label>
+
+                        <!-- TELP KONSUMEN -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="phone" style="color: #fff !important;">Phone <span
+                                        class="star">*</span></label>
+                                <input id="phone" type="text" class="form-control form-control-sm" name="phone"
+                                    value="{{ $spk->spk_phone }}" style="text-transform: uppercase;" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="order_status" type="text" class="form-control input-border-bottom"
-                                name="order_status" value="{{ $spk->order_status }}" data-toggle="modal"
-                                data-target=".modalOrderStatus" style="text-transform: capitalize;" required>
-                            <label for="order_status" class="placeholder">Choose Order Status *</label>
+
+                        <!-- GENDER -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="gender" style="color: #fff !important;">Gender <span
+                                        class="star">*</span></label>
+                                <input id="gender_name" type="text" class="form-control form-control-sm" name="gender"
+                                    data-toggle="modal" data-target=".modalGender" value="{{ $spk->gender }}"
+                                    style="text-transform: uppercase; cursor: pointer;" required>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <br>
-                <div style="border: 1px dashed grey;"></div>
-                <br>
-
-                <input type="hidden" name="spk_no" value="{{ $spk->spk_no }}" required>
-                <input type="hidden" name="sale_status" value="{{ $spk->sale_status }}" required>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="spk_date" type="date" class="form-control input-border-bottom"
-                                name="spk_date" value="{{ $spk->spk_date }}" required readonly>
-                            <!-- <label for="spk_date" class="placeholder">Date *</label> -->
+                        <!-- KTP -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ktp" style="color: #fff !important;">KTP No. <span
+                                        class="star">*</span></label>
+                                <input id="ktp" type="number" class="form-control form-control-sm" name="ktp"
+                                    value="{{ $spk->ktp }}" style="text-transform: uppercase;" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="order_name" type="text" class="form-control input-border-bottom" name="order_name" value="{{ $spk->order_name }}" style="text-transform: uppercase;" required>
-                            <label for="order_name" class="placeholder">Customer's Name</label>
+                        <!-- KK -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="kk" style="color: #fff !important;">KK No.</label>
+                                <input id="kk" type="number" class="form-control form-control-sm" name="kk"
+                                    value="{{ $spk->kk }}" style="text-transform: uppercase;">
+                                <small id="kk" class="form-text">Disarankan mendapatkan nomor KK untuk
+                                    keperluan analisa data (opsional)</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ $spk->address }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="address" class="placeholder">KTP Address</label>
+                        <!-- ALAMAT KTP -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="address" style="color: #fff !important;">KTP Address <span class="star">*</span></label>
+                                <input id="address" type="text" class="form-control form-control-sm" name="address"
+                                    value="{{ $spk->address }}" style="text-transform: uppercase;" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="address_shipment" type="text" class="form-control input-border-bottom" name="address_shipment" value="{{ $spk->address_shipment }}" style="text-transform: uppercase;" required maxlength="100">
-                            <label for="address_shipment" class="placeholder">Pengiriman Address</label>
-                        </div>
-                    </div>
-                </div>
+                        <!-- ALAMAT KIRIM -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="address_shipment" style="color: #fff !important;">Pengiriman Address <span class="star">*</span></label>
+                                <input id="address_shipment" type="text" class="form-control form-control-sm"
+                                    name="address_shipment" value="{{ $spk->address_shipment }}"
+                                    style="text-transform: uppercase;" required>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="ktp_number" type="number" class="form-control input-border-bottom" name="ktp_number"
-                                value="{{ $spk->ktp_number }}" style="text-transform: uppercase" required maxlength="16">
-                            <label for="ktp_number" class="placeholder">KTP Number</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="kk_number" type="number" class="form-control input-border-bottom" name="kk_number"
-                                value="{{ $spk->kk_number }}" style="text-transform: uppercase" maxlength="16">
-                            <label for="kk_number" class="placeholder">KK Number</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="phone" type="number" class="form-control input-border-bottom" name="phone" value="{{ $spk->spk_phone }}" required>
-                            <label for="phone" class="placeholder">Customer's Phone</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="stnk_name" type="text" class="form-control input-border-bottom" name="stnk_name" value="{{ $spk->stnk_name }}" style="text-transform: uppercase;" required>
-                            <label for="stnk_name" class="placeholder">STNK Name</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="stock_id" name="stock_id" value="{{ $spk->stock_id }}" required>
-                            <input id="on_hand" type="hidden" class="form-control input-border-bottom" name="on_hand" value="{{ $spk->stock->qty }}">
-
-                            <input id="model_name" type="text" class="form-control input-border-bottom"
-                                name="model_name" data-toggle="modal"
-                                data-target=".modalData" value="{{ $spk->stock->unit->model_name }}" required>
-                            <label for="model_name" class="placeholder">Select Unit *</label>
-
-                            <span class="invalid-feedback">
-                                <strong><span id="error-msg"></span></strong>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="otr" type="text" class="form-control input-border-bottom" name="otr" value="{{ $spk->stock->unit->price }}" required>
-                            <label for="otr" class="placeholder">OTR Price</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="tandajadi" type="number" class="form-control input-border-bottom" name="tandajadi"
-                                value="{{ $spk->tandajadi }}" required>
-                            <label for="tandajadi" class="placeholder">Tanda Jadi</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="downpayment" type="number" class="form-control input-border-bottom" name="downpayment" value="{{ $spk->downpayment }}" required>
-                            <label for="downpayment" class="placeholder">Down Payment</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="discount" type="number" class="form-control input-border-bottom" name="discount" value="{{ $spk->discount }}">
-                            <label for="discount" class="placeholder">Discount</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="payment" type="number" class="form-control input-border-bottom" name="payment" value="{{ $spk->payment }}" required>
-                            <label for="payment" class="placeholder">Payment</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" id="col-leasing">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ $spk->leasing_id }}" required>
-                            <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ $spk->leasing->leasing_code }}" data-toggle="modal"
-                                data-target="{{ $spk->payment_method == 'cash' ? '.modalLeasingCash' : '.modalLeasing' }}" required>
-                            <label for="leasing_code" class="placeholder"><span id="leasing-label">{{ $spk->payment_method == 'credit' ? 'Select Finance *' : 'Select Micro/Instansi *' }}</span></label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" id="col-leasing-bunga" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
-                        <div class="form-group form-floating-label">
-                            <input id="bunga" type="text" class="form-control input-border-bottom" name="bunga"
-                                value="{{ $spk->bunga }}" data-toggle="modal" data-target=".modalBunga">
-                            <label for="bunga" class="placeholder">Bunga</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" id="col-leasing-tenor" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
-                        <div class="form-group form-floating-label">
-                            <input id="tenor" type="text" class="form-control input-border-bottom" name="tenor"
-                                value="{{ $spk->tenor }}" data-toggle="modal" data-target=".modalTenor">
-                            <label for="tenor" class="placeholder">Tenor</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 leasing-group" id="col-leasing-namapemohon" {{ $spk->payment_method == 'cash' ? 'hidden' : '' }}>
-                        <div class="form-group form-floating-label">
-                            <input id="pemohon_name" type="text" class="form-control input-border-bottom" name="pemohon_name"
-                                value="{{ $spk->pemohon_name }}" style="text-transform: uppercase">
-                            <label for="pemohon_name" class="placeholder">Nama Pemohon</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="manpower_id" name="manpower_id" value="{{ $spk->manpower_id }}" required>
-                            <input id="manpower" type="text" class="form-control input-border-bottom"
-                                name="manpower" value="{{ $spk->manpower->name }}" data-toggle="modal"
-                                data-target=".modalManpower" required>
-                            <label for="manpower" class="placeholder">Select Manpower *</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-bottom: -80px;">
-                    <div class="col-md-3">
-                        <div class="card" style="margin-top: 10px;">
-                            <img src="{{ $spk->ktp == '' ? asset('img/noimage.jpg') : asset('img/ktp/'.$spk->ktp.'') }}" alt="{{ $spk->ktp }}" style="width: 100%; height: 100%;">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <br>
-                        <button id="formImage" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp" style="font-weight: bold; width: 100%;">
-                            Change ID-KTP photo
-                        </button>
-                        <div class="collapse" id="uploadKtp">
-                            <div class="card card-body">
-                                <div class="form-group form-floating-label">
-                                    <input id="picture" type="file" class="form-control input-border-bottom" name="picture"
-                                        value="{{ old('picture') }}">
-                                    <label for="picture" class="placeholder" style="
-                                background-color: forestgreen; 
-                                color: #ffffff !important; 
-                                font-weight: bold;
-                                width: 200px; 
-                                padding-left: 20px; 
-                                padding-right: 20px;
-                                padding-top: 10px; 
-                                border-radius: 5px;
-                                position: absolute;
-                                top: 20px;
-                                cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
-                                </div>
-
-                                <div class="form-group form-floating-label" style="position: relative;">
-                                    <input id="photo" type="file" accept="image/*" capture="user"
-                                        class="form-control input-border-bottom" name="photo"
-                                        value="{{ old('photo') }}">
-                                    <label for="photo" class="placeholder" style="
-                                background-color: teal; 
-                                color: #ffffff !important; 
-                                font-weight: bold;
-                                width: 200px; 
-                                padding-left: 20px; 
-                                padding-right: 20px;
-                                padding-top: 10px; 
-                                border-radius: 5px;
-                                position: absolute;
-                                top: 20px;
-                                cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                <!-- Checkbox -->
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" id="sameAddress" type="checkbox" value="">
+                                        <span class="form-check-sign" style="color: orange !important;">Alamat sama dengan KTP</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                        <br><br>
                     </div>
                 </div>
 
-                <input type="hidden" value="{{ $spk->ktp }}" name="ktp_file_prev">
+                <!-- HIDE CARD -->
+                <div id="fieldForm">
+                    <div class="row">
+                        <!-- NAMA STNK -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="stnk_name">STNK Name <span class="star">*</span></label>
+                                <input id="stnk_name" type="text" class="form-control form-control-sm" name="stnk_name"
+                                    value="{{ $spk->stnk_name }}" style="text-transform: uppercase;" required>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group form-floating-label">
-                            <textarea name="description" id="description" cols="30" rows="10" class="form-control input-border-bottom" placeholder="Description" style="border: 1px dashed #e6e6e6; padding: 10px;" maxlength="100">{{ $spk->description }}</textarea>
-                            <label for="description" class="placeholder"></label>
+                                <!-- Checkbox -->
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" id="sameName" type="checkbox" value="">
+                                        <span class="form-check-sign">Nama sama dengan KTP</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MODEL MOTOR -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="model_name">Motor <span class="star">*</span></label>
+                                <span id="stockStatus">
+                                    @if($spk->order_status == 'INDENT')
+                                    <span class="badge badge-warning">INDENT</span>
+                                    @elseif($spk->order_status == 'READY')
+                                    <span class="badge badge-success">READY</span>
+                                    @else
+                                    <span class="badge badge-danger">EMPTY</span>
+                                    @endif
+                                </span>
+                                <input id="model_name" type="text" class="form-control form-control-sm"
+                                    name="model_name" value="{{ $spk->model_name }}" style="text-transform: uppercase; cursor: pointer;"
+                                    data-toggle="modal" data-target=".modalStock"
+                                    required readonly>
+                                <button id="btnSyncStock" style="
+                                        border: none;
+                                        cursor: pointer;
+                                        background-color: #fda552;
+                                        border-radius: 0 0 10px 10px;
+                                    ">
+                                    <i class="fas fa-sync"></i> Update
+                                </button>
+
+                                <span id="frameStatus" style="color: grey; font-size: 12px; font-weight: bold;"></span>
+                                <div>
+                                    <span id="engineStatus" style="color: grey; font-size: 12px;"></span>
+                                    <span id="colorStatus"
+                                        style="color: grey; font-size: 12px; font-weight: bold;"></span>
+                                    <span id="yearStatus" style="color: grey; font-size: 12px;"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- HARGA MOTOR -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="price">Price OTR <span class="star">*</span></label>
+                                <input id="price" type="text" class="form-control form-control-sm rupiah" name="price"
+                                    value="{{ $spk->price }}" style="text-transform: uppercase;" required>
+                            </div>
+                        </div>
+
+                        <!--  -->
+                    </div>
+
+                    <div class="row">
+                        <!-- PAYMENT TYPE -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="payment">Payment Type <span class="star">*</span></label>
+                                <input id="payment" type="text" class="form-control form-control-sm" name="payment"
+                                    value="{{ $spk->payment_method }}" style="text-transform: uppercase;" required
+                                    readonly>
+                            </div>
+                        </div>
+
+                        @if($spk->payment_method == 'CASH')
+                        <!-- MICROFINANCE -->
+                        <div class="col-md-3" id="microfinanceInstansi">
+                            <div class="form-group">
+                                <label for="microfinance">Microfinance / Instansi <span class="star">*</span></label>
+                                <input id="microfinance" type="text" class="form-control form-control-sm"
+                                    name="microfinance" value="{{ $spk->microfinance }}"
+                                    style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
+                                    data-target=".modalMicrofinance" required>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Discount -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="discount">Discount <span class="star">*</span></label>
+                                <input id="discount" type="text" class="form-control form-control-sm rupiah"
+                                    name="discount" value="{{ $spk->discount }}" style="text-transform: uppercase;"
+                                    required>
+                            </div>
+                        </div>
+
+                        <!-- Deposit -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="deposit">Deposit <span class="star">*</span></label>
+                                <input id="deposit" type="text" class="form-control form-control-sm rupiah"
+                                    name="deposit" value="{{ $spk->deposit }}" style="text-transform: uppercase;"
+                                    required>
+                            </div>
                         </div>
                     </div>
 
-                    
-                </div>
-                @if(Auth::user()->dealer_code == 'group')
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $spk->stock->dealer->dealer_code }}" required>
-                            <input id="dealer" type="text" class="form-control input-border-bottom"
-                                name="dealer" value="{{ $spk->stock->dealer->dealer_name }}" required>
-                            <label for="dealer" class="placeholder">Dealer *</label>
+                    @if($spk->payment_method != 'CASH')
+                    <div id="leasingName" class="mt-2" {{ $spk->payment_method == 'CASH' ? 'hidden' : '' }}
+                        style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                        <h3 style="font-size: 14px; font-weight: bold; margin-left: 10px;" class="form-label mt-2">
+                            CREDIT INFO
+                        </h3>
+
+                        <div class="row">
+
+                            <!-- LEASING NAME -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="leasing">Leasing Name <span class="star">*</span></label>
+                                    <input id="leasing" type="text" class="form-control form-control-sm" name="leasing"
+                                        value="{{ $spk->leasing }}" style="text-transform: uppercase;" required
+                                        readonly>
+                                </div>
+                            </div>
+
+                            <!-- NAMA PEMOHON -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="pemohon_name">Nama Pemohon <span class="star">*</span></label>
+                                    <input id="pemohon_name" type="text" class="form-control form-control-sm"
+                                        name="pemohon_name" value="{{ $spk->pemohon_name }}"
+                                        style="text-transform: uppercase;" required>
+                                </div>
+                            </div>
+
+                            <!-- STATUS KREDIT -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="credit_status">Kredit Status <span class="star">*</span></label>
+                                    <input id="credit_status" type="text" class="form-control form-control-sm"
+                                        name="credit_status" value="{{ $spk->credit_status }}"
+                                        style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
+                                        data-target=".modalCreditStatus" required>
+                                </div>
+                            </div>
+
+                            <!-- Downpayment -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="downpayment">Downpayment <span class="star">*</span></label>
+                                    <input id="downpayment" type="text" class="form-control form-control-sm rupiah"
+                                        name="downpayment" value="{{ $spk->downpayment }}"
+                                        style="text-transform: uppercase;" required>
+                                </div>
+                            </div>
+
+                            <!-- Tenor Pilih di Pop Up Modal -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tenor">Tenor <span class="star">*</span></label>
+                                    <input id="tenor" type="text" class="form-control form-control-sm" name="tenor"
+                                        value="{{ $spk->tenor }}" style="text-transform: uppercase; cursor:pointer;"
+                                        data-toggle="modal" data-target=".modalTenor" required>
+                                </div>
+                            </div>
+
+                            <!-- Bunga Pilih di Pop Up Modal -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="bunga">Bunga <span class="star">*</span></label>
+                                    <input id="bunga" type="text" class="form-control form-control-sm" name="bunga"
+                                        value="{{ $spk->bunga }}" style="text-transform: uppercase; cursor:pointer;"
+                                        data-toggle="modal" data-target=".modalBunga" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    <div class="row">
+                        <!-- Frame No -->
+                        <input id="frame_no" type="hidden" class="form-control form-control-sm" name="frame_no"
+                            value="{{ $spk->frame_no }}" style="text-transform: uppercase;" required>
+
+                        <!-- Engine No -->
+                        <input id="engine_no" type="hidden" class="form-control form-control-sm" name="engine_no"
+                            value="{{ $spk->engine_no }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Faktur Color -->
+                        <input id="color" type="hidden" class="form-control form-control-sm" name="color"
+                            value="{{ $spk->color }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Year MC -->
+                        <input id="year" type="hidden" class="form-control form-control-sm" name="year"
+                            value="{{ $spk->year }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Order Status -->
+                        <input id="order_status" type="hidden" class="form-control form-control-sm" name="order_status"
+                            value="{{ $spk->order_status }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Prospect Key -->
+                        <input id="prospect_key" type="hidden" class="form-control form-control-sm" name="prospect_key"
+                            value="{{ $spk->prospect_key }}" style="text-transform: uppercase;" required readonly>
+
+                        <!-- Salesman -->
+                        <input id="manpower" type="hidden" class="form-control form-control-sm" name="manpower"
+                            value="{{ Auth::user()->name }}" style="text-transform: uppercase;" required readonly>
+
+                        <div class="col-md-3" style="margin-top: 12px;">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp"
+                                style="font-weight: bold;">
+                                Upload / Take an ID-KTP photo
+                            </button>
+                            <div class="collapse" id="uploadKtp">
+                                <div class="card card-body">
+                                    <div class="form-group form-floating-label">
+                                        <input id="picture" type="file" class="form-control input-border-bottom"
+                                            name="picture" value="{{ old('picture') }}">
+                                        <label for="picture" class="placeholder" style="
+                                        background-color: forestgreen; 
+                                        color: #ffffff !important; 
+                                        font-weight: bold;
+                                        width: 200px; 
+                                        padding-left: 20px; 
+                                        padding-right: 20px;
+                                        padding-top: 10px; 
+                                        border-radius: 5px;
+                                        position: absolute;
+                                        top: 20px;
+                                        cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
+                                    </div>
+
+                                    <div class="form-group form-floating-label" style="position: relative;">
+                                        <input id="photo" type="file" accept="image/*" capture="user"
+                                            class="form-control input-border-bottom" name="photo"
+                                            value="{{ old('photo') }}">
+                                        <label for="photo" class="placeholder" style="
+                                    background-color: teal; 
+                                    color: #ffffff !important; 
+                                    font-weight: bold;
+                                    width: 200px; 
+                                    padding-left: 20px; 
+                                    padding-right: 20px;
+                                    padding-top: 10px; 
+                                    border-radius: 5px;
+                                    position: absolute;
+                                    top: 20px;
+                                    cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Foto -->
+                        <div class="preview" style="padding: 20px;">
+                            <img id="previewImage" src="{{ asset('img/' . $spk->ktp) }}" class="img-thumbnail"
+                                style="width:200px;height:150px;object-fit:contain;">
+                        </div>
+
+                        <!-- NOTE -->
+                        <div class="col-md-12">
+                            <div class="form-group form-floating-label">
+                                <textarea name="description" id="description" cols="30" rows="10"
+                                    class="form-control input-border-bottom" placeholder="NOTE:"
+                                    value="{{ old('description') }}"
+                                    style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
+                                <label for="description" class="placeholder"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                @else
-                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $spk->stock->dealer->dealer_code }}" required>
-                @endif
 
-                <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
-                <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
+                <!-- BUTTON -->
+                <div id="fieldBtn">
+                    <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
+                </div>
             </form>
+            <!-- END FORM -->
         </div>
     </div>
-</div>
 
-@section('modal-title','Data Stock')
-@include('component.modal-data')
-@include('component.modal-leasing')
-@include('component.modal-leasing-cash')
-@include('component.modal-manpower')
-@include('component.modal-payment-method')
-@include('component.modal-credit-status-edit')
-@include('component.modal-order-status')
-@include('component.modal-bunga')
-@include('component.modal-tenor')
+    @include('component.modal-tenor')
+    @include('component.modal-bunga')
+    @include('component.modal-credit-status')
+    @include('component.modal-microfinance')
+    @include('component.modal-stock')
+    @include('component.modal-gender')
 
-@push('after-script')
-<script>
-    // $(document).ready(function(){
-    //     $('#form').submit(function(e){
-    //         let onHand = $('#on_hand').val();
-    //         let stock = onHand - 1;
-    //         console.log(onHand);
-    //         console.log(stock);
-    //         if (stock < 0) {
-    //             e.preventDefault();
-    //             $('#on_hand').addClass('is-invalid');
-    //             $('#error-msg').text('out of stock!');
-    //         } else {
-    //             $('#form').submit();
-    //         }
-    //     });
-    // });
+    @push('after-script')
+    <script>
+        // Custom Upload File
+        $(document).ready(function () {
+            $("#picture").change(function () {
+                filename = this.picture[0].name;
+                console.log(filename);
+            });
+        });
 
-    $('#on_hand').keypress(function(e){
-        e.preventDefault();
-    });
+        // Custom Upload File
+        $(document).ready(function () {
+            $("#photo").change(function () {
+                filename = this.photo[0].name;
+                console.log(filename);
+            });
+        });
 
-    $('#on_hand').keydown(function(e){
-        e.preventDefault();
-    });
+    </script>
 
-    // document.addEventListener('contextmenu', function(e){
-    //     e.preventDefault();
-    // });
+    <script>
+        // Checkbox data yang sama
+        $('#sameAddress').change(function () {
+            if ($(this).is(':checked')) {
+                $('#address_shipment').val($('#address').val());
+            } else {
+                $('#address_shipment').val('');
+            }
+        });
 
-    function showReason() {
+        // Checkbox data yang sama
+        $('#sameName').change(function () {
+            if ($(this).is(':checked')) {
+                $('#stnk_name').val($('#customer_name').val());
+            } else {
+                $('#stnk_name').val('');
+            }
+        });
 
-        let status = $('#credit_status').val().toLowerCase();
+    </script>
 
-        if (status === 'reject' || status === 'cancel') {
-            $('#col-leasing-reason').removeAttr('hidden');
-            $('#col-leasing-reason').attr('required', true);
-        } else {
-            $('#col-leasing-reason').attr('hidden', true);
-            $('#col-leasing-reason').removeAttr('required');
+    <script>
+        // Format Rupiah
+        function formatRupiah(angka) {
+            angka = angka.toString().replace(/\D/g, '');
+
+            if (angka == '') return '';
+
+            return 'Rp ' + Number(angka).toLocaleString('id-ID');
         }
 
-    }
+        // Hapus format saat mulai mengetik
+        $(document).on('focus', '.rupiah', function () {
 
-    function showLeasingGroup() {
+            let value = $(this).val()
+                .replace('Rp', '')
+                .replace(/\./g, '')
+                .trim();
 
-        let payment_method = $('#payment_method').val().toLowerCase();
+            $(this).val(value);
 
-        if (payment_method === 'credit') {
-            $('#col-leasing-bunga').removeAttr('hidden');
-            $('#col-leasing-tenor').removeAttr('hidden');
-            $('#col-leasing-namapemohon').removeAttr('hidden');
-            $('#col-credit-status').removeAttr('hidden');
-            $('#leasing-label').text('Select Finance *');
-            $('#credit_status').attr('required', true);
-            $('#leasing_code').attr('required', true);
-            $('#leasing_code_cash').removeAttr('required');
-            $('#bunga').attr('required', true);
-            $('#tenor').attr('required', true);
-            $('#nama_pemohon').attr('required', true);
-            $('#leasing_id').attr('required', true);
-            $('#leasing_id_cash').removeAttr('required');
-            $('#leasing_code').attr('data-target', '.modalLeasing');
-            $('#leasing_code').val('');
-        } else {
-            $('#col-leasing-bunga').attr('hidden', true);
-            $('#col-leasing-tenor').attr('hidden', true);
-            $('#col-leasing-namapemohon').attr('hidden', true);
-            $('#col-credit-status').attr('hidden', true);
-            $('#credit_status').removeAttr('required');
-            $('#leasing_code').removeAttr('required');
-            $('#leasing_code_cash').attr('required', true);
-            $('#bunga').removeAttr('required');
-            $('#tenor').removeAttr('required');
-            $('#nama_pemohon').removeAttr('required');
-            $('#leasing_id').removeAttr('required');
-            $('#leasing_id_cash').attr('required', true);
-            $('#leasing-label').text('Select Micro/Instansi *');
-            $('#leasing_code').attr('data-target', '.modalLeasingCash');
-            $('#leasing_code').val('');
-            $('#bunga').val('');
-            $('#tenor').val('');
+        });
+
+        $(document).on('blur', '.rupiah', function () {
+
+            $(this).val(
+                formatRupiah($(this).val())
+            );
+
+        });
+
+        // Check Price
+        function getPrice(model) {
+            $.get('/spk-checkprice', {
+                model: model
+            }, function (res) {
+
+                $('#price').val(
+                    formatRupiah(res.price)
+                );
+
+            });
         }
 
-    }
+    </script>
 
-    // Custom Upload File
-    $(document).ready(function () {
-        $("#picture").change(function () {
-            filename = this.picture[0].name;
-            console.log(filename);
-        });
-    });
+    <script>
+        // Preview foto
+        $('#photo').change(function () {
 
-    // Custom Upload File
-    $(document).ready(function () {
-        $("#photo").change(function () {
-            filename = this.photo[0].name;
-            console.log(filename);
+            let photos = this.photoss[0];
+
+            if (photos) {
+
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#previewImage').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(photos);
+            }
         });
-    });
-</script>
-@endpush
+
+        // Preview file
+        $('#picture').change(function () {
+
+            let file = this.files[0];
+
+            if (file) {
+
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#previewImage').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+    @endpush

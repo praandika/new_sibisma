@@ -171,6 +171,36 @@ class SpkController extends Controller
         }
     }
 
+    // CEK STOCK AJAX
+    public function dataStock(Request $request)
+    {
+        try {
+            $search = $request->search;
+
+            $data = UnitOnhand::query()
+                ->where('status', 'ready')
+                ->where('dealer_code', Auth::user()->dealer_code)
+                ->when($search, function ($q) use ($search) {
+                    $q->where('frame_no', 'like', "%{$search}%")
+                    ->orWhere('model_name', 'like', "%{$search}%")
+                    ->orWhere('year_mc', 'like', "%{$search}%")
+                    ->orWhere('engine_no', 'like', "%{$search}%")
+                    ->orWhere('faktur_color', 'like', "%{$search}%");
+                })
+                ->orderBy('receive_time', 'asc')
+                ->paginate(10);
+
+            return response()->json($data);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
+    }
+
     // CEK HARGA MOTOR AJAX
     public function checkPrice(Request $request)
     {
@@ -335,43 +365,10 @@ class SpkController extends Controller
      */
     public function edit(Spk $spk)
     {
-        $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $leasing = Leasing::where('leasing_code','!=','CASH')->get();
         $microfinance = Leasing::where('leasing_category','!=','credit')->get();
 
-        if ($dc == 'group') {
-            $stock = Stock::join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price','stocks.id as id')
-            ->orderBy('stocks.qty','desc')
-            ->get();
-            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where([
-                ['manpowers.category','SAL'],
-                ['manpowers.status','active']
-            ])
-            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
-            ->get();
-        } else {
-            $stock = Stock::join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','stocks.qty','dealers.dealer_code','dealers.dealer_name','units.price','stocks.id as id')
-            ->where('stocks.dealer_id',$did)
-            ->orderBy('stocks.qty','desc')
-            ->get();
-            $manpower = Manpower::join('dealers','manpowers.dealer_id','=','dealers.id')
-            ->where([
-                ['manpowers.dealer_id',$did],
-                ['manpowers.category','SAL'],
-                ['manpowers.status','active']
-            ])
-            ->select('manpowers.id as id_manpower','manpowers.name','manpowers.position','manpowers.gender','dealers.dealer_code')
-            ->get();
-        }
-        return view('page', compact('spk','stock','manpower','leasing','microfinance'));
+        return view('page', compact('spk','leasing','microfinance'));
     }
 
     /**
@@ -653,11 +650,13 @@ class SpkController extends Controller
 
     public function get($spk_no){
         $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.ktp_number')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.ktp')
         ->where('spks.spk_no',$spk_no)
         ->get();
 
-        return view('page', compact('data','spk_no'));
+        $id = Spk::where('spk_no',$spk_no)->value('id');
+
+        return view('page', compact('data','spk_no','id'));
     }
 
     // History Credit
@@ -679,15 +678,13 @@ class SpkController extends Controller
 
     public function printPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $dealer = Dealer::where('dealer_code',$dc)->get();
 
-        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
-        ->join('leasings','spks.leasing_id','=','leasings.id')
-        ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address','spks.spk_phone as customer_phone')
+        $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone as customer_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.address_shipment as customer_address_shipment','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.year_mc','spks.manpower')
         ->where('spks.spk_no',$spk_no)
         ->get();
+
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
         $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no','printDate','dealer'));
@@ -697,15 +694,13 @@ class SpkController extends Controller
 
     public function downloadPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $dealer = Dealer::where('dealer_code',$dc)->get();
 
-        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
-        ->join('leasings','spks.leasing_id','=','leasings.id')
-        ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address','spks.spk_phone as customer_phone')
+        $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone as customer_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.address_shipment as customer_address_shipment','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.year_mc','spks.manpower')
         ->where('spks.spk_no',$spk_no)
         ->get();
+
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
         $pdf = PDF::loadView('export.pdf-spk',compact('data','spk_no','printDate','dealer'));

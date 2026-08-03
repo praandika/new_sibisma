@@ -379,3 +379,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkprice', [SpkCont
 
 // SPK DATA AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-data', [SpkController::class, 'spkData'])->name('spk.data');
+
+// DATA STOCK AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk-datastock', [SpkController::class, 'dataStock'])->name('spk.datastock');

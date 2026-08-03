@@ -1,4 +1,11 @@
-<div class="modal fade modalData" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+@push('after-css')
+<style>
+    .tbModal tr:nth-child(even) {
+        background-color: #ededed !important;
+    }
+</style>
+@endpush
+<div class="modal fade modalStock" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -12,87 +19,190 @@
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
+                {{-- Search --}}
+                <div class="mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="searchStock"
+                        placeholder="Cari Stock">
+                </div>
+
                 <div class="table-responsive">
-                    <table id="tb-basic-table-position" class="display table table-striped table-hover" width="100%">
+                    <table class="table tbModal" width="100%">
                         <thead>
                             <tr>
-                                <th>Model Name</th>
-                                <th>Color</th>
-                                <th>Qty</th>
-                                <th>Year</th>
-                                <th>OTR</th>
-                                @if(Auth::user()->dealer_code == 'group')
-                                <th>Dealer</th>
-                                @endif
+                                <th>Model Info</th>
+                                <th>Faktur Color</th>
+                                <th>Receive Time</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Model Name</th>
-                                <th>Color</th>
-                                <th>Qty</th>
-                                <th>Year</th>
-                                <th>OTR</th>
-                                @if(Auth::user()->dealer_code == 'group')
-                                <th>Dealer</th>
-                                @endif
+                                <th>Model Info</th>
+                                <th>Faktur Color</th>
+                                <th>Receive Time</th>
                             </tr>
                         </tfoot>
-                        <tbody>
-                            @forelse($stock as $o)
-                            <tr data-id="{{ $o->id }}" data-model="{{ $o->model_name }}"
-                                data-color="{{ $o->color_name }}"
-                                data-colorcode="{{ $o->color_code }}" data-yearmc="{{ $o->year_mc }}"
-                                data-onhand="{{ $o->qty }}"
-                                data-dealercode="{{ $o->dealer_code }}"
-                                data-dealername="{{ $o->dealer_name }}"
-                                data-otr="{{ number_format($o->price, 0, ',','.') }}"
-                                class="klik">
-                                <td>{{ $o->model_name }}</td>
-                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
-                                    {{ $o->color_name }}
-                                </td>
-                                <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
-                                <td>{{ $o->year_mc }}</td>
-                                <td>{{ number_format($o->price, 0, ',','.') }}</td>
-                                @if(Auth::user()->dealer_code == 'group')
-                                <td>{{ $o->dealer_code }}</td>
-                                @endif
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="{{ Auth::user()->access == 'master' ? '6' : '5' }}" style="text-align: center;">No data available</td>
-                            </tr>
-                            @endforelse
+                        <tbody id="tbodyStock" style="cursor:pointer;">
+                            
                         </tbody>
                     </table>
                 </div>
+
+                <div id="paginationStock"></div>
             </div>
+            <!-- Modal Footer -->
+            @include('component.modal-footer')
         </div>
     </div>
 </div>
 
 @push('after-script')
 <script>
-    $(document).on('click', '.klik', function (e) {
-        let code = $(this).attr('data-colorcode');
-        $('#stock_id').val($(this).attr('data-id'));
-        $('#model_name').val($(this).attr('data-model'));
-        $('#on_hand').val($(this).attr('data-onhand'));
-        $('#dealer_code').val($(this).attr('data-dealercode'));
-        $('#dealer').val($(this).attr('data-dealername'));
-        $('#otr').val($(this).attr('data-otr'));
-        $('.modalData').modal('hide');
-        
-        $('#color_code').css('background', code);
+    function ucwords(str) {
+        return str.toLowerCase().replace(/\b[a-z]/g, letter => letter.toUpperCase());
+    }
+</script>
+
+<script>
+    // Format Tanggal JS
+    function formatTanggal(tanggal) {
+        return new Date(tanggal).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+</script>
+
+<script>
+    // AJAX
+    function loadStockModal(page = 1)
+    {
+        $.ajax({
+            url: '/spk-datastock',
+            type: 'GET',
+            data: {
+                search: $('#searchStock').val(),
+                page: page
+            },
+            success: function(res){
+
+                let html = '';
+
+                $.each(res.data, function(i,row){
+                    html+=`
+                    <tr class="pilihStock"
+                        data-model="${row.model_name}"
+                        data-frame="${row.frame_no}"
+                        data-engine="${row.engine_no}"
+                        data-color="${row.faktur_color}"
+                        data-price="${row.price}"
+                        data-year="${row.year_mc}">
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${row.frame_no}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; font-weight: bold;">${row.model_name}</div>
+                                    <div style="font-size: 11px; font-weight: bold;" class="mb-1">
+                                    ${
+                                        row.status == 'ready'
+                                        ? `<span class="badge badge-primary"> ${row.status}`
+                                        : `<span class="badge badge-danger"> ${row.status}`
+                                    }
+                                    </div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${ucwords(row.faktur_color)}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; font-weight: bold; font-style: italic;" class="mt-2">${row.engine_no}</div>
+                                    <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.year_mc}</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${formatTanggal(row.receive_time)}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; font-weight: bold;" class="mb-1">${row.dealer_code}</div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+
+                $('#tbodyStock').html(html);
+
+                renderPaginationStock(res);
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    // SEARCH
+    let timerFrame;
+
+    $('#searchStock').keyup(function(){
+        clearTimeout(timerFrame);
+        timerFrame = setTimeout(function(){
+            loadStockModal();
+        },300);
+    });
+
+    // PAGINATION
+    function renderPaginationStock(res)
+    {
+        let htmlStock = '';
+
+        if(res.prev_page_url){
+            htmlStock += `<button class="btn btn-sm btn-secondary page-stock"
+                        data-page="${res.current_page-1}">
+                       ← Previous
+                    </button>`;
+        }
+
+        htmlStock += ` Page ${res.current_page} of ${res.last_page} `;
+
+        if(res.next_page_url){
+            htmlStock += `<button class="btn btn-sm btn-secondary page-stock"
+                        data-page="${res.current_page+1}">
+                        Next →
+                    </button>`;
+        }
+
+        $('#paginationStock').html(htmlStock);
+    }
+
+    $('.modalStock').on('shown.bs.modal', function () {
+        loadStockModal();
     });
 </script>
 
 <script>
-        $('#tb-basic-table-position').DataTable({
-            "pageLength": 20,
-            "ordering": false
-        });
+    $(document).on('click','.pilihStock',function(){
+        $('#frame_no').val($(this).data('frame'));
+        $('#engine_no').val($(this).data('engine'));
+        $('#color').val($(this).data('color'));
+        $('#year').val($(this).data('year'));
 
+        $('#frameStatus').text($(this).data('frame'));
+        $('#engineStatus').text($(this).data('engine'));
+        $('#colorStatus').text($(this).data('color'));
+        $('#yearStatus').text($(this).data('year'));
+
+        $('#stockStatus').html(
+            '<span class="badge badge-success">READY</span>'
+        );
+        $('#order_status').val('READY');
+
+        $('.modalStock').modal('hide');
+
+    });
 </script>
 @endpush

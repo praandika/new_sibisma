@@ -15,7 +15,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ Auth::user()->access == 'salesman' ? route('spk.salesman') : route('spk.index') }}">Data SPK</a>
+    <a href="{{ route('spk.index') }}">Data SPK</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
@@ -27,7 +27,7 @@
     <!-- Status -->
     @foreach($data as $a)
     <div class="col-md-4">
-        <div class="card card-dark bg-primary-gradient curves-shadow">
+        <div class="card card-dark bg-dark-gradient curves-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method.png') }}" alt="payment method"></div>
                 <h2 class="mb-2">{{ ucwords($a->payment_method) }}</h2>
@@ -37,7 +37,18 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-info-gradient skew-shadow">
+        @if($a->payment_method == 'CASH')
+        <div class="card card-dark bg-dark-gradient skew-shadow">
+            <div class="card-body pb-0">
+                <div class="h1 fw-bold float-right">
+                    <img src="{{ asset('img/cash.png') }}" alt="Cash">
+                </div>
+                <h2 class="mb-2">{{ ucwords($a->microfinance) }}</h2>
+                <p>Microfinance</p>
+            </div>
+        </div>
+        @else
+        <div class="card card-dark bg-{{ $a->credit_status == 'survey' ? 'info' : ($a->credit_status == 'acc' ? 'success' : 'danger') }}-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($a->credit_status == 'survey')
@@ -54,10 +65,11 @@
                 <p>Credit Status</p>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-secondary-gradient bubble-shadow">
+        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' ? 'warning' : 'success' }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($a->order_status == 'indent')
@@ -82,17 +94,22 @@
                     <h4 class="card-title">{{ $spk_no }}</h4>
                 </div>
                 <div class="col-md-6" style="text-align: right;">
-                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
-                        style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
-                    </a>
-                    &nbsp;
-                    <a href="{{ url('spk-download',$spk_no) }}" class="btn btn-success btn-round print-pdf"
-                        style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Download PDF</strong>
-                    </a>
-                    &nbsp;
-                    <a href="{{ route('spk.ktp-print',$spk_no) }}" class="btn btn-danger btn-round print-pdf"
-                        style="margin-bottom: 20px;" target="_blank"><i class="fa fa-id-card"></i>&nbsp;&nbsp; <strong>Print KTP</strong>
-                    </a>
+                    @if($a->order_status == 'ready' || $a->order_status == 'READY')
+                        <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
+                            style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
+                        </a>
+                        &nbsp;
+                        <a href="{{ url('spk-download',$spk_no) }}" class="btn btn-success btn-round print-pdf"
+                            style="margin-bottom: 20px;"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Download PDF</strong>
+                        </a>
+                        &nbsp;
+                        <a href="{{ route('spk.ktp-print',$spk_no) }}" class="btn btn-danger btn-round print-pdf"
+                            style="margin-bottom: 20px;" target="_blank"><i class="fa fa-id-card"></i>&nbsp;&nbsp; <strong>Print KTP</strong>
+                        </a>
+                    @else
+                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-success btn-round print-pdf"><i
+                        class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong></a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -139,7 +156,7 @@
                         </tr>
                         <tr>
                             <th width="200">Warna Motor</th>
-                            <td>: {{ $o->color_faktur }}</td>
+                            <td>: {{ $o->faktur_color }}</td>
                         </tr>
                         <tr>
                             <th width="200">Harga OTR</th>

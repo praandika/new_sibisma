@@ -16,6 +16,11 @@
 @section('title','SPK')
 @section('page-title','SPK')
 
+@push('button')
+@section('button-title','Create SPK')
+@include('component.button-create-spk')
+@endpush
+
 @push('link-bread')
 <li class="nav-item">
     <a href="{{ route('spk.index') }}">Data SPK</a>
@@ -146,7 +151,7 @@ function formatJam(date) {
                                     <span class="main-data">
                                         ${row.spk_no}
                                         ${
-                                            row.order_status == 'indent'
+                                            row.order_status == 'indent' || row.order_status == 'INDENT'
                                             ? `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
                                             : `<span class="badge badge-success"> ${ucwords(row.order_status)}</span>`
                                         }
@@ -161,7 +166,7 @@ function formatJam(date) {
                                         <div style="font-size: 11px; font-style: italic;" class="mb-1">
                                         ${row.spk_phone}
                                         </div>
-                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">
+                                        <div style="font-size: 11px; font-style: italic; font-weight: bold;" class="mb-1">
                                         ${ucwords(row.model_name)} - ${ucwords(row.faktur_color)}
                                         </div>
                                     </span>
@@ -188,14 +193,18 @@ function formatJam(date) {
                             <td>${row.manpower}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="/spk/${row.spk_no}/edit" class="btnAction"
+                                    <a href="/spk/${row.id}/edit" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="/spk/get/${row.spk_no}" class="btnAction"
+                                    ${
+                                        row.order_status == 'READY'
+                                        ? `<a href="/spk/get/${row.spk_no}" class="btnAction"
                                         target="_blank"
                                         data-toggle="tooltip" data-placement="top" title="Detail" style="color:orange;"><i
-                                            class="fas fa-eye"></i></a>
+                                            class="fas fa-eye"></i></a>`
+                                        : `<span></span>`
+                                    }
                                 </div>
                             </td>
                         </tr>

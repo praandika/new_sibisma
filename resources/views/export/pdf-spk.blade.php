@@ -128,15 +128,15 @@
             </tr>
             <tr>
                 <th>Type Motor</th>
-                <td>: {{ $o->stock->unit->model_name }}</td>
+                <td>: {{ $o->model_name }}</td>
             </tr>
             <tr>
                 <th>Warna Motor</th>
-                <td>: {{ $o->stock->unit->color->color_faktur }} &nbsp; ( {{ $o->stock->unit->year_mc }} )</td>
+                <td>: {{ $o->faktur_color }} &nbsp; ( {{ $o->year_mc }} )</td>
             </tr>
             <tr>
                 <th>Harga OTR</th>
-                <td>: Rp {{ number_format($o->stock->unit->price, 0, ',','.') }}</td>
+                <td>: Rp {{ number_format($o->price, 0, ',','.') }}</td>
             </tr>
             <tr>
                 <th>Uang Muka</th>
@@ -147,12 +147,21 @@
                 <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
             </tr>
             <tr>
-                <th>Finance</th>
-                <td>: {{ $o->leasing_code }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                <th>Tipe Pembayaran</th>
+                <td>: {{ $o->payment_method }}</td>
+            </tr>
+            <tr>
+                @if($o->payment_method == 'CASH')
+                    <th>Microfinance</th>
+                    <td>: {{ $o->microfinance }}</td>
+                @else
+                    <th>Finance</th>
+                    <td>: {{ $o->leasing }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                @endif
             </tr>
             <tr>
                 <th>Salesman</th>
-                <td>: {{ $o->manpower->name }}</td>
+                <td>: {{ $o->manpower }}</td>
             </tr>
         </table>
     </div>
