@@ -177,29 +177,44 @@ class SpkController extends Controller
         try {
             $keywords = preg_split('/\s+/', trim($request->search));
 
-            $data = UnitOnhand::query()
+            $query = UnitOnhand::query()
             ->where('status', 'ready');
 
-            foreach ($keywords as $keyword) {
+            // SEARCH
+            if ($request->filled('search')) {
 
-                $data->where(function ($q) use ($keyword) {
+                $keywords = preg_split('/\s+/', trim($request->search));
 
-                    $q->where('model_name', 'like', "%{$keyword}%")
-                    ->orWhere('faktur_color', 'like', "%{$keyword}%")
-                    ->orWhere('year_mc', 'like', "%{$keyword}%")
-                    ->orWhere('dealer_code', 'like', "%{$keyword}%")
-                    ->orWhere('frame_no', 'like', "%{$keyword}%")
-                    ->orWhere('engine_no', 'like', "%{$keyword}%");
+                foreach ($keywords as $keyword) {
 
-                });
+                    $query->where(function ($q) use ($keyword) {
 
+                        $q->where('model_name', 'like', "%{$keyword}%")
+                            ->orWhere('faktur_color', 'like', "%{$keyword}%")
+                            ->orWhere('year_mc', 'like', "%{$keyword}%")
+                            ->orWhere('dealer_code', 'like', "%{$keyword}%")
+                            ->orWhere('frame_no', 'like', "%{$keyword}%")
+                            ->orWhere('engine_no', 'like', "%{$keyword}%");
+
+                    });
+
+                }
             }
 
-            $data = $data->paginate(10);
+            // DEALER LOGIN PALING ATAS
+            $query->orderByRaw(
+                "CASE WHEN dealer_code = ? THEN 0 ELSE 1 END",
+                [Auth::user()->dealer_code]
+            );
+
+            // Lalu urutkan data di masing-masing dealer
+            $query->orderBy('receive_time', 'desc');
+
+            $data = $query->paginate(10);
 
             return response()->json([
                 'dealer' => Auth::user()->dealer_code,
-                'data'    => $data,
+                'data'   => $data,
             ]);
 
         } catch (\Exception $e) {
