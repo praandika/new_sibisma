@@ -202,14 +202,20 @@
         $('#engine_no').val($(this).data('engine'));
         $('#color').val($(this).data('color'));
         $('#year').val($(this).data('year'));
+        $('#model_name').val($(this).data('model'));
+        $('#price').val($(this).data('price'));
 
         $('#frameStatus').text($(this).data('frame'));
         $('#engineStatus').text($(this).data('engine'));
         $('#colorStatus').text($(this).data('color'));
         $('#yearStatus').text($(this).data('year'));
 
+        // PIKIRIN DISINI
+        let status = $(this).data('status');
         $('#stockStatus').html(
-            '<span class="badge badge-success">READY</span>'
+            (status == 'READY' || status == 'ready')
+            ? '<span class="badge badge-success">On Hand</span>'
+            : '<span class="badge badge-warning">Request Stock</span>'
         );
         $('#order_status').val('READY');
 

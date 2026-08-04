@@ -231,7 +231,7 @@
                                         background-color: #fda552;
                                         border-radius: 0 0 10px 10px;
                                     ">
-                                    <i class="fas fa-sync"></i> Update
+                                    <i class="fas fa-sync"></i> Update Stock
                                 </button>
 
                                 <span id="frameStatus" style="color: grey; font-size: 12px; font-weight: bold;"></span>
