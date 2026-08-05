@@ -141,7 +141,7 @@
                                 <label for="ktp" style="color: #fff !important;">KTP No. <span
                                         class="star">*</span></label>
                                 <input id="ktp" type="number" class="form-control form-control-sm" name="ktp"
-                                    value="{{ $spk->ktp }}" style="text-transform: uppercase;" required>
+                                    value="{{ $spk->ktp_number }}" style="text-transform: uppercase;" required>
                             </div>
                         </div>
 
@@ -150,7 +150,7 @@
                             <div class="form-group">
                                 <label for="kk" style="color: #fff !important;">KK No.</label>
                                 <input id="kk" type="number" class="form-control form-control-sm" name="kk"
-                                    value="{{ $spk->kk }}" style="text-transform: uppercase;">
+                                    value="{{ $spk->kk_number }}" style="text-transform: uppercase;">
                                 <small id="kk" class="form-text">Disarankan mendapatkan nomor KK untuk
                                     keperluan analisa data (opsional)</small>
                             </div>
@@ -210,37 +210,41 @@
 
                         <!-- MODEL MOTOR -->
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="model_name">Motor <span class="star">*</span></label>
-                                <span id="stockStatus">
-                                    @if($spk->order_status == 'INDENT')
-                                    <span class="badge badge-warning">INDENT</span>
-                                    @elseif($spk->order_status == 'READY')
-                                    <span class="badge badge-success">READY</span>
-                                    @else
-                                    <span class="badge badge-danger">EMPTY</span>
-                                    @endif
-                                </span>
-                                <input id="model_name" type="text" class="form-control form-control-sm"
-                                    name="model_name" value="{{ $spk->model_name }}"
-                                    style="text-transform: uppercase; cursor: pointer;" data-toggle="modal"
-                                    data-target=".modalStock" required readonly>
-                                <button id="btnSyncStock" style="
-                                        border: none;
-                                        cursor: pointer;
-                                        background-color: #fda552;
-                                        border-radius: 0 0 10px 10px;
-                                    ">
-                                    <i class="fas fa-sync"></i> Update Stock
-                                </button>
+                            <div class="card card-dark bg-primary-gradient bubble-shadow">
+                                <div class="form-group">
+                                    <label for="model_name" style="color: white !important;">Motor <span
+                                            class="star">*</span></label>
+                                    <span id="stockStatus">
+                                        @if($spk->order_status == 'INDENT')
+                                        <span class="badge badge-warning">INDENT</span>
+                                        @elseif($spk->order_status == 'READY')
+                                        <span class="badge badge-success">READY</span>
+                                        @else
+                                        <span class="badge badge-danger">EMPTY</span>
+                                        @endif
+                                    </span>
+                                    <input id="model_name" type="text" class="form-control form-control-sm"
+                                        name="model_name" value="{{ $spk->model_name }}"
+                                        style="text-transform: uppercase; cursor: pointer;" data-toggle="modal"
+                                        data-target=".modalStock" required readonly>
 
-                                <span id="frameStatus" style="color: grey; font-size: 12px; font-weight: bold;"></span>
-                                <div>
-                                    <span id="engineStatus" style="color: grey; font-size: 12px;"></span>
-                                    <span id="colorStatus"
-                                        style="color: grey; font-size: 12px; font-weight: bold;"></span>
-                                    <span id="yearStatus" style="color: grey; font-size: 12px;"></span>
+                                    <span id="frameStatus" style="color: white; font-size: 12px; font-weight: bold;">
+                                        {{ $spk->frame_no }}
+                                    </span>
+                                    <div>
+                                        <span id="engineStatus" style="color: white; font-size: 12px;">
+                                            {{ $spk->engine_no }}
+                                        </span>
+                                        <span id="colorStatus"
+                                            style="color: white; font-size: 12px; font-weight: bold;">
+                                            {{ $spk->faktur_color }}
+                                        </span>
+                                        <span id="yearStatus" style="color: white; font-size: 12px;">
+                                            {{ $spk->year_mc }}
+                                        </span>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
 
@@ -396,15 +400,19 @@
                         <input id="prospect_key" type="hidden" class="form-control form-control-sm" name="prospect_key"
                             value="{{ $spk->prospect_key }}" style="text-transform: uppercase;" required readonly>
 
+                        <!-- SPK No -->
+                        <input id="spk_no" type="hidden" class="form-control form-control-sm" name="spk_no"
+                            value="{{ $spk->spk_no }}" style="text-transform: uppercase;" required readonly>
+
                         <!-- Salesman -->
                         <input id="manpower" type="hidden" class="form-control form-control-sm" name="manpower"
                             value="{{ Auth::user()->name }}" style="text-transform: uppercase;" required readonly>
 
                         <div class="col-md-3">
-                            <div class="col-md-3" style="margin-top: 12px;">
+                            <div class="col-md-12" style="margin-top: 12px;">
                                 <button class="btn btn-primary" type="button" data-toggle="collapse"
                                     data-target="#uploadKtp" aria-expanded="false" aria-controls="uploadKtp"
-                                    style="font-weight: bold;">
+                                    style="font-weight: bold; width: 100%;"><i class="fa fa-upload"></i>&nbsp;&nbsp;
                                     Upload / Take an ID-KTP photo
                                 </button>
                                 <div class="collapse" id="uploadKtp">
@@ -413,17 +421,18 @@
                                             <input id="picture" type="file" class="form-control input-border-bottom"
                                                 name="picture" value="{{ old('picture') }}">
                                             <label for="picture" class="placeholder" style="
-                                        background-color: forestgreen; 
-                                        color: #ffffff !important; 
-                                        font-weight: bold;
-                                        width: 200px; 
-                                        padding-left: 20px; 
-                                        padding-right: 20px;
-                                        padding-top: 10px; 
-                                        border-radius: 5px;
-                                        position: absolute;
-                                        top: 20px;
-                                        cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File</label>
+                                                background-color: forestgreen; 
+                                                color: #ffffff !important; 
+                                                font-weight: bold;
+                                                width: 92%; 
+                                                padding-left: 20px; 
+                                                padding-right: 20px;
+                                                padding-top: 10px; 
+                                                border-radius: 5px;
+                                                position: absolute;
+                                                top: 20px;
+                                                cursor: pointer;"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload File
+                                            </label>
                                         </div>
 
                                         <div class="form-group form-floating-label" style="position: relative;">
@@ -431,17 +440,18 @@
                                                 class="form-control input-border-bottom" name="photo"
                                                 value="{{ old('photo') }}">
                                             <label for="photo" class="placeholder" style="
-                                    background-color: teal; 
-                                    color: #ffffff !important; 
-                                    font-weight: bold;
-                                    width: 200px; 
-                                    padding-left: 20px; 
-                                    padding-right: 20px;
-                                    padding-top: 10px; 
-                                    border-radius: 5px;
-                                    position: absolute;
-                                    top: 20px;
-                                    cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo</label>
+                                                background-color: teal; 
+                                                color: #ffffff !important; 
+                                                font-weight: bold;
+                                                width: 92%; 
+                                                padding-left: 20px; 
+                                                padding-right: 20px;
+                                                padding-top: 10px; 
+                                                border-radius: 5px;
+                                                position: absolute;
+                                                top: 20px;
+                                                cursor: pointer;"><i class="fa fa-camera"></i>&nbsp;&nbsp;Take a Photo
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -450,7 +460,7 @@
 
                         <!-- Preview Foto -->
                         <div class="preview" style="padding: 20px;">
-                            <img id="previewImage" src="{{ asset('img/' . $spk->ktp) }}" class="img-thumbnail"
+                            <img id="previewImage" src="{{ asset('img/ktp/' . $spk->ktp) }}" class="img-thumbnail"
                                 style="width:200px;height:150px;object-fit:contain;">
                         </div>
 
@@ -459,8 +469,9 @@
                             <div class="form-group form-floating-label">
                                 <textarea name="description" id="description" cols="30" rows="10"
                                     class="form-control input-border-bottom" placeholder="NOTE:"
-                                    value="{{ old('description') }}"
-                                    style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;"></textarea>
+                                    style="border: 1px dashed #e6e6e6; padding: 10px; text-transform: uppercase;">
+                                    {{ $spk->description }}
+                                </textarea>
                                 <label for="description" class="placeholder"></label>
                             </div>
                         </div>
@@ -473,7 +484,7 @@
                         <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>
                     </div>
                 </div>
-                
+
             </form>
             <!-- END FORM -->
         </div>

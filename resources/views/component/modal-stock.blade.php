@@ -28,6 +28,14 @@
                         placeholder="Cari Stock">
                 </div>
 
+                <!-- Toggle Dealer -->
+                <div class="form-check">
+                    <label class="form-check-label" style="border: 1px solid #ced4da; border-radius: 5px; padding: 10px; margin-bottom: 10px; background-color: #f8f9fa; cursor: pointer;">
+                        <input class="form-check-input" id="onlyDealer" type="checkbox" value="" checked>
+                        <span class="form-check-sign" for="onlyDealer">Dealer Saya</span>
+                    </label>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table tbModal" width="100%">
                         <thead>
@@ -85,7 +93,8 @@
             type: 'GET',
             data: {
                 search: $('#searchStock').val(),
-                page: page
+                page: page,
+                onlyDealer: $('#onlyDealer').is(':checked')
             },
             success: function(res){
 
@@ -99,6 +108,7 @@
                         data-engine="${row.engine_no}"
                         data-color="${row.faktur_color}"
                         data-price="${row.price}"
+                        data-stock-type="${row.dealer_code == res.dealer ? 'On-Hand' : 'Request Stock'}"
                         data-year="${row.year_mc}">
                         <td>
                             <div class="td-group">
@@ -151,6 +161,13 @@
             }
         });
     }
+
+    // RELOAD STOCK MODAL WHEN TOGGLE DEALER CHECKBOX
+    $('#onlyDealer').change(function(){
+
+        loadStockModal(1);
+
+    });
 
     // SEARCH
     let timerStock;
@@ -210,12 +227,11 @@
         $('#colorStatus').text($(this).data('color'));
         $('#yearStatus').text($(this).data('year'));
 
-        // PIKIRIN DISINI
-        let status = $(this).data('status');
+        // status stock
         $('#stockStatus').html(
-            (status == 'READY' || status == 'ready')
-            ? '<span class="badge badge-success">On Hand</span>'
-            : '<span class="badge badge-warning">Request Stock</span>'
+            $(this).data('stock-type') == 'On-Hand'
+            ? '<span class="badge badge-success">' + $(this).data('stock-type') + '</span>'
+            : '<span class="badge badge-warning">' + $(this).data('stock-type') + '</span>'
         );
         $('#order_status').val('READY');
 

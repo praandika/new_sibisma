@@ -180,6 +180,25 @@ class SpkController extends Controller
             $query = UnitOnhand::query()
             ->where('status', 'ready');
 
+            // Dealer Saya
+            if($request->boolean('onlyDealer')){
+                $query->where(
+                    'dealer_code',
+                    Auth::user()->dealer_code
+                );
+            }else{
+
+                // Semua dealer
+                $query->orderByRaw(
+                    "CASE
+                        WHEN dealer_code = ? THEN 0
+                        ELSE 1
+                    END",
+                    [Auth::user()->dealer_code]
+                );
+
+            }
+
             // SEARCH
             if ($request->filled('search')) {
 
@@ -200,12 +219,6 @@ class SpkController extends Controller
 
                 }
             }
-
-            // DEALER LOGIN PALING ATAS
-            $query->orderByRaw(
-                "CASE WHEN dealer_code = ? THEN 0 ELSE 1 END",
-                [Auth::user()->dealer_code]
-            );
 
             // Lalu urutkan data di masing-masing dealer
             $query->orderBy('receive_time', 'desc');
@@ -413,45 +426,40 @@ class SpkController extends Controller
             $discount = $request->discount;
         }
 
-        if ($request->tandajadi == '') {
-            $tandajadi = 0;
+        if ($request->deposit == '') {
+            $deposit = 0;
         } else {
-            $tandajadi = $request->tandajadi;
-        }
-
-        if ($request->payment == 'cash') {
-            $credit_status = 'cash';
-            $leasing = 1;
-        } else {
-            $credit_status = $request->credit_status;
-            $leasing = $request->leasing_id;
+            $deposit = $request->deposit;
         }
 
         $data = Spk::find($spk->id);
-        $data->spk_no = $request->spk_no;
-        $data->order_name = strtoupper($request->order_name);
-        $data->reason = strtoupper($request->reason);
+        $data->order_name = strtoupper($request->customer_name);
+        $data->gender = strtoupper($request->gender);
+        $data->stnk_name = strtoupper($request->stnk_name);
+        $data->model_name = strtoupper($request->model_name);
+        $data->frame_no = strtoupper($request->frame_no);
+        $data->engine_no = strtoupper($request->engine_no);
+        $data->year_mc = $request->year;
+        $data->price = preg_replace('/[^0-9]/', '', $request->price);
+        $data->faktur_color = strtoupper($request->color);
         $data->address = strtoupper($request->address);
         $data->address_shipment = strtoupper($request->address_shipment);
         $data->spk_phone = $request->phone;
-        $data->ktp_number = $request->ktp_number;
-        $data->kk_number = $request->kk_number;
-        $data->stnk_name = strtoupper($request->stnk_name);
+        $data->ktp_number = $request->ktp;
+        $data->kk_number = $request->kk;
         $data->pemohon_name = strtoupper($request->pemohon_name);
-        $data->stock_id = $request->stock_id;
-        $data->tandajadi = $tandajadi;
+        $data->deposit = $deposit;
         $data->downpayment = $request->downpayment;
         $data->discount = $discount;
-        $data->payment = $request->payment;
-        $data->leasing_id = $leasing;
-        $data->manpower_id = $request->manpower_id;
+        $data->leasing = strtoupper($request->leasing);
+        $data->microfinance = strtoupper($request->microfinance);
         $data->description = strtoupper($request->description);
-        $data->payment_method = $request->payment_method;
+        $data->payment_method = $request->payment;
         $data->bunga = $request->bunga;
         $data->tenor = $request->tenor;
-        $data->credit_status = $credit_status;
-        $data->order_status = $request->order_status;
-        $data->sale_status = $request->sale_status;
+        $data->reason = strtoupper($request->reason);
+        $data->credit_status = $request->credit_status;
+        $data->order_status = strtoupper($request->order_status);
         $data->created_by = Auth::user()->id;
 
         // Save Record to History Credit
@@ -461,7 +469,7 @@ class SpkController extends Controller
             $history->leasing_id = $request->leasing_id;
             $history->spk = $request->spk_no;
             $history->update_date = $today;
-            $history->credit_status = $credit_status;
+            $history->credit_status = $request->credit_status;
             $history->pemohon_name = strtoupper($request->pemohon_name);
             $history->reason = strtoupper($request->reason);
             $history->save();
