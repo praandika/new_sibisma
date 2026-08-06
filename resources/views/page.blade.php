@@ -19,11 +19,11 @@
             @endpush
             
             <livewire:rank>
+            @include('component.request-stock-list')
             <livewire:sale-chart>
             <livewire:ratio-stock>
             <livewire:sale-l-m>
             <livewire:sale-l-y>
-            <livewire:stu-vs-real>
             <livewire:sale-by-dealer-chart>
             <livewire:top-product-chart>
             <livewire:top-stock-chart>
@@ -499,5 +499,12 @@
         });
     });
 
+</script>
+
+<!-- INIT LOAD AJAX -->
+<script>
+    $(window).on('load', function () {
+        initRequestStock();
+    });
 </script>
 @endpush

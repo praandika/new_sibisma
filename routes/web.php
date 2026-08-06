@@ -382,3 +382,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-data', [SpkController
 
 // DATA STOCK AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-datastock', [SpkController::class, 'dataStock'])->name('spk.datastock');
+
+// LIST REQUEST STOCK AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/list-request-stock', [DashboardController::class, 'listRequestStock'])->name('listrequeststock');

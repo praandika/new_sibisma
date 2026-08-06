@@ -69,13 +69,15 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' ? 'warning' : 'success' }}-gradient bubble-shadow">
+        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' ? 'danger' : ($a->order_status == 'ready' || $a->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($a->order_status == 'indent')
                     <img src="{{ asset('img/indent.png') }}" alt="Indent">
+                    @elseif($a->order_status == 'ready')
+                    <img src="{{ asset('img/available.png') }}" alt="Ready">
                     @else
-                    <img src="{{ asset('img/available.png') }}" alt="Available">
+                    <img src="{{ asset('img/indent.png') }}" alt="Request Stock">
                     @endif
                 </div>
                 <h2 class="mb-2">{{ ucwords($a->order_status) }}</h2>
@@ -106,8 +108,12 @@
                         <a href="{{ route('spk.ktp-print',$spk_no) }}" class="btn btn-danger btn-round print-pdf"
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-id-card"></i>&nbsp;&nbsp; <strong>Print KTP</strong>
                         </a>
+                        &nbsp;
+                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-primary btn-round print-pdf"
+                            style="margin-bottom: 20px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong>
+                        </a>
                     @else
-                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-success btn-round print-pdf"><i
+                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-primary btn-round print-pdf"><i
                         class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong></a>
                     @endif
                 </div>

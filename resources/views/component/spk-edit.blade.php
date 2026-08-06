@@ -243,8 +243,29 @@
                                             {{ $spk->year_mc }}
                                         </span>
                                     </div>
+
+                                    <!-- POINT CODE STOCK -->
+                                    <input id="point_code" type="hidden" class="form-control form-control-sm"
+                                        name="point_code" value="{{ $spk->point_code }}"
+                                        style="text-transform: uppercase;" required readonly>
+                                    
+                                    <!-- DEALER NAME STOCK -->
+                                    <input id="dealer_name" type="hidden" class="form-control form-control-sm"
+                                        name="dealer_name" value=""
+                                        style="text-transform: uppercase;" required readonly>
                                 </div>
-                                
+                                <!-- BUTTON -->
+                                <div class="col-md-12 mb-2" id="btnRequest" hidden>
+                                    <button style="all: unset; background: orange; color: black; padding: 5px 8px; border: none; border-radius: 20px; cursor: pointer;" type="button"
+                                    data-toggle="modal"
+                                        data-target=".modalRequestStock"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Kirim</button>
+                                </div>
+                                <!-- BUTTON REQUEST -->
+                                <input
+                                    type="hidden"
+                                    name="request_type"
+                                    id="request_type"
+                                    value="">
                             </div>
                         </div>
 
@@ -496,6 +517,7 @@
     @include('component.modal-microfinance')
     @include('component.modal-stock')
     @include('component.modal-gender')
+    @include('component.modal-request-stock')
 
     @push('after-script')
     <script>
@@ -617,4 +639,24 @@
         });
 
     </script>
+
+    <script>
+        $('#btnRequest').click(function(){
+
+            $('#reqDealer').text($('#point_code').val());
+
+            $('#reqModel').text($('#model_name').val());
+
+            $('#reqColor').text($('#color').val());
+
+            $('#reqYear').text($('#year').val());
+
+            $('#reqPrice').text(formatRupiah($('#price').val()));
+
+            $('#reqDealerName').text($('#dealer_name').val().toUpperCase());
+
+            $('#modalRequestStock').modal('show');
+
+        });
+</script>
     @endpush

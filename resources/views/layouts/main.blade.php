@@ -50,7 +50,7 @@
         @livewireStyles
     </head>
     <body>
-        <div class="wrapper">
+        <div class="wrapper sidebar_minimize">
             <!-- Header -->
             <livewire:header>
             
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-				    <div class="page-inner mt--5">
+				    <div class="page-inner mt--5" style="cursor: pointer;">
                         <div class="row mt--2">
                             @yield('content')
                         </div>

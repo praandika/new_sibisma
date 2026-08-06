@@ -178,12 +178,16 @@ class SpkController extends Controller
             $keywords = preg_split('/\s+/', trim($request->search));
 
             $query = UnitOnhand::query()
-            ->where('status', 'ready');
+            ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
+            ->where('unit_on_hands.status', 'ready')
+            ->select(
+                'unit_on_hands.*','dealers.dealer_name'
+            );
 
             // Dealer Saya
             if($request->boolean('onlyDealer')){
                 $query->where(
-                    'dealer_code',
+                    'unit_on_hands.dealer_code',
                     Auth::user()->dealer_code
                 );
             }else{
@@ -191,7 +195,7 @@ class SpkController extends Controller
                 // Semua dealer
                 $query->orderByRaw(
                     "CASE
-                        WHEN dealer_code = ? THEN 0
+                        WHEN unit_on_hands.dealer_code = ? THEN 0
                         ELSE 1
                     END",
                     [Auth::user()->dealer_code]
@@ -208,12 +212,12 @@ class SpkController extends Controller
 
                     $query->where(function ($q) use ($keyword) {
 
-                        $q->where('model_name', 'like', "%{$keyword}%")
-                            ->orWhere('faktur_color', 'like', "%{$keyword}%")
-                            ->orWhere('year_mc', 'like', "%{$keyword}%")
-                            ->orWhere('dealer_code', 'like', "%{$keyword}%")
-                            ->orWhere('frame_no', 'like', "%{$keyword}%")
-                            ->orWhere('engine_no', 'like', "%{$keyword}%");
+                        $q->where('unit_on_hands.model_name', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.faktur_color', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.year_mc', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.dealer_code', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.frame_no', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.engine_no', 'like', "%{$keyword}%");
 
                     });
 
@@ -221,7 +225,7 @@ class SpkController extends Controller
             }
 
             // Lalu urutkan data di masing-masing dealer
-            $query->orderBy('receive_time', 'desc');
+            $query->orderBy('unit_on_hands.receive_time', 'desc');
 
             $data = $query->paginate(10);
 
@@ -418,151 +422,109 @@ class SpkController extends Controller
      */
     public function update(Request $request, Spk $spk)
     {
-        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        if ($request->request_type == 'request_stock') {
 
-        if ($request->discount == '') {
-            $discount = 0;
+            // Request Stock Action
+            $data = Spk::find($spk->id);
+            $data->order_status = 'REQUEST STOCK';
+            $data->model_name = strtoupper($request->model_name);
+            $data->point_code = $request->point_code;
+            $data->update();
+            toast('Request stock berhasil dikirim','success');
+            return redirect()->route('spk.get',$request->spk_no);
+
         } else {
-            $discount = $request->discount;
-        }
+            // Update SPK Action
+            $today = Carbon::now('GMT+8')->format('Y-m-d');
 
-        if ($request->deposit == '') {
-            $deposit = 0;
-        } else {
-            $deposit = $request->deposit;
-        }
+            if ($request->discount == '') {
+                $discount = 0;
+            } else {
+                $discount = $request->discount;
+            }
 
-        $data = Spk::find($spk->id);
-        $data->order_name = strtoupper($request->customer_name);
-        $data->gender = strtoupper($request->gender);
-        $data->stnk_name = strtoupper($request->stnk_name);
-        $data->model_name = strtoupper($request->model_name);
-        $data->frame_no = strtoupper($request->frame_no);
-        $data->engine_no = strtoupper($request->engine_no);
-        $data->year_mc = $request->year;
-        $data->price = preg_replace('/[^0-9]/', '', $request->price);
-        $data->faktur_color = strtoupper($request->color);
-        $data->address = strtoupper($request->address);
-        $data->address_shipment = strtoupper($request->address_shipment);
-        $data->spk_phone = $request->phone;
-        $data->ktp_number = $request->ktp;
-        $data->kk_number = $request->kk;
-        $data->pemohon_name = strtoupper($request->pemohon_name);
-        $data->deposit = $deposit;
-        $data->downpayment = $request->downpayment;
-        $data->discount = $discount;
-        $data->leasing = strtoupper($request->leasing);
-        $data->microfinance = strtoupper($request->microfinance);
-        $data->description = strtoupper($request->description);
-        $data->payment_method = $request->payment;
-        $data->bunga = $request->bunga;
-        $data->tenor = $request->tenor;
-        $data->reason = strtoupper($request->reason);
-        $data->credit_status = $request->credit_status;
-        $data->order_status = strtoupper($request->order_status);
-        $data->created_by = Auth::user()->id;
+            if ($request->deposit == '') {
+                $deposit = 0;
+            } else {
+                $deposit = $request->deposit;
+            }
 
-        // Save Record to History Credit
+            $data = Spk::find($spk->id);
+            $data->order_name = strtoupper($request->customer_name);
+            $data->gender = strtoupper($request->gender);
+            $data->stnk_name = strtoupper($request->stnk_name);
+            $data->model_name = strtoupper($request->model_name);
+            $data->frame_no = strtoupper($request->frame_no);
+            $data->engine_no = strtoupper($request->engine_no);
+            $data->year_mc = $request->year;
+            $data->price = preg_replace('/[^0-9]/', '', $request->price);
+            $data->faktur_color = strtoupper($request->color);
+            $data->address = strtoupper($request->address);
+            $data->address_shipment = strtoupper($request->address_shipment);
+            $data->spk_phone = $request->phone;
+            $data->ktp_number = $request->ktp;
+            $data->kk_number = $request->kk;
+            $data->pemohon_name = strtoupper($request->pemohon_name);
+            $data->deposit = $deposit;
+            $data->downpayment = $request->downpayment;
+            $data->discount = $discount;
+            $data->leasing = strtoupper($request->leasing);
+            $data->microfinance = strtoupper($request->microfinance);
+            $data->description = strtoupper($request->description);
+            $data->payment_method = $request->payment;
+            $data->bunga = $request->bunga;
+            $data->tenor = $request->tenor;
+            $data->reason = strtoupper($request->reason);
+            $data->credit_status = $request->credit_status;
+            $data->order_status = strtoupper($request->order_status);
+            $data->created_by = Auth::user()->id;
 
-        if ($request->payment_method == 'credit') {
-            $history = new HistoryCredit;
-            $history->leasing_id = $request->leasing_id;
-            $history->spk = $request->spk_no;
-            $history->update_date = $today;
-            $history->credit_status = $request->credit_status;
-            $history->pemohon_name = strtoupper($request->pemohon_name);
-            $history->reason = strtoupper($request->reason);
-            $history->save();
-            toast('History Credit berhasil disimpan','success');
-        }
+            // Save Record to History Credit
 
-        if ($request->ktp_file_prev == '' || $request->ktp_file_prev == null) {
-            // Get KTP image and Store
-            if ($request->picture != '') {
+            if ($request->payment_method == 'credit') {
+                $history = new HistoryCredit;
+                $history->leasing_id = $request->leasing_id;
+                $history->spk = $request->spk_no;
+                $history->update_date = $today;
+                $history->credit_status = $request->credit_status;
+                $history->pemohon_name = strtoupper($request->pemohon_name);
+                $history->reason = strtoupper($request->reason);
+                $history->save();
+                toast('History Credit berhasil disimpan','success');
+            }
+
+            // Upload KTP jika ada file baru
+            if ($request->hasFile('picture')) {
+
+                if ($data->ktp && $data->ktp != 'noimage.jpg') {
+                    @unlink(public_path('img/ktp/'.$data->ktp));
+                }
+
                 $img = $request->file('picture');
-                $ktp_file = time()."_".$img->getClientOriginalName();
-                $dir_img = 'img/ktp';
-                $img->move($dir_img,$ktp_file);
-            } elseif ($request->photo != '') {
+                $ktpFile = time().'_'.$img->getClientOriginalName();
+                $img->move(public_path('img/ktp'), $ktpFile);
+
+                $data->ktp = $ktpFile;
+
+            } elseif ($request->hasFile('photo')) {
+
+                if ($data->ktp && $data->ktp != 'noimage.jpg') {
+                    @unlink(public_path('img/ktp/'.$data->ktp));
+                }
+
                 $img = $request->file('photo');
-                $ktp_file = time()."_".$img->getClientOriginalName();
-                $dir_img = 'img/ktp';
-                $img->move($dir_img,$ktp_file);
-            } elseif ($request->picture != '' && $request->photo != '') {
-                $img = $request->file('picture');
-                $ktp_file = time()."_".$img->getClientOriginalName();
-                $dir_img = 'img/ktp';
-                $img->move($dir_img,$ktp_file);
-            } else {
-                $ktp_file = 'noimage.jpg';
+                $ktpFile = time().'_'.$img->getClientOriginalName();
+                $img->move(public_path('img/ktp'), $ktpFile);
+
+                $data->ktp = $ktpFile;
             }
 
-        $data->ktp = $ktp_file;
-        $data->update();
-        toast('SPK berhasil diubah','success');
-        return redirect()->route('spk.get',$request->spk_no);
+            // simpan semua perubahan
+            $data->save();
 
-        } else {
-            //  Get KTP image and update
-            if ($request->picture != '') {
-                if ($request->hasfile('picture')) {
-                    if ($request->ktp_file_prev != '' && $request->ktp_file_prev != 'noimage.jpg') {
-                        $img_prev = $request->ktp_file_prev;
-                        unlink('img/ktp/'.$img_prev);
-                    }
-        
-                    $img = $request->file('picture');
-                    $ktp_file = time()."_".$img->getClientOriginalName();
-                    $dir_img = 'img/ktp';
-                    $img->move($dir_img,$ktp_file);
-
-        $data->ktp = $ktp_file;
-        $data->update();
-        toast('SPK berhasil diubah','success');
-        return redirect()->route('spk.get',$request->spk_no);
-
-                }
-            } elseif ($request->photo != '') {
-                if ($request->hasfile('photo')) {
-                    if ($request->ktp_file_prev != '' && $request->ktp_file_prev != 'noimage.jpg') {
-                        $img_prev = $request->ktp_file_prev;
-                        unlink('img/ktp/'.$img_prev);
-                    }
-        
-                    $img = $request->file('photo');
-                    $ktp_file = time()."_".$img->getClientOriginalName();
-                    $dir_img = 'img/ktp';
-                    $img->move($dir_img,$ktp_file);
-            
-        $data->ktp = $ktp_file;
-        $data->update();
-        toast('SPK berhasil diubah','success');
-        return redirect()->route('spk.get',$request->spk_no);
-
-                }
-            } elseif ($request->picture != '' && $request->photo != '') {
-                if ($request->hasfile('picture')) {
-                    if ($request->ktp_file_prev != '' && $request->ktp_file_prev != 'noimage.jpg') {
-                        $img_prev = $request->ktp_file_prev;
-                        unlink('img/ktp/'.$img_prev);
-                    }
-        
-                    $img = $request->file('picture');
-                    $ktp_file = time()."_".$img->getClientOriginalName();
-                    $dir_img = 'img/ktp';
-                    $img->move($dir_img,$ktp_file);
-
-        $data->ktp = $ktp_file;
-        $data->update();
-        toast('SPK berhasil diubah','success');
-        return redirect()->route('spk.get',$request->spk_no);
-                }
-            } else {
-                $data->update();
-                toast('SPK berhasil diubah','success');
-                return redirect()->route('spk.get',$request->spk_no);
-            }
-        }
+            toast('SPK berhasil diubah','success');
+            return redirect()->route('spk.get',$request->spk_no);
+        } // End of Save Action
     }
 
     /**

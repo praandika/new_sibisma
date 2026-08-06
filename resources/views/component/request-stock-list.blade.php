@@ -1,37 +1,8 @@
-@push('after-css')
-<style>
-    a.btnAction {
-        font-size: 20px;
-    }
-    .td-group .main-data{
-        font-weight: bold;
-    }
-    .td-group .secondary-data{
-        font-size: 12px;
-        display: block;
-    }
-</style>
-@endpush
-
-@section('title','SPK')
-@section('page-title','SPK')
-
-@push('button')
-@section('button-title','Create SPK')
-@include('component.button-create-spk')
-@endpush
-
-@push('link-bread')
-<li class="nav-item">
-    <a href="{{ route('spk.index') }}">Data SPK</a>
-</li>
-@endpush
-
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-            <h4 class="card-title">SPK Data</h4>
+            <h4 class="card-title">Request Stock</h4>
         </div>
         <div class="card-body">
             {{-- Search --}}
@@ -47,7 +18,7 @@
                 <table class="table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th>Status and Time</th>
+                            <th>Request Time</th>
                             <th>SPK Info</th>
                             <th>Unit</th>
                             <th>Salesman</th>
@@ -56,7 +27,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Status and Time</th>
+                            <th>Request Time</th>
                             <th>SPK Info</th>
                             <th>Unit</th>
                             <th>Salesman</th>
@@ -114,7 +85,7 @@ function formatJam(date) {
 <script>
     function loadSpkData(page = 1) {
         $.ajax({
-            url: "{{ route('spk.data') }}",
+            url: "{{ route('listrequeststock') }}",
             type: "GET",
             dataType: "json",
             data: {
@@ -131,18 +102,12 @@ function formatJam(date) {
                             <td>
                                 <div class="td-group">
                                     <span class="main-data">
+                                        <div style="font-weight: bold;">Request From ${row.dealer_name}</div>
+                                    </span>
+                                    <span class="secondary-data">
                                         <span class="badge badge-secondary mt-2">
-                                            ${row.spk_date ? formatTanggal(row.spk_date) : '-'}
+                                            ${row.updated_at ? formatTanggal(row.updated_at) : '-'}
                                         </span>
-                                    </span>
-                                    <span class="secondary-data">
-                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${row.created_at ? formatJam(row.created_at) : '-'}</div>
-                                            <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.sales_status == 'sold' ? 'DO: ' + formatTanggal(row.do_date) : ''}</div>
-                                    </span>
-                                    <span class="secondary-data">
-                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.payment_method)}</div>
-
-                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_method == 'CASH' ? row.microfinance : row.leasing}</div>
                                     </span>
                                 </div>
                             </td>
@@ -169,15 +134,15 @@ function formatJam(date) {
                                         <div style="font-size: 11px; font-style: italic;" class="mb-1">
                                         ${row.spk_phone}
                                         </div>
-                                        <div style="font-size: 11px; font-style: italic; font-weight: bold;" class="mb-1">
-                                        ${ucwords(row.model_name)} - ${ucwords(row.faktur_color)}
-                                        </div>
                                     </span>
                                 </div>
                             </td>
                             <td>
                                 <div class="td-group">
                                     <span class="main-data">
+                                        <div style="font-weight: bold;" class="mb-1">
+                                        ${ucwords(row.model_name)} - ${ucwords(row.faktur_color)}
+                                        </div>
                                     ${
                                         row.frame_no == ''
                                         ? `<span class="badge badge-danger"> No Frame</span>`
@@ -217,8 +182,10 @@ function formatJam(date) {
 
                 renderPaginationSpk(data);
             },
-            error: function (xhr, status, error) {
-                console.error("Error loading SPK data:", error);
+            error: function (xhr) {
+                console.log(xhr.status);
+                console.log(xhr.responseJSON);
+                console.log(xhr.responseText);
             }
         });
     }
@@ -270,8 +237,8 @@ function formatJam(date) {
         loadSpkData($(this).data('page'));
     });
 
-    $(document).ready(function () {
+    function initRequestStock() {
         loadSpkData();
-    });
+    }
 </script>
 @endpush

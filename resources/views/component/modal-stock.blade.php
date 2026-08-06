@@ -108,6 +108,8 @@
                         data-engine="${row.engine_no}"
                         data-color="${row.faktur_color}"
                         data-price="${row.price}"
+                        data-dealer="${row.dealer_name}"
+                        data-point-code="${row.point_code}"
                         data-stock-type="${row.dealer_code == res.dealer ? 'On-Hand' : 'Request Stock'}"
                         data-year="${row.year_mc}">
                         <td>
@@ -139,6 +141,7 @@
                                 <span class="main-data">${formatTanggal(row.receive_time)}</span>
                                 <span class="secondary-data">
                                     <div style="font-size: 11px; font-weight: bold;" class="mb-1">${row.dealer_code}</div>
+                                    <div style="font-size: 11px; font-weight: bold;" class="mb-1">${row.dealer_name}</div>
                                     <div style="font-size: 11px; font-weight: bold;" class="mb-1">
                                     ${
                                         row.dealer_code == res.dealer
@@ -221,6 +224,8 @@
         $('#year').val($(this).data('year'));
         $('#model_name').val($(this).data('model'));
         $('#price').val($(this).data('price'));
+        $('#point_code').val($(this).data('point-code'));
+        $('#dealer_name').val($(this).data('dealer'));
 
         $('#frameStatus').text($(this).data('frame'));
         $('#engineStatus').text($(this).data('engine'));
@@ -234,6 +239,13 @@
             : '<span class="badge badge-warning">' + $(this).data('stock-type') + '</span>'
         );
         $('#order_status').val('READY');
+
+        // SHOW REQUEST STOCK BUTTON IF STOCK TYPE IS REQUEST STOCK
+        if($(this).data('stock-type') == 'Request Stock'){
+            $('#btnRequest').prop('hidden', false);
+        } else {
+            $('#btnRequest').prop('hidden', true);
+        }
 
         $('.modalStock').modal('hide');
 
