@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-				    <div class="page-inner mt--5" style="cursor: pointer;">
+				    <div class="page-inner mt--5" style="cursor: {{ Route::is('dashboard') ? 'pointer' : '' }};">
                         <div class="row mt--2">
                             @yield('content')
                         </div>

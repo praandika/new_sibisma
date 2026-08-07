@@ -171,7 +171,7 @@ class SpkController extends Controller
         }
     }
 
-    // CEK STOCK AJAX
+    // MODAL DATA STOCK AJAX
     public function dataStock(Request $request)
     {
         try {
@@ -216,6 +216,63 @@ class SpkController extends Controller
                             ->orWhere('unit_on_hands.faktur_color', 'like', "%{$keyword}%")
                             ->orWhere('unit_on_hands.year_mc', 'like', "%{$keyword}%")
                             ->orWhere('unit_on_hands.dealer_code', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.frame_no', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.engine_no', 'like', "%{$keyword}%");
+
+                    });
+
+                }
+            }
+
+            // Lalu urutkan data di masing-masing dealer
+            $query->orderBy('unit_on_hands.receive_time', 'desc');
+
+            $data = $query->paginate(10);
+
+            return response()->json([
+                'dealer' => Auth::user()->dealer_code,
+                'data'   => $data,
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
+    }
+
+    // MODAL STOCK ONHAND WHERE MODEL TYPE ? AJAX ON REQUEST STOCK
+    public function dataStockRequest(Request $request)
+    {
+        try {
+            $keywords = preg_split('/\s+/', trim($request->search));
+
+            $query = UnitOnhand::query()
+            ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
+            ->where('unit_on_hands.status', 'ready')
+            ->where('unit_on_hands.dealer_code',Auth::user()->dealer_code)
+            ->select(
+                'unit_on_hands.*','dealers.dealer_name'
+            );
+
+            // FILTER BY MODEL NAME (dari model_name_filter di form edit)
+            if ($request->filled('model_name')) {
+                $query->where('unit_on_hands.model_name', $request->model_name);
+            }
+
+            // SEARCH
+            if ($request->filled('search')) {
+
+                $keywords = preg_split('/\s+/', trim($request->search));
+
+                foreach ($keywords as $keyword) {
+
+                    $query->where(function ($q) use ($keyword) {
+
+                        $q->where('unit_on_hands.faktur_color', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.year_mc', 'like', "%{$keyword}%")
                             ->orWhere('unit_on_hands.frame_no', 'like', "%{$keyword}%")
                             ->orWhere('unit_on_hands.engine_no', 'like', "%{$keyword}%");
 
@@ -413,6 +470,37 @@ class SpkController extends Controller
         return view('page', compact('spk','leasing','microfinance'));
     }
 
+    // REJECT REQUEST STOCK SPK
+    public function rejectStock($spk_no, $dealer_code)
+    {
+        $data = Spk::where('spk_no', $spk_no)->first();
+
+        if (!$data) {
+            toast('SPK tidak ditemukan','error');
+            return redirect()->back();
+        }
+
+        if ($data->order_status != 'REQUEST STOCK') {
+            toast('SPK tidak dalam status REQUEST STOCK','error');
+            return redirect()->back();
+        }
+
+        $data->order_status = 'REJECTED';
+        $data->point_code = $dealer_code;
+        $data->updated_by = Auth::user()->id;
+        $data->save();
+
+        toast('Request stock rejected','success');
+        return redirect()->back();
+    }
+
+    // CHANGE STOCK ON REQUEST STOCK SPK
+    public function changeStock($spk_no, $dealer_code, $model)
+    {
+        $spk = Spk::where('spk_no', $spk_no)->get();
+        return view('page', compact('spk','spk_no','dealer_code', 'model'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -477,7 +565,7 @@ class SpkController extends Controller
             $data->reason = strtoupper($request->reason);
             $data->credit_status = $request->credit_status;
             $data->order_status = strtoupper($request->order_status);
-            $data->created_by = Auth::user()->id;
+            $data->updated_by = Auth::user()->id;
 
             // Save Record to History Credit
 
@@ -525,6 +613,24 @@ class SpkController extends Controller
             toast('SPK berhasil diubah','success');
             return redirect()->route('spk.get',$request->spk_no);
         } // End of Save Action
+    }
+
+    public function processChangeStock(Request $request, $spk, $dealer_code)
+    {
+        $data = Spk::where('spk_no', $spk)->first();
+        $data->model_name = strtoupper($request->model_name);
+        $data->frame_no = strtoupper($request->frame_no);
+        $data->engine_no = strtoupper($request->engine_no);
+        $data->year_mc = $request->year;
+        $data->price = preg_replace('/[^0-9]/', '', $request->price);
+        $data->faktur_color = strtoupper($request->color);
+        $data->order_status = strtoupper('READY');
+        $data->point_code = $dealer_code;
+        $data->updated_by = Auth::user()->id;
+        $data->update();
+
+        toast('Request Stock Approved','success');
+        return redirect()->route('dashboard');
     }
 
     /**

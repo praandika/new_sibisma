@@ -380,6 +380,8 @@
             @include('component.spk-historysalesman')
         @elseif(Route::is('spk.historycredit'))
             @include('component.spk-history-credit-salesman')
+        @elseif(Route::is('spk.change-stock'))
+            @include('component.spk-change-stock')
         @else
             @include('component.spk-data')
         @endif
