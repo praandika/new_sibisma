@@ -10,16 +10,31 @@
         font-size: 12px;
         display: block;
     }
+    
+    /* SKELETON STYLE */
+    @keyframes skeletonPulse {
+        0% { background-position: -200px 0; }
+        100% { background-position: 200px 0; }
+    }
+    .skel-bar {
+        height: 12px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #eee 25%, #ddd 37%, #eee 63%);
+        background-size: 400px 100%;
+        animation: skeletonPulse 1.4s ease-in-out infinite;
+    }
 </style>
 @endpush
 
 @section('title','SPK')
 @section('page-title','SPK')
 
-@push('button')
-@section('button-title','Create SPK')
-@include('component.button-create-spk')
-@endpush
+@if(Auth::user()->access == 'salesman')
+    @push('button')
+    @section('button-title','Create SPK')
+    @include('component.button-create-spk')
+    @endpush
+@endif
 
 @push('link-bread')
 <li class="nav-item">
@@ -43,6 +58,7 @@
                     placeholder="Cari SPK No, Customer Info, Unit, Salesman">
             </div>
 
+            <div class="paginationSpk"></div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover" width="100%">
                     <thead>
@@ -68,7 +84,7 @@
                     </tbody>
                 </table>
             </div>
-            <div id="paginationSpk"></div>
+            <div class="paginationSpk"></div>
         </div>
     </div>
 </div>
@@ -112,7 +128,27 @@ function formatJam(date) {
 </script>
 
 <script>
+    // LOADING ANIMATION
+    function showSkeletonRows(count = 4) {
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            html += `
+                <tr>
+                    <td><div class="skel-bar" style="width:70%; margin-bottom:6px;"></div><div class="skel-bar" style="width:40%; height:9px;"></div></td>
+                    <td><div class="skel-bar" style="width:80%; margin-bottom:6px;"></div><div class="skel-bar" style="width:50%; height:9px;"></div></td>
+                    <td><div class="skel-bar" style="width:60%; margin-bottom:6px;"></div><div class="skel-bar" style="width:45%; height:9px;"></div></td>
+                    <td><div class="skel-bar" style="width:50%;"></div></td>
+                    <td><div class="skel-bar" style="width:40%;"></div></td>
+                </tr>
+            `;
+        }
+        $('#tbodySpk').html(html);
+        $('.paginationSpk').html('');
+    }
+
     function loadSpkData(page = 1) {
+        showSkeletonRows(); // tampilkan skeleton sebelum request
+
         $.ajax({
             url: "{{ route('spk.data') }}",
             type: "GET",
@@ -121,11 +157,23 @@ function formatJam(date) {
                 page: page,
                 search: $('#searchSpk').val()
             },
-            success: function (data) {
+            success: function (res) {
+                // CEK DATA KOSONG ATAU TIDAK
+                if (res.data.data.length === 0) {
+                    $('#tbodySpk').html(`
+                        <tr>
+                            <td colspan="5" class="text-center py-4" style="color:#999;">
+                                Data tidak ditemukan
+                            </td>
+                        </tr>
+                    `);
+                    $('.paginationSpk').html('');
+                    return;
+                }
 
                 let html = '';
 
-                $.each(data.data, function (i, row) {
+                $.each(res.data.data, function (i, row) {
                     html += `
                         <tr>
                             <td>
@@ -215,10 +263,15 @@ function formatJam(date) {
                 })
                 $('#tbodySpk').html(html);
 
-                renderPaginationSpk(data);
+                renderPaginationSpk(res);
             },
-            error: function (xhr, status, error) {
-                console.error("Error loading SPK data:", error);
+            error: function (xhr) {
+                $('#tbodySpk').html(
+                    `<tr><td colspan="5" class="text-center py-4" style="color:#c0392b;">Gagal memuat data. Silakan coba lagi.</td></tr>`
+                );
+                console.log(xhr.status);
+                console.log(xhr.responseJSON);
+                console.log(xhr.responseText);
             }
         });
     }
@@ -235,14 +288,14 @@ function formatJam(date) {
     });
 
     // PAGINATION
-    function renderPaginationSpk(data)
+    function renderPaginationSpk(res)
     {
         let html = '';
 
-        if (data.prev_page_url) {
+        if (res.data.prev_page_url) {
             html += `
                 <button class="btn btn-sm btn-secondary page"
-                        data-page="${data.current_page - 1}">
+                        data-page="${res.data.current_page - 1}">
                     ← Previous
                 </button>
             `;
@@ -250,28 +303,28 @@ function formatJam(date) {
 
         html += `
             <span class="mx-2">
-                Page ${data.current_page} of ${data.last_page}
+                Page ${res.data.current_page} of ${res.data.last_page}
             </span>
         `;
 
-        if (data.next_page_url) {
+        if (res.data.next_page_url) {
             html += `
                 <button class="btn btn-sm btn-secondary page"
-                        data-page="${data.current_page + 1}">
+                        data-page="${res.data.current_page + 1}">
                     Next →
                 </button>
             `;
         }
 
-        $('#paginationSpk').html(html);
+        $('.paginationSpk').html(html);
     }
 
     $(document).on('click', '.page', function () {
         loadSpkData($(this).data('page'));
     });
 
-    $(document).ready(function () {
+    function initRequestStock() {
         loadSpkData();
-    });
+    }
 </script>
 @endpush

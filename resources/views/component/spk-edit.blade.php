@@ -47,10 +47,12 @@
 @section('title','Edit SPK')
 @section('page-title','SPK')
 
-@push('button')
-@section('button-title','Create SPK')
-@include('component.button-create-spk')
-@endpush
+@if(Auth::user()->access == 'salesman')
+    @push('button')
+    @section('button-title','Create SPK')
+    @include('component.button-create-spk')
+    @endpush
+@endif
 
 @push('link-bread')
 <li class="nav-item">

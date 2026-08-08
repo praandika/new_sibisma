@@ -158,7 +158,7 @@ function loadSpkData(page = 1) {
             search: $('#searchSpk').val()
         },
         success: function (data) {
-
+            // CEK DATA KOSONG ATAU TIDAK
             if (data.data.length === 0) {
                 $('#tbodySpk').html(`
                     <tr>

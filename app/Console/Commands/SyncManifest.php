@@ -154,8 +154,8 @@ class SyncManifest extends BaseSyncCommand
                                 'assembly_date' => $assemblyDate,
                                 'year_mc' => $yearMc,
 
-                                'status' => 'ready',
-                                'info' => 'onhand',
+                                'info' => 'ready',
+                                'status' => 'onhand',
                                 'created_at'=>$now,
                                 'updated_at'=>$now
                             ];

@@ -86,6 +86,7 @@
             data: {
                 search: $('#searchStock').val(),
                 model_name: $('#model_name_filter').val(), // ← ambil dari URL edit
+                faktur_color: $('#model_name_color').val(), // ← ambil dari URL edit
                 page: page
             },
             success: function(res){

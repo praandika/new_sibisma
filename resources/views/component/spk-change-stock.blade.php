@@ -164,6 +164,7 @@
                                         style="text-transform: uppercase;" required readonly>
 
                                     <input type="hidden" id="model_name_filter" value="{{ $model }}">
+                                    <input type="hidden" id="model_name_color" value="{{ $color }}">
                                 </div>
                             </div>
                         </div>

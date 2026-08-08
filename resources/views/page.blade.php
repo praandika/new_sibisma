@@ -18,16 +18,8 @@
             </li>
             @endpush
             
-            <livewire:rank>
             @include('component.request-stock-list')
-            <livewire:sale-chart>
-            <livewire:ratio-stock>
-            <livewire:sale-l-m>
-            <livewire:sale-l-y>
-            <livewire:sale-by-dealer-chart>
-            <livewire:top-product-chart>
-            <livewire:top-stock-chart>
-            <livewire:modal-ranking>
+            
         @endif
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))

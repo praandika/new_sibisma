@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Prospect;
 use App\Models\UnitOnHand;
 use App\Models\MasterUnit;
+use Illuminate\Support\Facades\DB;
 
 class SpkController extends Controller
 {
@@ -101,19 +102,36 @@ class SpkController extends Controller
     // MODAL PROSPECT AJAX
     public function prospectSearch(Request $request)
     {
-        $search = $request->search;
-
         $data = Prospect::query()
             ->where('dealer_code', Auth::user()->dealer_code)
             ->where('salesman', Auth::user()->name)
-            ->when($search, function ($q) use ($search) {
-                $q->where('customer_name', 'like', "%{$search}%")
-                ->orWhere('ktp_no', 'like', "%{$search}%")
-                ->where('dealer_code', Auth::user()->dealer_code)
-                ->where('salesman', Auth::user()->name);
-            })
-            ->orderby('prospect_date', 'desc')
-            ->paginate(10);
+            ->where('status', '!=', 'spk');
+
+        if ($request->filled('search')) {
+
+            $keywords = preg_split(
+                '/\s+/',
+                trim($request->search)
+            );
+
+            foreach ($keywords as $keyword) {
+
+                $data->where(function ($q) use ($keyword) {
+
+                    $q->where('customer_name', 'like', "%{$keyword}%")
+                        ->orWhere('phone', 'like', "%{$keyword}%")
+                        ->orWhere('ktp_no', 'like', "%{$keyword}%")
+                        ->orWhere('interest_type', 'like', "%{$keyword}%")
+                        ->orWhere('interest_color', 'like', "%{$keyword}%")
+                        ->orWhere('salesman', 'like', "%{$keyword}%")
+                        ->orWhere('prospect_key', 'like', "%{$keyword}%");
+                });
+
+            }
+        }
+
+        $data = $data->orderBy('prospect_date', 'desc')
+        ->paginate(10);
 
         return response()->json($data);
     }
@@ -121,23 +139,55 @@ class SpkController extends Controller
     // DATA SPK AJAX
     public function spkData(Request $request)
     {
-        $search = $request->search;
+        try {
+            $keywords = preg_split('/\s+/', trim($request->search));
 
-        $data = Spk::query()
-            ->where('dealer_code', Auth::user()->dealer_code)
-            ->where('manpower', Auth::user()->name)
-            ->when($search, function ($q) use ($search) {
-                $q->where('order_name', 'like', "%{$search}%")
-                ->orWhere('ktp_number', 'like', "%{$search}%")
-                ->orWhere('payment_method', 'like', "%{$search}%")
-                ->orWhere('order_status', 'like', "%{$search}%")
-                ->orWhere('spk_no', 'like', "%{$search}%")
-                ->orWhere('model_name', 'like', "%{$search}%");
-            })
-            ->orderby('spk_date', 'asc')
-            ->paginate(10);
+            if (Auth::user()->access == 'salesman') {
+                $query = Spk::query()
+                ->where('dealer_code', Auth::user()->dealer_code)
+                ->where('manpower', Auth::user()->name);
+            } else {
+                $query = Spk::query()
+                ->where('dealer_code', Auth::user()->dealer_code);
+            }
 
-        return response()->json($data);
+            // SEARCH
+            if ($request->filled('search')) {
+
+                $keywords = preg_split('/\s+/', trim($request->search));
+
+                foreach ($keywords as $keyword) {
+
+                    $query->where(function ($q) use ($keyword) {
+
+                        $q->where('order_name', 'like', "%{$keyword}%")
+                        ->orWhere('ktp_number', 'like', "%{$keyword}%")
+                        ->orWhere('payment_method', 'like', "%{$keyword}%")
+                        ->orWhere('order_status', 'like', "%{$keyword}%")
+                        ->orWhere('spk_no', 'like', "%{$keyword}%")
+                        ->orWhere('model_name', 'like', "%{$keyword}%");
+                    });
+
+                }
+            }
+
+            // Lalu urutkan data
+            $query->orderby('spk_date', 'asc');
+
+            $data = $query->paginate(10);
+
+            return response()->json([
+                'dealer' => Auth::user()->dealer_code,
+                'data'   => $data,
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
     }
 
     // CEK STOCK AJAX
@@ -148,7 +198,8 @@ class SpkController extends Controller
 
             $data = UnitOnhand::query()
                 ->where('model_name', $request->model)
-                ->where('status', 'ready')
+                ->where('info', 'ready')
+                ->where('status', 'onhand')
                 ->where('faktur_color', $request->color)
                 ->where('dealer_code', Auth::user()->dealer_code)
                 ->when($search, function ($q) use ($search) {
@@ -179,7 +230,8 @@ class SpkController extends Controller
 
             $query = UnitOnhand::query()
             ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
-            ->where('unit_on_hands.status', 'ready')
+            ->where('unit_on_hands.info', 'ready')
+            ->where('unit_on_hands.status', 'onhand')
             ->select(
                 'unit_on_hands.*','dealers.dealer_name'
             );
@@ -251,13 +303,14 @@ class SpkController extends Controller
 
             $query = UnitOnhand::query()
             ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
-            ->where('unit_on_hands.status', 'ready')
+            ->where('unit_on_hands.info', 'ready')
+            ->where('unit_on_hands.status', 'onhand')
             ->where('unit_on_hands.dealer_code',Auth::user()->dealer_code)
             ->select(
                 'unit_on_hands.*','dealers.dealer_name'
             );
 
-            // FILTER BY MODEL NAME (dari model_name_filter di form edit)
+            // FILTER BY MODEL NAME AND COLOR (dari model_name_filter di form edit)
             if ($request->filled('model_name')) {
                 $query->where('unit_on_hands.model_name', $request->model_name);
             }
@@ -308,31 +361,6 @@ class SpkController extends Controller
         return response()->json([
             'price' => $unit ? $unit->price : 0
         ]);
-    }
-
-    // REQUEST STOCK AJAX
-    public function requestStock(Request $request)
-    {
-        try {
-
-            $search = $request->search;
-            
-            $data = UnitOnhand::query()
-            ->when($search, function ($q) use ($search) {
-                $q->where('model_name', 'like', "%{$search}%")
-                ->orWhere('color', 'like', "%{$search}%");
-            })
-            ->paginate(10);
-
-            return response()->json($data);
-
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'error' => $e->getMessage()
-            ],500);
-
-        }
     }
 
     /**
@@ -430,6 +458,27 @@ class SpkController extends Controller
         $data->save();
         toast('SPK berhasil dibuat','success');
 
+        // UPDATE STATUS STOCK
+        if ($request->filled('frame_no')) {
+            $unit = UnitOnHand::where('frame_no', $request->frame_no)->first();
+
+            if ($unit) {
+                $unit->status = 'onhold';
+                $unit->info = 'booked by '.Auth::user()->name.' - '.Auth::user()->dealer_code;
+                $unit->save();
+            }
+        }
+
+        // UPDATE STATUS PROSPECT
+        if ($request->filled('prospect_key')) {
+            $prospect = Prospect::where('prospect_key', $request->prospect_key)->first();
+
+            if ($prospect) {
+                $prospect->status = 'spk';
+                $prospect->save();
+            }
+        }
+
         if ($request->payment == 'CREDITCARD') {
             $history = new HistoryCredit;
             $history->spk = $request->spk_no;
@@ -516,6 +565,8 @@ class SpkController extends Controller
             $data = Spk::find($spk->id);
             $data->order_status = 'REQUEST STOCK';
             $data->model_name = strtoupper($request->model_name);
+            $data->faktur_color = strtoupper($request->color);
+            $data->year_mc = $request->year;
             $data->point_code = $request->point_code;
             $data->update();
             toast('Request stock berhasil dikirim','success');
@@ -569,7 +620,7 @@ class SpkController extends Controller
 
             // Save Record to History Credit
 
-            if ($request->payment_method == 'credit') {
+            if ($request->payment_method == 'CREDITCARD') {
                 $history = new HistoryCredit;
                 $history->leasing_id = $request->leasing_id;
                 $history->spk = $request->spk_no;
@@ -617,6 +668,7 @@ class SpkController extends Controller
 
     public function processChangeStock(Request $request, $spk, $dealer_code)
     {
+        // UPDATE SPK
         $data = Spk::where('spk_no', $spk)->first();
         $data->model_name = strtoupper($request->model_name);
         $data->frame_no = strtoupper($request->frame_no);
@@ -628,6 +680,13 @@ class SpkController extends Controller
         $data->point_code = $dealer_code;
         $data->updated_by = Auth::user()->id;
         $data->update();
+
+        // UPDATE STOCK INFO
+        $unit = UnitOnHand::where('frame_no', $request->frame_no)->first();
+        $unit->point_code = $dealer_code;
+        $unit->status = 'mutation';
+        $unit->info = 'mutation from '.Auth::user()->dealer_code.' to '.$dealer_code;
+        $unit->update();
 
         toast('Request Stock Approved','success');
         return redirect()->route('dashboard');

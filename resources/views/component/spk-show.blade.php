@@ -69,10 +69,10 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' ? 'danger' : ($a->order_status == 'ready' || $a->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
+        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' || $a->order_status == 'rejected' || $a->order_status == 'REJECTED' ? 'danger' : ($a->order_status == 'ready' || $a->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($a->order_status == 'indent')
+                    @if($a->order_status == 'indent' || $a->order_status == 'rejected')
                     <img src="{{ asset('img/indent.png') }}" alt="Indent">
                     @elseif($a->order_status == 'ready')
                     <img src="{{ asset('img/available.png') }}" alt="Ready">
