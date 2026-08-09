@@ -17,7 +17,6 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <livewire:widget-stock-qty>
             <h4 class="card-title">Request Stock</h4>
         </div>
         <div class="card-body">
@@ -90,6 +89,11 @@
 </div>
 
 @push('after-script')
+<script>
+    const authDealerCode = @json(Auth::user()->dealer_code);
+
+    console.log('Dealer Login:', authDealerCode);
+</script>
 <script>
     // Format Tanggal JS
     function formatTanggal(tanggal) {
@@ -182,6 +186,9 @@ function loadSpkData(page = 1) {
                                     <div style="font-weight: bold;">Request From ${row.dealer_name}</div>
                                 </span>
                                 <span class="secondary-data">
+                                    <div style="font-size: 11px;" class="mb-1">
+                                        Request from ${row.dealer_code} to ${row.point_code}
+                                    </div>
                                     <span class="badge badge-secondary mt-2">
                                         ${row.updated_at ? formatTanggal(row.updated_at) : '-'}
                                     </span>
@@ -238,18 +245,25 @@ function loadSpkData(page = 1) {
                         <td>${row.manpower}</td>
                         <td>
                             <div class="form-button-action">
-                                <a href="/spk/change-stock/${row.spk_no}/${row.dealer_code}/${row.model_name}" class="btnAction"
+                            ${
+                                authDealerCode != 'group'
+                                ? `<a href="/spk/change-stock/${row.spk_no}/${row.dealer_code}/${row.model_name}/${row.faktur_color}" class="btnAction"
                                     data-toggle="tooltip" data-placement="top" title="Approve"
-                                    style="color:#5ad166;" target="_blank"><i
+                                        style="color:#5ad166;" target="_blank"><i
                                         class="fas fa-check"></i></a>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="javascript:void(0);" class="btnAction btnRejectSpk"
-                                    data-url="/spk/reject/${row.spk_no}/${row.dealer_code}"
-                                    data-spkno="${row.spk_no}"
-                                    data-dealer="${row.dealer_name}"
-                                    data-model="${row.model_name}"
-                                    data-toggle="tooltip" data-placement="top" title="Reject" style="color:red;"><i
-                                        class="fas fa-times"></i></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="javascript:void(0);" class="btnAction btnRejectSpk"
+                                        data-url="/spk/reject/${row.spk_no}/${row.dealer_code}"
+                                        data-spkno="${row.spk_no}"
+                                        data-dealer="${row.dealer_name}"
+                                        data-model="${row.model_name}"
+                                        data-toggle="tooltip" data-placement="top" title="Reject" style="color:red;"><i
+                                        class="fas fa-times"></i></a>`
+                                : `<a href="javascript:void(0);" disabled class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Approve"
+                                            style="color:grey;"><i
+                                                class="fas fa-check"></i></a>`
+                            }
                             </div>
                         </td>
                     </tr>
@@ -317,9 +331,7 @@ function loadSpkData(page = 1) {
         loadSpkData($(this).data('page'));
     });
 
-    function initRequestStock() {
-        loadSpkData();
-    }
+    // INIT LOAD DATA ADA DI BLADE MUTATION STOCK LIST
 </script>
 
 <script>

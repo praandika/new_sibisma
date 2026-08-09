@@ -25,8 +25,8 @@
 </style>
 @endpush
 
-@section('title','Stock On-Hand')
-@section('page-title','Stock On-Hand')
+@section('title','Stock Mutation')
+@section('page-title','Stock Mutation')
 
 @if(Auth::user()-> access == 'owner')
 @push('button')
@@ -36,14 +36,14 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('stock.onhand') }}">Data Stock On-Hand</a>
+    <a href="{{ route('stock.mutation') }}">Data Stock Mutation</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Stock On-Hand Data</h4>
+            <h4 class="card-title">Stock Mutation Data</h4>
         </div>
         <div class="card-body">
             {{-- Search --}}
@@ -163,7 +163,7 @@
         showSkeletonRows(); // tampilkan skeleton sebelum request
 
         $.ajax({
-            url: "{{ route('stock.onhand-ajax') }}",
+            url: "{{ route('stock.mutation-ajax') }}",
             type: "GET",
             dataType: "json",
             data: {
@@ -239,7 +239,7 @@
                         </td>
                         <td>
                             <div class="td-group">
-                                <span class="main-data"><span class="badge badge-success">${ucwords(row.status)}</span></span>
+                                <span class="main-data"><span class="badge badge-warning">${ucwords(row.status)}</span></span>
                                 <span class="secondary-data">
                                     <div style="font-size: 11px; font-weight: bold;" class="mb-1">
                                     ${row.info.toUpperCase()}

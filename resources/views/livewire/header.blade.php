@@ -46,6 +46,16 @@
                 </li>
                 <!-- END Search Icon Mobile-->
 
+                <!-- Access Info -->
+                <i class="far fa-user" style="font-size: 25px; color: white;"></i>
+                <li class="nav-item dropdown hidden-caret">
+                    <a href="#" class="nav-link">
+                        <span>{{ ucwords(Auth::user()->name) }}</span>
+                        <span style="display: block; font-size: 10px; text-align: left;">{{ ucwords(Auth::user()->access) }}</span>
+                    </a>
+                </li>
+                <!-- END Access Info -->
+
                 <!-- Realtime DateTime -->
                 <li class="nav-item dropdown hidden-caret">
                     <a href="#" class="nav-link">

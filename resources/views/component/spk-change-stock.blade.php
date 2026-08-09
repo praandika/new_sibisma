@@ -85,7 +85,8 @@
             @foreach($spk as $o)
             <form action="{{ route('spk.process-change-stock', [
                 'spk_no' => $o->spk_no,
-                'dealer_code' => $o->dealer_code
+                'dealer_code' => $o->dealer_code,
+                'faktur_color' => $o->faktur_color
                 ]) }}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
 
@@ -144,8 +145,9 @@
                                         style="text-transform: uppercase;" required readonly>
 
                                     <!-- COLOR -->
+                                    <!-- PASSING data name="COLOR" ke modal -->
                                     <input id="color" type="hidden" class="form-control form-control-sm"
-                                        name="color" value="{{ $o->color }}"
+                                        name="color" value="{{ $o->faktur_color }}"
                                         style="text-transform: uppercase;" required readonly>
 
                                     <!-- YEAR -->
@@ -163,6 +165,7 @@
                                         name="point_code" value="{{ $dealer_code }}"
                                         style="text-transform: uppercase;" required readonly>
 
+                                    <!-- AMBIL VARIABLE DARI FUNCTION CHANGESTOCK YANG DI AMBIL DARI LINK URL LIST STOCK REQUEST DI DAHSBOARD -->
                                     <input type="hidden" id="model_name_filter" value="{{ $model }}">
                                     <input type="hidden" id="model_name_color" value="{{ $color }}">
                                 </div>

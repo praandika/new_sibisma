@@ -174,6 +174,18 @@ function formatJam(date) {
                 let html = '';
 
                 $.each(res.data.data, function (i, row) {
+
+                // CEK KELENGKAPAN DATA
+                const lengkap =
+                    String(row.ktp_number ?? '').trim() !== '' &&
+                    String(row.spk_phone ?? '').trim() !== '' &&
+                    String(row.address_shipment ?? '').trim() !== '' &&
+                    String(row.address ?? '').trim() !== '' &&
+                    String(row.frame_no ?? '').trim() !== '' &&
+                    String(row.faktur_color ?? '').trim() !== '' &&
+                    String(row.ktp ?? '').trim() !== '' &&
+                    String(row.stnk_name ?? '').trim() !== '';
+
                     html += `
                         <tr>
                             <td>
@@ -197,7 +209,8 @@ function formatJam(date) {
                             <td>
                                 <div class="td-group">
                                     <span class="main-data">
-                                        ${row.spk_no}
+                                        <a href="/spk/get/${row.spk_no}" class="btnAction" target="_blank" style="font-size: 14px;"
+                                        data-toggle="tooltip" data-placement="top" title="Show">${row.spk_no}</a>
                                         ${
                                             row.order_status == 'indent' || row.order_status == 'INDENT'
                                             ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
@@ -249,7 +262,7 @@ function formatJam(date) {
                                             class="fas fa-edit"></i></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     ${
-                                        row.order_status == 'READY'
+                                        row.order_status == 'READY' && lengkap
                                         ? `<a href="/spk/get/${row.spk_no}" class="btnAction"
                                         target="_blank"
                                         data-toggle="tooltip" data-placement="top" title="Detail" style="color:orange;"><i

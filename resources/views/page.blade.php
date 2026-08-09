@@ -19,6 +19,7 @@
             @endpush
             
             @include('component.request-stock-list')
+            @include('component.mutation-stock-list')
             
         @endif
     <!-- Dealer Page -->
@@ -157,12 +158,14 @@
     @elseif(Route::is('stock.*'))
         @if(Route::is('stock.show'))
             @include('component.stock-show')
+        @elseif(Route::is('stock.onhand'))
+            @include('component.stock-onhand')
+        @elseif(Route::is('stock.mutation'))
+            @include('component.stock-mutation')
+        @elseif(Route::is('stock.sold'))
+            @include('component.stock-sold')
         @else
-            @if(Auth::user()-> access == 'owner')
-                @include('component.stock-data')
-            @else
-                @include('component.stock-onhand')
-            @endif
+            @include('component.stock-onhand')
         @endif
 
     <!-- Allocation Page -->

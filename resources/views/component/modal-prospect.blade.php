@@ -75,80 +75,89 @@
     // AJAX
     function loadProspect(page = 1)
     {
-        $.get('/prospect-search', {
-            search: $('#searchProspect').val(),
-            page: page
-        }, function(res){
+        
+        $.ajax({
+            url: '/prospect-search',
+            type: 'GET',
+            data: {
+                search: $('#searchProspect').val(),
+                page: page
+            },
+            success: function(res) {
+                let html = '';
 
-            let html = '';
+                $.each(res.data, function(i,row){
 
-            $.each(res.data, function(i,row){
+                    html += `
+                    <tr class="pilih"
+                        data-name="${row.customer_name}"
+                        data-ktp="${row.ktp_no}"
+                        data-phone="${row.phone}"
+                        data-model="${row.interest_type}"
+                        data-color="${row.interest_color}"
+                        data-address="${row.address}"
+                        data-ktp="${row.ktp_no}"
+                        data-payment="${row.payment_type}"
+                        data-leasing="${row.leasing_name}"
+                        data-downpayment="${row.down_payment}"
+                        data-tenor="${row.tenor}"
+                        data-discount="${row.discount}"
+                        data-deposit="${row.deposit}"
+                        data-gender="${row.gender}"
+                        data-prospect_key="${row.prospect_key}"
+                        data-prospect_date="${row.prospect_date}"
+                        data-dealer="${row.dealer_code}">
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${ucwords(row.customer_name)}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; dislay:inline-block;">${row.prospect_date}</div>
+                                    <div style="font-size: 11px; font-weight: bold;" class="mb-1">
+                                    ${
+                                        row.ktp_no 
+                                        ? `<span class="badge badge-primary"> ${row.ktp_no}`
+                                        : `<span class="badge badge-danger"> no KTP`
+                                    }
+                                    </div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${ucwords(row.interest_color)}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; dislay:inline-block; font-weight: bold; font-style: italic;" class="mt-2">${ucwords(row.interest_type)}</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${row.phone}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.address)}</div>
+                                    <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_type} - ${row.leasing_name ? row.leasing_name : ''}</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="td-group">
+                                <span class="main-data">${row.point_code}</span>
+                                <span class="secondary-data">
+                                    <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.salesman)}</div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
 
-                html += `
-                <tr class="pilih"
-                    data-name="${row.customer_name}"
-                    data-ktp="${row.ktp_no}"
-                    data-phone="${row.phone}"
-                    data-model="${row.interest_type}"
-                    data-color="${row.interest_color}"
-                    data-address="${row.address}"
-                    data-ktp="${row.ktp_no}"
-                    data-payment="${row.payment_type}"
-                    data-leasing="${row.leasing_name}"
-                    data-downpayment="${row.down_payment}"
-                    data-tenor="${row.tenor}"
-                    data-discount="${row.discount}"
-                    data-deposit="${row.deposit}"
-                    data-gender="${row.gender}"
-                    data-prospect_key="${row.prospect_key}"
-                    data-prospect_date="${row.prospect_date}"
-                    data-dealer="${row.dealer_code}">
-                    <td>
-                        <div class="td-group">
-                            <span class="main-data">${ucwords(row.customer_name)}</span>
-                            <span class="secondary-data">
-                                <div style="font-size: 11px; dislay:inline-block;">${row.prospect_date}</div>
-                                <div style="font-size: 11px; font-weight: bold;" class="mb-1">
-                                ${
-                                    row.ktp_no 
-                                    ? `<span class="badge badge-primary"> ${row.ktp_no}`
-                                    : `<span class="badge badge-danger"> no KTP`
-                                }
-                                </div>
-                            </span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-group">
-                            <span class="main-data">${ucwords(row.interest_color)}</span>
-                            <span class="secondary-data">
-                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold; font-style: italic;" class="mt-2">${ucwords(row.interest_type)}</div>
-                            </span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-group">
-                            <span class="main-data">${row.phone}</span>
-                            <span class="secondary-data">
-                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.address)}</div>
-                                <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_type} - ${row.leasing_name ? row.leasing_name : ''}</div>
-                            </span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="td-group">
-                            <span class="main-data">${row.point_code}</span>
-                            <span class="secondary-data">
-                                <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.salesman)}</div>
-                            </span>
-                        </div>
-                    </td>
-                </tr>`;
-            });
+                $('#tbodyProspect').html(html);
 
-            $('#tbodyProspect').html(html);
-
-            renderPagination(res);
+                renderPagination(res);
+            },
+            error: function(xhr) {
+                console.error('STATUS:', xhr.status);
+                console.error('RESPONSE:', xhr.responseText);
+            }
         });
     }
 

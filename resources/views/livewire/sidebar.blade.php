@@ -104,6 +104,7 @@
                                 @include('menu.user')
                                 @include('menu.idcard')
                                 @include('menu.log')
+                                @include('menu.api-connection')
                             @endif
                         @endif
 

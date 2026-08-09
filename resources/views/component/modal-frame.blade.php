@@ -90,7 +90,6 @@
         }, function(res){
 
             console.log("loadFrameModal jalan");
-            console.log(res);
             let html='';
 
             $.each(res.data.data,function(i,row){
@@ -110,9 +109,9 @@
                                 <div style="font-size: 11px; font-weight: bold;">${row.model_name}</div>
                                 <div style="font-size: 11px; font-weight: bold;" class="mb-1">
                                 ${
-                                    row.status == 'ready'
-                                    ? `<span class="badge badge-primary"> ${row.status}`
-                                    : `<span class="badge badge-danger"> ${row.status}`
+                                    row.info == 'ready'
+                                    ? `<span class="badge badge-primary"> ${row.info}`
+                                    : `<span class="badge badge-danger"> ${row.info}`
                                 }
                                 </div>
                             </span>

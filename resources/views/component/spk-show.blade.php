@@ -25,43 +25,42 @@
 </li>
 @endpush
     <!-- Status -->
-    @foreach($data as $a)
     <div class="col-md-4">
         <div class="card card-dark bg-dark-gradient curves-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method.png') }}" alt="payment method"></div>
-                <h2 class="mb-2">{{ ucwords($a->payment_method) }}</h2>
+                <h2 class="mb-2">{{ ucwords($data->payment_method) }}</h2>
                 <p>Payment Method</p>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        @if($a->payment_method == 'CASH' || $a->payment_method == 'cash')
+        @if($data->payment_method == 'CASH' || $data->payment_method == 'cash')
         <div class="card card-dark bg-dark-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     <img src="{{ asset('img/cash.png') }}" alt="Cash">
                 </div>
-                <h2 class="mb-2">{{ ucwords($a->microfinance) }}</h2>
+                <h2 class="mb-2">{{ ucwords($data->microfinance) }}</h2>
                 <p>Microfinance</p>
             </div>
         </div>
         @else
-        <div class="card card-dark bg-{{ $a->credit_status == 'survey' ? 'info' : ($a->credit_status == 'acc' ? 'success' : 'danger') }}-gradient skew-shadow">
+        <div class="card card-dark bg-{{ $data->credit_status == 'survey' ? 'info' : ($data->credit_status == 'acc' ? 'success' : 'danger') }}-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($a->credit_status == 'survey')
+                    @if($data->credit_status == 'survey')
                     <img src="{{ asset('img/survey.png') }}" alt="Survey">
-                    @elseif($a->credit_status == 'acc')
+                    @elseif($data->credit_status == 'acc')
                     <img src="{{ asset('img/acc.png') }}" alt="Acc">
-                    @elseif($a->credit_status == 'reject')
+                    @elseif($data->credit_status == 'reject')
                     <img src="{{ asset('img/reject.png') }}" alt="Reject">
                     @else
                     <img src="{{ asset('img/cash.png') }}" alt="Cash">
                     @endif
                 </div>
-                <h2 class="mb-2">{{ ucwords($a->credit_status) }}</h2>
+                <h2 class="mb-2">{{ ucwords($data->credit_status) }}</h2>
                 <p>Credit Status</p>
             </div>
         </div>
@@ -69,23 +68,22 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-{{ $a->order_status == 'indent' || $a->order_status == 'INDENT' || $a->order_status == 'rejected' || $a->order_status == 'REJECTED' ? 'danger' : ($a->order_status == 'ready' || $a->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
+        <div class="card card-dark bg-{{ $data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED' ? 'danger' : ($data->order_status == 'ready' || $data->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($a->order_status == 'indent' || $a->order_status == 'rejected')
+                    @if($data->order_status == 'indent' || $data->order_status == 'rejected')
                     <img src="{{ asset('img/indent.png') }}" alt="Indent">
-                    @elseif($a->order_status == 'ready')
+                    @elseif($data->order_status == 'ready')
                     <img src="{{ asset('img/available.png') }}" alt="Ready">
                     @else
                     <img src="{{ asset('img/indent.png') }}" alt="Request Stock">
                     @endif
                 </div>
-                <h2 class="mb-2">{{ ucwords($a->order_status) }}</h2>
+                <h2 class="mb-2">{{ ucwords($data->order_status) }}</h2>
                 <p>Order Status</p>
             </div>
         </div>
     </div>
-    @endforeach
     <!-- END Status -->
 
 <div class="col-md-12">
@@ -95,8 +93,34 @@
                 <div class="col-md-6">
                     <h4 class="card-title">{{ $spk_no }}</h4>
                 </div>
+                <!-- CONTROL BUTTON -->
                 <div class="col-md-6" style="text-align: right;">
-                    @if($a->order_status == 'ready' || $a->order_status == 'READY')
+                    @if($data->order_status == 'ready' || $data->order_status == 'READY')
+                        @if(
+                            filled($data->ktp_number) &&
+                            filled($data->spk_phone) &&
+                            filled($data->address_shipment) &&
+                            filled($data->frame_no) &&
+                            filled($data->faktur_color) &&
+                            filled($data->ktp) &&
+                            filled($data->stnk_name)
+                        )
+                            <button type="button"
+                                    class="btn btn-secondary btn-round print-pdf"
+                                    style="margin-bottom: 20px;"
+                                    data-toggle="modal"
+                                    data-target="#modalConfirmSale">
+                                <i class="fas fa-check"></i>
+                                &nbsp;&nbsp; <strong>Proses Jual</strong>
+                            </button>
+                            &nbsp;
+                        @else
+                            <button type="button" class="btn btn-secondary btn-round print-pdf"
+                            style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp; <strong>Proses Jual</strong>
+                            </button>
+                            &nbsp;
+                        @endif
+
                         <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
                         </a>
@@ -121,7 +145,6 @@
         </div>
         <div class="card-body">
             <div class="row">
-                @forelse($data as $o)
                 <div class="col-md-6">
                     <center>
                         <h2>SURAT PESANAN KENDARAAN (SPK)</h2>
@@ -130,64 +153,67 @@
                     <table class="table table-striped">
                         <tr>
                             <th width="200">Tanggal</th>
-                            <td>: {{ $o->spk_date }}</td>
+                            <td>: {{ $data->spk_date }}</td>
                         </tr>
                         <tr>
                             <th width="200">Nama Pemesan</th>
-                            <td>: {{ $o->order_name }}</td>
+                            <td>: {{ $data->order_name }}</td>
                         </tr>
                         <tr>
+                            <th width="200">Nama STNK</th>
+                            <td>: {{ $data->stnk_name }}</td>
+                        <tr>
                             <th width="200">KTP</th>
-                            <td>: {{ $o->ktp_number }}</td>
+                            <td>: {{ $data->ktp_number }}</td>
                         </tr>
                         <tr>
                             <th width="200">Alamat KTP</th>
-                            <td>: {{ $o->customer_address }}</td>
+                            <td>: {{ $data->customer_address }}</td>
                         </tr>
                         <tr>
                             <th width="200">Alamat Pengiriman</th>
-                            <td>: {{ $o->address_shipment }}</td>
+                            <td>: {{ $data->address_shipment }}</td>
                         </tr>
                         <tr>
                             <th width="200">No. Telp</th>
-                            <td>: {{ $o->spk_phone }}</td>
+                            <td>: {{ $data->spk_phone }}</td>
                         </tr>
                         <tr>
                             <th width="200">Nama STNK & BPKB</th>
-                            <td>: {{ $o->stnk_name }}</td>
+                            <td>: {{ $data->stnk_name }}</td>
                         </tr>
                         <tr>
                             <th width="200">Type Motor</th>
-                            <td>: {{ $o->model_name }}</td>
+                            <td>: {{ $data->model_name }}</td>
                         </tr>
                         <tr>
                             <th width="200">Warna Motor</th>
-                            <td>: {{ $o->faktur_color }}</td>
+                            <td>: {{ $data->faktur_color }}</td>
                         </tr>
                         <tr>
                             <th width="200">Harga OTR</th>
-                            <td>: Rp {{ number_format($o->price, 0, ',','.') }}</td>
+                            <td>: Rp {{ number_format($data->price, 0, ',','.') }}</td>
                         </tr>
                         <tr>
                             <th width="200">Uang Muka</th>
-                            <td>: Rp {{ number_format($o->downpayment, 0, ',','.') }}</td>
+                            <td>: Rp {{ number_format($data->downpayment, 0, ',','.') }}</td>
                         </tr>
                         <tr>
                             <th width="200">Potongan</th>
-                            <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
+                            <td>: Rp {{ number_format($data->discount, 0, ',','.') }}</td>
                         </tr>
                         <tr>
-                            @if($o->payment_method == 'CASH' || $o->payment_method == 'cash')
+                            @if($data->payment_method == 'CASH' || $data->payment_method == 'cash')
                                 <th width="200">Microfinance</th>
-                                <td>: {{ $o->microfinance }}</td>
+                                <td>: {{ $data->microfinance }}</td>
                             @else
                                 <th width="200">Finance</th>
-                                <td>: {{ $o->leasing }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                                <td>: {{ $data->leasing }} {{ $data->bunga }} {{ $data->tenor == '' ? $data->tenor : $data->tenor.' Bulan' }}</td>
                             @endif
                         </tr>
                         <tr>
                             <th width="200">Salesman</th>
-                            <td>: {{ $o->salesman }}</td>
+                            <td>: {{ $data->salesman }}</td>
                         </tr>
                     </table>
                 </div>
@@ -246,22 +272,121 @@
                         <textarea name="description" id="description" cols="30" rows="10"
                             class="form-control input-border-bottom" readonly
                             style="border: 1px dashed grey; padding: 10px;">
-                            {{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }}{{ $o->description }}
+                            {{ $data->tandajadi > 0 ? 'Tanda Jadi '.number_format($data->tandajadi, 0, ',','.') : '' }}{{ $data->description }}
                         </textarea>
                         
                             <div class="card" style="margin-top: 10px;">
                                 <div class="card-body">
-                                    <img src="{{ $o->ktp == '' ? asset('img/noimage.jpg') : asset('img/ktp/'.$o->ktp.'') }}" alt="{{ $o->ktp }}" style="width: 100%; height: 100%;">
+                                    <img src="{{ $data->ktp == '' ? asset('img/noimage.jpg') : asset('img/ktp/'.$data->ktp.'') }}" alt="{{ $data->ktp }}" style="width: 100%; height: 100%;">
                                 </div>
                             </div>
                     </div>
                 </div>
-                @empty
-                <div class="col-md-12">
-                    <h3 style="text-align: center;">no data available</h3>
-                </div>
-                @endforelse
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI JUAL -->
+ <div class="modal fade" id="modalConfirmSale" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-check-circle text-success mr-1"></i>
+                    Konfirmasi Penjualan
+                </h5>
+
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    Apakah Anda yakin ingin memproses SPK ini sebagai
+                    <strong>SOLD</strong>?
+                </p>
+
+                <div class="card bg-light">
+                    <div class="card-body">
+
+                        <div class="row mb-2">
+                            <div class="col-5">SPK</div>
+                            <div class="col-7 font-weight-bold">
+                                {{ $spk->spk_no }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-5">Customer</div>
+                            <div class="col-7">
+                                {{ $spk->order_name }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-5">Model</div>
+                            <div class="col-7">
+                                {{ $spk->model_name }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-5">Color</div>
+                            <div class="col-7">
+                                {{ $spk->faktur_color }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">Frame</div>
+                            <div class="col-7">
+                                {{ $spk->frame_no ?: '-' }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="alert alert-warning mt-3 mb-0">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                    Setelah dikonfirmasi, SPK akan tercatat sebagai
+                    <strong>SOLD</strong> dan masuk ke laporan penjualan.
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal">
+                    <i class="fas fa-times mr-1"></i>
+                    Batal
+                </button>
+
+                <form action="{{ route('spk.process-sale', $spk->spk_no) }}"
+                      method="POST"
+                      id="formProcessSale">
+
+                    @csrf
+
+                    <button type="submit"
+                            class="btn btn-success"
+                            id="btnConfirmSale">
+                        <i class="fas fa-check mr-1"></i>
+                        Ya, Proses Penjualan
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
     </div>
 </div>

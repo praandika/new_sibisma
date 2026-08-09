@@ -10,6 +10,7 @@ use App\Models\Leasing;
 use App\Models\Manpower;
 use App\Models\Stock;
 use App\Models\Unit;
+use App\Models\Sale;
 use App\Models\HistoryCredit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -146,6 +147,8 @@ class SpkController extends Controller
                 $query = Spk::query()
                 ->where('dealer_code', Auth::user()->dealer_code)
                 ->where('manpower', Auth::user()->name);
+            } else if (Auth::user()->dealer_code == 'group'){
+                $query = Spk::query();
             } else {
                 $query = Spk::query()
                 ->where('dealer_code', Auth::user()->dealer_code);
@@ -310,9 +313,14 @@ class SpkController extends Controller
                 'unit_on_hands.*','dealers.dealer_name'
             );
 
-            // FILTER BY MODEL NAME AND COLOR (dari model_name_filter di form edit)
+            // FILTER BY MODEL NAME (dari faktur_color_filter di form edit)
             if ($request->filled('model_name')) {
                 $query->where('unit_on_hands.model_name', $request->model_name);
+            }
+
+            // FILTER BY MODEL NAME (dari model_name_color di form edit)
+            if ($request->filled('color')) {
+                $query->where('unit_on_hands.faktur_color', $request->color);
             }
 
             // SEARCH
@@ -544,10 +552,10 @@ class SpkController extends Controller
     }
 
     // CHANGE STOCK ON REQUEST STOCK SPK
-    public function changeStock($spk_no, $dealer_code, $model)
+    public function changeStock($spk_no, $dealer_code, $model, $color)
     {
         $spk = Spk::where('spk_no', $spk_no)->get();
-        return view('page', compact('spk','spk_no','dealer_code', 'model'));
+        return view('page', compact('spk','spk_no','dealer_code', 'model','color'));
     }
 
     /**
@@ -692,6 +700,69 @@ class SpkController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function processSale($spk_no)
+    {
+        $spk = Spk::where('spk_no', $spk_no)->firstOrFail();
+
+        // Cegah SPK diproses dua kali
+        if ($spk->sales_status == 'SOLD') {
+            toast('SPK sudah SOLD.', 'warning');
+
+            return redirect()->back();
+        }
+
+        // Validasi data wajib
+        if (
+            blank($spk->ktp_number) ||
+            blank($spk->spk_phone) ||
+            blank($spk->address_shipment) ||
+            blank($spk->frame_no) ||
+            blank($spk->faktur_color) ||
+            blank($spk->ktp) ||
+            blank($spk->stnk_name)
+        ) {
+            toast('Data SPK belum lengkap.', 'error');
+
+            return redirect()->back();
+        }
+
+        DB::transaction(function () use ($spk) {
+
+            // INSERT SALES
+            $sale = new Sale;
+            $sale->spk_no = $spk->spk_no;
+            $sale->dealer_code = $spk->dealer_code;
+            $sale->customer_name = $spk->order_name;
+            $sale->model_name = $spk->model_name;
+            $sale->frame_no = $spk->frame_no;
+            $sale->engine_no = $spk->engine_no;
+            $sale->sale_date = now();
+            $sale->created_by = Auth::id();
+            $sale->save();
+
+            // UPDATE SPK
+            $spk->sales_status = 'SOLD';
+            $spk->sold_date = now();
+            $spk->save();
+
+            // UPDATE UNIT ON HAND
+            $unit = UnitOnhand::where(
+                'frame_no',
+                $spk->frame_no
+            )->first();
+
+            if ($unit) {
+                $unit->status = 'sold';
+                $unit->info = 'sold';
+                $unit->save();
+            }
+        });
+
+        toast('Penjualan berhasil diproses.', 'success');
+
+        return redirect()->route('spk.get', $spk->spk_no);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -810,9 +881,9 @@ class SpkController extends Controller
 
     public function get($spk_no){
         $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.ktp')
+        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.ktp','spks.frame_no')
         ->where('spks.spk_no',$spk_no)
-        ->get();
+        ->firstOrFail();
 
         $id = Spk::where('spk_no',$spk_no)->value('id');
 
