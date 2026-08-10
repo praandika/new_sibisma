@@ -218,11 +218,15 @@
                                             class="star">*</span></label>
                                     <span id="stockStatus">
                                         @if($spk->order_status == 'INDENT')
-                                        <span class="badge badge-warning">INDENT</span>
+                                        <span class="badge badge-danger">INDENT</span>
                                         @elseif($spk->order_status == 'READY')
                                         <span class="badge badge-success">READY</span>
+                                        @elseif($spk->order_status == 'REQUEST STOCK')
+                                        <span class="badge badge-warning">REQUEST STOCK</span>
+                                        @elseif($spk->order_status == 'SOLD')
+                                        <span class="badge badge-secondary">SOLD</span>
                                         @else
-                                        <span class="badge badge-danger">EMPTY</span>
+                                        <span class="badge badge-dark">EMPTY</span>
                                         @endif
                                     </span>
                                     <input id="model_name" type="text" class="form-control form-control-sm"

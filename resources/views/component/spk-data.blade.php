@@ -32,6 +32,21 @@
         animation: skeletonPulse 1.4s ease-in-out infinite;
     }
 
+    .truck-icon {
+        display: inline-block;
+        animation: truckMove 1.2s ease-in-out infinite;
+    }
+
+    @keyframes truckMove {
+        0%, 100% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(4px);
+        }
+    }
+
 </style>
 @endpush
 
@@ -94,6 +109,8 @@
         </div>
     </div>
 </div>
+
+@include('component.modal-create-do')
 
 @push('after-script')
 <script>
@@ -225,11 +242,24 @@
                                             ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
                                             : (
                                                 row.order_status == 'ready' || row.order_status == 'READY' && lengkap
-                                                ? `<span class="badge badge-secondary">Ready to Sale</span>`
+                                                ? `<span class="badge badge-dark">Ready to Sale</span>`
                                                 : (
                                                     row.order_status == 'ready' || row.order_status == 'READY'
-                                                    ? `<span class="badge badge-success">${ucwords(row.order_status)}</span>`
-                                                    : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
+                                                    ? `<span class="badge badge-info"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Cek data lain atau data motor apakah sudah ada warna motor dan tahun rangka">
+                                                        Data belum lengkap (?)
+                                                        </span>`
+                                                    : (
+                                                        row.order_status == 'sold' || row.order_status == 'SOLD'
+                                                        ? `<span class="badge badge-secondary">${ucwords(row.order_status)}</span>`
+                                                        : (
+                                                            row.order_status == 'delivered' || row.order_status == 'DELIVERED'
+                                                            ? `<span class="badge badge-success">${ucwords(row.order_status)}</span>`
+                                                            : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
+                                                        )
+                                                    )
                                                 )
                                             )
                                         }
@@ -274,13 +304,30 @@
                                     <a href="/spk/${row.id}/edit" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Edit"><i
                                             class="fas fa-edit"></i></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     ${
                                         row.order_status == 'READY' && lengkap
-                                        ? `<a href="/spk/get/${row.spk_no}" class="btnAction"
+                                        ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="/spk/get/${row.spk_no}" class="btnAction"
                                         target="_blank"
                                         data-toggle="tooltip" data-placement="top" title="Detail" style="color:orange;"><i
                                             class="fas fa-eye"></i></a>`
+                                        : `<span></span>`
+                                    }
+                                    
+                                    ${
+                                        row.order_status == 'SOLD'
+                                        ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="javascript:void(0);"
+                                            class="btnAction btnCreateDo"
+                                            data-toggle="modal"
+                                            data-target="#modalCreateDo"
+                                            data-spk="${row.spk_no}"
+                                            data-placement="top"
+                                            title="Create DO"
+                                            style="color:#228B22; cursor:pointer;">
+
+                                            <i class="fas fa-truck truck-icon"></i>
+                                        </a>`
                                         : `<span></span>`
                                     }
                                 </div>
@@ -289,6 +336,8 @@
                     `;
                 })
                 $('#tbodySpk').html(html);
+
+                $('[data-toggle="tooltip"]').tooltip();
 
                 renderPaginationSpk(res);
             },
@@ -353,5 +402,85 @@
         loadSpkData();
     }
 
+</script>
+
+<!-- TAMPILKAN DATA SALES BY SPK NO KE MODAL CREATE DO -->
+<script>
+    $(document).on('click', '.btnCreateDo', function () {
+
+        const spkNo = $(this).data('spk');
+
+        console.log('SPK yang dikirim:', spkNo);
+
+        $('#do_spk_no').val(spkNo);
+
+        $('#doLoading').show();
+        $('#doContent').hide();
+        $('#btnCreateDo').prop('disabled', true);
+
+        $.ajax({
+            url: "{{ route('sale.byspk-ajax') }}",
+            type: "GET",
+
+            data: {
+                spk_no: spkNo
+            },
+
+            dataType: "json",
+
+            success: function (res) {
+
+                console.log('SUCCESS:', res);
+
+                if (!res.data) {
+                    alert('Data Sales tidak ditemukan.');
+                    return;
+                }
+
+                const sale = res.data;
+
+                console.log('DATA SALES:', sale);
+
+                $('#do_spk_display').val(sale.spk_no);
+                $('#do_sale_date').val(
+                    sale.sale_date ? formatTanggal(sale.sale_date) : '-'
+                );
+                $('#do_customer').val(sale.customer_name || '-');
+                $('#do_stnk_name').val(sale.stnk_name || '-');
+                $('#do_model').val(sale.model_name || '-');
+                $('#do_color').val(sale.faktur_color || '-');
+                $('#do_year').val(sale.year_mc || '-');
+                $('#do_frame').val(sale.frame_no || '-');
+                $('#do_engine').val(sale.engine_no || '-');
+
+                $('#do_address').val(
+                    sale.address_shipment ||
+                    sale.address ||
+                    '-'
+                );
+
+                $('#doLoading').hide();
+                $('#doContent').show();
+
+                $('#btnCreateDo').prop('disabled', false);
+            },
+
+            error: function (xhr, status, error) {
+
+                console.log('========== ERROR GET SALES ==========');
+                console.log('HTTP STATUS:', xhr.status);
+                console.log('STATUS:', status);
+                console.log('ERROR:', error);
+                console.log('RESPONSE:', xhr.responseText);
+                console.log('JSON:', xhr.responseJSON);
+                console.log('====================================');
+
+                alert(
+                    'Gagal mengambil data penjualan.\n\n' +
+                    'HTTP Status: ' + xhr.status
+                );
+            }
+        });
+    });
 </script>
 @endpush

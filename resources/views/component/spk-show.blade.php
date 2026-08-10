@@ -68,7 +68,23 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-dark bg-{{ $data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED' ? 'danger' : ($data->order_status == 'ready' || $data->order_status == 'READY' ? 'success' : 'warning') }}-gradient bubble-shadow">
+        <div class="card card-dark bg-{{ 
+        $data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED' 
+        ? 'danger' 
+        : (
+            $data->order_status == 'ready' || $data->order_status == 'READY'
+                ? 'success' 
+                : (
+                    $data->order_status == 'sold' || $data->order_status == 'SOLD'
+                        ? 'secondary'
+                        : (
+                            $data->order_status == 'delivered' || $data->order_status == 'DELIVERED'
+                                ? 'success'
+                                : 'warning'
+                            )
+                    )
+            ) 
+        }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($data->order_status == 'indent' || $data->order_status == 'rejected')

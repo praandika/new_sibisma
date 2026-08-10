@@ -68,6 +68,12 @@ class SaleDeliveryController extends Controller
         }
     }
 
+    // CREATE DO --> SHOW SALES TABLE BY SPK_NO
+    public function createDo($spk_id){
+        $data = SaleDelivery::where('spk_id', $spk_id)->firstOrFail();
+        return view('page', compact($data));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -84,40 +90,54 @@ class SaleDeliveryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $req)
+    public function store(Request $request)
     {
-        $data = new SaleDelivery;
-        $data->sale_delivery_date = $req->sale_delivery_date;
-        $data->sale_id = $req->sale_id;
-        $data->note = $req->note;
-        $data->created_by = Auth::user()->id;
-        $data->updated_by = Auth::user()->id;
-        if ($req->has('selfpickup')) {
-            $data->status = 'self pick up';
-            $data->main_driver = 38;
-            $data->backup_driver = 38;
-            $data->save();
-        } else {
-            $data->main_driver = $req->main_driver;
-            $data->backup_driver = $req->backup_driver;
-            $data->save();
-        }
-        
+        $request->validate([
+            'spk_no' => 'required',
+            'delivery_type' => 'required',
+        ]);
 
-        // Update Sale Status
-        $sale = Sale::find($req->sale_id);
-        $sale->status = 'delivered';
-        $sale->update();
+        $sale = Sale::where('spk_no', $request->spk_no)->firstOrFail();
 
-        // Write log
-        $log = new Log;
-        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
-        $log->activity = 'creates sale deliveries data';
-        $log->user_id = Auth::user()->id;
-        $log->save();
 
-        toast('Data sale delivery berhasil disimpan','success');
-        return redirect()->back();
+        $delivery = DB::transaction(function () use ($request, $sale) {
+
+            // Jangan buat DO kedua
+            if (SaleDelivery::where('sales_id', $sale->id)->exists()) {
+                throw new \Exception(
+                    'Delivery Order untuk transaksi ini sudah dibuat.'
+                );
+            }
+
+            // Simpan Data ke Sale Deliveries
+            $delivery = new SaleDelivery;
+
+            $delivery->sale_id = $sale->id;
+            $delivery->spk_no = $sale->spk_no;
+            $delivery->dealer_code = $sale->dealer_code;
+            $delivery->do_date = now();
+            $delivery->delivery_type = $request->delivery_type;
+            $delivery->driver_name = $request->driver_name ?: null;
+            $delivery->backup_driver = $request->backup_driver ?: null;
+            $delivery->notes = $request->notes ?: null;
+            $delivery->status = 'DELIVERED';
+            $delivery->created_by = Auth::id();
+            $delivery->save();
+
+            return $delivery;
+        });
+
+
+        return response()->json([
+
+            'success' => true,
+
+            'url' => route(
+                'do.print',
+                $delivery->id
+            )
+
+        ]);
     }
 
     /**

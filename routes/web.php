@@ -110,13 +110,6 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/leasing/deleteall', [Lea
 Route::middleware(['auth:sanctum', 'verified'])->resource('stock', StockController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock/delete/{id}', [StockController::class, 'delete'])->name('stock.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [StockController::class, 'deleteall'])->name('stock.deleteall');
-
-// NEW SIBISMA VERSION 4
-Route::middleware(['auth:sanctum', 'verified'])->get('/stock-onhand', [StockController::class, 'showStockOnhand'])->name('stock.onhand');
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation', [StockController::class, 'showStockMutation'])->name('stock.mutation');
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold', [StockController::class, 'showStockSold'])->name('stock.sold');
 // END STOCK
 
 // SALE
@@ -362,6 +355,19 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('acttype', ActtypeCont
 Route::middleware(['auth:sanctum', 'verified'])->get('/acttype/delete/{id}', [ActtypeController::class, 'delete'])->name('acttype.delete');
 // END ACT TYPE
 
+//=============================
+// NEW SIBISMA ROUTES VERSION 4
+//=============================
+
+// STOCK ON-HAND MENU
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock-onhand', [StockController::class, 'showStockOnhand'])->name('stock.onhand');
+
+// STOCK MUTATION MENU
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation', [StockController::class, 'showStockMutation'])->name('stock.mutation');
+
+// STOCK SOLD MENU
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold', [StockController::class, 'showStockSold'])->name('stock.sold');
+
 // CHANGE STOCK ON REQUEST STOCK - GO TO EDIT FORM
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/change-stock/{spkno}/{dealer_code}/{model}/{color}', [SpkController::class, 'changeStock'])->name('spk.change-stock');
 
@@ -372,9 +378,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk/reject/{spk_no}/{deal
 Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-change-stock/{spk_no}/{dealer_code}', [SpkController::class, 'processChangeStock'])->name('spk.process-change-stock');
 
 // PROSES STORE AND UPDATE PROSES JUAL DATA SPK
-Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-sale/{spk_no}', [SpkController::class, 'processSale'])->name('spk.process-sale');
+Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-sale/{spk_no}', [SaleController::class, 'processSale'])->name('spk.process-sale');
 
-// ============= AJAX ============= //
+// ===============================//
+// ************ AJAX ************ //
+// ===============================//
 
 // MODAL PROSPECT AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/prospect-search', [SpkController::class, 'prospectSearch'])->name('spk.prospect-search');
@@ -419,3 +427,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation-ajax', [St
 
 // DATA STOCK SOLD AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold-ajax', [StockController::class, 'dataStockSold'])->name('stock.sold-ajax');
+
+// DATA SALES --> CREATE DO
+Route::get('/sale/byspk', [SaleController::class, 'saleBySpk'])->name('sale.byspk-ajax');

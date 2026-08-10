@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 use App\Models\Entry;
 use App\Models\Sale;
 use App\Models\Out;
-use App\Models\Leasing;
 use App\Models\Stock;
 use App\Models\Document;
 use App\Models\Log;
 use App\Models\Spk;
 use App\Models\StockHistory;
+use App\Models\UnitOnHand;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -81,7 +82,7 @@ class SaleController extends Controller
         $spk = Spk::where('spk_no', $spk_no)->firstOrFail();
 
         // Cegah SPK diproses dua kali
-        if ($spk->sales_status === 'SOLD') {
+        if ($spk->sale_status === 'SOLD') {
             toast('SPK sudah SOLD.', 'warning');
 
             return redirect()->back();
@@ -91,6 +92,10 @@ class SaleController extends Controller
         if (
             blank($spk->ktp_number) ||
             blank($spk->spk_phone) ||
+            blank($spk->address_shipment) ||
+            blank($spk->frame_no) ||
+            blank($spk->faktur_color) ||
+            blank($spk->ktp) ||
             blank($spk->stnk_name)
         ) {
             toast('Data SPK belum lengkap.', 'error');
@@ -100,39 +105,75 @@ class SaleController extends Controller
 
         DB::transaction(function () use ($spk) {
 
+            // Pastikan belum pernah menjadi SALES
+            if (Sale::where('spk_no', $spk->spk_no)->exists()) {
+                throw new \Exception('SPK ini sudah tercatat sebagai penjualan.');
+            }
+
+            // Cari Unit
+            $unit = UnitOnhand::where('frame_no', $spk->frame_no)->first();
+
+            if (!$unit) {
+                throw new \Exception('Unit dengan frame '.$spk->frame_no.' tidak ditemukan.');
+            }
+
+            // =========================
             // INSERT SALES
-            $sale = new Sales;
+            // =========================
+            $sale = new Sale;
+            $sale->spk_id = $spk->id;
+            $sale->sale_date = now();
             $sale->spk_no = $spk->spk_no;
             $sale->dealer_code = $spk->dealer_code;
             $sale->customer_name = $spk->order_name;
+            $sale->stnk_name = $spk->stnk_name;
             $sale->model_name = $spk->model_name;
+            $sale->faktur_color = $spk->faktur_color;
+            $sale->year_mc = $spk->year_mc;
+            $sale->price = $spk->price;
+            $sale->nik = $spk->ktp_number;
+            $sale->phone = $spk->spk_phone;
+            $sale->address = $spk->address;
+            $sale->address_shipment = $spk->address_shipment;
+            $sale->sale_qty = 1;
             $sale->frame_no = $spk->frame_no;
             $sale->engine_no = $spk->engine_no;
-            $sale->sale_date = now();
-            $sale->created_by = Auth::id();
+            $sale->leasing_name = $spk->leasing;
+            $sale->payment_method = $spk->payment_method;
+            $sale->microfinance = $spk->microfinance;
+            $sale->manpower = $spk->manpower;
+            $sale->created_by = Auth::user()->id;
             $sale->save();
 
+            // =========================
             // UPDATE SPK
-            $spk->sales_status = 'SOLD';
-            $spk->sold_date = now();
+            // =========================
+            $spk->sale_status = 'SOLD';
+            $spk->order_status = 'SOLD';
+            $spk->sale_date = now();
             $spk->save();
 
+            // =========================
             // UPDATE UNIT ON HAND
-            $unit = UnitOnhand::where(
-                'frame_no',
-                $spk->frame_no
-            )->first();
-
-            if ($unit) {
-                $unit->status = 'sold';
-                $unit->info = 'sold';
-                $unit->save();
-            }
+            // =========================
+            $unit->status = 'sold';
+            $unit->info = 'sold to '.$spk->order_name;
+            $unit->save();
         });
 
         toast('Penjualan berhasil diproses.', 'success');
 
         return redirect()->route('spk.get', $spk->spk_no);
+    }
+
+    // GET SALES BY SPK --> CREATE DO
+    public function saleBySpk(Request $request)
+    {
+        return response()->json([
+            'status' => 'OK',
+            'message' => 'Controller terpanggil',
+            'spk_no' => $request->spk_no
+        ]);
     }
 
     /**
