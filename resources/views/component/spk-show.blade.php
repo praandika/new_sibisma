@@ -96,31 +96,32 @@
                 <!-- CONTROL BUTTON -->
                 <div class="col-md-6" style="text-align: right;">
                     @if($data->order_status == 'ready' || $data->order_status == 'READY')
-                        @if(
-                            filled($data->ktp_number) &&
-                            filled($data->spk_phone) &&
-                            filled($data->address_shipment) &&
-                            filled($data->frame_no) &&
-                            filled($data->faktur_color) &&
-                            filled($data->ktp) &&
-                            filled($data->stnk_name)
-                        )
-                            <button type="button"
-                                    class="btn btn-secondary btn-round print-pdf"
-                                    style="margin-bottom: 20px;"
-                                    data-toggle="modal"
-                                    data-target="#modalConfirmSale">
-                                <i class="fas fa-check"></i>
-                                &nbsp;&nbsp; <strong>Proses Jual</strong>
-                            </button>
-                            &nbsp;
-                        @else
-                            <button type="button" class="btn btn-secondary btn-round print-pdf"
-                            style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp; <strong>Proses Jual</strong>
-                            </button>
-                            &nbsp;
+                        @if(Auth::user()->access != 'salesman')
+                            @if(
+                                filled($data->ktp_number) &&
+                                filled($data->spk_phone) &&
+                                filled($data->address_shipment) &&
+                                filled($data->frame_no) &&
+                                filled($data->faktur_color) &&
+                                filled($data->ktp) &&
+                                filled($data->stnk_name)
+                            )
+                                <button type="button"
+                                        class="btn btn-secondary btn-round print-pdf"
+                                        style="margin-bottom: 20px;"
+                                        data-toggle="modal"
+                                        data-target="#modalConfirmSale">
+                                    <i class="fas fa-check"></i>
+                                    &nbsp;&nbsp; <strong>Proses Jual</strong>
+                                </button>
+                                &nbsp;
+                            @else
+                                <button type="button" class="btn btn-secondary btn-round print-pdf"
+                                style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp; <strong>Proses Jual</strong>
+                                </button>
+                                &nbsp;
+                            @endif
                         @endif
-
                         <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
                         </a>
@@ -318,35 +319,35 @@
                         <div class="row mb-2">
                             <div class="col-5">SPK</div>
                             <div class="col-7 font-weight-bold">
-                                {{ $spk->spk_no }}
+                                {{ $data->spk_no }}
                             </div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-5">Customer</div>
                             <div class="col-7">
-                                {{ $spk->order_name }}
+                                {{ $data->order_name }}
                             </div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-5">Model</div>
                             <div class="col-7">
-                                {{ $spk->model_name }}
+                                {{ $data->model_name }}
                             </div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-5">Color</div>
                             <div class="col-7">
-                                {{ $spk->faktur_color }}
+                                {{ $data->faktur_color }}
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-5">Frame</div>
                             <div class="col-7">
-                                {{ $spk->frame_no ?: '-' }}
+                                {{ $data->frame_no ?: '-' }}
                             </div>
                         </div>
 
@@ -370,7 +371,7 @@
                     Batal
                 </button>
 
-                <form action="{{ route('spk.process-sale', $spk->spk_no) }}"
+                <form action="{{ route('spk.process-sale', $data->spk_no) }}"
                       method="POST"
                       id="formProcessSale">
 

@@ -75,6 +75,66 @@ class SaleController extends Controller
         
     }
 
+    // PROSES JUAL -> FORM DARI SHOW SPK
+    public function processSale($spk_no)
+    {
+        $spk = Spk::where('spk_no', $spk_no)->firstOrFail();
+
+        // Cegah SPK diproses dua kali
+        if ($spk->sales_status === 'SOLD') {
+            toast('SPK sudah SOLD.', 'warning');
+
+            return redirect()->back();
+        }
+
+        // Validasi data wajib
+        if (
+            blank($spk->ktp_number) ||
+            blank($spk->spk_phone) ||
+            blank($spk->stnk_name)
+        ) {
+            toast('Data SPK belum lengkap.', 'error');
+
+            return redirect()->back();
+        }
+
+        DB::transaction(function () use ($spk) {
+
+            // INSERT SALES
+            $sale = new Sales;
+            $sale->spk_no = $spk->spk_no;
+            $sale->dealer_code = $spk->dealer_code;
+            $sale->customer_name = $spk->order_name;
+            $sale->model_name = $spk->model_name;
+            $sale->frame_no = $spk->frame_no;
+            $sale->engine_no = $spk->engine_no;
+            $sale->sale_date = now();
+            $sale->created_by = Auth::id();
+            $sale->save();
+
+            // UPDATE SPK
+            $spk->sales_status = 'SOLD';
+            $spk->sold_date = now();
+            $spk->save();
+
+            // UPDATE UNIT ON HAND
+            $unit = UnitOnhand::where(
+                'frame_no',
+                $spk->frame_no
+            )->first();
+
+            if ($unit) {
+                $unit->status = 'sold';
+                $unit->info = 'sold';
+                $unit->save();
+            }
+        });
+
+        toast('Penjualan berhasil diproses.', 'success');
+
+        return redirect()->route('spk.get', $spk->spk_no);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

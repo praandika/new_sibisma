@@ -3,19 +3,27 @@
     a.btnAction {
         font-size: 20px;
     }
-    .td-group .main-data{
+
+    .td-group .main-data {
         font-weight: bold;
     }
-    .td-group .secondary-data{
+
+    .td-group .secondary-data {
         font-size: 12px;
         display: block;
     }
-    
+
     /* SKELETON STYLE */
     @keyframes skeletonPulse {
-        0% { background-position: -200px 0; }
-        100% { background-position: 200px 0; }
+        0% {
+            background-position: -200px 0;
+        }
+
+        100% {
+            background-position: 200px 0;
+        }
     }
+
     .skel-bar {
         height: 12px;
         border-radius: 4px;
@@ -23,6 +31,7 @@
         background-size: 400px 100%;
         animation: skeletonPulse 1.4s ease-in-out infinite;
     }
+
 </style>
 @endpush
 
@@ -30,10 +39,10 @@
 @section('page-title','SPK')
 
 @if(Auth::user()->access == 'salesman')
-    @push('button')
-    @section('button-title','Create SPK')
-    @include('component.button-create-spk')
-    @endpush
+@push('button')
+@section('button-title','Create SPK')
+@include('component.button-create-spk')
+@endpush
 @endif
 
 @push('link-bread')
@@ -46,15 +55,12 @@
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-            <h4 class="card-title">SPK Data</h4>
+                <h4 class="card-title">SPK Data</h4>
         </div>
         <div class="card-body">
             {{-- Search --}}
             <div class="mb-3">
-                <input
-                    type="text"
-                    class="form-control"
-                    id="searchSpk"
+                <input type="text" class="form-control" id="searchSpk"
                     placeholder="Cari SPK No, Customer Info, Unit, Salesman">
             </div>
 
@@ -99,6 +105,7 @@
             year: 'numeric'
         });
     }
+
 </script>
 
 <script>
@@ -106,25 +113,27 @@
 
         if (!str) return '';
 
-        return str.toLowerCase().replace(/\b\w/g, function(char) {
+        return str.toLowerCase().replace(/\b\w/g, function (char) {
             return char.toUpperCase();
         });
 
     }
+
 </script>
 
 <script>
-function formatJam(date) {
-    if (!date) return '-';
+    function formatJam(date) {
+        if (!date) return '-';
 
-    return new Date(date).toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Makassar', // GMT+8 (WITA)
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-}
+        return new Date(date).toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Makassar', // GMT+8 (WITA)
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }
+
 </script>
 
 <script>
@@ -175,23 +184,23 @@ function formatJam(date) {
 
                 $.each(res.data.data, function (i, row) {
 
-                // CEK KELENGKAPAN DATA
-                const lengkap =
-                    String(row.ktp_number ?? '').trim() !== '' &&
-                    String(row.spk_phone ?? '').trim() !== '' &&
-                    String(row.address_shipment ?? '').trim() !== '' &&
-                    String(row.address ?? '').trim() !== '' &&
-                    String(row.frame_no ?? '').trim() !== '' &&
-                    String(row.faktur_color ?? '').trim() !== '' &&
-                    String(row.ktp ?? '').trim() !== '' &&
-                    String(row.stnk_name ?? '').trim() !== '';
+                    // CEK KELENGKAPAN DATA
+                    const lengkap =
+                        String(row.ktp_number ?? '').trim() !== '' &&
+                        String(row.spk_phone ?? '').trim() !== '' &&
+                        String(row.address_shipment ?? '').trim() !== '' &&
+                        String(row.address ?? '').trim() !== '' &&
+                        String(row.frame_no ?? '').trim() !== '' &&
+                        String(row.faktur_color ?? '').trim() !== '' &&
+                        String(row.ktp ?? '').trim() !== '' &&
+                        String(row.stnk_name ?? '').trim() !== '';
 
                     html += `
                         <tr>
                             <td>
                                 <div class="td-group">
                                     <span class="main-data">
-                                        <span class="badge badge-secondary mt-2">
+                                        <span class="badge badge-dark mt-2">
                                             ${row.spk_date ? formatTanggal(row.spk_date) : '-'}
                                         </span>
                                     </span>
@@ -214,9 +223,14 @@ function formatJam(date) {
                                         ${
                                             row.order_status == 'indent' || row.order_status == 'INDENT'
                                             ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
-                                            : (row.order_status == 'ready' || row.order_status == 'READY'
-                                                ? `<span class="badge badge-success"> ${ucwords(row.order_status)}</span>`
-                                                : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
+                                            : (
+                                                row.order_status == 'ready' || row.order_status == 'READY' && lengkap
+                                                ? `<span class="badge badge-secondary">Ready to Sale</span>`
+                                                : (
+                                                    row.order_status == 'ready' || row.order_status == 'READY'
+                                                    ? `<span class="badge badge-success">${ucwords(row.order_status)}</span>`
+                                                    : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
+                                                )
                                             )
                                         }
                                     </span>
@@ -292,17 +306,16 @@ function formatJam(date) {
     // SEARCH
     let timerSpk;
 
-    $('#searchSpk').keyup(function(){
+    $('#searchSpk').keyup(function () {
         clearTimeout(timerSpk);
 
-        timerSpk = setTimeout(function(){
+        timerSpk = setTimeout(function () {
             loadSpkData(1);
-        },300);
+        }, 300);
     });
 
     // PAGINATION
-    function renderPaginationSpk(res)
-    {
+    function renderPaginationSpk(res) {
         let html = '';
 
         if (res.data.prev_page_url) {
@@ -339,5 +352,6 @@ function formatJam(date) {
     function initRequestStock() {
         loadSpkData();
     }
+
 </script>
 @endpush

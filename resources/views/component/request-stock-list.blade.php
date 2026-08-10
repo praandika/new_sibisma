@@ -1,9 +1,15 @@
 @push('after-css')
 <style>
     @keyframes skeletonPulse {
-        0% { background-position: -200px 0; }
-        100% { background-position: 200px 0; }
+        0% {
+            background-position: -200px 0;
+        }
+
+        100% {
+            background-position: 200px 0;
+        }
     }
+
     .skel-bar {
         height: 12px;
         border-radius: 4px;
@@ -11,6 +17,7 @@
         background-size: 400px 100%;
         animation: skeletonPulse 1.4s ease-in-out infinite;
     }
+
 </style>
 @endpush
 
@@ -22,10 +29,7 @@
         <div class="card-body">
             {{-- Search --}}
             <div class="mb-3">
-                <input
-                    type="text"
-                    class="form-control"
-                    id="searchSpk"
+                <input type="text" class="form-control" id="searchSpk"
                     placeholder="Cari SPK No, Customer Info, Unit, Salesman">
             </div>
 
@@ -90,9 +94,10 @@
 
 @push('after-script')
 <script>
-    const authDealerCode = @json(Auth::user()->dealer_code);
+    const authDealerCode = @json(Auth::user()-> dealer_code);
 
     console.log('Dealer Login:', authDealerCode);
+
 </script>
 <script>
     // Format Tanggal JS
@@ -103,6 +108,7 @@
             year: 'numeric'
         });
     }
+
 </script>
 
 <script>
@@ -110,33 +116,35 @@
 
         if (!str) return '';
 
-        return str.toLowerCase().replace(/\b\w/g, function(char) {
+        return str.toLowerCase().replace(/\b\w/g, function (char) {
             return char.toUpperCase();
         });
 
     }
+
 </script>
 
 <script>
-function formatJam(date) {
-    if (!date) return '-';
+    function formatJam(date) {
+        if (!date) return '-';
 
-    return new Date(date).toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Makassar', // GMT+8 (WITA)
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-}
+        return new Date(date).toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Makassar', // GMT+8 (WITA)
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }
+
 </script>
 
 <script>
-// LOADING ANIMATION
-function showSkeletonRows(count = 4) {
-    let html = '';
-    for (let i = 0; i < count; i++) {
-        html += `
+    // LOADING ANIMATION
+    function showSkeletonRows(count = 4) {
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            html += `
             <tr>
                 <td><div class="skel-bar" style="width:70%; margin-bottom:6px;"></div><div class="skel-bar" style="width:40%; height:9px;"></div></td>
                 <td><div class="skel-bar" style="width:80%; margin-bottom:6px;"></div><div class="skel-bar" style="width:50%; height:9px;"></div></td>
@@ -145,40 +153,40 @@ function showSkeletonRows(count = 4) {
                 <td><div class="skel-bar" style="width:40%;"></div></td>
             </tr>
         `;
+        }
+        $('#tbodySpk').html(html);
+        $('#paginationSpk').html('');
     }
-    $('#tbodySpk').html(html);
-    $('#paginationSpk').html('');
-}
 
-function loadSpkData(page = 1) {
-    showSkeletonRows(); // tampilkan skeleton sebelum request
+    function loadSpkData(page = 1) {
+        showSkeletonRows(); // tampilkan skeleton sebelum request
 
-    $.ajax({
-        url: "{{ route('listrequeststock') }}",
-        type: "GET",
-        dataType: "json",
-        data: {
-            page: page,
-            search: $('#searchSpk').val()
-        },
-        success: function (data) {
-            // CEK DATA KOSONG ATAU TIDAK
-            if (data.data.length === 0) {
-                $('#tbodySpk').html(`
+        $.ajax({
+            url: "{{ route('listrequeststock') }}",
+            type: "GET",
+            dataType: "json",
+            data: {
+                page: page,
+                search: $('#searchSpk').val()
+            },
+            success: function (data) {
+                // CEK DATA KOSONG ATAU TIDAK
+                if (data.data.length === 0) {
+                    $('#tbodySpk').html(`
                     <tr>
                         <td colspan="5" class="text-center py-4" style="color:#999;">
                             Data tidak ditemukan
                         </td>
                     </tr>
                 `);
-                $('#paginationSpk').html('');
-                return;
-            }
+                    $('#paginationSpk').html('');
+                    return;
+                }
 
-            let html = '';
+                let html = '';
 
-            $.each(data.data, function (i, row) {
-                html += `
+                $.each(data.data, function (i, row) {
+                    html += `
                     <tr>
                         <td>
                             <div class="td-group">
@@ -189,7 +197,7 @@ function loadSpkData(page = 1) {
                                     <div style="font-size: 11px;" class="mb-1">
                                         Request from ${row.dealer_code} to ${row.point_code}
                                     </div>
-                                    <span class="badge badge-secondary mt-2">
+                                    <span class="badge badge-dark mt-2">
                                         ${row.updated_at ? formatTanggal(row.updated_at) : '-'}
                                     </span>
                                 </span>
@@ -201,11 +209,16 @@ function loadSpkData(page = 1) {
                                     ${row.spk_no}
                                     ${
                                         row.order_status == 'indent' || row.order_status == 'INDENT'
-                                        ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
-                                        : (row.order_status == 'ready' || row.order_status == 'READY'
-                                            ? `<span class="badge badge-success"> ${ucwords(row.order_status)}</span>`
-                                            : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
-                                        )
+                                            ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
+                                            : (
+                                                row.order_status == 'ready' || row.order_status == 'READY' && lengkap
+                                                ? `<span class="badge badge-secondary">Ready to Sale</span>`
+                                                : (
+                                                    row.order_status == 'ready' || row.order_status == 'READY'
+                                                    ? `<span class="badge badge-success">${ucwords(row.order_status)}</span>`
+                                                    : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
+                                                )
+                                            )
                                     }
                                 </span>
                                 <span class="secondary-data">
@@ -268,36 +281,35 @@ function loadSpkData(page = 1) {
                         </td>
                     </tr>
                 `;
-            })
-            $('#tbodySpk').html(html);
+                })
+                $('#tbodySpk').html(html);
 
-            renderPaginationSpk(data);
-        },
-        error: function (xhr) {
-            $('#tbodySpk').html(
-                `<tr><td colspan="5" class="text-center py-4" style="color:#c0392b;">Gagal memuat data. Silakan coba lagi.</td></tr>`
-            );
-            console.log(xhr.status);
-            console.log(xhr.responseJSON);
-            console.log(xhr.responseText);
-        }
-    });
-}
+                renderPaginationSpk(data);
+            },
+            error: function (xhr) {
+                $('#tbodySpk').html(
+                    `<tr><td colspan="5" class="text-center py-4" style="color:#c0392b;">Gagal memuat data. Silakan coba lagi.</td></tr>`
+                );
+                console.log(xhr.status);
+                console.log(xhr.responseJSON);
+                console.log(xhr.responseText);
+            }
+        });
+    }
 
     // SEARCH
     let timerSpk;
 
-    $('#searchSpk').keyup(function(){
+    $('#searchSpk').keyup(function () {
         clearTimeout(timerSpk);
 
-        timerSpk = setTimeout(function(){
+        timerSpk = setTimeout(function () {
             loadSpkData(1);
-        },300);
+        }, 300);
     });
 
     // PAGINATION
-    function renderPaginationSpk(data)
-    {
+    function renderPaginationSpk(data) {
         let html = '';
 
         if (data.prev_page_url) {
@@ -332,6 +344,7 @@ function loadSpkData(page = 1) {
     });
 
     // INIT LOAD DATA ADA DI BLADE MUTATION STOCK LIST
+
 </script>
 
 <script>
@@ -353,5 +366,6 @@ function loadSpkData(page = 1) {
     $('#btnConfirmRejectSpk').on('click', function () {
         $('#modalRejectSpk').modal('hide');
     });
+
 </script>
 @endpush
