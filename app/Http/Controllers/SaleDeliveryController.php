@@ -68,10 +68,16 @@ class SaleDeliveryController extends Controller
         }
     }
 
-    // CREATE DO --> SHOW SALES TABLE BY SPK_NO
+    // CREATE DO --> HALAMAN DATA SALES
     public function createDo($spk_id){
         $data = SaleDelivery::where('spk_id', $spk_id)->firstOrFail();
         return view('page', compact($data));
+    }
+
+    // PROSES STORE DO AND UPDATE DO DATE ON SPKS --> HALAMAN SHOW SALES
+    public function processDo($spk_no){
+        $data = SaleDelivery::where('spk_id', $spk_no)->firstOrFail();
+        // LANJUT DISINI PROSES SAVE DAN UPDATE SAAT KLIK POP UP DI HALAMAN SHOW SALES
     }
 
     /**

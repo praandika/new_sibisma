@@ -380,6 +380,12 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-change-stock
 // PROSES STORE AND UPDATE PROSES JUAL DATA SPK
 Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-sale/{spk_no}', [SaleController::class, 'processSale'])->name('spk.process-sale');
 
+// GO TO SALE SHOW --> SALE DETAIL --> CREATE DO
+Route::middleware(['auth:sanctum', 'verified'])->post('/sale/show/{spk_no}', [SaleController::class, 'saleShow'])->name('sale.sale-show');
+
+// PROSES STORE AND UPDATE PROSES DELIVERY ORDER
+Route::middleware(['auth:sanctum', 'verified'])->post('/do/process-do/{spk_no}', [SaleController::class, 'processDo'])->name('do.process-do');
+
 // ===============================//
 // ************ AJAX ************ //
 // ===============================//
@@ -427,6 +433,3 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation-ajax', [St
 
 // DATA STOCK SOLD AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold-ajax', [StockController::class, 'dataStockSold'])->name('stock.sold-ajax');
-
-// DATA SALES --> CREATE DO
-Route::get('/sale/byspk', [SaleController::class, 'saleBySpk'])->name('sale.byspk-ajax');

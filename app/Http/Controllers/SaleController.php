@@ -166,14 +166,11 @@ class SaleController extends Controller
         return redirect()->route('spk.get', $spk->spk_no);
     }
 
-    // GET SALES BY SPK --> CREATE DO
-    public function saleBySpk(Request $request)
-    {
-        return response()->json([
-            'status' => 'OK',
-            'message' => 'Controller terpanggil',
-            'spk_no' => $request->spk_no
-        ]);
+    // DETAIL SALE --> SHOW SALE BY SPK NO FROM SPK-DATA
+    public function saleShow($spk_no){
+        $data = Sale::where('spk_no', $spk_no)->firstOrFail();
+
+        return view('page', compact('data','spk_no'));
     }
 
     /**

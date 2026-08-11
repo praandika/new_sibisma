@@ -28,7 +28,7 @@
     <div class="col-md-4">
         <div class="card card-dark bg-dark-gradient curves-shadow">
             <div class="card-body pb-0">
-                <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method.png') }}" alt="payment method"></div>
+                <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method1.png') }}" alt="payment method"></div>
                 <h2 class="mb-2">{{ ucwords($data->payment_method) }}</h2>
                 <p>Payment Method</p>
             </div>
@@ -40,7 +40,7 @@
         <div class="card card-dark bg-dark-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    <img src="{{ asset('img/cash.png') }}" alt="Cash">
+                    <img src="{{ asset('img/cash1.png') }}" alt="Cash">
                 </div>
                 <h2 class="mb-2">{{ ucwords($data->microfinance) }}</h2>
                 <p>Microfinance</p>
@@ -51,13 +51,13 @@
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($data->credit_status == 'survey')
-                    <img src="{{ asset('img/survey.png') }}" alt="Survey">
+                    <img src="{{ asset('img/survey1.png') }}" alt="Survey">
                     @elseif($data->credit_status == 'acc')
-                    <img src="{{ asset('img/acc.png') }}" alt="Acc">
+                    <img src="{{ asset('img/acc1.png') }}" alt="Acc">
                     @elseif($data->credit_status == 'reject')
-                    <img src="{{ asset('img/reject.png') }}" alt="Reject">
+                    <img src="{{ asset('img/reject1.png') }}" alt="Reject">
                     @else
-                    <img src="{{ asset('img/cash.png') }}" alt="Cash">
+                    <img src="{{ asset('img/cash1.png') }}" alt="Cash">
                     @endif
                 </div>
                 <h2 class="mb-2">{{ ucwords($data->credit_status) }}</h2>
@@ -88,11 +88,11 @@
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($data->order_status == 'indent' || $data->order_status == 'rejected')
-                    <img src="{{ asset('img/indent.png') }}" alt="Indent">
+                    <img src="{{ asset('img/indent1.png') }}" alt="Indent">
                     @elseif($data->order_status == 'ready')
-                    <img src="{{ asset('img/available.png') }}" alt="Ready">
+                    <img src="{{ asset('img/available1.png') }}" alt="Ready">
                     @else
-                    <img src="{{ asset('img/indent.png') }}" alt="Request Stock">
+                    <img src="{{ asset('img/indent1.png') }}" alt="Request Stock">
                     @endif
                 </div>
                 <h2 class="mb-2">{{ ucwords($data->order_status) }}</h2>
@@ -111,17 +111,25 @@
                 </div>
                 <!-- CONTROL BUTTON -->
                 <div class="col-md-6" style="text-align: right;">
-                    @if($data->order_status == 'ready' || $data->order_status == 'READY')
-                        @if(Auth::user()->access != 'salesman')
+                    @if(Auth::user()->access != 'salesman')
+                        @if(
+                            filled($data->ktp_number) &&
+                            filled($data->spk_phone) &&
+                            filled($data->address_shipment) &&
+                            filled($data->frame_no) &&
+                            filled($data->faktur_color) &&
+                            filled($data->ktp) &&
+                            filled($data->stnk_name)
+                        )
                             @if(
-                                filled($data->ktp_number) &&
-                                filled($data->spk_phone) &&
-                                filled($data->address_shipment) &&
-                                filled($data->frame_no) &&
-                                filled($data->faktur_color) &&
-                                filled($data->ktp) &&
-                                filled($data->stnk_name)
+                                $data->order_status == 'sold' || 
+                                $data->order_status == 'SOLD'
                             )
+                                <button type="button" class="btn btn-secondary btn-round print-pdf"
+                                style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp;<strong>Terjual</strong>
+                                </button>
+                                &nbsp;
+                            @else
                                 <button type="button"
                                         class="btn btn-secondary btn-round print-pdf"
                                         style="margin-bottom: 20px;"
@@ -131,13 +139,20 @@
                                     &nbsp;&nbsp; <strong>Proses Jual</strong>
                                 </button>
                                 &nbsp;
-                            @else
-                                <button type="button" class="btn btn-secondary btn-round print-pdf"
-                                style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp; <strong>Proses Jual</strong>
-                                </button>
-                                &nbsp;
                             @endif
+                        @else
+                            <button type="button" class="btn btn-secondary btn-round print-pdf"
+                            style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp;<strong>Proses Jual</strong>
+                            </button>
+                            &nbsp;
                         @endif
+                    @endif
+                    
+                    @if(
+                        $data->order_status == 'ready' || 
+                        $data->order_status == 'READY' ||
+                        $data->order_status == 'sold' || 
+                        $data->order_status == 'SOLD')
                         <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
                         </a>
