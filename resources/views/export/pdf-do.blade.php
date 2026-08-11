@@ -100,22 +100,20 @@
             <div class="container-logo">
                 <img src="img/logo-bisma.png" alt="BISMA" width="60px">
                 &nbsp;
-                @foreach($dealer as $a)
                 <div class="info-dealer">
-                    <span style="font-weight: bold; font-size: 12px;">{{ $a->dealer_name }}</span><br>
-                    <span style="font-size: 10px;">{{ $a->address }}</span>
+                    <span style="font-weight: bold; font-size: 12px;">{{ $dealer->dealer_name }}</span><br>
+                    <span style="font-size: 10px;">{{ $dealer->address }}</span>
                 </div>
-                @endforeach
                 <img src="img/semakin-didepan.png" alt="BISMA" width="110px" style="position: absolute; right: 0px;">
             </div>
         </div>
     </header>
-    @forelse($data as $o)
+        <!-- DATA SALES -->
         <div class="title">DELIVERY ORDER (DO)</div>
         Kepada Yth. <br>
-        {{ $o->customer_name }} <br>
-        {{ $o->address_shipment > 0 ? $o->address_shipment : $o->address }} <br>
-        {{ $o->phone }} <br>
+        {{ $data->sale->customer_name }} <br>
+        {{ $data->sale->address_shipment > 0 ? $data->sale->address_shipment : $data->sale->address }} <br>
+        {{ $data->sale->phone }} <br>
         di- <br>
         <p style="text-indent: 30px;">Tempat</p>
         <span display: block; margin-bottom: -10px;">Dengan Hormat, </span>
@@ -127,23 +125,23 @@
         <table>
             <tr>
                 <th>Jenis</th>
-                <td>: {{ $o->stock->unit->model_name }}</td>
+                <td>: {{ $data->sale->model_name }}</td>
                 <th>&nbsp;&nbsp;&nbsp;&nbsp;Tgl Kirim</th>
                 <td>:</td>
             </tr>
             <tr>
                 <th>Warna</th>
-                <td>: {{ $o->stock->unit->color->color_faktur }}</td>
+                <td>: {{ $data->sale->faktur_color }}</td>
                 <th>&nbsp;&nbsp;&nbsp;&nbsp;Pembayaran</th>
                 <td>: Transfer / COD / Lunas</td>
             </tr>
             <tr>
                 <th>Nomor Rangka</th>
-                <td>: {{ $o->frame_no }}</td>
+                <td>: {{ $data->sale->frame_no }}</td>
             </tr>
             <tr>
                 <th>Nomor Mesin</th>
-                <td>: {{ strtoupper($o->engine_no) }}</td>
+                <td>: {{ strtoupper($data->sale->engine_no) }}</td>
             </tr>
         </table>
         <span>Motor diterima dalam keadaan yg baik</span>
@@ -185,30 +183,29 @@
                 <p>Denpasar, ____________</p>
                 <p>Dikirim Oleh,</p>
                 <br><br><br>
+                @if($data->driver_name)
+                <p>(&nbsp;&nbsp;{{ $data->driver_name }}&nbsp;&nbsp;)</p>
+                @else
                 <p>(____________________)</p>
+                @endif
                 <div style="font-size: 8px; margin-top: -10px;">&nbsp;&nbsp;SOPIR PENGIRIMAN&nbsp;&nbsp;</div>
             </div>
             <div class="right">
                 <p>Denpasar, ____________</p>
                 <p>Hormat Kami,</p>
                 <br><br><br>
-                <p>( {{ $o->stock->dealer->dealer_name }} )</p>
-                <div style="font-size: 8px; margin-top: -10px;">&nbsp;&nbsp;{{ $o->salesman }}&nbsp;&nbsp;</div>
+                <p>( {{ $data->sale->dealer->dealer_name }} )</p>
+                <div style="font-size: 8px; margin-top: -10px;">&nbsp;&nbsp;{{ $data->sale->manpower }}&nbsp;&nbsp;</div>
                 <!-- Change to Manpower Name -->
             </div>
         </div>
-    @empty
-        <center>
-            No Data Available
-        </center>
-    @endforelse
-
+        <!-- END DATA SALES -->
     <footer>
         <div style="float: left; width: 50%; text-align: right; font-size: 8px;">
             Printed at {{ $printDate }} WITA
         </div>
         <div style="float: right; width: 50%; font-size: 8px;">
-            &copy; Sibisma
+            {{ $data->spk_no }} | &copy; Sibisma
         </div>
     </footer>
 </body>

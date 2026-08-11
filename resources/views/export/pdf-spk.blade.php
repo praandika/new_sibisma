@@ -82,17 +82,15 @@
             <div class="container-logo">
                 <img src="img/logo-bisma.png" alt="BISMA" width="100px">
                 &nbsp;
-                @foreach($dealer as $a)
                 <div class="info-dealer">
-                    <span style="font-weight: bold; font-size: 14px;">{{ $a->dealer_name }}</span><br>
-                    <span style="font-size: 10px;">{{ $a->address }}</span>
+                    <span style="font-weight: bold; font-size: 14px;">{{ $dealer->dealer_name }}</span><br>
+                    <span style="font-size: 10px;">{{ $dealer->address }}</span>
                 </div>
-                @endforeach
                 <img src="img/semakin-didepan.png" alt="BISMA" width="150px" style="position: absolute; right: 0px;">
             </div>
         </div>
     </header>
-    @forelse($data as $o)
+    <!-- DATA SPK -->
     <div class="left">
         <center>
             <p class="title">SURAT PESANAN KENDARAAN (SPK)</p>
@@ -100,68 +98,68 @@
         <table>
             <tr>
                 <th>Tanggal</th>
-                <td>: {{ \Carbon\Carbon::parse($o->spk_date)->format('d-m-Y') }}</td>
+                <td>: {{ \Carbon\Carbon::parse($data->spk_date)->format('d-m-Y') }}</td>
             </tr>
             <tr>
                 <th>Nama Pemesan</th>
-                <td>: {{ $o->order_name }}</td>
+                <td>: {{ $data->order_name }}</td>
             </tr>
             <tr>
                 <th>KTP</th>
-                <td>: {{ $o->ktp_number }}</td>
+                <td>: {{ $data->ktp_number }}</td>
             </tr>
             <tr>
                 <th>Alamat KTP</th>
-                <td>: {{ $o->customer_address }}</td>
+                <td>: {{ $data->address }}</td>
             </tr>
             <tr>
                 <th>Alamat Pengiriman</th>
-                <td>: {{ $o->address_shipment }}</td>
+                <td>: {{ $data->address_shipment }}</td>
             </tr>
             <tr>
                 <th>No. Telp</th>
-                <td>: {{ $o->customer_phone }}</td>
+                <td>: {{ $data->spk_phone }}</td>
             </tr>
             <tr>
                 <th>Nama STNK & BPKB</th>
-                <td>: {{ $o->stnk_name }}</td>
+                <td>: {{ $data->stnk_name }}</td>
             </tr>
             <tr>
                 <th>Type Motor</th>
-                <td>: {{ $o->model_name }}</td>
+                <td>: {{ $data->model_name }}</td>
             </tr>
             <tr>
                 <th>Warna Motor</th>
-                <td>: {{ $o->faktur_color }} &nbsp; ( {{ $o->year_mc }} )</td>
+                <td>: {{ $data->faktur_color }} &nbsp; ( {{ $data->year_mc }} )</td>
             </tr>
             <tr>
                 <th>Harga OTR</th>
-                <td>: Rp {{ number_format($o->price, 0, ',','.') }}</td>
+                <td>: Rp {{ number_format($data->price, 0, ',','.') }}</td>
             </tr>
             <tr>
                 <th>Uang Muka</th>
-                <td>: Rp {{ number_format($o->downpayment, 0, ',','.') }}</td>
+                <td>: Rp {{ number_format($data->downpayment, 0, ',','.') }}</td>
             </tr>
             <tr>
                 <th>Potongan</th>
-                <td>: Rp {{ number_format($o->discount, 0, ',','.') }}</td>
+                <td>: Rp {{ number_format($data->discount, 0, ',','.') }}</td>
             </tr>
             <tr>
                 <th>Tipe Pembayaran</th>
-                <td>: {{ $o->payment_method }}</td>
+                <td>: {{ $data->payment_method }}</td>
             </tr>
             <tr>
-                @if($o->payment_method == 'CASH')
+                @if($data->payment_method == 'CASH')
                     <th>Microfinance</th>
-                    <td>: {{ $o->microfinance }}</td>
+                    <td>: {{ $data->microfinance }}</td>
                 @else
                     <th>Finance</th>
-                    <td>: {{ $o->leasing }} {{ $o->bunga }} {{ $o->tenor == '' ? $o->tenor : $o->tenor.' Bulan' }}</td>
+                    <td>: {{ $data->leasing }} {{ $data->bunga }} {{ $data->tenor == '' ? $data->tenor : $data->tenor.' Bulan' }}</td>
                 @endif
             </tr>
             <tr>
                 <th>Salesman</th>
-                <td>: {{ $o->manpower }}</td>
+                <td>: {{ $data->manpower }}</td>
             </tr>
         </table>
     </div>
@@ -215,15 +213,11 @@
             <br>
             <label for="description">Keterangan:</label>
 
-            <div style="width: 300px; height: 120px; border: 1px solid grey; padding-left: 5px;">&nbsp;{{ $o->tandajadi > 0 ? 'Tanda Jadi '.number_format($o->tandajadi, 0, ',','.') : '' }} <br>
-            <span style="font-size: 8px !important;">{{ $o->description }}</span>
+            <div style="width: 300px; height: 120px; border: 1px solid grey; padding-left: 5px;">&nbsp;{{ $data->deposit > 0 ? 'Tanda Jadi '.number_format($data->deposit, 0, ',','.') : '' }} <br>
+            <span style="font-size: 8px !important;">{{ $data->description }}</span>
             </div>
         </div>
-        @empty
-        <div class="col-md-12">
-            <h3 style="text-align: center;">no data available</h3>
-        </div>
-        @endforelse
+        <!-- END DATA SPK -->
     </div>
     <footer>
         <div style="float: right; width: 50%; font-size: 8px;">

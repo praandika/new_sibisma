@@ -163,10 +163,13 @@ class SaleController extends Controller
 
         toast('Penjualan berhasil diproses.', 'success');
 
-        return redirect()->route('spk.get', $spk->spk_no);
+        return redirect()
+            ->route('sale.sale-show', $spk->spk_no)
+            ->with('open_print', true)
+            ->with('print_url', route('spk.print', $spk->spk_no));
     }
 
-    // DETAIL SALE --> SHOW SALE BY SPK NO FROM SPK-DATA
+    // DETAIL SALE --> SHOW SALE BY SPK NO FROM SPK-DATA (HALAMAN DATA SPK)
     public function saleShow($spk_no){
         $data = Sale::where('spk_no', $spk_no)->firstOrFail();
 

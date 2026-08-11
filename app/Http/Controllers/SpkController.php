@@ -846,12 +846,9 @@ class SpkController extends Controller
 
     public function printPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $dealer = Dealer::where('dealer_code',$dc)->get();
+        $dealer = Dealer::where('dealer_code',$dc)->firstOrFail();
 
-        $data = Spk::join('dealers','spks.dealer_code','=','dealers.dealer_code')
-        ->select('spks.order_status','spks.credit_status','spks.payment_method','spks.spk_date','spks.sale_status','spks.spk_no','spks.order_name','spks.id as id_spk','spks.manpower as salesman','spks.spk_phone as customer_phone','spks.faktur_color','spks.model_name','spks.price','spks.address as customer_address','spks.address_shipment as customer_address_shipment','spks.stnk_name','spks.leasing','spks.description','spks.ktp_number','spks.deposit','spks.downpayment','spks.discount','spks.payment','spks.created_at','spks.bunga','spks.tenor','spks.address_shipment','spks.microfinance','spks.year_mc','spks.manpower')
-        ->where('spks.spk_no',$spk_no)
-        ->get();
+        $data = Spk::where('spk_no',$spk_no)->firstOrFail();
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 

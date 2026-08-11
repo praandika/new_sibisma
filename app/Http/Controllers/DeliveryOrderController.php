@@ -6,6 +6,7 @@ use App\Models\DeliveryOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Dealer;
 use App\Models\Sale;
+use App\Models\SaleDelivery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,57 +78,30 @@ class DeliveryOrderController extends Controller
         return view('page', compact('data','start','end'));
     }
 
-    public function printPDF($id){
+    public function printPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
-        $dealer = Dealer::where('dealer_code',$dc)->get();
+        $dealer = Dealer::where('dealer_code',$dc)->firstOrFail();
 
-        $name = Sale::where('id',$id)->pluck('customer_name');
-        $name = $name[0];
-
-        $unit = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->join('units','stocks.unit_id','=','units.id')
-        ->where('sales.id',$id)
-        ->pluck('model_name');
-        $unit = $unit[0];
-
-        $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->join('spks','sales.spk','=','spks.spk_no')
-        ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->where('sales.id',$id)
-        ->select('*','manpowers.name as salesman','sales.address as address','sales.phone as phone')
-        ->get();
+        $data = SaleDelivery::where('spk_no', $spk_no)->firstOrFail();
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
         $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
-        return $pdf->stream('DO_'.$name.'-'.$unit.'.pdf');
+        return $pdf->stream('DO_'.$data->sale->customer_name.'-'.$data->sale->model_name.'.pdf');
     }
 
-    public function downloadPDF($id){
+    public function downloadPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
-        $dealer = Dealer::where('dealer_code',$dc)->get();
+        $dealer = Dealer::where('dealer_code',$dc)->firstOrFail();
 
-        $name = Sale::where('id',$id)->pluck('customer_name');
-        $name = $name[0];
-
-        $unit = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->join('units','stocks.unit_id','=','units.id')
-        ->where('sales.id',$id)
-        ->pluck('model_name');
-        $unit = $unit[0];
-
-        $data = Sale::join('stocks','sales.stock_id','=','stocks.id')
-        ->where('sales.id',$id)
-        ->get();
+        $data = SaleDelivery::where('spk_no', $spk_no)->firstOrFail();
 
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
         $pdf = PDF::loadView('export.pdf-do',compact('data','printDate','dealer'));
         $pdf->setPaper('A5', 'potrait');
         
-        return $pdf->download('DO_'.$name.'-'.$unit.'.pdf');
+        return $pdf->download('DO_'.$data->sale->customer_name.'-'.$data->sale->model_name.'.pdf');
     }
 }

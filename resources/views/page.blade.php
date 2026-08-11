@@ -186,7 +186,9 @@
 
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
-        @if(Route::is('sale.history'))
+        @if(Route::is('sale.sale-show'))
+            @include('component.sale-show')
+        @elseif(Route::is('sale.history'))
             <livewire:ratio-stock>
             <livewire:sale-l-m>
             <livewire:sale-l-y>

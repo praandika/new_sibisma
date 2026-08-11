@@ -10,6 +10,7 @@ use App\Models\Manpower;
 use App\Models\Entry;
 use App\Models\Out;
 use App\Models\StockHistory;
+use App\Models\Sale;
 
 class Dealer extends Model
 {
@@ -55,5 +56,10 @@ class Dealer extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to Sales
+    public function sales(){
+        return $this->hasMany(Sale::class, 'dealer_code', 'dealer_code');
     }
 }

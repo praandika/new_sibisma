@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Sale;
 use App\Models\Manpower;
+use App\Models\Spk;
 
 class SaleDelivery extends Model
 {
@@ -37,5 +38,10 @@ class SaleDelivery extends Model
     // Relasi to Manpower
     public function backupDriver(){
         return $this->belongsTo(Manpower::class, 'backup_driver');
+    }
+
+    // Relasi to SPK
+    public function spk(){
+        return $this->belongsTo(Spk::class, 'spk_no', 'spk_no');
     }
 }

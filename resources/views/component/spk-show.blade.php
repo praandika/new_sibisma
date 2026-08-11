@@ -47,7 +47,12 @@
             </div>
         </div>
         @else
-        <div class="card card-dark bg-{{ $data->credit_status == 'survey' ? 'info' : ($data->credit_status == 'acc' ? 'success' : 'danger') }}-gradient skew-shadow">
+        <div class="card card-dark bg-{{ 
+            $data->credit_status == 'survey' || $data->credit_status == 'SURVET' 
+            ? 'info' : (
+                $data->credit_status == 'acc' || $data->credit_status == 'ACC' 
+                ? 'success' : 
+                    'danger') }}-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
                     @if($data->credit_status == 'survey')
@@ -87,9 +92,9 @@
         }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($data->order_status == 'indent' || $data->order_status == 'rejected')
+                    @if($data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED')
                     <img src="{{ asset('img/indent1.png') }}" alt="Indent">
-                    @elseif($data->order_status == 'ready')
+                    @elseif($data->order_status == 'ready' || $data->order_status == 'READY')
                     <img src="{{ asset('img/available1.png') }}" alt="Ready">
                     @else
                     <img src="{{ asset('img/indent1.png') }}" alt="Request Stock">
@@ -169,7 +174,7 @@
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong>
                         </a>
                     @else
-                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-primary btn-round print-pdf"><i
+                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-primary btn-round print-pdf" style="margin-bottom: 20px;"><i
                         class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong></a>
                     @endif
                 </div>

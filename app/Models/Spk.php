@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock;
 use App\Models\Leasing;
 use App\Models\Manpower;
+use App\Models\SaleDelivery;
 
 class Spk extends Model
 {
@@ -37,5 +38,10 @@ class Spk extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to SPK
+    public function saleDelivery(){
+        return $this->hasOne(SaleDelivery::class, 'spk_no', 'spk_no');
     }
 }

@@ -259,12 +259,12 @@ Route::get('print-pdf-tp', function () {
     return view('export.pdf-tp');
 })->name('printtppdf');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('spk-print/{id}', [SpkController::class, 'printPDF'])->name('spk.print');
-Route::middleware(['auth:sanctum', 'verified'])->get('spk-download/{id}', [SpkController::class, 'downloadPDF'])->name('spk.download');
-Route::middleware(['auth:sanctum', 'verified'])->get('spk-ktp-print/{id}', [SpkController::class, 'ktpPDF'])->name('spk.ktp-print');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-print/{spk_no}', [SpkController::class, 'printPDF'])->name('spk.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-download/{spk_no}', [SpkController::class, 'downloadPDF'])->name('spk.download');
+Route::middleware(['auth:sanctum', 'verified'])->get('spk-ktp-print/{spk_no}', [SpkController::class, 'ktpPDF'])->name('spk.ktp-print');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('do-print/{id}', [DeliveryOrderController::class, 'printPDF'])->name('do.print');
-Route::middleware(['auth:sanctum', 'verified'])->get('do-download/{id}', [DeliveryOrderController::class, 'downloadPDF'])->name('do.download');
+Route::middleware(['auth:sanctum', 'verified'])->get('do-print/{spk_no}', [DeliveryOrderController::class, 'printPDF'])->name('do.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('do-download/{spk_no}', [DeliveryOrderController::class, 'downloadPDF'])->name('do.download');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-print/{id}', [KwitansiController::class, 'printPDF'])->name('kwitansi.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('kwitansi-download/{id}', [KwitansiController::class, 'downloadPDF'])->name('kwitansi.download');
@@ -381,10 +381,10 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-change-stock
 Route::middleware(['auth:sanctum', 'verified'])->post('/spk/process-sale/{spk_no}', [SaleController::class, 'processSale'])->name('spk.process-sale');
 
 // GO TO SALE SHOW --> SALE DETAIL --> CREATE DO
-Route::middleware(['auth:sanctum', 'verified'])->post('/sale/show/{spk_no}', [SaleController::class, 'saleShow'])->name('sale.sale-show');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale/show/{spk_no}', [SaleController::class, 'saleShow'])->name('sale.sale-show');
 
 // PROSES STORE AND UPDATE PROSES DELIVERY ORDER
-Route::middleware(['auth:sanctum', 'verified'])->post('/do/process-do/{spk_no}', [SaleController::class, 'processDo'])->name('do.process-do');
+Route::middleware(['auth:sanctum', 'verified'])->post('/do/process-do/{spk_no}', [SaleDeliveryController::class, 'processDo'])->name('do.process-do');
 
 // ===============================//
 // ************ AJAX ************ //

@@ -9,6 +9,8 @@ use App\Models\Stock;
 use App\Models\Leasing;
 use App\Models\SaleDelivery;
 use App\Models\Document;
+use App\Models\Spk;
+use App\Models\Dealer;
 
 class Sale extends Model
 {
@@ -44,5 +46,15 @@ class Sale extends Model
     // Relasi to User
     public function updatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi to SPK
+    public function spk(){
+        return $this->belongsTo(Spk::class);
+    }
+
+    // Relasi to Dealer
+    public function dealer(){
+        return $this->belongsTo(Dealer::class, 'dealer_code', 'dealer_code');
     }
 }
