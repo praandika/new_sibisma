@@ -223,12 +223,32 @@
                                     </span>
                                     <span class="secondary-data">
                                         <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${row.created_at ? formatJam(row.created_at) : '-'}</div>
-                                            <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.sales_status == 'sold' ? 'DO: ' + formatTanggal(row.do_date) : ''}</div>
+                                            <div style="font-size: 11px; font-style: italic;" class="mb-1">${String(row.order_status || '').trim().toUpperCase() === 'DELIVERY' ? 'DO: ' + formatTanggal(row.do_date) : ''}</div>
                                     </span>
                                     <span class="secondary-data">
                                         <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.payment_method)}</div>
 
-                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">${row.payment_method == 'CASH' ? row.microfinance : row.leasing}</div>
+                                        <div style="
+                                            font-size: 11px; 
+                                            font-style: italic;
+                                            " 
+                                            class="
+                                            mb-1
+                                            ${row.credit_status == 'ACC'
+                                            ? 'text-success' : 
+                                                row.credit_status == 'SURVEY'
+                                                ? 'text-warning' :
+                                                    row.credit_status == 'REJECT'
+                                                    ? 'text-danger' :
+                                                        row.credit_status == 'CANCEL'
+                                                        ? 'text-dark' :
+                                                            'text-primary'
+                                            }
+                                            ">
+                                            ${row.payment_method == 'CASH' ? row.microfinance : row.leasing}
+                                            
+                                            ${row.payment_method == 'CREDITCARD' ? row.credit_status : ''}
+                                        </div>
                                     </span>
                                 </div>
                             </td>
@@ -301,21 +321,16 @@
                             <td>${row.manpower}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="/spk/${row.id}/edit" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                            class="fas fa-edit"></i></a>
                                     ${
-                                        row.order_status == 'READY' && lengkap
-                                        ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="/spk/get/${row.spk_no}" class="btnAction"
-                                        target="_blank"
-                                        data-toggle="tooltip" data-placement="top" title="Detail" style="color:orange;"><i
-                                            class="fas fa-eye"></i></a>`
+                                        row.sale_status != 'SOLD'
+                                        ? `<a href="/spk/${row.id}/edit" class="btnAction"
+                                            data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                class="fas fa-edit"></i></a>`
                                         : `<span></span>`
                                     }
                                     
                                     ${
-                                        row.order_status == 'SOLD'
+                                        String(row.order_status || '').trim().toUpperCase() === 'SOLD'
                                         ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="/sale/show/${row.spk_no}"
                                             class="btnAction"
@@ -324,12 +339,21 @@
                                             style="color:#228B22; cursor:pointer;">
 
                                             <i class="fas fa-truck truck-icon"></i>
-                                        </a>`
-                                        : `<span></span>`
+                                        </a>` : 
+                                            String(row.order_status || '').trim().toUpperCase() === 'DELIVERY'
+                                            ? `<a href="/do-print/${row.spk_no}"
+                                                    class="btnAction"
+                                                    target="_blank"
+                                                    data-toggle="tooltip" data-placement="top" title="Print DO"
+                                                    style="color:red; cursor:pointer;">
+
+                                                    <i class="fas fa-print"></i>
+                                                </a>`  : 
+                                                    `<span></span>`
                                     }
                                     
                                     ${ 
-                                        row.payment_method == 'CREDITCARD'
+                                        row.payment_method == 'CREDITCARD' && row.sale_status != 'SOLD'
                                         ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="/spk/historycredit/${row.spk_no}"
                                             class="btnAction"
@@ -338,6 +362,22 @@
                                             style="color:purple; cursor:pointer;">
 
                                             <i class="fas fa-credit-card"></i>
+                                        </a>`
+                                        : `<span></span>`
+                                    }
+
+                                    ${
+                                        String(row.order_status || '').trim().toUpperCase() === 'SOLD' ||
+                                        String(row.order_status || '').trim().toUpperCase() === 'READY' ||
+                                        String(row.order_status || '').trim().toUpperCase() === 'DELIVERY'
+                                        ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="/spk-print/${row.spk_no}"
+                                            class="btnAction"
+                                            target="_blank"
+                                            data-toggle="tooltip" data-placement="top" title="Print SPK"
+                                            style="color:maroon; cursor:pointer;">
+
+                                            <i class="fas fa-file-pdf"></i>
                                         </a>`
                                         : `<span></span>`
                                     }

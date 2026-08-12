@@ -76,16 +76,16 @@
 
     <div class="col-md-4">
         <div class="card card-dark bg-{{ 
-        $data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED' 
+        strtoupper($data->order_status == 'INDENT') || strtoupper($data->order_status == 'REJECTED') 
         ? 'danger' 
         : (
-            $data->order_status == 'ready' || $data->order_status == 'READY'
+            strtoupper($data->order_status == 'READY')
                 ? 'success' 
                 : (
-                    $data->order_status == 'sold' || $data->order_status == 'SOLD'
+                    strtoupper($data->order_status == 'SOLD')
                         ? 'secondary'
                         : (
-                            $data->order_status == 'delivered' || $data->order_status == 'DELIVERED'
+                            strtoupper($data->order_status == 'DELIVERY')
                                 ? 'success'
                                 : 'warning'
                             )
@@ -94,10 +94,14 @@
         }}-gradient bubble-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($data->order_status == 'indent' || $data->order_status == 'INDENT' || $data->order_status == 'rejected' || $data->order_status == 'REJECTED')
+                    @if(strtoupper($data->order_status == 'INDENT') || strtoupper($data->order_status == 'REJECTED'))
                     <img src="{{ asset('img/indent1.png') }}" alt="Indent">
-                    @elseif($data->order_status == 'ready' || $data->order_status == 'READY')
+                    @elseif(strtoupper($data->order_status == 'READY'))
                     <img src="{{ asset('img/available1.png') }}" alt="Ready">
+                    @elseif(strtoupper($data->order_status == 'SOLD'))
+                    <img src="{{ asset('img/sold1.png') }}" alt="Sold">
+                    @elseif(strtoupper($data->order_status == 'DELIVERY'))
+                    <img src="{{ asset('img/delivery1.png') }}" alt="Delivery">
                     @else
                     <img src="{{ asset('img/indent1.png') }}" alt="Request Stock">
                     @endif
@@ -119,47 +123,106 @@
                 <!-- CONTROL BUTTON -->
                 <div class="col-md-6" style="text-align: right;">
                     @if(Auth::user()->access != 'salesman')
+
+                    {{-- ============================= --}}
+                    {{-- DATA BELUM LENGKAP --}}
+                    {{-- ============================= --}}
+
                         @if(
-                            filled($data->ktp_number) &&
-                            filled($data->spk_phone) &&
-                            filled($data->address_shipment) &&
-                            filled($data->frame_no) &&
-                            filled($data->faktur_color) &&
-                            filled($data->ktp) &&
-                            filled($data->stnk_name)
+                            !filled($data->ktp_number) ||
+                            !filled($data->spk_phone) ||
+                            !filled($data->address_shipment) ||
+                            !filled($data->frame_no) ||
+                            !filled($data->faktur_color) ||
+                            !filled($data->ktp) ||
+                            !filled($data->stnk_name)
                         )
-                            @if(
-                                $data->order_status == 'sold' || 
-                                $data->order_status == 'SOLD'
-                            )
-                                <button type="button" class="btn btn-secondary btn-round print-pdf"
-                                style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp;<strong>Terjual</strong>
-                                </button>
-                                &nbsp;
-                            @else
-                                <button type="button"
-                                        class="btn btn-secondary btn-round print-pdf"
-                                        style="margin-bottom: 20px;"
-                                        data-toggle="modal"
-                                        data-target="#modalConfirmSale">
-                                    <i class="fas fa-check"></i>
-                                    &nbsp;&nbsp; <strong>Proses Jual</strong>
-                                </button>
-                                &nbsp;
-                            @endif
-                        @else
-                            <button type="button" class="btn btn-secondary btn-round print-pdf"
-                            style="margin-bottom: 20px;" disabled><i class="fa fa-check"></i>&nbsp;&nbsp;<strong>Proses Jual</strong>
+
+                            <button type="button"
+                                class="btn btn-secondary btn-round print-pdf"
+                                style="margin-bottom: 20px;"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Lengkapi Data - Edit SPK"
+                                disabled>
+
+                                <i class="fa fa-check"></i>
+                                &nbsp;&nbsp;
+                                <strong>Proses Jual</strong>
+
                             </button>
-                            &nbsp;
+
+                        {{-- ============================= --}}
+                        {{-- DATA SUDAH LENGKAP --}}
+                        {{-- ============================= --}}
+
+                        @else
+
+                            {{-- ============================= --}}
+                            {{-- SUDAH SOLD --}}
+                            {{-- ============================= --}}
+
+                            @if(
+                                strtoupper($data->order_status) == 'SOLD' ||
+                                strtoupper($data->order_status) == 'DELIVERY'
+                            )
+
+                                <button type="button"
+                                    class="btn btn-secondary btn-round print-pdf"
+                                    style="margin-bottom: 20px;"
+                                    disabled>
+
+                                    <i class="fa fa-check"></i>
+                                    &nbsp;&nbsp;
+                                    <strong>Terjual</strong>
+
+                                </button>
+
+                            {{-- ============================= --}}
+                            {{-- CREDIT CARD BELUM ACC --}}
+                            {{-- ============================= --}}
+
+                            @elseif(
+                                strtoupper($data->payment_method) == 'CREDITCARD' &&
+                                strtoupper($data->credit_status) != 'ACC'
+                            )
+
+                                <a href="{{ route('spk.historycredit', $spk_no) }}" type="button"
+                                    class="btn btn-warning btn-round print-pdf"
+                                    style="margin-bottom: 20px;">
+
+                                    <i class="fas fa-sync-alt mr-1"></i>
+                                    <strong>Update Status Kredit</strong>
+
+                                </a>
+
+                            {{-- ============================= --}}
+                            {{-- BOLEH PROSES JUAL --}}
+                            {{-- ============================= --}}
+
+                            @else
+
+                                <button type="button"
+                                    class="btn btn-secondary btn-round print-pdf"
+                                    style="margin-bottom: 20px;"
+                                    data-toggle="modal"
+                                    data-target="#modalConfirmSale">
+
+                                    <i class="fas fa-check"></i>
+                                    &nbsp;&nbsp;
+                                    <strong>Proses Jual</strong>
+
+                                </button>
+
+                            @endif
+
                         @endif
+
                     @endif
-                    
+                    &nbsp;
                     @if(
-                        $data->order_status == 'ready' || 
-                        $data->order_status == 'READY' ||
-                        $data->order_status == 'sold' || 
-                        $data->order_status == 'SOLD')
+                        strtoupper($data->order_status )== 'READY' ||
+                        strtoupper($data->order_status) == 'SOLD')
                         <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-dark btn-round print-pdf"
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp; <strong>Print SPK</strong>
                         </a>
@@ -176,8 +239,7 @@
                             style="margin-bottom: 20px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong>
                         </a>
                     @else
-                        <a href="{{ route('spk.edit',$id) }}" class="btn btn-primary btn-round print-pdf" style="margin-bottom: 20px;"><i
-                        class="fa fa-edit"></i>&nbsp;&nbsp; <strong>Edit SPK</strong></a>
+                        <span></span>
                     @endif
                 </div>
             </div>

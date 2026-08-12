@@ -71,7 +71,7 @@
                             @if(Auth::user()-> access != 'owner')
                                 @include('menu.stock')
                                 @include('menu.spk')
-                                @include('menu.manage-stock')
+                                @include('menu.sale')
                                 @include('menu.delivery')
                                 @include('menu.opname')
                                 @include('menu.dealer')

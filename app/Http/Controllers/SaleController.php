@@ -27,53 +27,88 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        return view('page');
+    }
 
-        $dealer = Dealer::all();
-        $today = Carbon::now('GMT+8')->format('Y-m-d');
+    // DATA SALE AJAX
+    public function saleData(Request $request)
+    {
+        try {
 
-        if ($dc == 'group') {
-            $stock = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('leasings','spks.leasing_id','leasings.id')
-            ->where('spks.sale_status','pending')
-            ->where('spks.order_status','available')
-            ->where(function($query){
-                $query->where('spks.order_status','!=','indent')
-                      ->where('spks.credit_status','acc')
-                      ->orWhere('spks.credit_status','cash');
-            })
-            ->orderBy('stocks.qty','desc')
-            ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
-            $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
-            return view('page', compact('stock','today','data','dealer'));
-        }else{
-            $stock = Spk::join('stocks','spks.stock_id','stocks.id')
-            ->join('dealers','stocks.dealer_id','dealers.id')
-            ->join('units','stocks.unit_id','units.id')
-            ->join('colors','units.color_id','colors.id')
-            ->join('leasings','spks.leasing_id','leasings.id')
-            ->where('stocks.dealer_id',$did)
-            ->where('spks.sale_status','pending')
-            ->where('spks.order_status','available')
-            ->where(function($query){
-                $query->where('spks.order_status','!=','indent')
-                      ->where('spks.credit_status','acc')
-                      ->orWhere('spks.credit_status','cash');
-            })
-            ->orderBy('stocks.qty','desc')
-            ->select('stocks.*','spks.stock_id as idstok','spks.id as idspk','spks.*','leasings.leasing_code','units.*','dealers.dealer_name','dealers.dealer_code','colors.color_name','colors.color_code')->get();
-            $dealerCode = $dc;
-            $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->join('users','sales.created_by','users.id')
-            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
-            ->select('*','sales.id as id_sale','users.first_name')->get();
-            return view('page', compact('stock','today','data','dealer','dealerCode'));
+            if (Auth::user()->dealer_code == 'group') {
+
+                $query = Sale::with('spk');
+
+            } else {
+
+                $query = Sale::with('spk')
+                    ->where('dealer_code', Auth::user()->dealer_code);
+            }
+
+            // =========================
+            // SEARCH
+            // =========================
+
+            if ($request->filled('search')) {
+
+                $keywords = preg_split('/\s+/', trim($request->search));
+
+                foreach ($keywords as $keyword) {
+
+                    $query->where(function ($q) use ($keyword) {
+
+                        // SEARCH DI SALE
+                        $q->Where('sale_date', 'like', "%{$keyword}%")
+                            ->orWhere('customer_name', 'like', "%{$keyword}%")
+                            ->orWhere('faktur_color', 'like', "%{$keyword}%")
+                            ->orWhere('year_mc', 'like', "%{$keyword}%")
+                            ->orWhere('nik', 'like', "%{$keyword}%")
+                            ->orWhere('phone', 'like', "%{$keyword}%")
+                            ->orWhere('address', 'like', "%{$keyword}%")
+                            ->orWhere('frame_no', 'like', "%{$keyword}%")
+                            ->orWhere('engine_no', 'like', "%{$keyword}%")
+                            ->orWhere('payment_method', 'like', "%{$keyword}%")
+                            ->orWhere('leasing_name', 'like', "%{$keyword}%")
+                            ->orWhere('microfinance', 'like', "%{$keyword}%")
+                            ->orWhere('manpower', 'like', "%{$keyword}%")
+                            ->orWhere('model_name', 'like', "%{$keyword}%");
+
+                        // SEARCH DI TABEL SPK
+                        $q->orWhereHas('spk', function ($spk) use ($keyword) {
+
+                            $spk->where('gender', 'like', "%{$keyword}%")
+                                ->orWhere('kk_number', 'like', "%{$keyword}%");
+
+                        });
+
+                    });
+
+                }
+            }
+
+            // =========================
+            // ORDER
+            // =========================
+
+            $query->orderBy('sale_date', 'desc');
+
+            // =========================
+            // PAGINATION
+            // =========================
+
+            $data = $query->paginate(10);
+
+            return response()->json([
+                'dealer' => Auth::user()->dealer_code,
+                'data'   => $data,
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
         }
-        
     }
 
     // PROSES JUAL -> FORM DARI SHOW SPK

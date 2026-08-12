@@ -778,125 +778,223 @@ class SpkController extends Controller
      * @param  \App\Models\Spk  $spk
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Spk $spk)
     {
         if ($request->request_type == 'request_stock') {
 
-            // Request Stock Action
-            $data = Spk::find($spk->id);
-            $data->order_status = 'REQUEST STOCK';
-            $data->model_name = strtoupper($request->model_name);
-            $data->faktur_color = strtoupper($request->color);
-            $data->year_mc = $request->year;
-            $data->point_code = $request->point_code;
-            $data->update();
-            toast('Request stock berhasil dikirim','success');
-            return redirect()->route('spk.get',$request->spk_no);
+            // =========================
+            // REQUEST STOCK
+            // =========================
+            DB::transaction(function () use ($request, $spk) {
+
+                $spk->order_status = 'REQUEST STOCK';
+                $spk->model_name = strtoupper($request->model_name);
+                $spk->faktur_color = strtoupper($request->color);
+                $spk->year_mc = $request->year;
+                $spk->point_code = $request->point_code;
+                $spk->updated_by = Auth::user()->id;
+
+                $spk->save();
+            });
+
+            toast('Request stock berhasil dikirim', 'success');
+
+            return redirect()->route('spk.get', $request->spk_no);
 
         } else {
-            // Update SPK Action
 
-            if ($request->discount == '') {
-                $discount = 0;
-            } else {
-                $discount = $request->discount;
-            }
+            // =========================
+            // UPDATE SPK
+            // =========================
 
-            if ($request->deposit == '') {
-                $deposit = 0;
-            } else {
-                $deposit = $request->deposit;
-            }
+            DB::transaction(function () use ($request, $spk) {
 
-            $reason = "";
-            if ($request->payment == 'CREDITCARD') {
-                // Cek status kredit
-                if($request->credit_status == 'acc'){
-                    $reason = 'ACC';
-                } else if($request->credit_status == 'survey'){
-                    $reason = 'Mulai Survey';
-                } else {
-                    $reason = $request->reason;
-                }
-            }
+                // =========================
+                // DEFAULT VALUE
+                // =========================
 
-            $data = Spk::find($spk->id);
-            $data->order_name = strtoupper($request->customer_name);
-            $data->gender = strtoupper($request->gender);
-            $data->stnk_name = strtoupper($request->stnk_name);
-            $data->model_name = strtoupper($request->model_name);
-            $data->frame_no = strtoupper($request->frame_no);
-            $data->engine_no = strtoupper($request->engine_no);
-            $data->year_mc = $request->year;
-            $data->price = preg_replace('/[^0-9]/', '', $request->price);
-            $data->faktur_color = strtoupper($request->color);
-            $data->address = strtoupper($request->address);
-            $data->address_shipment = strtoupper($request->address_shipment);
-            $data->spk_phone = $request->phone;
-            $data->ktp_number = $request->ktp;
-            $data->kk_number = $request->kk;
-            $data->pemohon_name = strtoupper($request->pemohon_name);
-            $data->deposit = $deposit;
-            $data->downpayment = $request->downpayment;
-            $data->discount = $discount;
-            $data->leasing = strtoupper($request->leasing);
-            $data->microfinance = strtoupper($request->microfinance);
-            $data->description = strtoupper($request->description);
-            $data->payment_method = $request->payment;
-            $data->bunga = $request->bunga;
-            $data->tenor = $request->tenor;
-            $data->reason = $reason;
-            $data->credit_status = strtoupper($request->credit_status);
-            $data->order_status = strtoupper($request->order_status);
-            $data->updated_by = Auth::user()->id;
+                $discount = $request->discount == ''
+                    ? 0
+                    : $request->discount;
 
-            // Save Record to History Credit
+                $deposit = $request->deposit == ''
+                    ? 0
+                    : $request->deposit;
 
-            if ($request->payment_method == 'CREDITCARD') {
-                $history = new HistoryCredit;
-                $history->leasing = $request->leasing;
-                $history->spk_no = $request->spk_no;
-                $history->update_date = now();
-                $history->credit_status = strtoupper($request->credit_status);
-                $history->pemohon_name = strtoupper($request->pemohon_name);
-                $history->reason = $reason;
-                $history->created_by = Auth::user()->id;
-                $history->save();
-                toast('History Credit berhasil disimpan','success');
-            }
 
-            // Upload KTP jika ada file baru
-            if ($request->hasFile('picture')) {
+                // =========================
+                // CREDIT REASON
+                // =========================
 
-                if ($data->ktp && $data->ktp != 'noimage.jpg') {
-                    @unlink(public_path('img/ktp/'.$data->ktp));
+                $reason = '';
+
+                if (strtoupper($request->payment) === 'CREDITCARD') {
+
+                    $creditStatus = strtoupper($request->credit_status);
+
+                    if ($creditStatus === 'ACC') {
+
+                        $reason = 'ACC';
+
+                    } elseif ($creditStatus === 'SURVEY') {
+
+                        $reason = 'Mulai Survey';
+
+                    } else {
+
+                        // REJECT / CANCEL
+                        $reason = $request->reason ?? '';
+                    }
                 }
 
-                $img = $request->file('picture');
-                $ktpFile = time().'_'.$img->getClientOriginalName();
-                $img->move(public_path('img/ktp'), $ktpFile);
 
-                $data->ktp = $ktpFile;
+                // =========================
+                // UPDATE SPK
+                // =========================
 
-            } elseif ($request->hasFile('photo')) {
+                $spk->order_name = strtoupper($request->customer_name);
+                $spk->gender = strtoupper($request->gender);
+                $spk->stnk_name = strtoupper($request->stnk_name);
+                $spk->model_name = strtoupper($request->model_name);
+                $spk->frame_no = strtoupper($request->frame_no);
+                $spk->engine_no = strtoupper($request->engine_no);
+                $spk->year_mc = $request->year;
 
-                if ($data->ktp && $data->ktp != 'noimage.jpg') {
-                    @unlink(public_path('img/ktp/'.$data->ktp));
+                $spk->price = preg_replace(
+                    '/[^0-9]/',
+                    '',
+                    $request->price
+                );
+
+                $spk->faktur_color = strtoupper($request->color);
+                $spk->address = strtoupper($request->address);
+                $spk->address_shipment = strtoupper($request->address_shipment);
+                $spk->spk_phone = $request->phone;
+                $spk->ktp_number = $request->ktp;
+                $spk->kk_number = $request->kk;
+                $spk->pemohon_name = strtoupper($request->pemohon_name);
+
+                $spk->deposit = $deposit;
+                $spk->downpayment = $request->downpayment;
+                $spk->discount = $discount;
+
+                $spk->leasing = strtoupper($request->leasing);
+                $spk->microfinance = strtoupper($request->microfinance);
+                $spk->description = strtoupper($request->description);
+
+                $spk->payment_method = strtoupper($request->payment);
+
+                $spk->bunga = $request->bunga;
+                $spk->tenor = $request->tenor;
+
+                $spk->reason = $reason;
+
+                $spk->credit_status = strtoupper(
+                    $request->credit_status
+                );
+
+                $spk->order_status = strtoupper(
+                    $request->order_status
+                );
+
+                $spk->updated_by = Auth::user()->id;
+
+
+                // =========================
+                // HISTORY CREDIT
+                // =========================
+
+                if (strtoupper($request->payment) === 'CREDITCARD') {
+
+                    $history = new HistoryCredit;
+
+                    $history->spk_no = $spk->spk_no;
+                    $history->leasing = strtoupper($request->leasing);
+                    $history->update_date = now();
+
+                    $history->credit_status = strtoupper(
+                        $request->credit_status
+                    );
+
+                    $history->pemohon_name = strtoupper(
+                        $request->pemohon_name
+                    );
+
+                    $history->reason = $reason;
+                    $history->created_by = Auth::user()->id;
+
+                    $history->save();
                 }
 
-                $img = $request->file('photo');
-                $ktpFile = time().'_'.$img->getClientOriginalName();
-                $img->move(public_path('img/ktp'), $ktpFile);
 
-                $data->ktp = $ktpFile;
-            }
+                // =========================
+                // UPLOAD KTP
+                // =========================
 
-            // simpan semua perubahan
-            $data->save();
+                if ($request->hasFile('picture')) {
 
-            toast('SPK berhasil diubah','success');
-            return redirect()->route('spk.get',$request->spk_no);
-        } // End of Save Action
+                    if (
+                        $spk->ktp &&
+                        $spk->ktp != 'noimage.jpg'
+                    ) {
+                        @unlink(
+                            public_path('img/ktp/' . $spk->ktp)
+                        );
+                    }
+
+                    $img = $request->file('picture');
+
+                    $ktpFile = time() . '_' .
+                        $img->getClientOriginalName();
+
+                    $img->move(
+                        public_path('img/ktp'),
+                        $ktpFile
+                    );
+
+                    $spk->ktp = $ktpFile;
+
+                } elseif ($request->hasFile('photo')) {
+
+                    if (
+                        $spk->ktp &&
+                        $spk->ktp != 'noimage.jpg'
+                    ) {
+                        @unlink(
+                            public_path('img/ktp/' . $spk->ktp)
+                        );
+                    }
+
+                    $img = $request->file('photo');
+
+                    $ktpFile = time() . '_' .
+                        $img->getClientOriginalName();
+
+                    $img->move(
+                        public_path('img/ktp'),
+                        $ktpFile
+                    );
+
+                    $spk->ktp = $ktpFile;
+                }
+
+
+                // =========================
+                // SAVE SPK
+                // =========================
+
+                $spk->save();
+            });
+
+
+            toast('SPK berhasil diubah', 'success');
+
+            return redirect()->route(
+                'spk.get',
+                $request->spk_no
+            );
+        }
     }
 
     public function processChangeStock(Request $request, $spk, $dealer_code)
@@ -1057,7 +1155,7 @@ class SpkController extends Controller
         $spk = Spk::where('spk_no', $spk_no)->firstOrFail();
 
         $history = HistoryCredit::where('spk_no',$spk_no)
-        ->orderBy('update_date','desc')
+        ->orderBy('created_at','desc')
         ->get();
 
         return view('page', compact('spk','spk_no','history'));
@@ -1066,7 +1164,7 @@ class SpkController extends Controller
     // Update History Credit SPK
     public function updateCreditStatus(Request $request, $spk_no)
     {
-        // PERLU DIBUAT LOGIC BARU, JIKA SETELAH REJECT, MAKA TOMBOL UBAH STATUS AKAN BERGANTI JADI TOMBOL UBAH LEASING --> TAMPIL SEMUA INPUTAN CREDIT INFO --> STATUS MULAI DARI SURVEY
+
         $request->validate([
             'credit_status' => 'required|in:SURVEY,ACC,REJECT,CANCEL',
             'reason' => 'nullable|string|max:500',
@@ -1170,6 +1268,111 @@ class SpkController extends Controller
         return redirect()->back();
     }
 
+    // PROSES UBAH LEASING ON HALAMAN HISTORY CREDIT SPK
+    public function changeLeasing(Request $request, $spk_no)
+    {
+        $request->validate([
+            'leasing' => 'required|in:BAF,ADIRA,SOF,MUF,IMFI,OTHER',
+            'credit_status' => 'required|in:SURVEY,ACC',
+        ]);
+
+        try {
+
+            DB::transaction(function () use ($request, $spk_no) {
+
+                $spk = Spk::where('spk_no', $spk_no)
+                    ->lockForUpdate()
+                    ->first();
+
+                if (!$spk) {
+                    throw new \Exception(
+                        'Data SPK tidak ditemukan.'
+                    );
+                }
+
+                // Pastikan hanya bisa dilakukan jika REJECT
+                if (strtoupper($spk->credit_status) !== 'REJECT') {
+                    throw new \Exception(
+                        'Ubah leasing hanya dapat dilakukan pada SPK dengan status REJECT.'
+                    );
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | UPDATE SPK
+                |--------------------------------------------------------------------------
+                */
+
+                $spk->leasing = strtoupper($request->leasing);
+
+                $spk->pemohon_name = strtoupper(
+                    $request->pemohon_name
+                );
+
+                $newCreditStatus = strtoupper(
+                    $request->credit_status
+                );
+
+                $spk->credit_status = $newCreditStatus;
+
+                // Leasing baru → reason dikosongkan
+                if (strtoupper($spk->credit_status) === 'SURVEY') {
+
+                    $spk->reason = 'Mulai Survey';
+
+                } elseif (strtoupper($spk->credit_status) === 'ACC') {
+
+                    $spk->reason = 'ACC';
+
+                } else {
+
+                    $spk->reason = '';
+
+                }
+
+                $spk->save();
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | INSERT HISTORY CREDIT
+                |--------------------------------------------------------------------------
+                */
+
+                $history = new HistoryCredit;
+
+                $history->spk_no = $spk->spk_no;
+                $history->leasing = strtoupper($request->leasing);
+                $history->update_date = now();
+                $history->credit_status = $newCreditStatus;
+                $history->reason = $spk->reason;
+                $history->pemohon_name = strtoupper($request->pemohon_name);
+                $history->created_by = Auth::user()->id;
+
+                $history->save();
+
+            });
+
+
+            toast(
+                'Leasing berhasil diubah dan status kredit diperbarui.',
+                'success'
+            );
+
+            return redirect()->back();
+
+        } catch (\Exception $e) {
+
+            toast(
+                $e->getMessage(),
+                'error'
+            );
+
+            return redirect()->back()
+                ->withInput();
+        }
+    }
+
     public function printPDF($spk_no){
         $dc = Auth::user()->dealer_code;
         $dealer = Dealer::where('dealer_code',$dc)->firstOrFail();
@@ -1198,15 +1401,10 @@ class SpkController extends Controller
 
     public function ktpPDF($spk_no){
         $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
-        $dealer = Dealer::where('dealer_code',$dc)->get();
+        $dealer = Dealer::where('dealer_code',$dc)->firstOrFail();
 
-        $data = Spk::join('stocks','spks.stock_id','=','stocks.id')
-        ->join('leasings','spks.leasing_id','=','leasings.id')
-        ->join('manpowers','spks.manpower_id','=','manpowers.id')
-        ->select('*','spks.address as customer_address','spks.spk_phone as customer_phone')
-        ->where('spks.spk_no',$spk_no)
-        ->get();
+        $data = Spk::where('spk_no',$spk_no)->firstOrFail();
+        
         $printDate = Carbon::now('GMT+8')->format('j F Y H:i:s');
 
         $pdf = PDF::loadView('export.pdf-ktp',compact('data','spk_no','printDate','dealer'));

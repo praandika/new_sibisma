@@ -235,7 +235,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [Sp
 // END SPK
 
 // DO
-Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', DeliveryOrderController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order/get/{id}', [DeliveryOrderController::class, 'get'])->name('delivery-order.get');
 Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order-history/{date?}', [DeliveryOrderController::class, 'history'])->name('delivery-order.history');
 // END DO
@@ -388,8 +387,18 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/do/process-do/{spk_no}',
 // HISTORY CREDIT SPK
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk/historycredit/{spk_no}', [SpkController::class, 'historyCredit'])->name('spk.historycredit');
 
-// PROSES UPDATE HISTORY CREDIT SPK
+// PROSES UPDATE STATUS CREDIT ON HISTORY CREDIT SPK
 Route::middleware(['auth:sanctum', 'verified'])->post('/spk/credit-status/{spk_no}', [SpkController::class, 'updateCreditStatus'])->name('spk.credit-status-update');
+
+// PROSES UBAH LEASING ON HISTORY CREDIT SPK
+Route::middleware(['auth:sanctum', 'verified'])->post('/spk/change-leasing/{spk_no}', [SpkController::class, 'changeLeasing'])->name('spk.change-leasing');
+
+// HALAMAN DATA DELIVERY ORDER
+Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', DeliveryOrderController::class);
+
+// HALAMAN DATA SALE
+Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController::class);
+
 
 // ===============================//
 // ************ AJAX ************ //
@@ -409,8 +418,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-requeststock', [SpkCo
 Route::middleware(['auth:sanctum', 'verified'])->get('/dpack', [DpackController::class, 'index'])->name('dpack.index');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sync-log', [DpackController::class, 'log'])->name('dpack.log');
 
-// MANUAL SYNC DPACK AJAX
+// MANUAL SYNC PROSPECT DPACK AJAX
 Route::middleware(['auth:sanctum', 'verified'])->post('/manual-sync/prospect', [DpackController::class, 'manualSyncProspect'])->name('dpack.manual-prospect');
+
+// MANUAL SYNC STOCK MANIFEST DPACK AJAX
+Route::middleware(['auth:sanctum', 'verified'])->post('/manual-sync/manifest', [DpackController::class, 'manualSyncManifest'])->name('dpack.manual-manifest');
 
 // CEK PRICE AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-checkprice', [SpkController::class, 'checkPrice'])->name('spk.checkprice');
@@ -441,3 +453,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stock-requested-ajax', [S
 
 // DATA STOCK SOLD AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold-ajax', [StockController::class, 'dataStockSold'])->name('stock.sold-ajax');
+
+// DATA DELIVERY ORDER AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/do-data-ajax', [DeliveryOrderController::class, 'doData'])->name('do.data-ajax');
+
+// DATA SALE AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-data-ajax', [SaleController::class, 'saleData'])->name('sale.data-ajax');

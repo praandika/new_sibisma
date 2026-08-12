@@ -26,28 +26,24 @@
 
 <body>
     <center>
-    @forelse($data as $o)
         <table>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
+                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
+                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
+                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $o->ktp }}" alt="{{ $o->ktp }}" style="width: 421px;">
+                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
             </tr>
         </table>
-    @empty
-        <p>No Image Available</p>
-    @endforelse
     </center>
 </body>
 

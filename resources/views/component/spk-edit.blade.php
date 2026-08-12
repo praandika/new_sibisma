@@ -359,34 +359,6 @@
                                 </div>
                             </div>
 
-                            <!-- STATUS KREDIT -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="credit_status">Kredit Status <span class="star">*</span></label>
-                                    <input id="credit_status" type="text" class="form-control form-control-sm"
-                                        name="credit_status" value="{{ $spk->credit_status }}"
-                                        style="text-transform: uppercase; cursor:pointer;" data-toggle="modal"
-                                        data-target=".modalCreditStatus" required>
-                                </div>
-                            </div>
-
-                            <!-- ALASAN -->
-                            <div class="col-md-3">
-                                <div class="form-group" id="creditReasonGroup" style="display: none;">
-                                    <label for="creditReason" id="creditReasonLabel">
-                                        Alasan
-                                    </label>
-
-                                    <textarea
-                                        class="form-control"
-                                        name="reason"
-                                        id="reason"
-                                        rows="2"
-                                        placeholder="Masukkan alasan reject/cancel..."
-                                    >{{ old('reason', $data->credit_reason ?? '') }}</textarea>
-                                </div>
-                            </div>
-
                             <!-- Downpayment -->
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -536,7 +508,6 @@
 
     @include('component.modal-tenor')
     @include('component.modal-bunga')
-    @include('component.modal-credit-status-edit')
     @include('component.modal-microfinance')
     @include('component.modal-stock')
     @include('component.modal-gender')

@@ -55,4 +55,35 @@ class DpackController extends Controller
 
         }
     }
+
+    // PANGGIL COMMAND MANIFEST
+
+    public function manualSyncManifest()
+    {
+        try {
+
+            $exitCode = Artisan::call('sync:manifest');
+
+            if ($exitCode !== 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sync manifest gagal.',
+                    'output'  => Artisan::output(),
+                ], 500);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Sync manifest berhasil.',
+                'output'  => Artisan::output(),
+            ]);
+
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

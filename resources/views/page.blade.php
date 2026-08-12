@@ -188,27 +188,7 @@
 
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
-        @if(Route::is('sale.sale-show'))
-            @include('component.sale-show')
-        @elseif(Route::is('sale.history'))
-            <livewire:ratio-stock>
-            <livewire:sale-l-m>
-            <livewire:sale-l-y>
-            <livewire:stu-vs-real>
-            @include('component.search-box')
-            @include('component.sale-history')
-        @else
-            @if(Auth::user()->crud == 'simple')
-                @include('component.sale-simple-create')
-            @else
-                @include('component.sale-create')
-            @endif
-            <livewire:ratio-stock>
-            <livewire:sale-l-m>
-            <livewire:sale-l-y>
-            <livewire:stu-vs-real>
             @include('component.sale-data')
-        @endif
 
     <!-- Entry Page -->
     @elseif(Route::is('entry.*'))
@@ -413,7 +393,7 @@
             @include('component.search-box')
             @include('component.delivery-order-history')
         @else
-            @include('component.delivery-order-data')
+            @include('component.do-data')
         @endif
 
     <!-- Data Kwitansi -->

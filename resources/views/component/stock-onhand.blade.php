@@ -34,6 +34,15 @@
 @endpush
 @endif
 
+@if(Auth::user()-> access != 'salesman')
+@push('button')
+<button id="btnSyncManifest" 
+        class="btn btn-dark btn-round">
+    <i class="fas fa-sync mr-1"></i> Sync Stock
+</button>
+@endpush
+@endif
+
 @push('link-bread')
 <li class="nav-item">
     <a href="{{ route('stock.onhand') }}">Data Stock On-Hand</a>
@@ -312,5 +321,70 @@
         loadStock($(this).data('page'));
     });
 
+</script>
+
+<!-- SYNC MANUAL STOCK MANIFEST DPACK -->
+ <script>
+$(document).on('click', '#btnSyncManifest', function () {
+
+    const btn = $(this);
+
+    btn.prop('disabled', true);
+
+    const originalHtml = btn.html();
+
+    btn.html(`
+        <i class="fas fa-spinner fa-spin mr-1"></i>
+        Syncing...
+    `);
+
+    $.ajax({
+        url: "{{ route('dpack.manual-manifest') }}",
+        type: "POST",
+
+        data: {
+            _token: "{{ csrf_token() }}"
+        },
+
+        success: function (res) {
+
+            console.log('SYNC SUCCESS:', res);
+
+            if (typeof toast === 'function') {
+                toast(res.message, 'success');
+            } else {
+                alert(res.message);
+            }
+
+            // Refresh data stock
+            loadStock(1);
+        },
+
+        error: function (xhr) {
+
+            console.log('SYNC ERROR:', xhr);
+
+            let message = 'Sync manifest gagal.';
+
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                message = xhr.responseJSON.message;
+            }
+
+            if (typeof toast === 'function') {
+                toast(message, 'error');
+            } else {
+                alert(message);
+            }
+        },
+
+        complete: function () {
+
+            btn.prop('disabled', false);
+            btn.html(originalHtml);
+
+        }
+    });
+
+});
 </script>
 @endpush

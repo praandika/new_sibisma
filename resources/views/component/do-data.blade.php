@@ -50,12 +50,12 @@
 </style>
 @endpush
 
-@section('title','Unit Sales')
-@section('page-title','Unit Sales')
+@section('title','Delivery Order')
+@section('page-title','Delivery Order')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('sale.index') }}">Unit Sales</a>
+    <a href="{{ route('delivery-order.index') }}">Delivery Order</a>
 </li>
 @endpush
 
@@ -63,33 +63,33 @@
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-                <h4 class="card-title">Unit Sales Data</h4>
+                <h4 class="card-title">Delivery Order Data</h4>
         </div>
         <div class="card-body">
             {{-- Search --}}
             <div class="mb-3">
-                <input type="text" class="form-control" id="searchSale"
+                <input type="text" class="form-control" id="searchDo"
                     placeholder="Cari SPK No, Customer Info, Unit, Salesman">
             </div>
 
-            <div class="paginationSale"></div>
+            <div class="paginationDo"></div>
             <div class="table-responsive">
                 <table class="table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Payment Method</th>
+                            <th>Delivery Info</th>
+                            <th>Unit</th>
                             <th>Customer Info</th>
-                            <th>Unit Info</th>
-                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Payment Method</th>
+                            <th>Delivery Info</th>
+                            <th>Unit</th>
                             <th>Customer Info</th>
-                            <th>Unit Info</th>
-                            <th>Salesman</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -98,7 +98,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="paginationSale"></div>
+            <div class="paginationDo"></div>
         </div>
     </div>
 </div>
@@ -155,11 +155,12 @@
                     <td><div class="skel-bar" style="width:80%; margin-bottom:6px;"></div><div class="skel-bar" style="width:50%; height:9px;"></div></td>
                     <td><div class="skel-bar" style="width:60%; margin-bottom:6px;"></div><div class="skel-bar" style="width:45%; height:9px;"></div></td>
                     <td><div class="skel-bar" style="width:50%;"></div></td>
+                    <td><div class="skel-bar" style="width:40%;"></div></td>
                 </tr>
             `;
         }
         $('#tbodyDo').html(html);
-        $('.paginationSale').html('');
+        $('.paginationDo').html('');
     }
 
     function loadDoData(page = 1) {
@@ -171,19 +172,19 @@
             dataType: "json",
             data: {
                 page: page,
-                search: $('#searchSale').val()
+                search: $('#searchDo').val()
             },
             success: function (res) {
                 // CEK DATA KOSONG ATAU TIDAK
                 if (res.data.data.length === 0) {
                     $('#tbodyDo').html(`
                         <tr>
-                            <td colspan="4" class="text-center py-4" style="color:#999;">
+                            <td colspan="5" class="text-center py-4" style="color:#999;">
                                 Data tidak ditemukan
                             </td>
                         </tr>
                     `);
-                    $('.paginationSale').html('');
+                    $('.paginationDo').html('');
                     return;
                 }
 
@@ -222,7 +223,41 @@
                                     </span>
                                 </div>
                             </td>
+                            <td>
+                                <div class="td-group">
+                                    <span class="main-data">
+                                        <span class="badge badge-dark mt-2">
+                                            Delivery: ${row.do_date ? formatTanggal(row.do_date) : '-'}
+                                        </span>
+                                    </span>
+                                    <span class="secondary-data">
+                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;"> Sale: ${row.spk.sale_date ? formatTanggal(row.spk.sale_date) : '-'}</div>
+                                            <div style="font-size: 11px; font-style: italic;" class="mb-1">SPK: ${row.spk.spk_date ? formatTanggal(row.spk.spk_date) : '-'}</div>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-group">
+                                    <span class="main-data">
+                                    ${
+                                        row.spk.frame_no == ''
+                                        ? `<span class="badge badge-danger mt-2"> No Frame</span>`
+                                        : `<span class="badge badge-primary mt-2"> ${row.spk.frame_no}</span>`
+                                    }
+                                    </span>
+                                    <span class="secondary-data">
+                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${row.spk.engine_no}</div>
 
+                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">
+                                        ${row.spk.year_mc ? row.spk.year_mc : ''}
+                                        </div>
+
+                                        <div style="font-size: 11px; font-style: italic; font-weight: bold;" class="mb-1">
+                                        ${ucwords(row.spk.model_name)} - ${ucwords(row.spk.faktur_color)}
+                                        </div>
+                                    </span>
+                                </div>
+                            </td>
                             <td>
                                 <div class="td-group">
                                     <span class="main-data">
@@ -246,32 +281,6 @@
                                     </span>
                                 </div>
                             </td>
-
-                            <td>
-                                <div class="td-group">
-                                    <span class="main-data">
-                                    ${
-                                        row.spk.frame_no == ''
-                                        ? `<span class="badge badge-danger mt-2"> No Frame</span>`
-                                        : `<span class="badge badge-primary mt-2"> ${row.spk.frame_no}</span>`
-                                    }
-                                    </span>
-                                    <span class="secondary-data">
-                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${row.spk.engine_no}</div>
-
-                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">
-                                        ${row.spk.year_mc ? row.spk.year_mc : ''}
-                                        </div>
-
-                                        <div style="font-size: 11px; font-style: italic; font-weight: bold;" class="mb-1">
-                                        ${ucwords(row.spk.model_name)} - ${ucwords(row.spk.faktur_color)}
-                                        </div>
-                                    </span>
-                                </div>
-                            </td>
-
-                            <td>${row.spk.manpower}</td>
-
                             <td>
                                 <div class="form-button-action">
                                     <a href="/do-print/${row.spk_no}"
@@ -282,17 +291,6 @@
 
                                         <i class="fas fa-print"></i>
                                     </a>
-
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    
-                                    <a href="/spk-print/${row.spk_no}"
-                                        class="btnAction"
-                                        target="_blank"
-                                        data-toggle="tooltip" data-placement="top" title="PrintSPK"
-                                        style="color:maroon; cursor:pointer;">
-
-                                        <i class="fas fa-file-pdf"></i>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -302,7 +300,7 @@
 
                 $('[data-toggle="tooltip"]').tooltip();
 
-                renderPaginationSale(res);
+                renderPaginationDo(res);
             },
             error: function (xhr) {
                 $('#tbodyDo').html(
@@ -318,7 +316,7 @@
     // SEARCH
     let timerDo;
 
-    $('#searchSale').keyup(function () {
+    $('#searchDo').keyup(function () {
         clearTimeout(timerDo);
 
         timerDo = setTimeout(function () {
@@ -327,7 +325,7 @@
     });
 
     // PAGINATION
-    function renderPaginationSale(res) {
+    function renderPaginationDo(res) {
         let html = '';
 
         if (res.data.prev_page_url) {
@@ -354,7 +352,7 @@
             `;
         }
 
-        $('.paginationSale').html(html);
+        $('.paginationDo').html(html);
     }
 
     $(document).on('click', '.page', function () {

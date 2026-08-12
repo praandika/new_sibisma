@@ -11,7 +11,7 @@ use App\Models\Dealer;
 use App\Models\Log;
 use App\Models\Spk;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SaleDeliveryController extends Controller

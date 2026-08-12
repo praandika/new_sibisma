@@ -21,21 +21,87 @@ class DeliveryOrderController extends Controller
      */
     public function index()
     {
-        $dc = Auth::user()->dealer_code;
-        $did = Dealer::where('dealer_code',$dc)->sum('id');
+        return view('page');
+    }
 
-        if ($dc == 'group') {
-            $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->join('users','sales.created_by','users.id')
-            ->orderBy('sales.id','desc')
-            ->select('*','sales.id as id_sale','users.first_name')->limit(400)->get();
-        } else {
-            $data = Sale::join('stocks','sales.stock_id','stocks.id')
-            ->join('users','sales.created_by','users.id')
-            ->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')
-            ->select('*','sales.id as id_sale','users.first_name')->limit(400)->get();
+    // DATA DELIVERY ORDER AJAX -> TABEL SALE DELIVERY
+    public function doData(Request $request)
+    {
+        try {
+
+            if (Auth::user()->dealer_code == 'group') {
+
+                $query = SaleDelivery::with('spk');
+
+            } else {
+
+                $query = SaleDelivery::with('spk')
+                    ->where('dealer_code', Auth::user()->dealer_code);
+            }
+
+            // =========================
+            // SEARCH
+            // =========================
+
+            if ($request->filled('search')) {
+
+                $keywords = preg_split('/\s+/', trim($request->search));
+
+                foreach ($keywords as $keyword) {
+
+                    $query->where(function ($q) use ($keyword) {
+
+                        // SEARCH DI SALE DELIVERY
+                        $q->Where('driver_name', 'like', "%{$keyword}%")
+                            ->orWhere('notes', 'like', "%{$keyword}%")
+                            ->orWhere('spk_no', 'like', "%{$keyword}%");
+
+                        // SEARCH DI TABEL SPK
+                        $q->orWhereHas('spk', function ($spk) use ($keyword) {
+
+                            $spk->where('order_name', 'like', "%{$keyword}%")
+                                ->orWhere('model_name', 'like', "%{$keyword}%")
+                                ->orWhere('faktur_color', 'like', "%{$keyword}%")
+                                ->orWhere('year_mc', 'like', "%{$keyword}%")
+                                ->orWhere('ktp_number', 'like', "%{$keyword}%")
+                                ->orWhere('kk_number', 'like', "%{$keyword}%")
+                                ->orWhere('address', 'like', "%{$keyword}%")
+                                ->orWhere('spk_phone', 'like', "%{$keyword}%")
+                                ->orWhere('manpower', 'like', "%{$keyword}%")
+                                ->orWhere('frame_no', 'like', "%{$keyword}%")
+                                ->orWhere('engine_no', 'like', "%{$keyword}%")
+                                ->orWhere('payment_method', 'like', "%{$keyword}%");
+
+                        });
+
+                    });
+
+                }
+            }
+
+            // =========================
+            // ORDER
+            // =========================
+
+            $query->orderBy('do_date', 'desc');
+
+            // =========================
+            // PAGINATION
+            // =========================
+
+            $data = $query->paginate(10);
+
+            return response()->json([
+                'dealer' => Auth::user()->dealer_code,
+                'data'   => $data,
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
         }
-        return view('page', compact('data'));
     }
 
     public function history(Request $req){
