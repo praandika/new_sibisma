@@ -162,6 +162,8 @@
             @include('component.stock-onhand')
         @elseif(Route::is('stock.mutation'))
             @include('component.stock-mutation')
+        @elseif(Route::is('stock.requested'))
+            @include('component.stock-requested')
         @elseif(Route::is('stock.sold'))
             @include('component.stock-sold')
         @else
@@ -376,7 +378,7 @@
         @elseif(Route::is('spk.historysalesman'))
             @include('component.spk-historysalesman')
         @elseif(Route::is('spk.historycredit'))
-            @include('component.spk-history-credit-salesman')
+            @include('component.spk-history-credit')
         @elseif(Route::is('spk.change-stock'))
             @include('component.spk-change-stock')
         @else

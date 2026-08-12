@@ -8,6 +8,7 @@ use App\Models\Stock;
 use App\Models\Leasing;
 use App\Models\Manpower;
 use App\Models\SaleDelivery;
+use App\Models\HistoryCredit;
 
 class Spk extends Model
 {
@@ -43,5 +44,10 @@ class Spk extends Model
     // Relasi to SPK
     public function saleDelivery(){
         return $this->hasOne(SaleDelivery::class, 'spk_no', 'spk_no');
+    }
+
+    // Relasi to History Credit
+    public function historyCredit(){
+        return $this->hasMany(HistoryCredit::class, 'spk_no', 'spk_no');
     }
 }

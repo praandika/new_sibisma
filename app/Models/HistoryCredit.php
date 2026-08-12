@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Leasing;
+use App\Models\Spk;
+use App\Models\User;
 
 class HistoryCredit extends Model
 {
@@ -13,8 +14,13 @@ class HistoryCredit extends Model
 
     protected $guarded = ['id'];
 
-    // Relasi to Leasing
-    public function leasing(){
-        return $this->belongsTo(Leasing::class);
+    // Relasi to SPK
+    public function spk(){
+        return $this->belongsTo(Spk::class, 'spk_no', 'spk_no');
+    }
+
+    // Relasi to User
+    public function user(){
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

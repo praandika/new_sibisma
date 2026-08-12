@@ -234,10 +234,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historysalesman/{date
 Route::middleware(['auth:sanctum', 'verified'])->get('/spk-filter/{param?}', [SpkController::class, 'filter'])->name('spk.filter');
 // END SPK
 
-// History SPK Credit
-Route::middleware(['auth:sanctum', 'verified'])->get('/spk-historycredit/{param?}', [SpkController::class, 'historyCredit'])->name('spk.historycredit');
-// END History SPK Credit
-
 // DO
 Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', DeliveryOrderController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/delivery-order/get/{id}', [DeliveryOrderController::class, 'get'])->name('delivery-order.get');
@@ -365,6 +361,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stock-onhand', [StockCont
 // STOCK MUTATION MENU
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation', [StockController::class, 'showStockMutation'])->name('stock.mutation');
 
+// STOCK REQUESTED MENU
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock-requested', [StockController::class, 'showStockRequested'])->name('stock.requested');
+
 // STOCK SOLD MENU
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold', [StockController::class, 'showStockSold'])->name('stock.sold');
 
@@ -385,6 +384,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/sale/show/{spk_no}', [Sal
 
 // PROSES STORE AND UPDATE PROSES DELIVERY ORDER
 Route::middleware(['auth:sanctum', 'verified'])->post('/do/process-do/{spk_no}', [SaleDeliveryController::class, 'processDo'])->name('do.process-do');
+
+// HISTORY CREDIT SPK
+Route::middleware(['auth:sanctum', 'verified'])->get('/spk/historycredit/{spk_no}', [SpkController::class, 'historyCredit'])->name('spk.historycredit');
+
+// PROSES UPDATE HISTORY CREDIT SPK
+Route::middleware(['auth:sanctum', 'verified'])->post('/spk/credit-status/{spk_no}', [SpkController::class, 'updateCreditStatus'])->name('spk.credit-status-update');
 
 // ===============================//
 // ************ AJAX ************ //
@@ -430,6 +435,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/stock-onhand-ajax', [Stoc
 
 // DATA STOCK MUTATION AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-mutation-ajax', [StockController::class, 'dataStockMutation'])->name('stock.mutation-ajax');
+
+// DATA STOCK REQUESTED AJAX
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock-requested-ajax', [StockController::class, 'dataStockRequested'])->name('stock.requested-ajax');
 
 // DATA STOCK SOLD AJAX
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock-sold-ajax', [StockController::class, 'dataStockSold'])->name('stock.sold-ajax');

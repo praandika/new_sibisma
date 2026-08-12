@@ -16,6 +16,11 @@
                     <span class="sub-item">Mutation</span>
                 </a>
             </li>
+            <li class="{{ Route::is('stock.requested') ? 'active' : '' }}">
+                <a href="{{ route('stock.requested') }}">
+                    <span class="sub-item">Requested</span>
+                </a>
+            </li>
             <li class="{{ Route::is('stock.sold') ? 'active' : '' }}">
                 <a href="{{ route('stock.sold') }}">
                     <span class="sub-item">Sold</span>

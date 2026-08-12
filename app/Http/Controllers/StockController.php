@@ -211,6 +211,7 @@ class StockController extends Controller
         return StockColorResource::collection($data);
     }
 
+    // DIRECT TO PAGE STOCK
     public function showStockOnhand(){
         return view('page');
     }
@@ -219,9 +220,14 @@ class StockController extends Controller
         return view('page');
     }
 
+    public function showStockRequested(){
+        return view('page');
+    }
+
     public function showStockSold(){
         return view('page');
     }
+    // DIRECT TO PAGE STOCK
 
     // DATA STOCK ONHAND AJAX
     public function dataStockOnHand(Request $request)
@@ -351,7 +357,71 @@ class StockController extends Controller
         }
     }
 
-    // DATA STOCK MUTATION AJAX
+    // DATA STOCK REQUESTED AJAX
+    public function dataStockRequested(Request $request)
+    {
+        try {
+            $keywords = preg_split('/\s+/', trim($request->search));
+
+            if (Auth::user()->dealer_code == 'group') {
+                $query = UnitOnhand::query()
+                ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
+                ->where('unit_on_hands.status', 'mutation')
+                ->select(
+                    'unit_on_hands.*','dealers.dealer_name'
+                );
+            } else {
+                $query = UnitOnhand::query()
+                ->join('dealers','unit_on_hands.dealer_code','=','dealers.dealer_code')
+                ->where('unit_on_hands.status', 'mutation')
+                ->where('unit_on_hands.point_code',Auth::user()->dealer_code)
+                ->select(
+                    'unit_on_hands.*','dealers.dealer_name'
+                );
+            }
+
+            // SEARCH
+            if ($request->filled('search')) {
+
+                $keywords = preg_split('/\s+/', trim($request->search));
+
+                foreach ($keywords as $keyword) {
+
+                    $query->where(function ($q) use ($keyword) {
+
+                        $q->where('unit_on_hands.faktur_color', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.year_mc', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.frame_no', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.engine_no', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.model_name', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.price', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.receive_time', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.location', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.status', 'like', "%{$keyword}%")
+                            ->orWhere('unit_on_hands.info', 'like', "%{$keyword}%");
+
+                    });
+
+                }
+            }
+
+            // Lalu urutkan data
+            $query->orderBy('unit_on_hands.updated_at', 'asc');
+
+            $data = $query->paginate(10);
+
+            return response()->json($data);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'error' => $e->getMessage()
+            ],500);
+
+        }
+    }
+
+    // DATA STOCK SOLD AJAX
     public function dataStockSold(Request $request)
     {
         try {

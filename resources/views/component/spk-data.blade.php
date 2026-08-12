@@ -327,19 +327,17 @@
                                         </a>`
                                         : `<span></span>`
                                     }
-
-                                    // buat tombol history
-
+                                    
                                     ${ 
                                         row.payment_method == 'CREDITCARD'
                                         ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="/sale/show/${row.spk_no}"
+                                        <a href="/spk/historycredit/${row.spk_no}"
                                             class="btnAction"
                                             target="_blank"
-                                            data-toggle="tooltip" data-placement="top" title="Create DO"
-                                            style="color:#228B22; cursor:pointer;">
+                                            data-toggle="tooltip" data-placement="top" title="Credit Status"
+                                            style="color:purple; cursor:pointer;">
 
-                                            <i class="fas fa-truck truck-icon"></i>
+                                            <i class="fas fa-credit-card"></i>
                                         </a>`
                                         : `<span></span>`
                                     }

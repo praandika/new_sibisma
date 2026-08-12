@@ -24,7 +24,8 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Request Stock</h4>
+            <h4 class="card-title">Request Info</h4>
+            <p class="text-danger" style="font-size: 15px;">Stock request <span style="font-weight: bold;">dari Cabang lain</span></p>
         </div>
         <div class="card-body">
             {{-- Search --}}

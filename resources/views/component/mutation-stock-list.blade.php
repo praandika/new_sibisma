@@ -2,6 +2,7 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Mutation Info</h4>
+            <p class="text-success" style="font-size: 15px;">Stock mutasi <span style="font-weight: bold;">ke Cabang lain</span></p>
         </div>
         <div class="card-body">
             {{-- Search --}}

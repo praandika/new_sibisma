@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\HistoryCredit;
 
 class User extends Authenticatable
 {
@@ -206,5 +207,10 @@ class User extends Authenticatable
 
     public function user(){
         return $this->hasMany(Log::class);
+    }
+
+    // Relasi to History Credit
+    public function historyCredit(){
+        return $this->hasMany(HistoryCredit::class, 'created_by');
     }
 }

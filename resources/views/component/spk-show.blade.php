@@ -28,7 +28,9 @@
     <div class="col-md-4">
         <div class="card card-dark bg-dark-gradient curves-shadow">
             <div class="card-body pb-0">
-                <div class="h1 fw-bold float-right"><img src="{{ asset('img/payment_method1.png') }}" alt="payment method"></div>
+                <div class="h1 fw-bold float-right">
+                    <img src="{{ asset('img/payment_method1.png') }}" alt="payment method">
+                </div>
                 <h2 class="mb-2">{{ ucwords($data->payment_method) }}</h2>
                 <p>Payment Method</p>
             </div>
@@ -48,18 +50,18 @@
         </div>
         @else
         <div class="card card-dark bg-{{ 
-            $data->credit_status == 'survey' || $data->credit_status == 'SURVET' 
+            $data->credit_status == 'survey' || $data->credit_status == 'SURVEY' 
             ? 'info' : (
                 $data->credit_status == 'acc' || $data->credit_status == 'ACC' 
                 ? 'success' : 
                     'danger') }}-gradient skew-shadow">
             <div class="card-body pb-0">
                 <div class="h1 fw-bold float-right">
-                    @if($data->credit_status == 'survey')
+                    @if($data->credit_status == 'survey' || $data->credit_status == 'SURVEY' )
                     <img src="{{ asset('img/survey1.png') }}" alt="Survey">
-                    @elseif($data->credit_status == 'acc')
+                    @elseif($data->credit_status == 'acc' || $data->credit_status == 'ACC')
                     <img src="{{ asset('img/acc1.png') }}" alt="Acc">
-                    @elseif($data->credit_status == 'reject')
+                    @elseif($data->credit_status == 'reject' || $data->credit_status == 'REJECT')
                     <img src="{{ asset('img/reject1.png') }}" alt="Reject">
                     @else
                     <img src="{{ asset('img/cash1.png') }}" alt="Cash">
