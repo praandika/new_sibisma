@@ -457,8 +457,8 @@ class SpkController extends Controller
         $data->payment_method = $request->payment;
         $data->bunga = $request->bunga;
         $data->tenor = $request->tenor;
-        $data->reason = strtoupper($reason);
-        $data->credit_status = $request->credit_status;
+        $data->reason = $reason;
+        $data->credit_status = strtoupper($request->credit_status);
         $data->order_status = strtoupper($request->order_status);
         $data->sale_status = 'pending';
         $data->ktp = $ktp_file;
@@ -489,12 +489,13 @@ class SpkController extends Controller
 
         if ($request->payment == 'CREDITCARD') {
             $history = new HistoryCredit;
-            $history->spk = $request->spk_no;
+            $history->spk_no = $request->spk_no;
             $history->leasing = $request->leasing;
-            $history->update_date = $today;
-            $history->credit_status = $request->credit_status;
+            $history->update_date = now();
+            $history->credit_status = strtoupper($request->credit_status);
             $history->reason = $reason;
             $history->pemohon_name = strtoupper($request->pemohon_name);
+            $history->created_by = Auth::user()->id;
             $history->save();
             toast('History Credit berhasil disimpan','success');
         }
@@ -582,7 +583,6 @@ class SpkController extends Controller
 
         } else {
             // Update SPK Action
-            $today = Carbon::now('GMT+8')->format('Y-m-d');
 
             if ($request->discount == '') {
                 $discount = 0;
@@ -594,6 +594,18 @@ class SpkController extends Controller
                 $deposit = 0;
             } else {
                 $deposit = $request->deposit;
+            }
+
+            $reason = "";
+            if ($request->payment == 'CREDITCARD') {
+                // Cek status kredit
+                if($request->credit_status == 'acc'){
+                    $reason = 'ACC';
+                } else if($request->credit_status == 'survey'){
+                    $reason = 'Mulai Survey';
+                } else {
+                    $reason = $request->reason;
+                }
             }
 
             $data = Spk::find($spk->id);
@@ -621,8 +633,8 @@ class SpkController extends Controller
             $data->payment_method = $request->payment;
             $data->bunga = $request->bunga;
             $data->tenor = $request->tenor;
-            $data->reason = strtoupper($request->reason);
-            $data->credit_status = $request->credit_status;
+            $data->reason = $reason;
+            $data->credit_status = strtoupper($request->credit_status);
             $data->order_status = strtoupper($request->order_status);
             $data->updated_by = Auth::user()->id;
 
@@ -630,12 +642,13 @@ class SpkController extends Controller
 
             if ($request->payment_method == 'CREDITCARD') {
                 $history = new HistoryCredit;
-                $history->leasing_id = $request->leasing_id;
-                $history->spk = $request->spk_no;
-                $history->update_date = $today;
-                $history->credit_status = $request->credit_status;
+                $history->leasing = $request->leasing;
+                $history->spk_no = $request->spk_no;
+                $history->update_date = now();
+                $history->credit_status = strtoupper($request->credit_status);
                 $history->pemohon_name = strtoupper($request->pemohon_name);
-                $history->reason = strtoupper($request->reason);
+                $history->reason = $reason;
+                $history->created_by = Auth::user()->id;
                 $history->save();
                 toast('History Credit berhasil disimpan','success');
             }

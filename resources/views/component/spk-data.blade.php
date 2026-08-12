@@ -327,6 +327,22 @@
                                         </a>`
                                         : `<span></span>`
                                     }
+
+                                    // buat tombol history
+
+                                    ${ 
+                                        row.payment_method == 'CREDITCARD'
+                                        ? `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="/sale/show/${row.spk_no}"
+                                            class="btnAction"
+                                            target="_blank"
+                                            data-toggle="tooltip" data-placement="top" title="Create DO"
+                                            style="color:#228B22; cursor:pointer;">
+
+                                            <i class="fas fa-truck truck-icon"></i>
+                                        </a>`
+                                        : `<span></span>`
+                                    }
                                 </div>
                             </td>
                         </tr>

@@ -138,7 +138,11 @@
                     &nbsp;
                     <a href="{{ url('do-download',$spk_no) }}" class="btn btn-success btn-round print-pdf"
                         style="margin-bottom: 20px;" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp;&nbsp; <strong>Download
-                            PDF</strong>
+                            DO</strong>
+                    </a>
+                    &nbsp;
+                    <a href="{{ url('spk-print',$spk_no) }}" class="btn btn-primary btn-round print-pdf"
+                        style="margin-bottom: 20px;" target="_blank"><i class="fa fa-print"></i>&nbsp;&nbsp;<strong>Print SPK</strong>
                     </a>
                     @endif
                 </div>

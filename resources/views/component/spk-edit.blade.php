@@ -370,6 +370,23 @@
                                 </div>
                             </div>
 
+                            <!-- ALASAN -->
+                            <div class="col-md-3">
+                                <div class="form-group" id="creditReasonGroup" style="display: none;">
+                                    <label for="creditReason" id="creditReasonLabel">
+                                        Alasan
+                                    </label>
+
+                                    <textarea
+                                        class="form-control"
+                                        name="reason"
+                                        id="reason"
+                                        rows="2"
+                                        placeholder="Masukkan alasan reject/cancel..."
+                                    >{{ old('reason', $data->credit_reason ?? '') }}</textarea>
+                                </div>
+                            </div>
+
                             <!-- Downpayment -->
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -519,7 +536,7 @@
 
     @include('component.modal-tenor')
     @include('component.modal-bunga')
-    @include('component.modal-credit-status')
+    @include('component.modal-credit-status-edit')
     @include('component.modal-microfinance')
     @include('component.modal-stock')
     @include('component.modal-gender')
