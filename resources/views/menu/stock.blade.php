@@ -13,12 +13,12 @@
             </li>
             <li class="{{ Route::is('stock.mutation') ? 'active' : '' }}">
                 <a href="{{ route('stock.mutation') }}">
-                    <span class="sub-item">Mutation</span>
+                    <span class="sub-item">Mutation Out</span>
                 </a>
             </li>
             <li class="{{ Route::is('stock.requested') ? 'active' : '' }}">
                 <a href="{{ route('stock.requested') }}">
-                    <span class="sub-item">Requested</span>
+                    <span class="sub-item">Mutation In</span>
                 </a>
             </li>
             <li class="{{ Route::is('stock.sold') ? 'active' : '' }}">

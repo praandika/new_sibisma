@@ -33,7 +33,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Stock Summary</h5>
+                <h5 class="modal-title">Stock On-Hand</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">
                         <i style="color: red;" class="fas fa-times"></i>
@@ -61,8 +61,8 @@
                         <tbody>
                             @forelse($data as $o)
                                 <td>{{ $o->dealer_code }}</td>
-                                <td>{{ $o->dealer_name }}</td>
-                                <td>{{ $o->stock }}</td>
+                                <td>{{ $o->dealer->dealer_name }}</td>
+                                <td>{{ $o->qty }}</td>
                             </tr>
                             @empty
                             <tr>

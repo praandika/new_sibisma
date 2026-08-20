@@ -155,6 +155,7 @@
                     <td><div class="skel-bar" style="width:80%; margin-bottom:6px;"></div><div class="skel-bar" style="width:50%; height:9px;"></div></td>
                     <td><div class="skel-bar" style="width:60%; margin-bottom:6px;"></div><div class="skel-bar" style="width:45%; height:9px;"></div></td>
                     <td><div class="skel-bar" style="width:50%;"></div></td>
+                    <td><div class="skel-bar" style="width:50%;"></div></td>
                 </tr>
             `;
         }
@@ -166,7 +167,7 @@
         showSkeletonRows(); // tampilkan skeleton sebelum request
 
         $.ajax({
-            url: "{{ route('do.data-ajax') }}",
+            url: "{{ route('sale.data-ajax') }}",
             type: "GET",
             dataType: "json",
             data: {
@@ -195,6 +196,11 @@
                         <tr>
                             <td>
                                 <div class="td-group">
+                                    <span class="main-data">
+                                        <span class="badge badge-dark mt-2">
+                                            ${row.sale_date ? formatTanggal(row.sale_date) : '-'}
+                                        </span>
+                                    </span>
                                     <span class="secondary-data">
                                         <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.spk.payment_method)}</div>
 
@@ -228,7 +234,13 @@
                                     <span class="main-data">
                                         <a href="/spk/get/${row.spk_no}" class="btnAction" target="_blank" style="font-size: 14px;"
                                         data-toggle="tooltip" data-placement="top" title="Show">${row.spk_no}</a>
-                                            <span class="badge badge-warning"> 
+                                        ${
+                                            String(row.spk.order_status || '').trim().toUpperCase() === 'SOLD' 
+                                            ? `<span class="badge badge-secondary
+                                            "> ` 
+                                            : `<span class="badge badge-success
+                                            "> `
+                                        }
                                                 ${ucwords(row.spk.order_status)}
                                             </span>
                                     </span>

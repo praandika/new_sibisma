@@ -25,25 +25,19 @@
 </style>
 @endpush
 
-@section('title','Stock Requested')
-@section('page-title','Stock Requested')
-
-@if(Auth::user()-> access == 'owner')
-@push('button')
-@include('component.button-print')
-@endpush
-@endif
+@section('title','Stock Mutation In')
+@section('page-title','Stock Mutation In')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('stock.requested') }}">Data Stock Requested</a>
+    <a href="{{ route('stock.requested') }}">Data Stock Mutation In</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Stock Requested Data</h4>
+            <h4 class="card-title">Stock Mutation In Data</h4>
         </div>
         <div class="card-body">
             {{-- Search --}}

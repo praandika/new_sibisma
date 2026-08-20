@@ -53,7 +53,7 @@
 @section('title','SPK')
 @section('page-title','SPK')
 
-@if(Auth::user()->access == 'salesman')
+@if(Auth::user()->access == 'salesman' || Auth::user()->access == 'admin')
 @push('button')
 @section('button-title','Create SPK')
 @include('component.button-create-spk')
@@ -258,6 +258,11 @@
                                         <a href="/spk/get/${row.spk_no}" class="btnAction" target="_blank" style="font-size: 14px;"
                                         data-toggle="tooltip" data-placement="top" title="Show">${row.spk_no}</a>
                                         ${
+                                        // CEK APAKAH CREDIT?
+                                        String(row.payment_method || '').trim().toUpperCase() === 'CREDITCARD' ?
+                                            String(row.credit_status || '').trim().toUpperCase() === 'ACC' && lengkap 
+                                            ? `<span class="badge badge-dark">Ready to Sale</span>` : `<span class="badge badge-danger">Credit is not ACC</span>`
+                                        :
                                             row.order_status == 'indent' || row.order_status == 'INDENT'
                                             ? `<span class="badge badge-danger"> ${ucwords(row.order_status)}</span>`
                                             : (
@@ -275,7 +280,7 @@
                                                         row.order_status == 'sold' || row.order_status == 'SOLD'
                                                         ? `<span class="badge badge-secondary">${ucwords(row.order_status)}</span>`
                                                         : (
-                                                            row.order_status == 'delivered' || row.order_status == 'DELIVERED'
+                                                            row.order_status == 'delivered' || row.order_status == 'DELIVERY'
                                                             ? `<span class="badge badge-success">${ucwords(row.order_status)}</span>`
                                                             : `<span class="badge badge-warning"> ${ucwords(row.order_status)}</span>`
                                                         )

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Sale;
 use App\Models\Manpower;
 use App\Models\Spk;
+use App\Models\Dealer;
 
 class SaleDelivery extends Model
 {
@@ -43,5 +44,10 @@ class SaleDelivery extends Model
     // Relasi to SPK
     public function spk(){
         return $this->belongsTo(Spk::class, 'spk_no', 'spk_no');
+    }
+
+    // Relasi to Dealer
+    public function dealer(){
+        return $this->belongsTo(Dealer::class, 'dealer_code', 'dealer_code');
     }
 }

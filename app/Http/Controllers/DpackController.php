@@ -86,4 +86,13 @@ class DpackController extends Controller
             ], 500);
         }
     }
+
+    // GET DATA PROSPECT FOR API
+    public function sendProspect(){
+        $prospect = Prospect::all();
+
+        return response()->json([
+            'data' => $prospect
+        ]);
+    }
 }

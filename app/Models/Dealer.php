@@ -11,6 +11,8 @@ use App\Models\Entry;
 use App\Models\Out;
 use App\Models\StockHistory;
 use App\Models\Sale;
+use App\Models\UnitOnHand;
+use App\Models\SaleDelivery;
 
 class Dealer extends Model
 {
@@ -61,5 +63,20 @@ class Dealer extends Model
     // Relasi to Sales
     public function sales(){
         return $this->hasMany(Sale::class, 'dealer_code', 'dealer_code');
+    }
+
+    // Relasi to Unit On Hand
+    public function unitOnHand(){
+        return $this->hasMany(UnitOnHand::class, 'dealer_code', 'dealer_code');
+    }
+
+    // Relasi to Unit On Hand for Point Code
+    public function unitOnHandPoint(){
+        return $this->hasMany(UnitOnHand::class, 'point_code', 'dealer_code');
+    }
+
+    // Relasi to Deliver Order
+    public function do(){
+        return $this->hasMany(SaleDelivery::class, 'dealer_code', 'dealer_code');
     }
 }

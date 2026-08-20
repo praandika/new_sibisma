@@ -76,7 +76,7 @@
                 <div style="font-size: 12px; font-weight: bold;">{{ $spk_no }}</div>
             </div>
             <div class="row" style="padding-left: 20px;">
-                <div style="font-size: 12px;">{{ ucwords(strtolower(Auth::user()->name)) }}</div>
+                <div style="font-size: 12px;">{{ Auth::user()->access == 'salesman' ? ucwords(strtolower(Auth::user()->name)) : 'Create by Admin' }}</div>
             </div>
         </div>
         <!-- START FORM -->
@@ -375,7 +375,7 @@
 
                         <!-- Salesman -->
                         <input id="manpower" type="hidden" class="form-control form-control-sm" name="manpower"
-                            value="{{ Auth::user()->name }}" style="text-transform: uppercase;" required readonly>
+                            value="{{ Auth::user()->access == 'salesman' ? Auth::user()->name : old('manpower') }}" style="text-transform: uppercase;" required readonly>
 
                         <div class="col-md-3" style="margin-top: 12px;">
                             <button class="btn btn-primary" type="button" data-toggle="collapse"
@@ -383,6 +383,9 @@
                                 style="font-weight: bold;">
                                 Upload / Take an ID-KTP photo
                             </button>
+                            <small class="text-muted" style="display: block;">
+                                Foto akan otomatis di-resize sebelum upload.
+                            </small>
                             <div class="collapse" id="uploadKtp">
                                 <div class="card card-body">
                                     <div class="form-group form-floating-label">
@@ -673,6 +676,295 @@
 
             reader.readAsDataURL(file);
         }
+    });
+
+</script>
+
+<script>
+
+    /**
+     * =====================================================
+     * COMPRESS / RESIZE IMAGE SEBELUM UPLOAD
+     * =====================================================
+     */
+    async function resizeImageBeforeUpload(file, maxWidth = 2000, maxHeight = 2000) {
+
+        // Kalau file bukan gambar
+        if (!file.type.startsWith('image/')) {
+            return file;
+        }
+
+        // ==========================================
+        // BUAT IMAGE
+        // ==========================================
+
+        const img = new Image();
+
+        const objectUrl = URL.createObjectURL(file);
+
+        img.src = objectUrl;
+
+        await new Promise((resolve, reject) => {
+
+            img.onload = resolve;
+
+            img.onerror = reject;
+
+        });
+
+        // ==========================================
+        // HITUNG UKURAN BARU
+        // ==========================================
+
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+
+        const ratio = Math.min(
+            maxWidth / width,
+            maxHeight / height,
+            1
+        );
+
+        const newWidth = Math.round(width * ratio);
+        const newHeight = Math.round(height * ratio);
+
+        console.log('Original:', width, 'x', height);
+
+        console.log(
+            'Resize:',
+            newWidth,
+            'x',
+            newHeight
+        );
+
+        // ==========================================
+        // BUAT CANVAS
+        // ==========================================
+
+        const canvas = document.createElement('canvas');
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        const ctx = canvas.getContext('2d');
+
+        // Background putih
+        ctx.fillStyle = '#ffffff';
+
+        ctx.fillRect(
+            0,
+            0,
+            newWidth,
+            newHeight
+        );
+
+        // ==========================================
+        // DRAW IMAGE
+        // ==========================================
+
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            newWidth,
+            newHeight
+        );
+
+        // ==========================================
+        // CONVERT CANVAS -> JPEG
+        // ==========================================
+
+        let quality = 0.85;
+
+        let blob = await new Promise(resolve => {
+
+            canvas.toBlob(
+                resolve,
+                'image/jpeg',
+                quality
+            );
+
+        });
+
+        // ==========================================
+        // TURUNKAN QUALITY JIKA MASIH >150 KB
+        // ==========================================
+
+        const maxSize = 150 * 1024;
+
+        while (
+            blob.size > maxSize &&
+            quality > 0.3
+        ) {
+
+            quality -= 0.05;
+
+            blob = await new Promise(resolve => {
+
+                canvas.toBlob(
+                    resolve,
+                    'image/jpeg',
+                    quality
+                );
+
+            });
+
+        }
+
+        console.log(
+            'Final size:',
+            Math.round(blob.size / 1024),
+            'KB'
+        );
+
+        console.log(
+            'Quality:',
+            quality
+        );
+
+        // ==========================================
+        // BUAT FILE BARU
+        // ==========================================
+
+        const filename =
+            file.name.replace(/\.[^/.]+$/, '') +
+            '.jpg';
+
+        const newFile = new File(
+            [blob],
+            filename,
+            {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+            }
+        );
+
+        // Bersihkan object URL
+        URL.revokeObjectURL(objectUrl);
+
+        return newFile;
+    }
+
+
+    /**
+     * =====================================================
+     * PICTURE
+     * =====================================================
+     */
+
+    $('#picture').on('change', async function () {
+
+        const input = this;
+
+        if (!input.files.length) {
+            return;
+        }
+
+        const originalFile = input.files[0];
+
+        console.log(
+            'Original file:',
+            Math.round(originalFile.size / 1024),
+            'KB'
+        );
+
+        try {
+
+            const compressedFile =
+                await resizeImageBeforeUpload(
+                    originalFile,
+                    2000,
+                    2000
+                );
+
+            console.log(
+                'Compressed file:',
+                Math.round(compressedFile.size / 1024),
+                'KB'
+            );
+
+            // ==========================================
+            // GANTI FILE INPUT
+            // ==========================================
+
+            const dataTransfer =
+                new DataTransfer();
+
+            dataTransfer.items.add(
+                compressedFile
+            );
+
+            input.files =
+                dataTransfer.files;
+
+        } catch (error) {
+
+            console.error(
+                'Gagal resize gambar:',
+                error
+            );
+
+            alert(
+                'Gagal memproses foto KTP.'
+            );
+
+            input.value = '';
+
+        }
+
+    });
+
+
+    /**
+     * =====================================================
+     * PHOTO
+     * =====================================================
+     */
+
+    $('#photo').on('change', async function () {
+
+        const input = this;
+
+        if (!input.files.length) {
+            return;
+        }
+
+        const originalFile = input.files[0];
+
+        try {
+
+            const compressedFile =
+                await resizeImageBeforeUpload(
+                    originalFile,
+                    2000,
+                    2000
+                );
+
+            const dataTransfer =
+                new DataTransfer();
+
+            dataTransfer.items.add(
+                compressedFile
+            );
+
+            input.files =
+                dataTransfer.files;
+
+        } catch (error) {
+
+            console.error(
+                'Gagal resize gambar:',
+                error
+            );
+
+            alert(
+                'Gagal memproses foto KTP.'
+            );
+
+            input.value = '';
+
+        }
+
     });
 
 </script>

@@ -106,6 +106,7 @@
                         data-gender="${row.gender}"
                         data-prospect_key="${row.prospect_key}"
                         data-prospect_date="${row.prospect_date}"
+                        data-salesman="${row.salesman}"
                         data-dealer="${row.dealer_code}">
                         <td>
                             <div class="td-group">
@@ -211,6 +212,7 @@
         $('#prospect_key').val($(this).attr('data-prospect_key'));
         $('#prospect_date').val($(this).attr('data-prospect_date'));
         $('#gender').val($(this).attr('data-gender'));
+        $('#manpower').val($(this).attr('data-salesman'));
 
         // CONDITION KTP
         let ktp = $(this).attr('data-ktp');

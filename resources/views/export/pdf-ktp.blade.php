@@ -29,18 +29,18 @@
         <table>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
+                    <img src="{{ 'file://' . public_path('img/ktp/' . $data->ktp) }}" alt="" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
+                    <img src="{{ 'file://' . public_path('img/ktp/' . $data->ktp) }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
+                    <img src="{{ 'file://' . public_path('img/ktp/' . $data->ktp) }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
                 <td>
-                    <img src="img/ktp/{{ $data->ktp }}" alt="{{ $data->ktp }}" style="width: 421px;">
+                    <img src="{{ 'file://' . public_path('img/ktp/' . $data->ktp) }}" alt="{{ $data->ktp }}" style="width: 421px;">
                 </td>
             </tr>
         </table>

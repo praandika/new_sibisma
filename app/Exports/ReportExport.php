@@ -15,6 +15,7 @@ use App\Models\Opname;
 use App\Models\Spk;
 use App\Models\Stock;
 use App\Models\Manpower;
+use App\Models\UnitOnHand;
 use App\Models\Warehouse;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -64,31 +65,20 @@ class ReportExport implements FromView
             }
         }elseif($this->param == 'sale') {
             if ($dc == 'group') {
-                return view('export.sale_simple',[
-                    'data' => Sale::join('stocks','sales.stock_id','stocks.id')
-                    ->whereBetween('sales.sale_date', [$this->start, $this->end])
-                    ->orderBy('sales.sale_date','asc')->get()
-                ]);
+                $data = Sale::with('spk')
+                ->whereBetween('sale_date', [$this->start, $this->end])
+                ->orderBy('sale_date','asc')->get();
+
+                return view('export.sale_simple', compact('data'));
+
             } else {
-                if (Auth::user()->crud == 'simple') {
-                    return view('export.sale_simple',[
-                        'data' => Sale::join('stocks','sales.stock_id','stocks.id')
-                        ->where('stocks.dealer_id',$did)
-                        ->whereBetween('sales.sale_date', [$this->start, $this->end])
-                        ->orderBy('sales.sale_date','asc')->get()
-                    ]);
-                } else {
-                    return view('export.sale',[
-                        'data' => Sale::join('stocks','sales.stock_id','stocks.id')
-                        ->join('spks','sales.spk','spks.spk_no')
-                        ->join('manpowers','spks.manpower_id','manpowers.id')
-                        ->join('units','stocks.unit_id','units.id')
-                        ->where('stocks.dealer_id',$did)
-                        ->whereBetween('sales.sale_date', [$this->start, $this->end])
-                        ->orderBy('sales.sale_date','asc')
-                        ->select('*','manpowers.name as salesman','sales.address as sale_address','sales.phone as sale_phone')->get()
-                    ]);
-                }
+                $data = Sale::with('spk')
+                ->where('dealer_code',$dc)
+                ->whereBetween('sale_date', [$this->start, $this->end])
+                ->orderBy('sale_date','asc')
+                ->get();
+
+                return view('export.sale', compact('data'));
             }
         }elseif($this->param == 'out') {
             if ($dc == 'group') {
@@ -106,39 +96,23 @@ class ReportExport implements FromView
                     ->select('dealers.dealer_name','stocks.*','outs.*')->get()
                 ]);
             }
-        }elseif($this->param == 'sale-delivery') {
+        }elseif($this->param == 'delivery-order') {
             if ($dc == 'group') {
-                return view('export.sale-delivery',[
-                    'data' => SaleDelivery::whereBetween('sale_delivery_date', [$this->start, $this->end])
-                    ->orderBy('sale_delivery_date','asc')->get()
-                ]);
+                $data = SaleDelivery::with('sale')
+                ->whereBetween('do_date', [$this->start, $this->end])
+                ->orderBy('do_date','asc')
+                ->get();
+
+                return view('export.delivery-order', compact('data'));
+
             } else {
-                return view('export.sale-delivery',[
-                    'data' => SaleDelivery::with(['sale.stock'], function($query){
-                        $dc = Auth::user()->dealer_code;
-                        $did = Dealer::where('dealer_code',$dc)->sum('id');
-                        $query->where('stock.dealer_id',$did);
-                    })
-                    ->whereBetween('sale_delivery_date', [$this->start, $this->end])
-                    ->orderBy('sale_delivery_date','asc')->get()
-                ]);
-            }
-        }elseif($this->param == 'branch-delivery') {
-            if ($dc == 'group') {
-                return view('export.branch-delivery',[
-                    'data' => BranchDelivery::whereBetween('branch_delivery_date', [$this->start, $this->end])
-                    ->orderBy('branch_delivery_date','asc')->get()
-                ]);
-            } else {
-                return view('export.branch-delivery',[
-                    'data' => BranchDelivery::with(['out.stock'], function($query){
-                        $dc = Auth::user()->dealer_code;
-                        $did = Dealer::where('dealer_code',$dc)->sum('id');
-                        $query->where('stock.dealer_id',$did);
-                    })
-                    ->whereBetween('branch_delivery_date', [$this->start, $this->end])
-                    ->orderBy('branch_delivery_date','asc')->get()
-                ]);
+                $data = SaleDelivery::with('sale')
+                ->where('dealer_code',$dc)
+                ->whereBetween('do_date', [$this->start, $this->end])
+                ->orderBy('do_date','asc')
+                ->get();
+
+                return view('export.delivery-order', compact('data'));
             }
         }elseif($this->param == 'stock-history') {
             if ($dc == 'group') {
@@ -220,24 +194,75 @@ class ReportExport implements FromView
                 'data' => Log::whereBetween('log_date', [$this->start, $this->end])
                 ->orderBy('log_date','asc')->get()
             ]);
-        }elseif($this->param == 'stock') {
+        }elseif($this->param == 'stock-onhand') {
             if ($dc == 'group') {
-                return view('export.stock',[
-                    'data' => Stock::join('units','stocks.unit_id','units.id')
-                        ->join('dealers','stocks.dealer_id','dealers.id')
-                        ->join('colors','units.color_id','colors.id')
-                        ->where('stocks.qty','>',0)
-                        ->orderBy('units.year_mc')->get()
-                ]);
+                $data = UnitOnHand::with('dealer')
+                ->where('status','onhand')
+                ->get();
+
+                return view('export.stock', compact('data'));
+
             } else {
-                return view('export.stock',[
-                    'data' => Stock::join('units','stocks.unit_id','units.id')
-                        ->join('dealers','stocks.dealer_id','dealers.id')
-                        ->join('colors','units.color_id','colors.id')
-                        ->where('stocks.qty','>',0)
-                        ->orderBy('units.year_mc')
-                        ->where('stocks.dealer_id',$did)->get()
-                ]);
+                $data = UnitOnHand::with('dealer')
+                ->where('dealer_code', $dc)
+                ->where('status','onhand')
+                ->get();
+
+                return view('export.stock', compact('data'));
+            }
+        }elseif($this->param == 'stock-sold') {
+            if ($dc == 'group') {
+                $data = UnitOnHand::with('dealer')
+                ->where('status','sold')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
+
+            } else {
+                $data = UnitOnHand::with('dealer')
+                ->where('dealer_code', $dc)
+                ->where('status','sold')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
+            }
+        }elseif($this->param == 'stock-mutation') {
+            if ($dc == 'group') {
+                $data = UnitOnHand::with('dealer')
+                ->where('status','mutation')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
+
+            } else {
+                $data = UnitOnHand::with('dealer')
+                ->where('dealer_code', $dc)
+                ->where('status','mutation')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
+            }
+        }elseif($this->param == 'stock-requested') {
+            if ($dc == 'group') {
+                $data = UnitOnHand::with('dealer')
+                ->where('status','mutation')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
+
+            } else {
+                $data = UnitOnHand::with('dealer')
+                ->where('point_code', $dc)
+                ->where('status','mutation')
+                ->whereBetween('updated_at', [$this->start, $this->end])
+                ->get();
+
+                return view('export.stock', compact('data'));
             }
         }elseif($this->param == 'manpower') {
             if ($dc == 'group') {

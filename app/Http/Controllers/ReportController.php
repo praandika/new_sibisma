@@ -57,35 +57,39 @@ class ReportController extends Controller
         return redirect()->back();
     }
 
-    public function reportPrint($param, $start = null, $end = null){
+    public function reportPrint(Request $request, $param){
         if ($param == 'entry') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Entry_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Entry_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'sale') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Sale_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Sale_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'out') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Out_report_'.$start.'-'.$end.'.xlsx');
-        }elseif($param == 'sale-delivery') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Sale_delivery_report_'.$start.'-'.$end.'.xlsx');
-        }elseif($param == 'branch-delivery') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Branch_delivery_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Out_report_'.$request->start.'-'.$request->end.'.xlsx');
+        }elseif($param == 'delivery-order') {
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Deliver_order_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'stock-history') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Stock_history_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Stock_history_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'document') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Document_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Document_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'log') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Log_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Log_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'opname') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Opname_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Opname_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'spk') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Spk_report_'.$start.'-'.$end.'.xlsx');
-        }elseif($param == 'stock') {
-            return (new ReportExport)->param($param)->download('Stock_report.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Spk_report_'.$request->start.'-'.$request->end.'.xlsx');
+        }elseif($param == 'stock-onhand') {
+            return (new ReportExport)->param($param)->download('Stock_onhand_report.xlsx');
+        }elseif($param == 'stock-sold') {
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Stock_sold_report_'.$request->start.'-'.$request->end.'.xlsx');
+        }elseif($param == 'stock-mutation') {
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Stock_mutation_report_'.$request->start.'-'.$request->end.'.xlsx');
+        }elseif($param == 'stock-requested') {
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Stock_requested_report_'.$request->start.'-'.$request->end.'.xlsx');
         }elseif($param == 'manpower') {
             return (new ReportExport)->param($param)->download('Manpower_report.xlsx');
         }elseif($param == 'warehouse') {
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Warehouse_report.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Warehouse_report.xlsx');
         }else{
-            return (new ReportExport)->param($param)->start($start)->end($end)->download('Error_report_'.$start.'-'.$end.'.xlsx');
+            return (new ReportExport)->param($param)->start($request->start)->end($request->end)->download('Error_report_'.$request->start.'-'.$request->end.'.xlsx');
         }
     }
 

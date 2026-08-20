@@ -161,10 +161,13 @@
         @elseif(Route::is('stock.onhand'))
             @include('component.stock-onhand')
         @elseif(Route::is('stock.mutation'))
+            <livewire:search-box>
             @include('component.stock-mutation')
         @elseif(Route::is('stock.requested'))
+            <livewire:search-box>
             @include('component.stock-requested')
         @elseif(Route::is('stock.sold'))
+            <livewire:search-box>
             @include('component.stock-sold')
         @else
             @include('component.stock-onhand')
@@ -188,7 +191,12 @@
 
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
+        @if(Route::is('sale.sale-show'))
+            @include('component.sale-show')
+        @else
+            <livewire:search-box>
             @include('component.sale-data')
+        @endif
 
     <!-- Entry Page -->
     @elseif(Route::is('entry.*'))
@@ -393,6 +401,7 @@
             @include('component.search-box')
             @include('component.delivery-order-history')
         @else
+            <livewire:search-box>
             @include('component.do-data')
         @endif
 

@@ -196,9 +196,10 @@
                         <tr>
                             <td>
                                 <div class="td-group">
+                                    <span class="main-data">
+                                        <div style="font-size: 13px; dislay:inline-block; font-weight: bold;">${ucwords(row.spk.payment_method)}</div>
+                                    </span>
                                     <span class="secondary-data">
-                                        <div style="font-size: 11px; dislay:inline-block; font-weight: bold;">${ucwords(row.spk.payment_method)}</div>
-
                                         <div style="
                                             font-size: 11px; 
                                             font-style: italic;
@@ -263,7 +264,7 @@
                                     <span class="main-data">
                                         <a href="/spk/get/${row.spk_no}" class="btnAction" target="_blank" style="font-size: 14px;"
                                         data-toggle="tooltip" data-placement="top" title="Show">${row.spk_no}</a>
-                                            <span class="badge badge-warning"> 
+                                            <span class="badge badge-success"> 
                                                 ${ucwords(row.spk.order_status)}
                                             </span>
                                     </span>
@@ -273,11 +274,14 @@
                                             row.spk.gender == 'MALE'
                                             ? `<span style="color: blue;"> ${row.spk.gender}`
                                             : `<span style="color: pink;"> ${row.spk.gender}`
-                                        }</div>
-                                        <div style="font-size: 11px; font-style: italic;" class="mb-1">
-                                        ${row.spk.spk_phone}
+                                        }
                                         </div>
-                                        </div>
+                                            <div style="font-size: 11px; font-style: italic;" class="mb-1">
+                                            ${row.spk.spk_phone}
+                                            </div>
+                                            <div style="font-size: 11px; font-weight: bold; font-style: italic;" class="mb-1">
+                                            ${row.spk.address_shipment}
+                                            </div>
                                     </span>
                                 </div>
                             </td>

@@ -28,18 +28,15 @@
 @section('title','Stock On-Hand')
 @section('page-title','Stock On-Hand')
 
-@if(Auth::user()-> access == 'owner')
-@push('button')
-@include('component.button-print')
-@endpush
-@endif
-
 @if(Auth::user()-> access != 'salesman')
 @push('button')
 <button id="btnSyncManifest" 
-        class="btn btn-dark btn-round">
+        class="btn btn-dark btn-round" style="margin-bottom: 20px;">
     <i class="fas fa-sync mr-1"></i> Sync Stock
 </button>
+&nbsp;
+@include('component.button-print')
+
 @endpush
 @endif
 

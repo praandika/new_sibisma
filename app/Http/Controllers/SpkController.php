@@ -10,7 +10,6 @@ use App\Models\Leasing;
 use App\Models\Manpower;
 use App\Models\Stock;
 use App\Models\Unit;
-use App\Models\Sale;
 use App\Models\HistoryCredit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,6 +19,8 @@ use App\Models\Prospect;
 use App\Models\UnitOnHand;
 use App\Models\MasterUnit;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SpkController extends Controller
 {
@@ -103,10 +104,16 @@ class SpkController extends Controller
     // MODAL PROSPECT AJAX
     public function prospectSearch(Request $request)
     {
-        $data = Prospect::query()
+        if (Auth::user()->access == 'salesman') {
+            $data = Prospect::query()
             ->where('dealer_code', Auth::user()->dealer_code)
             ->where('salesman', Auth::user()->name)
             ->where('status', '!=', 'spk');
+        } else {
+            $data = Prospect::query()
+            ->where('dealer_code', Auth::user()->dealer_code)
+            ->where('status', '!=', 'spk');
+        }
 
         if ($request->filled('search')) {
 
@@ -377,6 +384,167 @@ class SpkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * =====================================================
+     * SAVE KTP IMAGE
+     * =====================================================
+     *
+     * Jika file <= 150 KB:
+     *     langsung disimpan
+     *
+     * Jika file > 150 KB:
+     *     resize + compress
+     */
+    private function saveKtpImage($file)
+    {
+        $maxSize = 150 * 1024; // 150 KB
+
+        $directory = public_path('img/ktp');
+
+        // Pastikan folder tersedia
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        // =====================================================
+        // CEK FILE ASLI
+        // =====================================================
+
+        $fileSize = $file->getSize();
+
+        // =====================================================
+        // JIKA <= 150 KB
+        // LANGSUNG SIMPAN
+        // =====================================================
+
+        if ($fileSize <= $maxSize) {
+
+            $extension = strtolower(
+                $file->getClientOriginalExtension()
+            );
+
+            $filename =
+                time() . '_' .
+                uniqid() . '.' .
+                $extension;
+
+            $file->move(
+                $directory,
+                $filename
+            );
+
+            return $filename;
+        }
+
+        // =====================================================
+        // JIKA > 150 KB
+        // CEK DIMENSI TERLEBIH DAHULU
+        // =====================================================
+
+        $imageInfo = getimagesize(
+            $file->getRealPath()
+        );
+
+        if (!$imageInfo) {
+
+            throw new \Exception(
+                'File yang diupload bukan gambar yang valid.'
+            );
+        }
+
+        $width  = $imageInfo[0];
+        $height = $imageInfo[1];
+
+        // =====================================================
+        // PROTEKSI GAMBAR TERLALU BESAR
+        // =====================================================
+        //
+        // Ini penting karena foto seperti:
+        // 15592 x 8921
+        //
+        // bisa membuat GD menggunakan RAM >512 MB.
+        //
+
+        if ($width > 6000 || $height > 6000) {
+
+            throw new \Exception(
+                'Resolusi foto terlalu besar (' .
+                $width . ' x ' . $height .
+                ' px). Silakan gunakan foto dengan resolusi lebih kecil.'
+            );
+        }
+
+        // =====================================================
+        // INTERVENTION IMAGE V3
+        // =====================================================
+
+        $manager = new ImageManager(
+            new Driver()
+        );
+
+        $image = $manager->read(
+            $file->getRealPath()
+        );
+
+        // =====================================================
+        // RESIZE
+        // =====================================================
+
+        $image->scaleDown(
+            width: 2000
+        );
+
+        // =====================================================
+        // COMPRESS
+        // =====================================================
+
+        $filename =
+            time() . '_' .
+            uniqid() .
+            '_ktp.jpg';
+
+        $path =
+            $directory . '/' . $filename;
+
+        $quality = 85;
+
+        $binary = null;
+
+        do {
+
+            $encoded = $image->toJpeg(
+                quality: $quality
+            );
+
+            $binary = (string) $encoded;
+
+            $size = strlen($binary);
+
+            if ($size <= $maxSize) {
+                break;
+            }
+
+            $quality -= 5;
+
+        } while ($quality >= 30);
+
+        // =====================================================
+        // SIMPAN
+        // =====================================================
+
+        file_put_contents(
+            $path,
+            $binary
+        );
+
+        // Bersihkan object image
+        unset($image);
+
+        return $filename;
+    }
+
+    // STORE SPK
     public function store(Request $request)
     {
         $today = Carbon::now('GMT+8')->format('Y-m-d');
@@ -422,31 +590,19 @@ class SpkController extends Controller
                 // GET KTP IMAGE
                 // =====================================================
 
+                $ktp_file = 'noimage.jpg';
+
                 if ($request->hasFile('picture')) {
 
-                    $img = $request->file('picture');
-
-                    $ktp_file =
-                        time().'_'.$img->getClientOriginalName();
-
-                    $dir_img = 'img/ktp';
-
-                    $img->move($dir_img, $ktp_file);
+                    $ktp_file = $this->saveKtpImage(
+                        $request->file('picture')
+                    );
 
                 } elseif ($request->hasFile('photo')) {
 
-                    $img = $request->file('photo');
-
-                    $ktp_file =
-                        time().'_'.$img->getClientOriginalName();
-
-                    $dir_img = 'img/ktp';
-
-                    $img->move($dir_img, $ktp_file);
-
-                } else {
-
-                    $ktp_file = 'noimage.jpg';
+                    $ktp_file = $this->saveKtpImage(
+                        $request->file('photo')
+                    );
                 }
 
 
@@ -824,32 +980,6 @@ class SpkController extends Controller
 
 
                 // =========================
-                // CREDIT REASON
-                // =========================
-
-                $reason = '';
-
-                if (strtoupper($request->payment) === 'CREDITCARD') {
-
-                    $creditStatus = strtoupper($request->credit_status);
-
-                    if ($creditStatus === 'ACC') {
-
-                        $reason = 'ACC';
-
-                    } elseif ($creditStatus === 'SURVEY') {
-
-                        $reason = 'Mulai Survey';
-
-                    } else {
-
-                        // REJECT / CANCEL
-                        $reason = $request->reason ?? '';
-                    }
-                }
-
-
-                // =========================
                 // UPDATE SPK
                 // =========================
 
@@ -888,44 +1018,11 @@ class SpkController extends Controller
                 $spk->bunga = $request->bunga;
                 $spk->tenor = $request->tenor;
 
-                $spk->reason = $reason;
-
-                $spk->credit_status = strtoupper(
-                    $request->credit_status
-                );
-
                 $spk->order_status = strtoupper(
                     $request->order_status
                 );
 
                 $spk->updated_by = Auth::user()->id;
-
-
-                // =========================
-                // HISTORY CREDIT
-                // =========================
-
-                if (strtoupper($request->payment) === 'CREDITCARD') {
-
-                    $history = new HistoryCredit;
-
-                    $history->spk_no = $spk->spk_no;
-                    $history->leasing = strtoupper($request->leasing);
-                    $history->update_date = now();
-
-                    $history->credit_status = strtoupper(
-                        $request->credit_status
-                    );
-
-                    $history->pemohon_name = strtoupper(
-                        $request->pemohon_name
-                    );
-
-                    $history->reason = $reason;
-                    $history->created_by = Auth::user()->id;
-
-                    $history->save();
-                }
 
 
                 // =========================

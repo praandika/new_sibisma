@@ -402,7 +402,7 @@
 
                         <!-- Faktur Color -->
                         <input id="color" type="hidden" class="form-control form-control-sm" name="color"
-                            value="{{ $spk->color }}" style="text-transform: uppercase;" required readonly>
+                            value="{{ $spk->faktur_color }}" style="text-transform: uppercase;" required readonly>
 
                         <!-- Year MC -->
                         <input id="year" type="hidden" class="form-control form-control-sm" name="year"
@@ -411,6 +411,10 @@
                         <!-- Order Status -->
                         <input id="order_status" type="hidden" class="form-control form-control-sm" name="order_status"
                             value="{{ $spk->order_status }}" style="text-transform: uppercase;" required readonly>
+                        
+                        <!-- Credit Status -->
+                        <input id="credit_status" type="hidden" class="form-control form-control-sm" name="credit_status"
+                            value="{{ $spk->credit_status }}" style="text-transform: uppercase;" required readonly>
 
                         <!-- Prospect Key -->
                         <input id="prospect_key" type="hidden" class="form-control form-control-sm" name="prospect_key"
