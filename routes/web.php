@@ -41,6 +41,7 @@ use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\SpkEntryController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\DpackController;
+use App\Http\Controllers\MasterLocationController;
 use App\Models\SpkEntry;
 
 /*
@@ -400,6 +401,13 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('delivery-order', Deli
 
 // HALAMAN DATA SALE
 Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController::class);
+
+// FITUR STOCK OPNAME
+Route::middleware(['auth:sanctum', 'verified'])->get('/master-location', [MasterLocationController::class, 'index'])->name('master-location.index');
+Route::middleware(['auth:sanctum', 'verified'])->post('/master-location/store', [MasterLocationController::class, 'store'])->name('master-location.store');
+Route::middleware(['auth:sanctum', 'verified'])->put('/master-location/{id}', [MasterLocationController::class, 'update'])->name('master-location.update');
+Route::middleware(['auth:sanctum', 'verified'])->put('/master-location/{id}/deactive', [MasterLocationController::class, 'deactive'])->name('master-location.deactive');
+// END FITUR STOCK OPNAME
 
 
 // ===============================//

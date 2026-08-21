@@ -73,7 +73,6 @@
                                 @include('menu.spk')
                                 @include('menu.sale')
                                 @include('menu.delivery')
-                                @include('menu.opname')
                                 @include('menu.dealer')
                                 @include('menu.manpower')
                                 @include('menu.dokumen')

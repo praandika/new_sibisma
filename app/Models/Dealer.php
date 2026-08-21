@@ -13,6 +13,7 @@ use App\Models\StockHistory;
 use App\Models\Sale;
 use App\Models\UnitOnHand;
 use App\Models\SaleDelivery;
+use App\Models\MasterLocation;
 
 class Dealer extends Model
 {
@@ -78,5 +79,10 @@ class Dealer extends Model
     // Relasi to Deliver Order
     public function do(){
         return $this->hasMany(SaleDelivery::class, 'dealer_code', 'dealer_code');
+    }
+
+    // Relasi to Master Location
+    public function location(){
+        return $this->hasMany(MasterLocation::class, 'dealer_code', 'dealer_code');
     }
 }
